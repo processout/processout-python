@@ -5,6 +5,16 @@ import requests
 class Invoice(BaseInvoice):
 	def __init__(self, projectId, projectSecret, itemName, itemAmount,
 			itemQuantity, currency):
+		"""Create a new instance of a simple invoice
+
+		Keyword argument:
+		projectId -- id of the ProcessOut's project
+		projectSecret -- secret of the ProcessOut's project
+		itemName -- name of the item
+		itemAmount -- amount of the item
+		itemQuantity -- quantity of the item
+		currency -- currency of the invoice
+		"""
 		BaseInvoice.__init__(self, projectId, projectSecret)
 
 		self._itemName      = itemName
@@ -17,65 +27,111 @@ class Invoice(BaseInvoice):
 
 	@property
 	def itemName(self):
+		"""Get the name of the item"""
 		return self._itemName
 
 	@itemName.setter
 	def itemName(self, value):
+		"""Set the name of the item
+
+		Keyword argument:
+		value -- new name of the item
+		"""
 		self._itemName = value
 
 	@property
 	def itemAmount(self):
+		"""Get the amount of the item"""
 		return self._itemAmount
 
 	@itemAmount.setter
 	def itemAmount(self, value):
+		"""Set the amount of the item
+
+		Keyword argument:
+		value -- new amount of the item
+		"""
 		self._itemAmount = value
 
 	@property
 	def itemQuantity(self):
+		"""Get the quantity of the item"""
 		return self._itemQuantity
 
 	@itemQuantity.setter
 	def itemQuantity(self, value):
+		"""Set the quantity of the item
+
+		Keyword argument:
+		value -- new quantity of the item
+		"""
 		self._itemQuantity = value
 
 	@property
 	def currency(self):
+		"""Get the currency of the invoice"""
 		return self._currency
 
 	@currency.setter
 	def currency(self, value):
+		"""Set the currency of the invoice
+
+		Keyword argument:
+		value -- new currency of the invoice
+		"""
 		self._currency = value
 
 	@property
 	def taxes(self):
+		"""Get the taxes applied to the invoice"""
 		return self._taxes
 
 	@taxes.setter
 	def taxes(self, value):
+		"""Set the taxes applied to the invoice
+
+		Keyword argument:
+		value -- new taxes applied to the invoice
+		"""
 		self._taxes = value
 
 	@property
 	def shipping(self):
+		"""Get the shipping fee applied to the invoice"""
 		return self._shipping
 
 	@shipping.setter
 	def shipping(self, value):
+		"""Set the shipping fee applied to the invoice
+
+		Keyword argument:
+		value -- new shipping fee applied to the invoice
+		"""
 		self._shipping = value
 
 	@property
 	def discount(self):
+		"""Get the discount already applied to the invoice"""
 		return self._discount
 
 	@discount.setter
 	def discount(self, value):
+		"""Set the discount already applied to the invoice
+
+		Keyword argument:
+		value -- new discount already applied to the invoice"""
 		self._discount = value
 
 	def getLink(self):
+		"""Get the invoice url
+
+		Perform the ProcessOut's request to generate the invoice, and return the
+	 	URL to that invoice
+		"""
 		response = requests.post(self.host + '/invoices/create',
 			auth = (self.projectId, self.projectSecret),
 			data = self._generateData(),
-			verify = False).json()
+			verify = True).json()
 
 		if not response['success']:
 			raise Exception(response['message'])
@@ -83,6 +139,7 @@ class Invoice(BaseInvoice):
 		return response['url']
 
 	def _generateData(self):
+		"""Generate the data used during the ProcessOut's request"""
 		data = {
 			'item_name':     self.itemName,
 			'item_amount':   self.itemAmount,
