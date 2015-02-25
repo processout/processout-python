@@ -1,6 +1,7 @@
 # processout.py
 
 import hmac
+import hashlib
 import base64
 from .objects.invoice import Invoice
 from .objects.productinvoice import ProductInvoice
@@ -20,8 +21,8 @@ class ProcessOut:
 			productId)
 
 	def checkCallbackData(self, transactionId, hmacInput):
-		newhmac = hmac.new(key=self._projectSecret,
-		    msg=transactionId,
+		newhmac = hmac.new(key=bytes(self._projectSecret.encode('utf-8')),
+		    msg=transactionId.encode('utf-8'),
 		    digestmod=hashlib.sha256).digest()
-			
+
 		return hmac.compare_digest(newhmac, base64.b64decode(hmacInput))
