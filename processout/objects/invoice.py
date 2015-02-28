@@ -128,7 +128,7 @@ class Invoice(BaseInvoice):
 		Perform the ProcessOut's request to generate the invoice, and return the
 	 	URL to that invoice
 		"""
-		response = requests.post(self.host + '/invoices/create',
+		response = requests.post(self.host + '/invoices',
 			auth = (self.projectId, self.projectSecret),
 			data = self._generateData(),
 			verify = True).json()
