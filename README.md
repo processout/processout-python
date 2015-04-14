@@ -54,10 +54,46 @@ invoice = processout.newInvoice(
 )
 ```
 
-### Create a new invoice from an existing product
+##### Available attributes:
+
+- *attribute*  - *example*
+- ItemName     - **Amazing product**
+- ItemPrice    - **4.20**
+- ItemQuantity - **2**
+- Currency     - **USD**
+- Taxes        - **4.20**
+- Shipping     - **4.20**
+- Discount     - **10** *Note: percentage, not taken into account in the total price*
+
+### Create a new invoice from a tailored invoice
 
 ``` python
-invoice = processout.newProductInvoice('f7dec519feb3106efa1ee96189a222c3')
+invoice = processout.newTailoredInvoice('f7dec519feb3106efa1ee96189a222c3')
+```
+
+##### Shared invoice attributes
+
+The following attributes are shared between Invoice and TailoredInvoice instances
+
+- EnableCoupon - *Decide weither or not to accept coupon codes on the invoice*
+- ReturnUrl    - *URL to which the customer will be redirected upon purchase*
+- CancelUrl    - *URL to which the customer will be redirected upon cancellation*
+- NotifyUrl    - *URL being called by ProcessOut to send callbacks upon transaction updates*
+- Custom       - *A custom field containing anything you want, sent back within all callbacks*
+- Sandbox      - *Decide weither or not to activate the sandbox mode*
+
+#### Attributes getters and setters
+
+Every attributes has its own getter and setter, as such:
+
+``` python
+@property
+def custom(self):
+    return self._custom
+
+@custom.setter
+def custom(self, value):
+    self._custom = value
 ```
 
 ### Getting the link to an invoice
