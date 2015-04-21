@@ -63,7 +63,7 @@ invoice = processout.newInvoice(
 - Currency     - **USD**
 - Taxes        - **4.20**
 - Shipping     - **4.20**
-- Discount     - **10** *Note: percentage, not taken into account in the total price*
+- Discount     - **10** *Note: The value is a percentage, not a subtraction value*
 
 ### Create a new invoice from a tailored invoice
 
