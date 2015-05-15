@@ -4,15 +4,15 @@ ProcessOut Python Server
 This module manages invoices for the server-side of an application that uses
 the ProcessOut SDK.
 
-ProcessOut makes you able to manage a bunch of payment gateways - such as PayPal,
-Crypto currencies, Payza or Dwolla, with no efforts. Learn more on the
-[ProcessOut's website](https://www.processout.com).
+ProcessOut allows you to manage a lot of payment gateways such as PayPal,
+Crypto currencies, Payza or Dwolla, with no effort.
+Learn more on the [ProcessOut website](https://www.processout.com).
 
 Dependencies
 ------------
 
 * Python 2.4 or higher
-* requests
+* Requests
 
 Installation
 ------------
@@ -28,10 +28,15 @@ git clone https://github.com/ProcessOut/ProcessOut-python-server .
 Prerequisites
 -------------
 
-### Import the module
+### Import the modules
 
 ``` python
 from processout.processout import ProcessOut
+
+from processout.invoice.invoice         import Invoice
+from processout.invoice.tailoredinvoice import TailoredInvoice
+
+from processout.callback.callback import Callback
 ```
 
 ### Instantiate a new ProcessOut instance
@@ -49,12 +54,12 @@ Usage
 ### Create a new invoice from scratch
 
 ``` python
-invoice = processout.newInvoice(
-	'1 copy of a wonderful product at $4.99 USD',
-	4.99,
-	1,
-	'USD'
-)
+invoice = Invoice(
+    processout,                                   # ProcessOut instance
+	'1 copy of a wonderful product at $4.99 USD', # Title
+	4.99,                                         # Price
+	1,                                            # Quantity
+	'USD')                                        # Currency
 ```
 
 ##### Available attributes:
@@ -66,12 +71,14 @@ invoice = processout.newInvoice(
 - Currency     - **USD**
 - Taxes        - **4.20**
 - Shipping     - **4.20**
-- Discount     - **10** *Note: percentage, not taken into account in the total price*
+- Discount     - **10** *Note: The value is a percentage, not a subtraction value*
 
 ### Create a new invoice from a tailored invoice
 
 ``` python
-invoice = processout.newTailoredInvoice('f7dec519feb3106efa1ee96189a222c3')
+invoice = TailoredInvoice(
+    processout,                         # ProcessOut instance
+    'f7dec519feb3106efa1ee96189a222c3') # Tailored invoice id
 ```
 
 ##### Shared invoice attributes
@@ -85,9 +92,9 @@ The following attributes are shared between Invoice and TailoredInvoice instance
 - Custom       - *A custom field containing anything you want, sent back within all callbacks*
 - Sandbox      - *Decide weither or not to activate the sandbox mode*
 
-#### Attributes getters and setters
+#### Attribute getters and setters
 
-Every attributes has its own getter and setter, as such:
+Every attribute has its own getter and setter, as follows:
 
 ``` python
 @property
@@ -105,19 +112,19 @@ def custom(self, value):
 print(invoice.getLink())
 ```
 
-### Receiving callbacks / Web hooks
+### Receiving callbacks / Webhooks
 
-Callbacks can be used to automate transaction management once a payment has been
-placed by one of your customers. One example could be adding credit to an account
-once the user has paid his subscription.
+Callbacks can be used to automate transaction management once a payment has
+been placed by one of your customers. One example could be adding credit to
+an account once the user has paid their subscription.
 
-However, it doesn't stop there. ProcessOut also supports chargebacks handling,
+However, it doesn't stop there. ProcessOut also supports chargeback handling,
 and much more. Please refer to the
 [API documentation](http://docs.processout.apiary.io/#) to learn what data is
 sent through callbacks.
 
 Once a callback has been sent to your server, you need to check its authenticity,
-as such:
+as follows:
 
 ``` python
 if not processout.checkCallbackData(data['transaction_id'],
@@ -137,4 +144,4 @@ Full API documentation
 
 The ProcessOut's full API documentation can be found on
 [Apiary](http://docs.processout.apiary.io). It contains all the needed
-information, including the callbacks data, and much more.
+information, including callback data, and much more.
