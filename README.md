@@ -1,8 +1,9 @@
-ProcessOut Python Server
+ProcessOut Python
 =====================
 
-This module manages invoices for the server-side of an application that uses
-the ProcessOut SDK.
+This package provides bindings to the ProcessOut API. Manage your callbacks,
+create new invoices, redirect your users to a newly generated checkout
+page and more.
 
 ProcessOut allows you to manage a lot of payment gateways such as PayPal,
 Crypto currencies, Payza or Dwolla, with no effort.
