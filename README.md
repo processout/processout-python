@@ -1,5 +1,5 @@
 ProcessOut Python
-=====================
+=================
 
 This package provides bindings to the ProcessOut API. Manage your callbacks,
 create new invoices, redirect your users to a newly generated checkout
