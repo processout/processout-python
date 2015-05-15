@@ -1,9 +1,12 @@
 ProcessOut Python Server
 =====================
 
-This module manages invoices for the server-side of an application that uses the ProcessOut SDK.
+This module manages invoices for the server-side of an application that uses
+the ProcessOut SDK.
 
-ProcessOut makes you able to manage a bunch of payment gateways - such as PayPal, Crypto currencies, Payza or Dwolla, with no efforts. Learn more on the [ProcessOut's website](https://www.processout.com).
+ProcessOut makes you able to manage a bunch of payment gateways - such as PayPal,
+Crypto currencies, Payza or Dwolla, with no efforts. Learn more on the
+[ProcessOut's website](https://www.processout.com).
 
 Dependencies
 ------------
@@ -104,11 +107,17 @@ print(invoice.getLink())
 
 ### Receiving callbacks / Web hooks
 
-Callbacks can be used to automate transaction management once a payment has been placed by one of your customers. One example could be adding credit to an account once the user has paid his subscription.
+Callbacks can be used to automate transaction management once a payment has been
+placed by one of your customers. One example could be adding credit to an account
+once the user has paid his subscription.
 
-However, it doesn't stop there. ProcessOut also supports chargebacks handling, and much more. Please refer to the [API documentation](http://docs.processout.apiary.io/#) to learn what data is sent through callbacks.
+However, it doesn't stop there. ProcessOut also supports chargebacks handling,
+and much more. Please refer to the
+[API documentation](http://docs.processout.apiary.io/#) to learn what data is
+sent through callbacks.
 
-Once a callback has been sent to your server, you need to check its authenticity, as such:
+Once a callback has been sent to your server, you need to check its authenticity,
+as such:
 
 ``` python
 if not processout.checkCallbackData(data['transaction_id'],
@@ -126,4 +135,6 @@ Full API documentation
 
 ### Apiary
 
-The ProcessOut's full API documentation can be found on [Apiary](http://docs.processout.apiary.io). It contains all the needed information, including the callbacks data, and much more.
+The ProcessOut's full API documentation can be found on
+[Apiary](http://docs.processout.apiary.io). It contains all the needed
+information, including the callbacks data, and much more.

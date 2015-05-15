@@ -1,23 +1,26 @@
+# processout.invoice.tailoredinvoice
 
-from .baseinvoice import BaseInvoice
+from ..processout     import ProcessOut
+from .invoiceabstract import InvoiceAbstract
+
 import requests
 
-class TailoredInvoice(BaseInvoice):
-    def __init__(self, projectId, projectSecret, tailoredInvoiceId):
+class TailoredInvoice(InvoiceAbstract):
+    def __init__(self, processOut, tailoredInvoiceId):
         """Create a new instance of a tailored invoice
 
         Keyword argument:
-        projectId -- id of the ProcessOut's project
-        projectSecret -- secret of the ProcessOut's project
+        processOut -- ProcessOut instance
         tailoredInvoiceId -- id of the tailored invoice
         """
-        BaseInvoice.__init__(self, projectId, projectSecret)
+        InvoiceAbstract.__init__(self, processOut)
 
         self._tailoredInvoiceId = tailoredInvoiceId
 
     @property
     def tailoredInvoiceId(self):
-        """Return the current tailored invoice id id associated with the TailoredInvoice"""
+        """Return the current tailored invoice id associated with the
+        TailoredInvoice"""
         return self._tailoredInvoiceId
 
     @tailoredInvoiceId.setter
@@ -35,9 +38,9 @@ class TailoredInvoice(BaseInvoice):
         Perform the ProcessOut's request to generate the invoice, and return the
         URL to that invoice
         """
-        response = requests.post(self.host + '/invoices/from-tailored/' +
+        response = requests.post(ProcessOut.HOST + '/invoices/from-tailored/' +
             self.tailoredInvoiceId,
-            auth = (self.projectId, self.projectSecret),
+            auth = (self._processOut.projectId, self._processOut.projectKey),
             data = self._generateData(),
             verify = True).json()
 
@@ -48,4 +51,4 @@ class TailoredInvoice(BaseInvoice):
 
     def _generateData(self):
         """Generate the data used during the ProcessOut's request"""
-        return BaseInvoice._generateData(self)
+        return InvoiceAbstract._generateData(self)

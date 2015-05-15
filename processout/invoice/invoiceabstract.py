@@ -1,15 +1,17 @@
+# processout.invoice.invoiceabstract
 
-class BaseInvoice:
-    def __init__(self, projectId, projectSecret):
-        """Create a new instance of BaseInvoice
+from abc import ABCMeta, abstractmethod
+
+class InvoiceAbstract:
+    __metaclass__ = ABCMeta
+
+    def __init__(self, processOut):
+        """Create a new instance of InvoiceAbstract
 
         Keyword argument:
-        projectId -- id of the ProcessOut's project
-        projectSecret -- secret of the ProcessOut's project
+        processOut -- ProcessOut instance
         """
-        self._host          = 'https://api.processout.com/v1'
-        self._projectId     = projectId
-        self._projectSecret = projectSecret
+        self._processOut = processOut
 
         self._enableCoupon = False
         self._returnUrl    = None
@@ -123,7 +125,6 @@ class BaseInvoice:
     def disableSandbox(self):
         """Disable the sandbox mode"""
         self.sandbox = False
-
 
     def _generateData(self):
         """Generate the data used during the ProcessOut's request"""

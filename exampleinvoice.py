@@ -2,18 +2,21 @@
 
 import sys
 
-# Let's load our processout module
-from processout.processout import ProcessOut
+# Let's load our processout modules
+from processout.processout              import ProcessOut
+from processout.invoice.invoice         import Invoice
+from processout.invoice.tailoredinvoice import TailoredInvoice
 
 
 def main(argv):
     # Create a new ProcessOut instance
     processout = ProcessOut(
-        '4d65cebe-c2f0-4803-9eab-3f9e190aaeb5',
-        'key-9db060c19281bb39656df61c63ddecff674d80b1178533db0ceffb29b87ce40a')
+        '8722fce8-f8c0-44be-997e-d4954cf32fc0',
+        'key-3022bbac0a88514dff79c0d95f5b8486ba0884bb665834ea9ad79610ac31ab43')
 
     # Create a new invoice, with custom name, price and currency
-    invoice = processout.newInvoice(
+    invoice = Invoice(
+    	processout,                                    # ProcessOut instance
         '1 copy of a wonderful product at $4.99 USD',  # Title
         4.99,                                          # Price
         1,                                             # Quantity
@@ -24,8 +27,9 @@ def main(argv):
 
 
     # Create a new invoice thanks to a tailored invoice id
-    productInvoice = processout.newTailoredInvoice(
-        '2fac6a3a-b5da-4067-a694-67373de3283d')
+    productInvoice = TailoredInvoice(
+    	processout,                             # ProcessOut instance
+        '1ca570ac-0cb4-4c54-8ff2-f7c82f4fb12b') # Tailored invoice id
 
     # Get its invoice link
     print(productInvoice.getLink())

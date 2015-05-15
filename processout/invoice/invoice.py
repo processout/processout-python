@@ -1,24 +1,26 @@
+# processout.invoice.invoice
 
-from .baseinvoice import BaseInvoice
+from ..processout     import ProcessOut
+from .invoiceabstract import InvoiceAbstract
+
 import requests
 
-class Invoice(BaseInvoice):
-    def __init__(self, projectId, projectSecret, itemName, itemPrice,
+class Invoice(InvoiceAbstract):
+    def __init__(self, processOut, itemName, itemPrice,
             itemQuantity, currency):
         """Create a new instance of a simple invoice
 
         Keyword argument:
-        projectId -- id of the ProcessOut's project
-        projectSecret -- secret of the ProcessOut's project
+        processOut -- ProcessOut instance
         itemName -- name of the item
         itemPrice -- price of the item
         itemQuantity -- quantity of the item
         currency -- currency of the invoice
         """
-        BaseInvoice.__init__(self, projectId, projectSecret)
+        InvoiceAbstract.__init__(self, processOut)
 
         self._itemName      = itemName
-        self._itemPrice    = itemPrice
+        self._itemPrice     = itemPrice
         self._itemQuantity  = itemQuantity
         self._currency      = currency
         self._taxes         = 0
@@ -128,8 +130,8 @@ class Invoice(BaseInvoice):
         Perform the ProcessOut's request to generate the invoice, and return the
         URL to that invoice
         """
-        response = requests.post(self.host + '/invoices',
-            auth = (self.projectId, self.projectSecret),
+        response = requests.post(ProcessOut.HOST + '/invoices',
+            auth = (self._processOut.projectId, self._processOut.projectKey),
             data = self._generateData(),
             verify = True).json()
 
@@ -149,5 +151,5 @@ class Invoice(BaseInvoice):
             'shipping':      self.shipping,
             'discount':      self.discount
         }
-        data.update(BaseInvoice._generateData(self))
+        data.update(InvoiceAbstract._generateData(self))
         return data
