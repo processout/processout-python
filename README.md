@@ -86,7 +86,6 @@ invoice = TailoredInvoice(
 
 The following attributes are shared between Invoice and TailoredInvoice instances
 
-- EnableCoupon - *Decide weither or not to accept coupon codes on the invoice*
 - ReturnUrl    - *URL to which the customer will be redirected upon purchase*
 - CancelUrl    - *URL to which the customer will be redirected upon cancellation*
 - NotifyUrl    - *URL being called by ProcessOut to send callbacks upon transaction updates*

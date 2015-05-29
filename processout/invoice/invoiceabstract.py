@@ -13,7 +13,6 @@ class InvoiceAbstract:
         """
         self._processOut = processOut
 
-        self._enableCoupon = False
         self._returnUrl    = None
         self._cancelUrl    = None
         self._notifyUrl    = None
@@ -34,20 +33,6 @@ class InvoiceAbstract:
     def projectSecret(self):
         """Get the ProcessOut's project secret"""
         return self._projectSecret
-
-    @property
-    def enableCoupon(self):
-        """Determine if coupons are enabled on the invoice"""
-        return self._enableCoupon
-
-    @enableCoupon.setter
-    def enableCoupon(self, value):
-        """Set if coupons are enabled on the invoice
-
-        Keyword argument:
-        value -- True: coupons enabled; False: disabled
-        """
-        self._enableCoupon = value
 
     @property
     def returnUrl(self):
@@ -130,7 +115,6 @@ class InvoiceAbstract:
     def _generateData(self):
         """Generate the data used during the ProcessOut's request"""
         return {
-            'enabled_coupon': self.enableCoupon,
             'return_url':     self.returnUrl,
             'cancel_url':     self.cancelUrl,
             'notify_url':     self.notifyUrl,
