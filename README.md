@@ -111,6 +111,9 @@ def custom(self, value):
 
 ``` python
 print(invoice.getLink())
+
+# You may also get the id of the invoice (which can be used with the modal)
+print(invoice.getId())
 ```
 
 ### Receiving callbacks / Webhooks

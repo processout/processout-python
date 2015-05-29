@@ -25,14 +25,20 @@ def main(argv):
     # Get its invoice link
     print(invoice.getLink())
 
+    # Or get its id
+    print(invoice.getId())
+
 
     # Create a new invoice thanks to a tailored invoice id
-    productInvoice = TailoredInvoice(
+    tailoredInvoice = TailoredInvoice(
     	processout,                             # ProcessOut instance
         '1ca570ac-0cb4-4c54-8ff2-f7c82f4fb12b') # Tailored invoice id
 
     # Get its invoice link
-    print(productInvoice.getLink())
+    print(tailoredInvoice.getLink())
+
+    # Or its id
+    print(tailoredInvoice.getId())
 
 if __name__ == '__main__':
     main(sys.argv[1:])

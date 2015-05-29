@@ -18,6 +18,7 @@ class InvoiceAbstract:
         self._cancelUrl    = None
         self._notifyUrl    = None
         self._custom       = None
+        self._lastResponse = None
 
     @property
     def host(self):
