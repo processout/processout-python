@@ -130,9 +130,10 @@ Once a callback has been sent to your server, you need to check its authenticity
 as follows:
 
 ``` python
-if not processout.checkCallbackData(data['transaction_id'],
-		data['hmac_signature']):
+callback = Callback(processout)
+if not callback.validate(data['transaction_id'], data['hmac_signature']):
 	print('Bad callback')
+    return
 
 # Continue normally here, the callback is verified
 # One common thing to do would be to check the price, currency, etc...
