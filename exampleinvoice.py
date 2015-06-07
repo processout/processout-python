@@ -19,7 +19,6 @@ def main(argv):
     	processout,                                    # ProcessOut instance
         '1 copy of a wonderful product at $4.99 USD',  # Title
         4.99,                                          # Price
-        1,                                             # Quantity
         'USD')                                         # Currency
 
     # Get its invoice link

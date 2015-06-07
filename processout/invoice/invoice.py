@@ -6,22 +6,20 @@ from .invoiceabstract import InvoiceAbstract
 import requests
 
 class Invoice(InvoiceAbstract):
-	def __init__(self, processOut, itemName, itemPrice,
-			itemQuantity, currency):
+	def __init__(self, processOut, itemName, itemPrice, currency):
 		"""Create a new instance of a simple invoice
 
 		Keyword argument:
 		processOut -- ProcessOut instance
 		itemName -- name of the item
 		itemPrice -- price of the item
-		itemQuantity -- quantity of the item
 		currency -- currency of the invoice
 		"""
 		InvoiceAbstract.__init__(self, processOut)
 
 		self._itemName      = itemName
 		self._itemPrice     = itemPrice
-		self._itemQuantity  = itemQuantity
+		self._itemQuantity  = 1
 		self._currency      = currency
 		self._taxes         = 0
 		self._shipping      = 0
