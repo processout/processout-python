@@ -1,172 +1,89 @@
 # processout.invoice.invoice
 
-from ..processout     import ProcessOut
-from .invoiceabstract import InvoiceAbstract
+from ..processout              import ProcessOut
+from ..networking.response     import Response
+from .invoiceabstract          import InvoiceAbstract
 
 import requests
 
 class Invoice(InvoiceAbstract):
-	def __init__(self, processOut, itemName, itemPrice, currency):
-		"""Create a new instance of a simple invoice
+    def __init__(self, processOut = None):
+        """Create a new instance of a simple invoice
 
-		Keyword argument:
-		processOut -- ProcessOut instance
-		itemName -- name of the item
-		itemPrice -- price of the item
-		currency -- currency of the invoice
-		"""
-		InvoiceAbstract.__init__(self, processOut)
+        Keyword argument:
+        processOut -- ProcessOut instance
+        """
+        if processOut == None:
+            processOut = ProcessOut.getDefault()
 
-		self._itemName      = itemName
-		self._itemPrice     = itemPrice
-		self._itemQuantity  = 1
-		self._currency      = currency
-		self._taxes         = 0
-		self._shipping      = 0
-		self._discount      = 0
+        InvoiceAbstract.__init__(self, processOut)
 
-	@property
-	def itemName(self):
-		"""Get the name of the item"""
-		return self._itemName
+        self._id                = None
+        self._url               = None
+        self._tailoredInvoiceId = None
 
-	@itemName.setter
-	def itemName(self, value):
-		"""Set the name of the item
+    def fromTailored(self, tailoredInvoiceId):
+        """Set the tailored invoice id to this invoice
 
-		Keyword argument:
-		value -- new name of the item
-		"""
-		self._itemName = value
+        Keywork argument:
+        tailoredInvoiceId -- id of the tailored invoice"""
+        self._tailoredInvoiceId = tailoredInvoiceId
 
-	@property
-	def itemPrice(self):
-		"""Get the price of the item"""
-		return self._itemPrice
+    def save(self):
+        """Save the invoice and push data to ProcessOut"""
+        if self.tailoredInvoiceId == None:
+            self._saveNew()
+        else:
+            self._saveFromTailored()
 
-	@itemPrice.setter
-	def itemPrice(self, value):
-		"""Set the price of the item
+        self._id  = self._lastResponse.body['id']
+        self._url = self._lastResponse.body['url']
 
-		Keyword argument:
-		value -- new price of the item
-		"""
-		self._itemPrice = value
+        return self
 
-	@property
-	def itemQuantity(self):
-		"""Get the quantity of the item"""
-		return self._itemQuantity
 
-	@itemQuantity.setter
-	def itemQuantity(self, value):
-		"""Set the quantity of the item
+    def _saveNew(self):
+        """Create the invoice
 
-		Keyword argument:
-		value -- new quantity of the item
-		"""
-		self._itemQuantity = value
+        Perform the ProcessOut's request to generate the invoice
+        """
+        self._lastResponse = Response(requests.post(ProcessOut.HOST + '/invoices',
+            auth = (self._processOut.projectId, self._processOut.projectKey),
+            data = self._generateData(),
+            verify = True))
 
-	@property
-	def currency(self):
-		"""Get the currency of the invoice"""
-		return self._currency
+    def _saveFromTailored(self):
+        """Create the invoice from the tailored invoice
 
-	@currency.setter
-	def currency(self, value):
-		"""Set the currency of the invoice
+        Perform the ProcessOut's request to generate the invoice from the
+        tailored invoice
+        """
+        self._lastResponse = Response(requests.post(ProcessOut.HOST + '/invoices/from-tailored/' +
+            self.tailoredInvoiceId,
+            auth = (self._processOut.projectId, self._processOut.projectKey),
+            data = self._generateData(),
+            verify = True))
 
-		Keyword argument:
-		value -- new currency of the invoice
-		"""
-		self._currency = value
+    @property
+    def id(self):
+        """Get the invoice id
 
-	@property
-	def taxes(self):
-		"""Get the taxes applied to the invoice"""
-		return self._taxes
+        Return the id of the created invoice
+        """
+        return self._id
 
-	@taxes.setter
-	def taxes(self, value):
-		"""Set the taxes applied to the invoice
+    @property
+    def url(self):
+        """Get the invoice url
 
-		Keyword argument:
-		value -- new taxes applied to the invoice
-		"""
-		self._taxes = value
+        Return the URL to the created invoice
+        """
+        return self._url
 
-	@property
-	def shipping(self):
-		"""Get the shipping fee applied to the invoice"""
-		return self._shipping
+    @property
+    def tailoredInvoiceId(self):
+        """Get the tailored invoice id
 
-	@shipping.setter
-	def shipping(self, value):
-		"""Set the shipping fee applied to the invoice
-
-		Keyword argument:
-		value -- new shipping fee applied to the invoice
-		"""
-		self._shipping = value
-
-	@property
-	def discount(self):
-		"""Get the discount already applied to the invoice"""
-		return self._discount
-
-	@discount.setter
-	def discount(self, value):
-		"""Set the discount already applied to the invoice
-
-		Keyword argument:
-		value -- new discount already applied to the invoice"""
-		self._discount = value
-
-	def create(self):
-		"""Create the invoice
-
-		Perform the ProcessOut's request to generate the invoice
-		"""
-		self._lastResponse = requests.post(ProcessOut.HOST + '/invoices',
-			auth = (self._processOut.projectId, self._processOut.projectKey),
-			data = self._generateData(),
-			verify = True).json()
-
-		if not self._lastResponse['success']:
-			raise Exception(self._lastResponse['message'])
-
-		return self._lastResponse
-
-	def getLink(self):
-		"""Get the invoice url
-
-		Return the URL to the created invoice
-		"""
-		if not self._lastResponse:
-			self.create()
-
-		return self._lastResponse['url']
-
-	def getId(self):
-		"""Get the invoice id
-
-		Return the id of the created invoice
-		"""
-		if not self._lastResponse:
-			self.create()
-
-		return self._lastResponse['id']
-
-	def _generateData(self):
-		"""Generate the data used during the ProcessOut's request"""
-		data = {
-			'item_name':     self.itemName,
-			'item_price':    self.itemPrice,
-			'item_quantity': self.itemQuantity,
-			'currency':      self.currency,
-			'taxes':         self.taxes,
-			'shipping':      self.shipping,
-			'discount':      self.discount
-		}
-		data.update(InvoiceAbstract._generateData(self))
-		return data
+        Return the ID of the tailored invoice linked to this invoice
+        """
+        return self._tailoredInvoiceId

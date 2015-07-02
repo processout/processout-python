@@ -1,7 +1,11 @@
 # processout.processout
 
+from .exceptions.apiexception import ApiException
+
 class ProcessOut:
     HOST = 'https://api.processout.com/v1'
+
+    default = None
 
     def __init__(self, projectId, projectKey):
         """Create a new instance of ProcessOut
@@ -22,3 +26,18 @@ class ProcessOut:
     def projectKey(self):
         """Get the project secret key"""
         return self._projectKey
+
+    @staticmethod
+    def getDefault():
+    	"""Get the default ProcessOut instance"""
+    	if default == None:
+    		raise ApiAuthenticationException(
+    			'You need to define a default ProcessOut object (ProcessOut::setDefault()).')
+
+    @staticmethod
+    def setDefault(processout):
+    	"""Set the default ProcessOut instance
+
+    	Keyword argument:
+    	processout -- ProcessOut's instance"""
+    	ProcessOut.default = processout

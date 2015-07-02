@@ -10,8 +10,8 @@ from processout.callback.callback import Callback
 def main(argv):
     # Create a new ProcessOut instance
     processout = ProcessOut(
-        '8722fce8-f8c0-44be-997e-d4954cf32fc0',
-        'key-3022bbac0a88514dff79c0d95f5b8486ba0884bb665834ea9ad79610ac31ab43')
+        '008a8331-db1b-4cf4-b905-e21fd4aa78e9',
+    	'key-bb6edef7b8b486b8fabb3097c21f171ad85022b057e9422f960509016a6afcdc')
 
     # Create a dummy request data
     data = {
