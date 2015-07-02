@@ -55,24 +55,14 @@ Usage
 ### Create a new invoice from scratch
 
 ``` python
-invoice = Invoice(
-    processout,                                   # ProcessOut instance
-	'1 copy of a wonderful product at $4.99 USD', # Title
-	4.99,                                         # Price
-	1,                                            # Quantity
-	'USD')                                        # Currency
+invoice = Invoice(processout)
+invoice.itemName = 'Amazing product'
+# Set more attributes here
+invoice.save()
 ```
 
 ##### Available attributes:
 
-- *attribute*  - *example*
-- ItemName     - **Amazing product**
-- ItemPrice    - **4.20**
-- ItemQuantity - **2**
-- Currency     - **USD**
-- Taxes        - **4.20**
-- Shipping     - **4.20**
-- Discount     - **10** *Note: The value is a percentage, not a subtraction value*
 
 ### Create a new invoice from a tailored invoice
 
@@ -86,11 +76,19 @@ invoice = TailoredInvoice(
 
 The following attributes are shared between Invoice and TailoredInvoice instances
 
-- ReturnUrl    - *URL to which the customer will be redirected upon purchase*
-- CancelUrl    - *URL to which the customer will be redirected upon cancellation*
-- NotifyUrl    - *URL being called by ProcessOut to send callbacks upon transaction updates*
-- Custom       - *A custom field containing anything you want, sent back within all callbacks*
-- Sandbox      - *Decide weither or not to activate the sandbox mode*
+- *attribute*   - *example*
+- itemName      - **Amazing product**
+- itemPrice     - **4.20**
+- itemQuantity  - *2*
+- currency      - **USD**
+- taxes         - *4.20*
+- shipping      - *4.20*
+- recurringDays - *7*
+- returnUrl     - *URL to which the customer will be redirected upon purchase*
+- cancelUrl     - *URL to which the customer will be redirected upon cancellation*
+- notifyUrl     - *URL being called by ProcessOut to send callbacks upon transaction updates*
+- custom        - *A custom field containing anything you want, sent back within all callbacks*
+- sandbox       - *Decide weither or not to activate the sandbox mode*
 
 #### Attribute getters and setters
 
@@ -137,6 +135,23 @@ if not callback.validate(data['transaction_id'], data['hmac_signature']):
 
 # Continue normally here, the callback is verified
 # One common thing to do would be to check the price, currency, etc...
+```
+
+### Error and exception handling
+
+The library will throw different kind of exception when errors happen.
+This can be extremely useful to see what part of the application crashed,
+and why.
+Currently, the library supports 3 kind of exceptions, each verbose-friendly.
+
+``` python
+from processout.exceptions.apiauthenticationexception import ApiAuthenticationException
+from processout.exceptions.apiexception               import ApiException
+from processout.exceptions.notfoundexception          import NotFoundException
+
+raise ProcessOut\Exceptions\APIAuthenticationException();
+raise ProcessOut\Exceptions\ApiException();
+raise ProcessOut\Exceptions\NotFoundException();
 ```
 
 -------------------------

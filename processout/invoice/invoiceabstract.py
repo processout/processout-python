@@ -24,6 +24,7 @@ class InvoiceAbstract:
         self._cancelUrl     = None
         self._notifyUrl     = None
         self._custom        = None
+        self._sandbox       = None
 
         self._lastResponse = None
 
@@ -245,5 +246,6 @@ class InvoiceAbstract:
             'return_url':     self.returnUrl,
             'cancel_url':     self.cancelUrl,
             'notify_url':     self.notifyUrl,
-            'custom':         self.custom
+            'custom':         self.custom,
+            'sandbox':        self.sandbox
         }
