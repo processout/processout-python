@@ -29,19 +29,14 @@ class InvoiceAbstract:
         self._lastResponse = None
 
     @property
-    def host(self):
-        """Get the ProcessOut's host"""
-        return self._host
-
-    @property
     def projectId(self):
         """Get the ProcessOut's project id"""
-        return self._projectId
+        return self._processOut.projectId
 
     @property
-    def projectSecret(self):
-        """Get the ProcessOut's project secret"""
-        return self._projectSecret
+    def projectKey(self):
+        """Get the ProcessOut's project key"""
+        return self._processOut.projectKey
 
     @property
     def itemName(self):

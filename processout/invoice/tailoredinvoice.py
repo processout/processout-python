@@ -44,7 +44,7 @@ class TailoredInvoice(InvoiceAbstract):
 
         self._lastResponse = Response(requests.get(ProcessOut.HOST + '/tailored-invoices/' +
             self._id,
-            auth = (self._processOut.projectId, self._processOut.projectKey),
+            auth = (self.projectId, self.projectKey),
             data = self._generateData(),
             verify = True))
 

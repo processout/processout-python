@@ -48,7 +48,7 @@ class Invoice(InvoiceAbstract):
         Perform the ProcessOut's request to generate the invoice
         """
         self._lastResponse = Response(requests.post(ProcessOut.HOST + '/invoices',
-            auth = (self._processOut.projectId, self._processOut.projectKey),
+            auth = (self.projectId, self.projectKey),
             data = self._generateData(),
             verify = True))
 
@@ -60,7 +60,7 @@ class Invoice(InvoiceAbstract):
         """
         self._lastResponse = Response(requests.post(ProcessOut.HOST + '/invoices/from-tailored/' +
             self.tailoredInvoiceId,
-            auth = (self._processOut.projectId, self._processOut.projectKey),
+            auth = (self.projectId, self.projectKey),
             data = self._generateData(),
             verify = True))
 
