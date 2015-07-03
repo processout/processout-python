@@ -67,7 +67,8 @@ class Response:
         elif (self.statusCode == 401) or (self.statusCode == 402):
             raise ApiAuthenticationException(self.message)
 
-        if (self.statusCode != 200) or (self.success != True):
+        if ((self.statusCode < 200) or (self.statusCode > 206)
+        		or (self.success != True)):
             raise ApiException(
                 'ProcessOut returned an error which couldn\'t be identified. Status code: ' +
                     self.statusCode);
