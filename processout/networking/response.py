@@ -70,5 +70,5 @@ class Response:
         if ((self.statusCode < 200) or (self.statusCode > 206)
         		or (self.success != True)):
             raise ApiException(
-                'ProcessOut returned an error which couldn\'t be identified. Status code: ' +
-                    self.statusCode);
+                'ProcessOut returned an error which couldn\'t be identified (' +
+                    self.statusCode + '): ' + self.message);
