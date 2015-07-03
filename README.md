@@ -67,9 +67,10 @@ invoice.save()
 ### Create a new invoice from a tailored invoice
 
 ``` python
-invoice = TailoredInvoice(
-    processout,                         # ProcessOut instance
-    'f7dec519feb3106efa1ee96189a222c3') # Tailored invoice id
+tailored = TailoredInvoice(processout)
+invoice = tailored.fromId('1ca570ac-0cb4-4c54-8ff2-f7c82f4fb12b').invoice()
+# You can set more attributes here too, invoice is an instance of Invoice
+invoice.save()
 ```
 
 ##### Shared invoice attributes

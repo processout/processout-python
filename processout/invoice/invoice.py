@@ -22,12 +22,12 @@ class Invoice(InvoiceAbstract):
         self._url               = None
         self._tailoredInvoiceId = None
 
-    def fromTailored(self, tailoredInvoiceId):
+    def fromTailored(self, tailoredInvoice):
         """Set the tailored invoice id to this invoice
 
         Keywork argument:
         tailoredInvoiceId -- id of the tailored invoice"""
-        self._tailoredInvoiceId = tailoredInvoiceId
+        self._tailoredInvoiceId = tailoredInvoiceId.id
 
     def save(self):
         """Save the invoice and push data to ProcessOut"""
