@@ -20,7 +20,13 @@ Dependencies
 Installation
 ------------
 
-The module's installation is done by a simple git clone
+This ProcessOut package is published on pypi:
+``` sh
+pip install processout
+```
+
+If you don't want to use pip to install this package, you may simply do a
+git clone:
 
 ``` sh
 git clone https://github.com/ProcessOut/ProcessOut-python-server .
