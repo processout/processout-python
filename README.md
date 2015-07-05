@@ -61,8 +61,6 @@ invoice.itemName = 'Amazing product'
 invoice.save()
 ```
 
-##### Available attributes:
-
 
 ### Create a new invoice from a tailored invoice
 
