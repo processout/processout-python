@@ -3,13 +3,13 @@
 import sys
 
 # Let's load our processout modules
-from processout.processout              import ProcessOut
-from processout.invoice.invoice         import Invoice
-from processout.invoice.tailoredinvoice import TailoredInvoice
+from ..processout.processout              import ProcessOut
+from ..processout.invoice.invoice         import Invoice
+from ..processout.invoice.tailoredinvoice import TailoredInvoice
 
-from processout.exceptions.apiauthenticationexception import ApiAuthenticationException
-from processout.exceptions.apiexception               import ApiException
-from processout.exceptions.notfoundexception          import NotFoundException
+from ..processout.exceptions.apiauthenticationexception import ApiAuthenticationException
+from ..processout.exceptions.apiexception               import ApiException
+from ..processout.exceptions.notfoundexception          import NotFoundException
 
 
 def main(argv):

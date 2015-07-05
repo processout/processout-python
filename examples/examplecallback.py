@@ -3,8 +3,8 @@
 import sys
 
 # Let's load our processout modules
-from processout.processout        import ProcessOut
-from processout.callback.callback import Callback
+from ..processout.processout        import ProcessOut
+from ..processout.callback.callback import Callback
 
 
 def main(argv):
