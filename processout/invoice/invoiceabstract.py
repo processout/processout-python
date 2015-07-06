@@ -15,16 +15,22 @@ class InvoiceAbstract:
 
         self._itemName      = None
         self._itemPrice     = None
-        self._itemQuantity  = None
+        self._itemQuantity  = 1
         self._currency      = None
-        self._taxes         = None
-        self._shipping      = None
-        self._recurringDays = None
-        self._returnUrl     = None
-        self._cancelUrl     = None
-        self._notifyUrl     = None
-        self._custom        = None
-        self._sandbox       = None
+        self._taxes         = 0
+        self._shipping      = 0
+        self._recurringDays = 0
+
+        self._requestEmail    = False
+        self._requestShipping = False
+
+        self._metas = {}
+
+        self._returnUrl = None
+        self._cancelUrl = None
+        self._notifyUrl = None
+        self._custom    = None
+        self._sandbox   = False
 
         self._lastResponse = None
 
@@ -144,6 +150,51 @@ class InvoiceAbstract:
         return self
 
     @property
+    def requestEmail(self):
+    	"""Get the request email boolean value"""
+        return self._requestEmail
+
+    @requestEmail.setter
+    def requestEmail(self, value):
+    	"""Set the request email boolean value
+
+        Keyword argument:
+        value -- new boolean value
+        """
+    	self._requestEmail = value
+    	return self
+
+    @property
+    def requestShipping(self):
+    	"""Get the request shipping boolean value"""
+        return self._requestShipping
+
+    @requestEmail.setter
+    def requestShipping(self, value):
+    	"""Set the request shipping boolean value
+
+        Keyword argument:
+        value -- new boolean value
+        """
+    	self._requestShipping = value
+    	return self
+
+    @property
+    def metas(self):
+    	"""Get the metas shown during the checkout"""
+        return self._metas
+
+    @metas.setter
+    def metas(self, value):
+    	"""Set the metas shown during the checkout
+
+        Keyword argument:
+        value -- new metas dictionnary
+        """
+        self._metas = value
+        return self
+
+    @property
     def returnUrl(self):
         """Get the return URL"""
         return self._returnUrl
@@ -238,9 +289,15 @@ class InvoiceAbstract:
             'taxes':          self.taxes,
             'shipping':       self.shipping,
             'recurring_days': self.recurringDays,
-            'return_url':     self.returnUrl,
-            'cancel_url':     self.cancelUrl,
-            'notify_url':     self.notifyUrl,
-            'custom':         self.custom,
-            'sandbox':        self.sandbox
+
+            'request_email': self.requestEmail,
+            'request_discount': self.requestShipping,
+
+            'metas': self.metas,
+
+            'return_url': self.returnUrl,
+            'cancel_url': self.cancelUrl,
+            'notify_url': self.notifyUrl,
+            'custom':     self.custom,
+            'sandbox':    self.sandbox
         }
