@@ -156,9 +156,9 @@ from processout.exceptions.apiauthenticationexception import ApiAuthenticationEx
 from processout.exceptions.apiexception               import ApiException
 from processout.exceptions.notfoundexception          import NotFoundException
 
-raise ProcessOut\Exceptions\APIAuthenticationException();
-raise ProcessOut\Exceptions\ApiException();
-raise ProcessOut\Exceptions\NotFoundException();
+raise APIAuthenticationException();
+raise ApiException();
+raise NotFoundException();
 ```
 
 -------------------------
