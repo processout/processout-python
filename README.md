@@ -2,6 +2,7 @@ ProcessOut Python
 =================
 
 [![Code Climate](https://codeclimate.com/github/ProcessOut/processout-python/badges/gpa.svg)](https://codeclimate.com/github/ProcessOut/processout-python)
+[![PyPI version](https://badge.fury.io/py/processout.svg)](http://badge.fury.io/py/processout)
 
 This package provides bindings to the ProcessOut API. Manage your callbacks,
 create new invoices, redirect your users to a newly generated checkout
