@@ -95,7 +95,7 @@ The following attributes are shared between Invoice and TailoredInvoice instance
 | recurringDays | *7* |
 | requestEmail | *false* |
 | requestShipping | *false* |
-| metas | *array('key 1' => 'value 1', 'key 2' => 'value 2')* |
+| metas | *{"key 1": "value 1", "key 2": "value 2"}* |
 | returnUrl | *URL to which the customer will be redirected upon purchase* |
 | cancelUrl | *URL to which the customer will be redirected upon cancellation* |
 | notifyUrl | *URL being called by ProcessOut to send callbacks upon transaction updates* |
