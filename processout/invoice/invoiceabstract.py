@@ -30,7 +30,6 @@ class InvoiceAbstract:
         self._cancelUrl = None
         self._notifyUrl = None
         self._custom    = None
-        self._sandbox   = False
 
         self._lastResponse = None
 
@@ -254,31 +253,6 @@ class InvoiceAbstract:
         self._custom = value
         return self
 
-    @property
-    def sandbox(self):
-        """Get the sandbox field value"""
-        return self._sandbox
-
-    @sandbox.setter
-    def sandbox(self, value):
-        """Set the sandbox field value
-
-        Keyword argument:
-        value -- new sandbox field value
-        """
-        self._sandbox = value
-        return self
-
-    def enableSandbox(self):
-        """Enable the sandbox mode"""
-        self.sandbox = True
-        return self
-
-    def disableSandbox(self):
-        """Disable the sandbox mode"""
-        self.sandbox = False
-        return self
-
     def _generateData(self):
         """Generate the data used during the ProcessOut's request"""
         return {
@@ -298,6 +272,5 @@ class InvoiceAbstract:
             'return_url': self.returnUrl,
             'cancel_url': self.cancelUrl,
             'notify_url': self.notifyUrl,
-            'custom':     self.custom,
-            'sandbox':    self.sandbox
+            'custom':     self.custom
         }

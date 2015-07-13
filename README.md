@@ -165,6 +165,17 @@ raise ApiException();
 raise NotFoundException();
 ```
 
+### Sandbox
+
+To enable the sandbox on ProcessOut, simply prepend `sandbox-` to your project id:
+
+``` python
+projectId     = 'public-21184268-76fa-4b33-99a0-63fb15f9041a'
+projectSecret = 'key-24a2061d0fd2853b75728073d5406de437d525b2ff941fe34ca061cb2180d0f8'
+
+processout = ProcessOut(projectId, projectSecret)
+```
+
 -------------------------
 
 Full API documentation
