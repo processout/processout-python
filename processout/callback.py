@@ -1,6 +1,4 @@
-# processout.callback.callback
-
-from ..processout import ProcessOut
+from .processout import ProcessOut
 
 import hmac
 import hashlib
@@ -9,7 +7,6 @@ import base64
 class Callback:
     def __init__(self, processOut = None):
         """Create a new callback instance
-
         Keyword argument:
         processOut -- ProcessOut instance
         """
@@ -20,7 +17,6 @@ class Callback:
 
     def validate(self, transactionId, hmacInput):
         """Perform basic checks on the callback to make sure it's legit
-
         Keyword argument:
         transactionId -- id of the transaction returned by the callback
         hmacInput -- hmac returned by the callback

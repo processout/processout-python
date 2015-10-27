@@ -1,5 +1,3 @@
-# processout.processout
-
 from .exceptions.apiexception import ApiException
 
 class ProcessOut:
@@ -7,37 +5,50 @@ class ProcessOut:
 
     default = None
 
-    def __init__(self, projectId, projectKey):
-        """Create a new instance of ProcessOut
+    def __init__(self):
+        """Create a new instance of ProcessOut"""
+        
+        self._projectId = ""
+        
+        self._projectSecret = ""
+        
 
-        Keyword argument:
-        projectId -- id of the ProcessOut's project
-        projectKey -- secret key associated to the project
-        """
-        self._projectId  = projectId
-        self._projectKey = projectKey
-
+    
     @property
     def projectId(self):
-        """Get the project id"""
+        """Get projectId"""
         return self._projectId
 
+    @projectId.setter
+    def projectId(self, val):
+        """Set projectId
+        Keyword argument:
+        val -- New projectId value"""
+        self._projectId = val
+    
     @property
-    def projectKey(self):
-        """Get the project secret key"""
-        return self._projectKey
+    def projectSecret(self):
+        """Get projectSecret"""
+        return self._projectSecret
+
+    @projectSecret.setter
+    def projectSecret(self, val):
+        """Set projectSecret
+        Keyword argument:
+        val -- New projectSecret value"""
+        self._projectSecret = val
+    
 
     @staticmethod
     def getDefault():
-    	"""Get the default ProcessOut instance"""
-    	if default == None:
-    		raise ApiAuthenticationException(
-    			'You need to define a default ProcessOut object (ProcessOut::setDefault()).')
+        """Get the default ProcessOut instance"""
+        if default == None:
+            raise ApiAuthenticationException(
+                'You need to define a default ProcessOut object (ProcessOut.setDefault()).')
 
     @staticmethod
     def setDefault(processout):
-    	"""Set the default ProcessOut instance
-
-    	Keyword argument:
-    	processout -- ProcessOut's instance"""
-    	ProcessOut.default = processout
+        """Set the default ProcessOut instance
+        Keyword argument:
+        processout -- ProcessOut's instance"""
+        ProcessOut.default = processout

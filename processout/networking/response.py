@@ -1,4 +1,4 @@
-# processout.networking.response
+from urllib.parse import urlparse
 
 from ..exceptions.apiexception               import ApiException
 from ..exceptions.notfoundexception          import NotFoundException
@@ -14,11 +14,14 @@ class Response:
         self._raw        = resp
         self._statusCode = resp.status_code
         self._headers    = resp.headers
-        self._body       = resp.json()
         self._rawBody    = resp.text
 
-        if checkStatusCode:
-            self._checkStatusCode()
+        if ("application/json" in resp.headers['content-type']):
+            self._body = resp.json()
+        else:
+            self._body = urlparse.parse_qs(resp.text)
+
+        self._check()
 
     @property
     def raw(self):
@@ -48,27 +51,43 @@ class Response:
     @property
     def success(self):
         """Get the response status"""
-        if self.body['success'] == None:
+        
+        
+        
+        
+        if (self.body["success"] == None or not self.body["success"]):
             return False
+        
+        
 
-        return self.body['success']
+        return True
 
     @property
     def message(self):
         """Get the response error message"""
-        return self.body['message']
+        message = ""
+        
+        
+        if self.body["message"] != None:
+            message = message + self.body["message"]
+        
+        
+        
+        
 
-    def _checkStatusCode(self):
+        return message
+
+    def _check(self):
         """Check if response was successful, or raise an exception"""
-        if self.statusCode == 400:
-            raise ApiException(self.message)
-        elif self.statusCode == 404:
-            raise NotFoundException(self.message)
-        elif (self.statusCode == 401) or (self.statusCode == 402):
-            raise ApiAuthenticationException(self.message)
+        if (not self.success):
+            if self.statusCode == 404:
+                raise ApiException(
+                    'The resource could not be found (404): ' + self.message)
+            if self.statusCode == 401:
+                raise ApiException(
+                    'Your ProcessOut credentials could not be verified (401): ' +
+                        self.message)
 
-        if ((self.statusCode < 200) or (self.statusCode > 206)
-        		or (self.success != True)):
             raise ApiException(
-                'ProcessOut returned an error which couldn\'t be identified (' +
-                    self.statusCode + '): ' + self.message);
+                'ProcessOut returned an error (' +
+                    str(self.statusCode) + '): ' + self.message)
