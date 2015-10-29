@@ -3,7 +3,7 @@ from distutils.core import setup
 setup(
   name = 'processout',
   packages = ['ProcessOut'],
-  version = '2.0.0',
+  version = '2.1.0',
   description = 'ProcessOut API bindings.',
   author = 'ProcessOut',
   author_email = 'hi@processout.com',
