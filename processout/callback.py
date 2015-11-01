@@ -21,7 +21,7 @@ class Callback:
         transactionId -- id of the transaction returned by the callback
         hmacInput -- hmac returned by the callback
         """
-        newhmac = hmac.new(key=bytes(self._processOut.projectKey.encode('utf-8')),
+        newhmac = hmac.new(key=bytes(self._processOut.projectSecret.encode('utf-8')),
             msg=transactionId.encode('utf-8'),
             digestmod=hashlib.sha256).digest()
 
