@@ -3,8 +3,53 @@ from urllib.parse import quote_plus
 from .processout import ProcessOut
 from .networking.response import Response
 
-from .networking.requestprocessoutprivate import RequestProcessoutPrivate
+try:
+    from .customer import Customer
+except ImportError:
+    import sys
+    Customer = sys.modules[__package__ + '.customer']
+try:
+    from .customeraction import CustomerAction
+except ImportError:
+    import sys
+    CustomerAction = sys.modules[__package__ + '.customeraction']
+try:
+    from .customertoken import CustomerToken
+except ImportError:
+    import sys
+    CustomerToken = sys.modules[__package__ + '.customertoken']
+try:
+    from .event import Event
+except ImportError:
+    import sys
+    Event = sys.modules[__package__ + '.event']
+try:
+    from .invoice import Invoice
+except ImportError:
+    import sys
+    Invoice = sys.modules[__package__ + '.invoice']
+try:
+    from .paymentgatewaypublickey import PaymentGatewayPublicKey
+except ImportError:
+    import sys
+    PaymentGatewayPublicKey = sys.modules[__package__ + '.paymentgatewaypublickey']
+try:
+    from .project import Project
+except ImportError:
+    import sys
+    Project = sys.modules[__package__ + '.project']
+try:
+    from .recurringinvoice import RecurringInvoice
+except ImportError:
+    import sys
+    RecurringInvoice = sys.modules[__package__ + '.recurringinvoice']
+try:
+    from .tailoredinvoice import TailoredInvoice
+except ImportError:
+    import sys
+    TailoredInvoice = sys.modules[__package__ + '.tailoredinvoice']
 
+from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 from .networking.requestprocessoutpublic import RequestProcessoutPublic
 
 
@@ -16,10 +61,71 @@ class PaymentGateway:
 
         self._instance = instance
 
-        
+        self._beta = False
+        self._displayName = ""
+        self._name = ""
+        self._publicKeys = []
         self._settings = {}
         
+    @property
+    def beta(self):
+        """Get beta"""
+        return self._beta
 
+    @beta.setter
+    def beta(self, val):
+        """Set beta
+        Keyword argument:
+        val -- New beta value"""
+        self._beta = val
+        return self
+    
+    @property
+    def displayName(self):
+        """Get displayName"""
+        return self._displayName
+
+    @displayName.setter
+    def displayName(self, val):
+        """Set displayName
+        Keyword argument:
+        val -- New displayName value"""
+        self._displayName = val
+        return self
+    
+    @property
+    def name(self):
+        """Get name"""
+        return self._name
+
+    @name.setter
+    def name(self, val):
+        """Set name
+        Keyword argument:
+        val -- New name value"""
+        self._name = val
+        return self
+    
+    @property
+    def publicKeys(self):
+        """Get publicKeys"""
+        return self._publicKeys
+
+    @publicKeys.setter
+    def publicKeys(self, val):
+        """Set publicKeys
+        Keyword argument:
+        val -- New publicKeys value"""
+        if len(val) > 0 and isinstance(val[0], PaymentGatewayPublicKey):
+            self._publicKeys = val
+        else:
+            l = []
+            for v in val:
+                obj = PaymentGatewayPublicKey(self._instance)
+                obj.fillWithData(v)
+                l.append(obj)
+            self._publicKeys = l
+        return self
     
     @property
     def settings(self):
@@ -32,55 +138,55 @@ class PaymentGateway:
         Keyword argument:
         val -- New settings value"""
         self._settings = val
+        return self
     
 
     def fillWithData(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
-        
+        if "beta" in data.keys():
+            self.beta = data["beta"]
+        if "display_name" in data.keys():
+            self.displayName = data["display_name"]
+        if "name" in data.keys():
+            self.name = data["name"]
+        if "public_keys" in data.keys():
+            self.publicKeys = data["public_keys"]
         if "settings" in data.keys():
             self.settings = data["settings"]
         
 
-    
-    
-    def save(self, name):
+    def save(self, gatewayName, options = None):
         """Update or set the payment gateway settings.
         Keyword argument:
-		name -- Name of the payment gateway (ex: paypal)"""
+		gatewayName -- Name of the payment gateway (ex: paypal)
+        options -- Options for the request"""
         request = RequestProcessoutPrivate(self._instance)
-        path    = "/payment-gateway/" + quote_plus(name) + ""
+        path    = "/gateways/" + quote_plus(gatewayName) + ""
         data    = {
 			'settings': self.settings
         }
 
+        response = Response(request.put(path, data, options))
+        body = response.body
+        body = body["gateway"]
+        paymentGateway = PaymentGateway(self._instance)
+        return paymentGateway.fillWithData(body)
         
-        response = Response(request.put(path, data))
-        
-
-        
-        return response.success
-        
-    
-    
     @staticmethod
-    
-    def delete(self, name):
+    def delete(self, gatewayName, options = None):
         """Remove the payment gateway and its settings from the current project.
         Keyword argument:
-		name -- Name of the payment gateway (ex: paypal)"""
+		gatewayName -- Name of the payment gateway (ex: paypal)
+        options -- Options for the request"""
         request = RequestProcessoutPrivate(self._instance)
-        path    = "/payment-gateway/" + quote_plus(name) + ""
+        path    = "/gateways/" + quote_plus(gatewayName) + ""
         data    = {
 
         }
 
-        
-        response = Response(request.delete(path, data))
-        
-
-        
+        response = Response(request.delete(path, data, options))
         return response.success
         
     

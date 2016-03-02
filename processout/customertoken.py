@@ -14,11 +14,6 @@ except ImportError:
     import sys
     CustomerAction = sys.modules[__package__ + '.customeraction']
 try:
-    from .customertoken import CustomerToken
-except ImportError:
-    import sys
-    CustomerToken = sys.modules[__package__ + '.customertoken']
-try:
     from .event import Event
 except ImportError:
     import sys
@@ -39,6 +34,11 @@ except ImportError:
     import sys
     PaymentGatewayPublicKey = sys.modules[__package__ + '.paymentgatewaypublickey']
 try:
+    from .project import Project
+except ImportError:
+    import sys
+    Project = sys.modules[__package__ + '.project']
+try:
     from .recurringinvoice import RecurringInvoice
 except ImportError:
     import sys
@@ -53,7 +53,7 @@ from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 from .networking.requestprocessoutpublic import RequestProcessoutPublic
 
 
-class Project:
+class CustomerToken:
 
     def __init__(self, instance = None):
         if instance == None:
@@ -61,23 +61,21 @@ class Project:
 
         self._instance = instance
 
-        self._email = ""
+        self._gateway = ""
         self._id = ""
-        self._logoUrl = ""
         self._name = ""
-        self._secretKey = ""
         
     @property
-    def email(self):
-        """Get email"""
-        return self._email
+    def gateway(self):
+        """Get gateway"""
+        return self._gateway
 
-    @email.setter
-    def email(self, val):
-        """Set email
+    @gateway.setter
+    def gateway(self, val):
+        """Set gateway
         Keyword argument:
-        val -- New email value"""
-        self._email = val
+        val -- New gateway value"""
+        self._gateway = val
         return self
     
     @property
@@ -94,19 +92,6 @@ class Project:
         return self
     
     @property
-    def logoUrl(self):
-        """Get logoUrl"""
-        return self._logoUrl
-
-    @logoUrl.setter
-    def logoUrl(self, val):
-        """Set logoUrl
-        Keyword argument:
-        val -- New logoUrl value"""
-        self._logoUrl = val
-        return self
-    
-    @property
     def name(self):
         """Get name"""
         return self._name
@@ -119,52 +104,17 @@ class Project:
         self._name = val
         return self
     
-    @property
-    def secretKey(self):
-        """Get secretKey"""
-        return self._secretKey
-
-    @secretKey.setter
-    def secretKey(self, val):
-        """Set secretKey
-        Keyword argument:
-        val -- New secretKey value"""
-        self._secretKey = val
-        return self
-    
 
     def fillWithData(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
-        if "email" in data.keys():
-            self.email = data["email"]
+        if "gateway" in data.keys():
+            self.gateway = data["gateway"]
         if "id" in data.keys():
             self.id = data["id"]
-        if "logo_url" in data.keys():
-            self.logoUrl = data["logo_url"]
         if "name" in data.keys():
             self.name = data["name"]
-        if "secret_key" in data.keys():
-            self.secretKey = data["secret_key"]
         
 
-    def createSupervised(self, options = None):
-        """Create a new supervised project which will belong to current project.
-        Keyword argument:
-		
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "/projects/supervised"
-        data    = {
-			'name': self.name, 
-			'email': self.email, 
-			'logo_url': self.logoUrl
-        }
-
-        response = Response(request.post(path, data, options))
-        body = response.body
-        body = body["project"]
-        return self.fillWithData(body)
-        
     

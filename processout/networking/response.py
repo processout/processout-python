@@ -51,14 +51,8 @@ class Response:
     @property
     def success(self):
         """Get the response status"""
-        
-        
-        
-        
         if (self.body["success"] == None or not self.body["success"]):
             return False
-        
-        
 
         return True
 
@@ -66,14 +60,8 @@ class Response:
     def message(self):
         """Get the response error message"""
         message = ""
-        
-        
         if self.body["message"] != None:
             message = message + self.body["message"]
-        
-        
-        
-        
 
         return message
 

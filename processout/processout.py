@@ -1,7 +1,7 @@
 from .exceptions.apiexception import ApiException
 
 class ProcessOut:
-    HOST = 'https://api.processout.com/v1'
+    HOST = 'https://api.processout.com/'
 
     default = None
 
@@ -13,7 +13,6 @@ class ProcessOut:
         self._projectSecret = ""
         
 
-    
     @property
     def projectId(self):
         """Get projectId"""
@@ -25,7 +24,7 @@ class ProcessOut:
         Keyword argument:
         val -- New projectId value"""
         self._projectId = val
-    
+
     @property
     def projectSecret(self):
         """Get projectSecret"""
@@ -37,7 +36,6 @@ class ProcessOut:
         Keyword argument:
         val -- New projectSecret value"""
         self._projectSecret = val
-    
 
     @staticmethod
     def getDefault():
