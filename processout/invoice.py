@@ -277,6 +277,84 @@ class Invoice:
             self.url = data["url"]
         
 
+    def chargeWithToken(self, tokenId, options = None):
+        """Charge using a customer token.
+        Keyword argument:
+		tokenId -- ID of the customer token
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "/invoices/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + "/charges"
+        data    = {
+
+        }
+
+        response = Response(request.post(path, data, options))
+        body = response.body
+        body = body["customer_action"]
+        customerAction = CustomerAction(self._instance)
+        return customerAction.fillWithData(body)
+        
+    def create(self, options = None):
+        """Create an invoice.
+        Keyword argument:
+		
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "/invoices"
+        data    = {
+			'name': self.name, 
+			'price': self.price, 
+			'taxes': self.taxes, 
+			'shipping': self.shipping, 
+			'currency': self.currency, 
+			'request_email': self.requestEmail, 
+			'request_shipping': self.requestShipping, 
+			'return_url': self.returnUrl, 
+			'cancel_url': self.cancelUrl, 
+			'metas': self.metas, 
+			'custom': self.custom
+        }
+
+        response = Response(request.post(path, data, options))
+        body = response.body
+        body = body["invoice"]
+        invoice = Invoice(self._instance)
+        return invoice.fillWithData(body)
+        
+    @staticmethod
+    def find(self, id, options = None):
+        """Get the invoice data.
+        Keyword argument:
+		id -- ID of the invoice
+        options -- Options for the request"""
+        request = RequestProcessoutPublic(self._instance)
+        path    = "/invoices/" + quote_plus(id) + ""
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        body = response.body
+        body = body["invoice"]
+        return self.fillWithData(body)
+        
+    def charge(self, token, options = None):
+        """Charge using a manually generated payment gateway token.
+        Keyword argument:
+		token -- Payment gateway token (ex: stripe card token)
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "/invoices/" + quote_plus(self.id) + "/gateways/{gateway_name}/charges"
+        data    = {
+			'token': token
+        }
+
+        response = Response(request.post(path, data, options))
+        body = response.body
+        body = body["customer_action"]
+        customerAction = CustomerAction(self._instance)
+        return customerAction.fillWithData(body)
+        
     def customer(self, options = None):
         """Get the customer associated with the current invoice.
         Keyword argument:
@@ -310,83 +388,5 @@ class Invoice:
         body = body["customer"]
         customer = Customer(self._instance)
         return customer.fillWithData(body)
-        
-    def charge(self, token, options = None):
-        """Charge using a manually generated payment gateway token.
-        Keyword argument:
-		token -- Payment gateway token (ex: stripe card token)
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "/invoices/" + quote_plus(self.id) + "/gateways/{gateway_name}/charges"
-        data    = {
-			'token': token
-        }
-
-        response = Response(request.post(path, data, options))
-        body = response.body
-        body = body["customer_action"]
-        customerAction = CustomerAction(self._instance)
-        return customerAction.fillWithData(body)
-        
-    def chargeWithToken(self, tokenId, options = None):
-        """Charge using a customer token.
-        Keyword argument:
-		tokenId -- ID of the customer token
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "/invoices/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + "/charges"
-        data    = {
-
-        }
-
-        response = Response(request.post(path, data, options))
-        body = response.body
-        body = body["customer_action"]
-        customerAction = CustomerAction(self._instance)
-        return customerAction.fillWithData(body)
-        
-    @staticmethod
-    def find(self, id, options = None):
-        """Get the invoice data.
-        Keyword argument:
-		id -- ID of the invoice
-        options -- Options for the request"""
-        request = RequestProcessoutPublic(self._instance)
-        path    = "/invoices/" + quote_plus(id) + ""
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        body = response.body
-        body = body["invoice"]
-        return self.fillWithData(body)
-        
-    def create(self, options = None):
-        """Create an invoice.
-        Keyword argument:
-		
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "/invoices"
-        data    = {
-			'name': self.name, 
-			'price': self.price, 
-			'taxes': self.taxes, 
-			'shipping': self.shipping, 
-			'currency': self.currency, 
-			'request_email': self.requestEmail, 
-			'request_shipping': self.requestShipping, 
-			'return_url': self.returnUrl, 
-			'cancel_url': self.cancelUrl, 
-			'metas': self.metas, 
-			'custom': self.custom
-        }
-
-        response = Response(request.post(path, data, options))
-        body = response.body
-        body = body["invoice"]
-        invoice = Invoice(self._instance)
-        return invoice.fillWithData(body)
         
     

@@ -262,81 +262,6 @@ class Customer:
         
 
     @staticmethod
-    def find(self, id, options = None):
-        """Get the customer data.
-        Keyword argument:
-		id -- ID of the customer
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "/customers/" + quote_plus(id) + ""
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        body = response.body
-        body = body["customer"]
-        return self.fillWithData(body)
-        
-    def save(self, options = None):
-        """Update the customer data.
-        Keyword argument:
-		
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "/customers/" + quote_plus(self.id) + ""
-        data    = {
-			'email': self.email, 
-			'first_name': self.firstName, 
-			'last_name': self.lastName, 
-			'address1': self.address1, 
-			'address2': self.address2, 
-			'city': self.city, 
-			'zip': self.zip, 
-			'country_code': self.countryCode
-        }
-
-        response = Response(request.post(path, data, options))
-        body = response.body
-        body = body["customer"]
-        customer = Customer(self._instance)
-        return customer.fillWithData(body)
-        
-    def delete(self, options = None):
-        """Delete the customer.
-        Keyword argument:
-		
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "/customers/" + quote_plus(self.id) + ""
-        data    = {
-
-        }
-
-        response = Response(request.delete(path, data, options))
-        return response.success
-        
-    def authorize(self, gatewayName, name, token, options = None):
-        """Authorize (create) a new customer token.
-        Keyword argument:
-		gatewayName -- Name of the payment gateway
-		name -- Name of the customer token
-		token -- Payment gateway token (ex: stripe customer token)
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "/customers/" + quote_plus(self.id) + "/gateways/" + quote_plus(gatewayName) + "/tokens"
-        data    = {
-			'name': name, 
-			'token': token
-        }
-
-        response = Response(request.post(path, data, options))
-        body = response.body
-        body = body["token"]
-        customerToken = CustomerToken(self._instance)
-        return customerToken.fillWithData(body)
-        
-    @staticmethod
     def all(self, options = None):
         """Get the customers list belonging to the project.
         Keyword argument:
@@ -401,6 +326,61 @@ class Customer:
             a.append(tmp)
 
         return a
+    @staticmethod
+    def find(self, id, options = None):
+        """Get the customer data.
+        Keyword argument:
+		id -- ID of the customer
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "/customers/" + quote_plus(id) + ""
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        body = response.body
+        body = body["customer"]
+        return self.fillWithData(body)
+        
+    def save(self, options = None):
+        """Update the customer data.
+        Keyword argument:
+		
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "/customers/" + quote_plus(self.id) + ""
+        data    = {
+			'email': self.email, 
+			'first_name': self.firstName, 
+			'last_name': self.lastName, 
+			'address1': self.address1, 
+			'address2': self.address2, 
+			'city': self.city, 
+			'zip': self.zip, 
+			'country_code': self.countryCode
+        }
+
+        response = Response(request.post(path, data, options))
+        body = response.body
+        body = body["customer"]
+        customer = Customer(self._instance)
+        return customer.fillWithData(body)
+        
+    def delete(self, options = None):
+        """Delete the customer.
+        Keyword argument:
+		
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "/customers/" + quote_plus(self.id) + ""
+        data    = {
+
+        }
+
+        response = Response(request.delete(path, data, options))
+        return response.success
+        
     def findToken(self, tokenId, options = None):
         """Find a specific customer token.
         Keyword argument:
@@ -431,5 +411,25 @@ class Customer:
 
         response = Response(request.delete(path, data, options))
         return response.success
+        
+    def authorize(self, gatewayName, name, token, options = None):
+        """Authorize (create) a new customer token.
+        Keyword argument:
+		gatewayName -- Name of the payment gateway
+		name -- Name of the customer token
+		token -- Payment gateway token (ex: stripe customer token)
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "/customers/" + quote_plus(self.id) + "/gateways/" + quote_plus(gatewayName) + "/tokens"
+        data    = {
+			'name': name, 
+			'token': token
+        }
+
+        response = Response(request.post(path, data, options))
+        body = response.body
+        body = body["token"]
+        customerToken = CustomerToken(self._instance)
+        return customerToken.fillWithData(body)
         
     
