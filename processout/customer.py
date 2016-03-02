@@ -306,6 +306,57 @@ class Customer:
         customer = Customer(self._instance)
         return customer.fillWithData(body)
         
+    def findToken(self, tokenId, options = None):
+        """Find a specific customer token.
+        Keyword argument:
+		tokenId -- ID of the customer token
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "customers/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + ""
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        body = response.body
+        body = body["token"]
+        customerToken = CustomerToken(self._instance)
+        return customerToken.fillWithData(body)
+        
+    def revoke(self, tokenId, options = None):
+        """Revoke (delete) a specific customer token.
+        Keyword argument:
+		tokenId -- ID of the customer token
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "customers/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + ""
+        data    = {
+
+        }
+
+        response = Response(request.delete(path, data, options))
+        return response.success
+        
+    def authorize(self, gatewayName, name, token, options = None):
+        """Authorize (create) a new customer token.
+        Keyword argument:
+		gatewayName -- Name of the payment gateway
+		name -- Name of the customer token
+		token -- Payment gateway token (ex: stripe customer token)
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "/customers/" + quote_plus(self.id) + "/gateways/" + quote_plus(gatewayName) + "/tokens"
+        data    = {
+			'name': name, 
+			'token': token
+        }
+
+        response = Response(request.post(path, data, options))
+        body = response.body
+        body = body["token"]
+        customerToken = CustomerToken(self._instance)
+        return customerToken.fillWithData(body)
+        
     def tokens(self, options = None):
         """Get all the authorization tokens of the customer.
         Keyword argument:
@@ -380,56 +431,5 @@ class Customer:
 
         response = Response(request.delete(path, data, options))
         return response.success
-        
-    def findToken(self, tokenId, options = None):
-        """Find a specific customer token.
-        Keyword argument:
-		tokenId -- ID of the customer token
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "customers/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + ""
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        body = response.body
-        body = body["token"]
-        customerToken = CustomerToken(self._instance)
-        return customerToken.fillWithData(body)
-        
-    def revoke(self, tokenId, options = None):
-        """Revoke (delete) a specific customer token.
-        Keyword argument:
-		tokenId -- ID of the customer token
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "customers/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + ""
-        data    = {
-
-        }
-
-        response = Response(request.delete(path, data, options))
-        return response.success
-        
-    def authorize(self, gatewayName, name, token, options = None):
-        """Authorize (create) a new customer token.
-        Keyword argument:
-		gatewayName -- Name of the payment gateway
-		name -- Name of the customer token
-		token -- Payment gateway token (ex: stripe customer token)
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "/customers/" + quote_plus(self.id) + "/gateways/" + quote_plus(gatewayName) + "/tokens"
-        data    = {
-			'name': name, 
-			'token': token
-        }
-
-        response = Response(request.post(path, data, options))
-        body = response.body
-        body = body["token"]
-        customerToken = CustomerToken(self._instance)
-        return customerToken.fillWithData(body)
         
     

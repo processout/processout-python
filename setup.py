@@ -2,13 +2,13 @@ from distutils.core import setup
 
 setup(
   name = 'processout',
-  packages = ['processout'],
-  version = '3.0.0.1',
+  packages = ['processout', 'processout/exceptions', 'processout/networking'],
+  version = '3.0.0.2',
   description = 'ProcessOut API bindings.',
   author = 'ProcessOut',
   author_email = 'hi@processout.com',
   url = 'https://github.com/processout/processout-python',
-  download_url = 'https://github.com/processout/processout-python/tarball/3.0.0.1',
+  download_url = 'https://github.com/processout/processout-python/tarball/3.0.0.2',
   keywords = ['ProcessOut', 'api', 'bindings'],
   classifiers = [],
 )

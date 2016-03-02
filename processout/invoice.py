@@ -294,6 +294,57 @@ class Invoice:
         customerAction = CustomerAction(self._instance)
         return customerAction.fillWithData(body)
         
+    def customer(self, options = None):
+        """Get the customer associated with the current invoice.
+        Keyword argument:
+		
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "/invoices/" + quote_plus(self.id) + "/customers"
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        body = response.body
+        body = body["customer"]
+        customer = Customer(self._instance)
+        return customer.fillWithData(body)
+        
+    def setCustomer(self, customerId, options = None):
+        """Link a customer to the invoice.
+        Keyword argument:
+		customerId -- ID of the customer
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "/invoices/" + quote_plus(self.id) + "/customers"
+        data    = {
+			'customer_id': customerId
+        }
+
+        response = Response(request.post(path, data, options))
+        body = response.body
+        body = body["customer"]
+        customer = Customer(self._instance)
+        return customer.fillWithData(body)
+        
+    def charge(self, token, options = None):
+        """Charge using a manually generated payment gateway token.
+        Keyword argument:
+		token -- Payment gateway token (ex: stripe card token)
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "/invoices/" + quote_plus(self.id) + "/gateways/{gateway_name}/charges"
+        data    = {
+			'token': token
+        }
+
+        response = Response(request.post(path, data, options))
+        body = response.body
+        body = body["customer_action"]
+        customerAction = CustomerAction(self._instance)
+        return customerAction.fillWithData(body)
+        
     def create(self, options = None):
         """Create an invoice.
         Keyword argument:
@@ -337,56 +388,5 @@ class Invoice:
         body = response.body
         body = body["invoice"]
         return self.fillWithData(body)
-        
-    def charge(self, token, options = None):
-        """Charge using a manually generated payment gateway token.
-        Keyword argument:
-		token -- Payment gateway token (ex: stripe card token)
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "/invoices/" + quote_plus(self.id) + "/gateways/{gateway_name}/charges"
-        data    = {
-			'token': token
-        }
-
-        response = Response(request.post(path, data, options))
-        body = response.body
-        body = body["customer_action"]
-        customerAction = CustomerAction(self._instance)
-        return customerAction.fillWithData(body)
-        
-    def customer(self, options = None):
-        """Get the customer associated with the current invoice.
-        Keyword argument:
-		
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "/invoices/" + quote_plus(self.id) + "/customers"
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        body = response.body
-        body = body["customer"]
-        customer = Customer(self._instance)
-        return customer.fillWithData(body)
-        
-    def setCustomer(self, customerId, options = None):
-        """Link a customer to the invoice.
-        Keyword argument:
-		customerId -- ID of the customer
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "/invoices/" + quote_plus(self.id) + "/customers"
-        data    = {
-			'customer_id': customerId
-        }
-
-        response = Response(request.post(path, data, options))
-        body = response.body
-        body = body["customer"]
-        customer = Customer(self._instance)
-        return customer.fillWithData(body)
         
     
