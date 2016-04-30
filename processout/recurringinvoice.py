@@ -245,6 +245,32 @@ class RecurringInvoice:
             self.url = data["url"]
         
 
+    def create(self, customerId, options = None):
+        """Create a new recurring invoice.
+        Keyword argument:
+		customerId -- ID of the customer to which the recurring invoice will be linked
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "/customers/" + quote_plus(customerId) + "/recurring-invoices"
+        data    = {
+			'name': self.name, 
+			'price': self.price, 
+			'shipping': self.shipping, 
+			'taxes': self.taxes, 
+			'currency': self.currency, 
+			'recurring_days': self.recurringDays, 
+			'trial_days': self.trialDays, 
+			'return_url': self.returnUrl, 
+			'cancel_url': self.cancelUrl, 
+			'custom': self.custom
+        }
+
+        response = Response(request.post(path, data, options))
+        body = response.body
+        body = body["recurring_invoice"]
+        recurringInvoice = RecurringInvoice(self._instance)
+        return recurringInvoice.fillWithData(body)
+        
     def customer(self, options = None):
         """Get the customer linked to the recurring invoice.
         Keyword argument:
@@ -278,32 +304,6 @@ class RecurringInvoice:
         body = body["invoice"]
         invoice = Invoice(self._instance)
         return invoice.fillWithData(body)
-        
-    def create(self, customerId, options = None):
-        """Create a new recurring invoice.
-        Keyword argument:
-		customerId -- ID of the customer to which the recurring invoice will be linked
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "/customers/" + quote_plus(customerId) + "/recurring-invoices"
-        data    = {
-			'name': self.name, 
-			'price': self.price, 
-			'shipping': self.shipping, 
-			'taxes': self.taxes, 
-			'currency': self.currency, 
-			'recurring_days': self.recurringDays, 
-			'trial_days': self.trialDays, 
-			'return_url': self.returnUrl, 
-			'cancel_url': self.cancelUrl, 
-			'custom': self.custom
-        }
-
-        response = Response(request.post(path, data, options))
-        body = response.body
-        body = body["recurring_invoice"]
-        recurringInvoice = RecurringInvoice(self._instance)
-        return recurringInvoice.fillWithData(body)
         
     @staticmethod
     def find(self, id, options = None):

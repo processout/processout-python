@@ -150,6 +150,37 @@ class Event:
         
 
     @staticmethod
+    def find(self, id, options = None):
+        """Get the information related to the specific event.
+        Keyword argument:
+		id -- ID of the event
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "/events/" + quote_plus(id) + ""
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        body = response.body
+        body = body["event"]
+        return self.fillWithData(body)
+        
+    def markProcessed(self, options = None):
+        """Set the specific event as processed.
+        Keyword argument:
+		
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "/events/" + quote_plus(self.id) + ""
+        data    = {
+
+        }
+
+        response = Response(request.delete(path, data, options))
+        return response.success
+        
+    @staticmethod
     def pull(self, options = None):
         """Get the 15 oldest events pending processing.
         Keyword argument:
@@ -178,37 +209,6 @@ class Event:
         options -- Options for the request"""
         request = RequestProcessoutPrivate(self._instance)
         path    = "/events"
-        data    = {
-
-        }
-
-        response = Response(request.delete(path, data, options))
-        return response.success
-        
-    @staticmethod
-    def find(self, id, options = None):
-        """Get the information related to the specific event.
-        Keyword argument:
-		id -- ID of the event
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "/events/" + quote_plus(id) + ""
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        body = response.body
-        body = body["event"]
-        return self.fillWithData(body)
-        
-    def markProcessed(self, options = None):
-        """Set the specific event as processed.
-        Keyword argument:
-		
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "/events/" + quote_plus(self.id) + ""
         data    = {
 
         }

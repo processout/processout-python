@@ -241,23 +241,6 @@ class TailoredInvoice:
         tailoredInvoice = TailoredInvoice(self._instance)
         return tailoredInvoice.fillWithData(body)
         
-    def invoice(self, options = None):
-        """Create an invoice from a tailored invoice.
-        Keyword argument:
-		
-        options -- Options for the request"""
-        request = RequestProcessoutPublic(self._instance)
-        path    = "/tailored-invoices/" + quote_plus(self.id) + "/invoices"
-        data    = {
-
-        }
-
-        response = Response(request.post(path, data, options))
-        body = response.body
-        body = body["invoice"]
-        invoice = Invoice(self._instance)
-        return invoice.fillWithData(body)
-        
     @staticmethod
     def find(self, id, options = None):
         """Get tailored invoice data.
@@ -311,5 +294,22 @@ class TailoredInvoice:
 
         response = Response(request.delete(path, data, options))
         return response.success
+        
+    def invoice(self, options = None):
+        """Create an invoice from a tailored invoice.
+        Keyword argument:
+		
+        options -- Options for the request"""
+        request = RequestProcessoutPublic(self._instance)
+        path    = "/tailored-invoices/" + quote_plus(self.id) + "/invoices"
+        data    = {
+
+        }
+
+        response = Response(request.post(path, data, options))
+        body = response.body
+        body = body["invoice"]
+        invoice = Invoice(self._instance)
+        return invoice.fillWithData(body)
         
     

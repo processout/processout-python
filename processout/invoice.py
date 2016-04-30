@@ -277,22 +277,22 @@ class Invoice:
             self.url = data["url"]
         
 
-    def chargeWithToken(self, tokenId, options = None):
-        """Charge using a customer token.
+    @staticmethod
+    def find(self, id, options = None):
+        """Get the invoice data.
         Keyword argument:
-		tokenId -- ID of the customer token
+		id -- ID of the invoice
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "/invoices/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + "/charges"
+        request = RequestProcessoutPublic(self._instance)
+        path    = "/invoices/" + quote_plus(id) + ""
         data    = {
 
         }
 
-        response = Response(request.post(path, data, options))
+        response = Response(request.get(path, data, options))
         body = response.body
-        body = body["customer_action"]
-        customerAction = CustomerAction(self._instance)
-        return customerAction.fillWithData(body)
+        body = body["invoice"]
+        return self.fillWithData(body)
         
     def customer(self, options = None):
         """Get the customer associated with the current invoice.
@@ -345,6 +345,23 @@ class Invoice:
         customerAction = CustomerAction(self._instance)
         return customerAction.fillWithData(body)
         
+    def chargeWithToken(self, tokenId, options = None):
+        """Charge using a customer token.
+        Keyword argument:
+		tokenId -- ID of the customer token
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "/invoices/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + "/charges"
+        data    = {
+
+        }
+
+        response = Response(request.post(path, data, options))
+        body = response.body
+        body = body["customer_action"]
+        customerAction = CustomerAction(self._instance)
+        return customerAction.fillWithData(body)
+        
     def create(self, options = None):
         """Create an invoice.
         Keyword argument:
@@ -371,22 +388,5 @@ class Invoice:
         body = body["invoice"]
         invoice = Invoice(self._instance)
         return invoice.fillWithData(body)
-        
-    @staticmethod
-    def find(self, id, options = None):
-        """Get the invoice data.
-        Keyword argument:
-		id -- ID of the invoice
-        options -- Options for the request"""
-        request = RequestProcessoutPublic(self._instance)
-        path    = "/invoices/" + quote_plus(id) + ""
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        body = response.body
-        body = body["invoice"]
-        return self.fillWithData(body)
         
     
