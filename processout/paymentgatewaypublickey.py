@@ -98,9 +98,9 @@ class PaymentGatewayPublicKey:
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
-        if "0" in data.keys():
+        if "key" in data.keys():
             self.key = data["key"]
-        if "1" in data.keys():
+        if "value" in data.keys():
             self.value = data["value"]
         
 

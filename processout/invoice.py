@@ -252,31 +252,31 @@ class Invoice:
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
-        if "0" in data.keys():
+        if "id" in data.keys():
             self.id = data["id"]
-        if "1" in data.keys():
+        if "url" in data.keys():
             self.url = data["url"]
-        if "2" in data.keys():
+        if "name" in data.keys():
             self.name = data["name"]
-        if "3" in data.keys():
+        if "price" in data.keys():
             self.price = data["price"]
-        if "4" in data.keys():
+        if "currency" in data.keys():
             self.currency = data["currency"]
-        if "5" in data.keys():
+        if "taxes" in data.keys():
             self.taxes = data["taxes"]
-        if "6" in data.keys():
+        if "shipping" in data.keys():
             self.shipping = data["shipping"]
-        if "7" in data.keys():
+        if "request_email" in data.keys():
             self.requestEmail = data["request_email"]
-        if "8" in data.keys():
+        if "request_shipping" in data.keys():
             self.requestShipping = data["request_shipping"]
-        if "9" in data.keys():
+        if "metas" in data.keys():
             self.metas = data["metas"]
-        if "10" in data.keys():
+        if "return_url" in data.keys():
             self.returnUrl = data["return_url"]
-        if "11" in data.keys():
+        if "cancel_url" in data.keys():
             self.cancelUrl = data["cancel_url"]
-        if "12" in data.keys():
+        if "custom" in data.keys():
             self.custom = data["custom"]
         
 

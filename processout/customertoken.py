@@ -112,11 +112,11 @@ class CustomerToken:
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
-        if "0" in data.keys():
+        if "id" in data.keys():
             self.id = data["id"]
-        if "1" in data.keys():
+        if "name" in data.keys():
             self.name = data["name"]
-        if "2" in data.keys():
+        if "gateway" in data.keys():
             self.gateway = data["gateway"]
         
 

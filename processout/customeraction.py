@@ -84,7 +84,7 @@ class CustomerAction:
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
-        if "0" in data.keys():
+        if "url" in data.keys():
             self.url = data["url"]
         
 

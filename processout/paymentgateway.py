@@ -148,15 +148,15 @@ class PaymentGateway:
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
-        if "0" in data.keys():
+        if "name" in data.keys():
             self.name = data["name"]
-        if "1" in data.keys():
+        if "display_name" in data.keys():
             self.displayName = data["display_name"]
-        if "2" in data.keys():
+        if "beta" in data.keys():
             self.beta = data["beta"]
-        if "3" in data.keys():
+        if "public_keys" in data.keys():
             self.publicKeys = data["public_keys"]
-        if "4" in data.keys():
+        if "settings" in data.keys():
             self.settings = data["settings"]
         
 

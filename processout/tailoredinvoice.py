@@ -182,21 +182,21 @@ class TailoredInvoice:
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
-        if "0" in data.keys():
+        if "id" in data.keys():
             self.id = data["id"]
-        if "1" in data.keys():
+        if "name" in data.keys():
             self.name = data["name"]
-        if "2" in data.keys():
+        if "price" in data.keys():
             self.price = data["price"]
-        if "3" in data.keys():
+        if "currency" in data.keys():
             self.currency = data["currency"]
-        if "4" in data.keys():
+        if "taxes" in data.keys():
             self.taxes = data["taxes"]
-        if "5" in data.keys():
+        if "shipping" in data.keys():
             self.shipping = data["shipping"]
-        if "6" in data.keys():
+        if "return_url" in data.keys():
             self.returnUrl = data["return_url"]
-        if "7" in data.keys():
+        if "cancel_url" in data.keys():
             self.cancelUrl = data["cancel_url"]
         
 

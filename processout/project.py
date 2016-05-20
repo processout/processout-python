@@ -140,15 +140,15 @@ class Project:
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
-        if "0" in data.keys():
+        if "name" in data.keys():
             self.name = data["name"]
-        if "1" in data.keys():
+        if "email" in data.keys():
             self.email = data["email"]
-        if "2" in data.keys():
+        if "logo_url" in data.keys():
             self.logoUrl = data["logo_url"]
-        if "3" in data.keys():
+        if "id" in data.keys():
             self.id = data["id"]
-        if "4" in data.keys():
+        if "secret_key" in data.keys():
             self.secretKey = data["secret_key"]
         
 

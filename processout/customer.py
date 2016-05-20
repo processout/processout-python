@@ -196,23 +196,23 @@ class Customer:
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
-        if "0" in data.keys():
+        if "id" in data.keys():
             self.id = data["id"]
-        if "1" in data.keys():
+        if "first_name" in data.keys():
             self.firstName = data["first_name"]
-        if "2" in data.keys():
+        if "last_name" in data.keys():
             self.lastName = data["last_name"]
-        if "3" in data.keys():
+        if "address1" in data.keys():
             self.address1 = data["address1"]
-        if "4" in data.keys():
+        if "address2" in data.keys():
             self.address2 = data["address2"]
-        if "5" in data.keys():
+        if "city" in data.keys():
             self.city = data["city"]
-        if "6" in data.keys():
+        if "state" in data.keys():
             self.state = data["state"]
-        if "7" in data.keys():
+        if "zip" in data.keys():
             self.zip = data["zip"]
-        if "8" in data.keys():
+        if "country_code" in data.keys():
             self.countryCode = data["country_code"]
         
 
