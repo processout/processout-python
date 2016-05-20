@@ -7,40 +7,10 @@ from .processout import ProcessOut
 from .networking.response import Response
 
 try:
-    from .customeraction import CustomerAction
-except ImportError:
-    import sys
-    CustomerAction = sys.modules[__package__ + '.customeraction']
-try:
-    from .customertoken import CustomerToken
-except ImportError:
-    import sys
-    CustomerToken = sys.modules[__package__ + '.customertoken']
-try:
-    from .event import Event
-except ImportError:
-    import sys
-    Event = sys.modules[__package__ + '.event']
-try:
     from .invoice import Invoice
 except ImportError:
     import sys
     Invoice = sys.modules[__package__ + '.invoice']
-try:
-    from .paymentgateway import PaymentGateway
-except ImportError:
-    import sys
-    PaymentGateway = sys.modules[__package__ + '.paymentgateway']
-try:
-    from .paymentgatewaypublickey import PaymentGatewayPublicKey
-except ImportError:
-    import sys
-    PaymentGatewayPublicKey = sys.modules[__package__ + '.paymentgatewaypublickey']
-try:
-    from .project import Project
-except ImportError:
-    import sys
-    Project = sys.modules[__package__ + '.project']
 try:
     from .recurringinvoice import RecurringInvoice
 except ImportError:
@@ -51,6 +21,36 @@ try:
 except ImportError:
     import sys
     TailoredInvoice = sys.modules[__package__ + '.tailoredinvoice']
+try:
+    from .customertoken import CustomerToken
+except ImportError:
+    import sys
+    CustomerToken = sys.modules[__package__ + '.customertoken']
+try:
+    from .customeraction import CustomerAction
+except ImportError:
+    import sys
+    CustomerAction = sys.modules[__package__ + '.customeraction']
+try:
+    from .event import Event
+except ImportError:
+    import sys
+    Event = sys.modules[__package__ + '.event']
+try:
+    from .project import Project
+except ImportError:
+    import sys
+    Project = sys.modules[__package__ + '.project']
+try:
+    from .paymentgateway import PaymentGateway
+except ImportError:
+    import sys
+    PaymentGateway = sys.modules[__package__ + '.paymentgateway']
+try:
+    from .paymentgatewaypublickey import PaymentGatewayPublicKey
+except ImportError:
+    import sys
+    PaymentGatewayPublicKey = sys.modules[__package__ + '.paymentgatewaypublickey']
 
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 from .networking.requestprocessoutpublic import RequestProcessoutPublic
@@ -64,16 +64,55 @@ class Customer:
 
         self._instance = instance
 
+        self._id = ""
+        self._firstName = ""
+        self._lastName = ""
         self._address1 = ""
         self._address2 = ""
         self._city = ""
-        self._countryCode = ""
-        self._firstName = ""
-        self._id = ""
-        self._lastName = ""
         self._state = ""
         self._zip = ""
+        self._countryCode = ""
         
+    @property
+    def id(self):
+        """Get id"""
+        return self._id
+
+    @id.setter
+    def id(self, val):
+        """Set id
+        Keyword argument:
+        val -- New id value"""
+        self._id = val
+        return self
+    
+    @property
+    def firstName(self):
+        """Get firstName"""
+        return self._firstName
+
+    @firstName.setter
+    def firstName(self, val):
+        """Set firstName
+        Keyword argument:
+        val -- New firstName value"""
+        self._firstName = val
+        return self
+    
+    @property
+    def lastName(self):
+        """Get lastName"""
+        return self._lastName
+
+    @lastName.setter
+    def lastName(self, val):
+        """Set lastName
+        Keyword argument:
+        val -- New lastName value"""
+        self._lastName = val
+        return self
+    
     @property
     def address1(self):
         """Get address1"""
@@ -114,58 +153,6 @@ class Customer:
         return self
     
     @property
-    def countryCode(self):
-        """Get countryCode"""
-        return self._countryCode
-
-    @countryCode.setter
-    def countryCode(self, val):
-        """Set countryCode
-        Keyword argument:
-        val -- New countryCode value"""
-        self._countryCode = val
-        return self
-    
-    @property
-    def firstName(self):
-        """Get firstName"""
-        return self._firstName
-
-    @firstName.setter
-    def firstName(self, val):
-        """Set firstName
-        Keyword argument:
-        val -- New firstName value"""
-        self._firstName = val
-        return self
-    
-    @property
-    def id(self):
-        """Get id"""
-        return self._id
-
-    @id.setter
-    def id(self, val):
-        """Set id
-        Keyword argument:
-        val -- New id value"""
-        self._id = val
-        return self
-    
-    @property
-    def lastName(self):
-        """Get lastName"""
-        return self._lastName
-
-    @lastName.setter
-    def lastName(self, val):
-        """Set lastName
-        Keyword argument:
-        val -- New lastName value"""
-        self._lastName = val
-        return self
-    
-    @property
     def state(self):
         """Get state"""
         return self._state
@@ -191,62 +178,44 @@ class Customer:
         self._zip = val
         return self
     
+    @property
+    def countryCode(self):
+        """Get countryCode"""
+        return self._countryCode
+
+    @countryCode.setter
+    def countryCode(self, val):
+        """Set countryCode
+        Keyword argument:
+        val -- New countryCode value"""
+        self._countryCode = val
+        return self
+    
 
     def fillWithData(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
-        if "address1" in data.keys():
-            self.address1 = data["address1"]
-        if "address2" in data.keys():
-            self.address2 = data["address2"]
-        if "city" in data.keys():
-            self.city = data["city"]
-        if "country_code" in data.keys():
-            self.countryCode = data["country_code"]
-        if "first_name" in data.keys():
-            self.firstName = data["first_name"]
-        if "id" in data.keys():
+        if "0" in data.keys():
             self.id = data["id"]
-        if "last_name" in data.keys():
+        if "1" in data.keys():
+            self.firstName = data["first_name"]
+        if "2" in data.keys():
             self.lastName = data["last_name"]
-        if "state" in data.keys():
+        if "3" in data.keys():
+            self.address1 = data["address1"]
+        if "4" in data.keys():
+            self.address2 = data["address2"]
+        if "5" in data.keys():
+            self.city = data["city"]
+        if "6" in data.keys():
             self.state = data["state"]
-        if "zip" in data.keys():
+        if "7" in data.keys():
             self.zip = data["zip"]
+        if "8" in data.keys():
+            self.countryCode = data["country_code"]
         
 
-    def findToken(self, tokenId, options = None):
-        """Find a specific customer token.
-        Keyword argument:
-		tokenId -- ID of the customer token
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "customers/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + ""
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        body = response.body
-        body = body["token"]
-        customerToken = CustomerToken(self._instance)
-        return customerToken.fillWithData(body)
-        
-    def revokeToken(self, tokenId, options = None):
-        """Revoke (delete) a specific customer token.
-        Keyword argument:
-		tokenId -- ID of the customer token
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "customers/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + ""
-        data    = {
-
-        }
-
-        response = Response(request.delete(path, data, options))
-        return response.success
-        
     @staticmethod
     def all(self, options = None):
         """Get the customers list belonging to the project.
@@ -291,26 +260,6 @@ class Customer:
         body = body["customer"]
         customer = Customer(self._instance)
         return customer.fillWithData(body)
-        
-    def authorize(self, gatewayName, name, token, options = None):
-        """Authorize (create) a new customer token.
-        Keyword argument:
-		gatewayName -- Name of the payment gateway
-		name -- Name of the customer token
-		token -- Payment gateway token (ex: stripe customer token)
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "/customers/" + quote_plus(self.id) + "/gateways/" + quote_plus(gatewayName) + "/tokens"
-        data    = {
-			'name': name, 
-			'token': token
-        }
-
-        response = Response(request.post(path, data, options))
-        body = response.body
-        body = body["token"]
-        customerToken = CustomerToken(self._instance)
-        return customerToken.fillWithData(body)
         
     @staticmethod
     def find(self, id, options = None):
@@ -373,7 +322,7 @@ class Customer:
 		
         options -- Options for the request"""
         request = RequestProcessoutPrivate(self._instance)
-        path    = "customers/" + quote_plus(self.id) + "/tokens"
+        path    = "/customers/" + quote_plus(self.id) + "/tokens"
         data    = {
 
         }
@@ -387,4 +336,55 @@ class Customer:
             a.append(tmp)
 
         return a
+    def findToken(self, tokenId, options = None):
+        """Find a specific customer token.
+        Keyword argument:
+		tokenId -- ID of the customer token
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "/customers/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + ""
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        body = response.body
+        body = body["token"]
+        customerToken = CustomerToken(self._instance)
+        return customerToken.fillWithData(body)
+        
+    def revokeToken(self, tokenId, options = None):
+        """Revoke (delete) a specific customer token.
+        Keyword argument:
+		tokenId -- ID of the customer token
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "/customers/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + ""
+        data    = {
+
+        }
+
+        response = Response(request.delete(path, data, options))
+        return response.success
+        
+    def authorize(self, gatewayName, name, token, options = None):
+        """Authorize (create) a new customer token.
+        Keyword argument:
+		gatewayName -- Name of the payment gateway
+		name -- Name of the customer token
+		token -- Payment gateway token (ex: stripe customer token)
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "/customers/" + quote_plus(self.id) + "/gateways/" + quote_plus(gatewayName) + "/tokens"
+        data    = {
+			'name': name, 
+			'token': token
+        }
+
+        response = Response(request.post(path, data, options))
+        body = response.body
+        body = body["token"]
+        customerToken = CustomerToken(self._instance)
+        return customerToken.fillWithData(body)
+        
     

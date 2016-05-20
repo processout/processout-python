@@ -1,4 +1,4 @@
-from .exceptions.apiexception import ApiException
+from .exceptions.apiauthenticationexception import ApiAuthenticationException
 
 class ProcessOut:
     HOST = 'https://api.processout.com/'

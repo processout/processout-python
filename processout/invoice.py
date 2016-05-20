@@ -7,25 +7,40 @@ from .processout import ProcessOut
 from .networking.response import Response
 
 try:
+    from .recurringinvoice import RecurringInvoice
+except ImportError:
+    import sys
+    RecurringInvoice = sys.modules[__package__ + '.recurringinvoice']
+try:
+    from .tailoredinvoice import TailoredInvoice
+except ImportError:
+    import sys
+    TailoredInvoice = sys.modules[__package__ + '.tailoredinvoice']
+try:
     from .customer import Customer
 except ImportError:
     import sys
     Customer = sys.modules[__package__ + '.customer']
-try:
-    from .customeraction import CustomerAction
-except ImportError:
-    import sys
-    CustomerAction = sys.modules[__package__ + '.customeraction']
 try:
     from .customertoken import CustomerToken
 except ImportError:
     import sys
     CustomerToken = sys.modules[__package__ + '.customertoken']
 try:
+    from .customeraction import CustomerAction
+except ImportError:
+    import sys
+    CustomerAction = sys.modules[__package__ + '.customeraction']
+try:
     from .event import Event
 except ImportError:
     import sys
     Event = sys.modules[__package__ + '.event']
+try:
+    from .project import Project
+except ImportError:
+    import sys
+    Project = sys.modules[__package__ + '.project']
 try:
     from .paymentgateway import PaymentGateway
 except ImportError:
@@ -36,21 +51,6 @@ try:
 except ImportError:
     import sys
     PaymentGatewayPublicKey = sys.modules[__package__ + '.paymentgatewaypublickey']
-try:
-    from .project import Project
-except ImportError:
-    import sys
-    Project = sys.modules[__package__ + '.project']
-try:
-    from .recurringinvoice import RecurringInvoice
-except ImportError:
-    import sys
-    RecurringInvoice = sys.modules[__package__ + '.recurringinvoice']
-try:
-    from .tailoredinvoice import TailoredInvoice
-except ImportError:
-    import sys
-    TailoredInvoice = sys.modules[__package__ + '.tailoredinvoice']
 
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 from .networking.requestprocessoutpublic import RequestProcessoutPublic
@@ -64,59 +64,20 @@ class Invoice:
 
         self._instance = instance
 
-        self._cancelUrl = ""
-        self._currency = ""
-        self._custom = ""
         self._id = ""
-        self._metas = {}
+        self._url = ""
         self._name = ""
         self._price = ""
+        self._currency = ""
+        self._taxes = "0.00"
+        self._shipping = "0.00"
         self._requestEmail = False
         self._requestShipping = False
+        self._metas = {}
         self._returnUrl = ""
-        self._shipping = "0.00"
-        self._taxes = "0.00"
-        self._url = ""
+        self._cancelUrl = ""
+        self._custom = ""
         
-    @property
-    def cancelUrl(self):
-        """Get cancelUrl"""
-        return self._cancelUrl
-
-    @cancelUrl.setter
-    def cancelUrl(self, val):
-        """Set cancelUrl
-        Keyword argument:
-        val -- New cancelUrl value"""
-        self._cancelUrl = val
-        return self
-    
-    @property
-    def currency(self):
-        """Get currency"""
-        return self._currency
-
-    @currency.setter
-    def currency(self, val):
-        """Set currency
-        Keyword argument:
-        val -- New currency value"""
-        self._currency = val
-        return self
-    
-    @property
-    def custom(self):
-        """Get custom"""
-        return self._custom
-
-    @custom.setter
-    def custom(self, val):
-        """Set custom
-        Keyword argument:
-        val -- New custom value"""
-        self._custom = val
-        return self
-    
     @property
     def id(self):
         """Get id"""
@@ -131,16 +92,16 @@ class Invoice:
         return self
     
     @property
-    def metas(self):
-        """Get metas"""
-        return self._metas
+    def url(self):
+        """Get url"""
+        return self._url
 
-    @metas.setter
-    def metas(self, val):
-        """Set metas
+    @url.setter
+    def url(self, val):
+        """Set url
         Keyword argument:
-        val -- New metas value"""
-        self._metas = val
+        val -- New url value"""
+        self._url = val
         return self
     
     @property
@@ -170,6 +131,45 @@ class Invoice:
         return self
     
     @property
+    def currency(self):
+        """Get currency"""
+        return self._currency
+
+    @currency.setter
+    def currency(self, val):
+        """Set currency
+        Keyword argument:
+        val -- New currency value"""
+        self._currency = val
+        return self
+    
+    @property
+    def taxes(self):
+        """Get taxes"""
+        return self._taxes
+
+    @taxes.setter
+    def taxes(self, val):
+        """Set taxes
+        Keyword argument:
+        val -- New taxes value"""
+        self._taxes = val
+        return self
+    
+    @property
+    def shipping(self):
+        """Get shipping"""
+        return self._shipping
+
+    @shipping.setter
+    def shipping(self, val):
+        """Set shipping
+        Keyword argument:
+        val -- New shipping value"""
+        self._shipping = val
+        return self
+    
+    @property
     def requestEmail(self):
         """Get requestEmail"""
         return self._requestEmail
@@ -196,6 +196,19 @@ class Invoice:
         return self
     
     @property
+    def metas(self):
+        """Get metas"""
+        return self._metas
+
+    @metas.setter
+    def metas(self, val):
+        """Set metas
+        Keyword argument:
+        val -- New metas value"""
+        self._metas = val
+        return self
+    
+    @property
     def returnUrl(self):
         """Get returnUrl"""
         return self._returnUrl
@@ -209,42 +222,29 @@ class Invoice:
         return self
     
     @property
-    def shipping(self):
-        """Get shipping"""
-        return self._shipping
+    def cancelUrl(self):
+        """Get cancelUrl"""
+        return self._cancelUrl
 
-    @shipping.setter
-    def shipping(self, val):
-        """Set shipping
+    @cancelUrl.setter
+    def cancelUrl(self, val):
+        """Set cancelUrl
         Keyword argument:
-        val -- New shipping value"""
-        self._shipping = val
+        val -- New cancelUrl value"""
+        self._cancelUrl = val
         return self
     
     @property
-    def taxes(self):
-        """Get taxes"""
-        return self._taxes
+    def custom(self):
+        """Get custom"""
+        return self._custom
 
-    @taxes.setter
-    def taxes(self, val):
-        """Set taxes
+    @custom.setter
+    def custom(self, val):
+        """Set custom
         Keyword argument:
-        val -- New taxes value"""
-        self._taxes = val
-        return self
-    
-    @property
-    def url(self):
-        """Get url"""
-        return self._url
-
-    @url.setter
-    def url(self, val):
-        """Set url
-        Keyword argument:
-        val -- New url value"""
-        self._url = val
+        val -- New custom value"""
+        self._custom = val
         return self
     
 
@@ -252,68 +252,34 @@ class Invoice:
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
-        if "cancel_url" in data.keys():
-            self.cancelUrl = data["cancel_url"]
-        if "currency" in data.keys():
-            self.currency = data["currency"]
-        if "custom" in data.keys():
-            self.custom = data["custom"]
-        if "id" in data.keys():
+        if "0" in data.keys():
             self.id = data["id"]
-        if "metas" in data.keys():
-            self.metas = data["metas"]
-        if "name" in data.keys():
-            self.name = data["name"]
-        if "price" in data.keys():
-            self.price = data["price"]
-        if "request_email" in data.keys():
-            self.requestEmail = data["request_email"]
-        if "request_shipping" in data.keys():
-            self.requestShipping = data["request_shipping"]
-        if "return_url" in data.keys():
-            self.returnUrl = data["return_url"]
-        if "shipping" in data.keys():
-            self.shipping = data["shipping"]
-        if "taxes" in data.keys():
-            self.taxes = data["taxes"]
-        if "url" in data.keys():
+        if "1" in data.keys():
             self.url = data["url"]
+        if "2" in data.keys():
+            self.name = data["name"]
+        if "3" in data.keys():
+            self.price = data["price"]
+        if "4" in data.keys():
+            self.currency = data["currency"]
+        if "5" in data.keys():
+            self.taxes = data["taxes"]
+        if "6" in data.keys():
+            self.shipping = data["shipping"]
+        if "7" in data.keys():
+            self.requestEmail = data["request_email"]
+        if "8" in data.keys():
+            self.requestShipping = data["request_shipping"]
+        if "9" in data.keys():
+            self.metas = data["metas"]
+        if "10" in data.keys():
+            self.returnUrl = data["return_url"]
+        if "11" in data.keys():
+            self.cancelUrl = data["cancel_url"]
+        if "12" in data.keys():
+            self.custom = data["custom"]
         
 
-    @staticmethod
-    def find(self, id, options = None):
-        """Get the invoice data.
-        Keyword argument:
-		id -- ID of the invoice
-        options -- Options for the request"""
-        request = RequestProcessoutPublic(self._instance)
-        path    = "/invoices/" + quote_plus(id) + ""
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        body = response.body
-        body = body["invoice"]
-        return self.fillWithData(body)
-        
-    def chargeWithToken(self, tokenId, options = None):
-        """Charge using a customer token.
-        Keyword argument:
-		tokenId -- ID of the customer token
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "/invoices/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + "/charges"
-        data    = {
-
-        }
-
-        response = Response(request.post(path, data, options))
-        body = response.body
-        body = body["customer_action"]
-        customerAction = CustomerAction(self._instance)
-        return customerAction.fillWithData(body)
-        
     def create(self, options = None):
         """Create an invoice.
         Keyword argument:
@@ -340,6 +306,23 @@ class Invoice:
         body = body["invoice"]
         invoice = Invoice(self._instance)
         return invoice.fillWithData(body)
+        
+    @staticmethod
+    def find(self, id, options = None):
+        """Get the invoice data.
+        Keyword argument:
+		id -- ID of the invoice
+        options -- Options for the request"""
+        request = RequestProcessoutPublic(self._instance)
+        path    = "/invoices/" + quote_plus(id) + ""
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        body = response.body
+        body = body["invoice"]
+        return self.fillWithData(body)
         
     def customer(self, options = None):
         """Get the customer associated with the current invoice.
@@ -384,6 +367,23 @@ class Invoice:
         path    = "/invoices/" + quote_plus(self.id) + "/gateways/{gateway_name}/charges"
         data    = {
 			'token': token
+        }
+
+        response = Response(request.post(path, data, options))
+        body = response.body
+        body = body["customer_action"]
+        customerAction = CustomerAction(self._instance)
+        return customerAction.fillWithData(body)
+        
+    def chargeWithToken(self, tokenId, options = None):
+        """Charge using a customer token.
+        Keyword argument:
+		tokenId -- ID of the customer token
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "/invoices/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + "/charges"
+        data    = {
+
         }
 
         response = Response(request.post(path, data, options))

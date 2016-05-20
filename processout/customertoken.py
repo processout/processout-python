@@ -7,6 +7,21 @@ from .processout import ProcessOut
 from .networking.response import Response
 
 try:
+    from .invoice import Invoice
+except ImportError:
+    import sys
+    Invoice = sys.modules[__package__ + '.invoice']
+try:
+    from .recurringinvoice import RecurringInvoice
+except ImportError:
+    import sys
+    RecurringInvoice = sys.modules[__package__ + '.recurringinvoice']
+try:
+    from .tailoredinvoice import TailoredInvoice
+except ImportError:
+    import sys
+    TailoredInvoice = sys.modules[__package__ + '.tailoredinvoice']
+try:
     from .customer import Customer
 except ImportError:
     import sys
@@ -22,10 +37,10 @@ except ImportError:
     import sys
     Event = sys.modules[__package__ + '.event']
 try:
-    from .invoice import Invoice
+    from .project import Project
 except ImportError:
     import sys
-    Invoice = sys.modules[__package__ + '.invoice']
+    Project = sys.modules[__package__ + '.project']
 try:
     from .paymentgateway import PaymentGateway
 except ImportError:
@@ -36,21 +51,6 @@ try:
 except ImportError:
     import sys
     PaymentGatewayPublicKey = sys.modules[__package__ + '.paymentgatewaypublickey']
-try:
-    from .project import Project
-except ImportError:
-    import sys
-    Project = sys.modules[__package__ + '.project']
-try:
-    from .recurringinvoice import RecurringInvoice
-except ImportError:
-    import sys
-    RecurringInvoice = sys.modules[__package__ + '.recurringinvoice']
-try:
-    from .tailoredinvoice import TailoredInvoice
-except ImportError:
-    import sys
-    TailoredInvoice = sys.modules[__package__ + '.tailoredinvoice']
 
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 from .networking.requestprocessoutpublic import RequestProcessoutPublic
@@ -64,23 +64,10 @@ class CustomerToken:
 
         self._instance = instance
 
-        self._gateway = ""
         self._id = ""
         self._name = ""
+        self._gateway = ""
         
-    @property
-    def gateway(self):
-        """Get gateway"""
-        return self._gateway
-
-    @gateway.setter
-    def gateway(self, val):
-        """Set gateway
-        Keyword argument:
-        val -- New gateway value"""
-        self._gateway = val
-        return self
-    
     @property
     def id(self):
         """Get id"""
@@ -107,17 +94,30 @@ class CustomerToken:
         self._name = val
         return self
     
+    @property
+    def gateway(self):
+        """Get gateway"""
+        return self._gateway
+
+    @gateway.setter
+    def gateway(self, val):
+        """Set gateway
+        Keyword argument:
+        val -- New gateway value"""
+        self._gateway = val
+        return self
+    
 
     def fillWithData(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
-        if "gateway" in data.keys():
-            self.gateway = data["gateway"]
-        if "id" in data.keys():
+        if "0" in data.keys():
             self.id = data["id"]
-        if "name" in data.keys():
+        if "1" in data.keys():
             self.name = data["name"]
+        if "2" in data.keys():
+            self.gateway = data["gateway"]
         
 
     

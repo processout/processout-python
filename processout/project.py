@@ -7,40 +7,10 @@ from .processout import ProcessOut
 from .networking.response import Response
 
 try:
-    from .customer import Customer
-except ImportError:
-    import sys
-    Customer = sys.modules[__package__ + '.customer']
-try:
-    from .customeraction import CustomerAction
-except ImportError:
-    import sys
-    CustomerAction = sys.modules[__package__ + '.customeraction']
-try:
-    from .customertoken import CustomerToken
-except ImportError:
-    import sys
-    CustomerToken = sys.modules[__package__ + '.customertoken']
-try:
-    from .event import Event
-except ImportError:
-    import sys
-    Event = sys.modules[__package__ + '.event']
-try:
     from .invoice import Invoice
 except ImportError:
     import sys
     Invoice = sys.modules[__package__ + '.invoice']
-try:
-    from .paymentgateway import PaymentGateway
-except ImportError:
-    import sys
-    PaymentGateway = sys.modules[__package__ + '.paymentgateway']
-try:
-    from .paymentgatewaypublickey import PaymentGatewayPublicKey
-except ImportError:
-    import sys
-    PaymentGatewayPublicKey = sys.modules[__package__ + '.paymentgatewaypublickey']
 try:
     from .recurringinvoice import RecurringInvoice
 except ImportError:
@@ -51,6 +21,36 @@ try:
 except ImportError:
     import sys
     TailoredInvoice = sys.modules[__package__ + '.tailoredinvoice']
+try:
+    from .customer import Customer
+except ImportError:
+    import sys
+    Customer = sys.modules[__package__ + '.customer']
+try:
+    from .customertoken import CustomerToken
+except ImportError:
+    import sys
+    CustomerToken = sys.modules[__package__ + '.customertoken']
+try:
+    from .customeraction import CustomerAction
+except ImportError:
+    import sys
+    CustomerAction = sys.modules[__package__ + '.customeraction']
+try:
+    from .event import Event
+except ImportError:
+    import sys
+    Event = sys.modules[__package__ + '.event']
+try:
+    from .paymentgateway import PaymentGateway
+except ImportError:
+    import sys
+    PaymentGateway = sys.modules[__package__ + '.paymentgateway']
+try:
+    from .paymentgatewaypublickey import PaymentGatewayPublicKey
+except ImportError:
+    import sys
+    PaymentGatewayPublicKey = sys.modules[__package__ + '.paymentgatewaypublickey']
 
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 from .networking.requestprocessoutpublic import RequestProcessoutPublic
@@ -64,12 +64,25 @@ class Project:
 
         self._instance = instance
 
-        self._email = ""
-        self._id = ""
-        self._logoUrl = ""
         self._name = ""
+        self._email = ""
+        self._logoUrl = ""
+        self._id = ""
         self._secretKey = ""
         
+    @property
+    def name(self):
+        """Get name"""
+        return self._name
+
+    @name.setter
+    def name(self, val):
+        """Set name
+        Keyword argument:
+        val -- New name value"""
+        self._name = val
+        return self
+    
     @property
     def email(self):
         """Get email"""
@@ -81,19 +94,6 @@ class Project:
         Keyword argument:
         val -- New email value"""
         self._email = val
-        return self
-    
-    @property
-    def id(self):
-        """Get id"""
-        return self._id
-
-    @id.setter
-    def id(self, val):
-        """Set id
-        Keyword argument:
-        val -- New id value"""
-        self._id = val
         return self
     
     @property
@@ -110,16 +110,16 @@ class Project:
         return self
     
     @property
-    def name(self):
-        """Get name"""
-        return self._name
+    def id(self):
+        """Get id"""
+        return self._id
 
-    @name.setter
-    def name(self, val):
-        """Set name
+    @id.setter
+    def id(self, val):
+        """Set id
         Keyword argument:
-        val -- New name value"""
-        self._name = val
+        val -- New id value"""
+        self._id = val
         return self
     
     @property
@@ -140,15 +140,15 @@ class Project:
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
-        if "email" in data.keys():
-            self.email = data["email"]
-        if "id" in data.keys():
-            self.id = data["id"]
-        if "logo_url" in data.keys():
-            self.logoUrl = data["logo_url"]
-        if "name" in data.keys():
+        if "0" in data.keys():
             self.name = data["name"]
-        if "secret_key" in data.keys():
+        if "1" in data.keys():
+            self.email = data["email"]
+        if "2" in data.keys():
+            self.logoUrl = data["logo_url"]
+        if "3" in data.keys():
+            self.id = data["id"]
+        if "4" in data.keys():
             self.secretKey = data["secret_key"]
         
 

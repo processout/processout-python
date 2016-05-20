@@ -7,30 +7,40 @@ from .processout import ProcessOut
 from .networking.response import Response
 
 try:
+    from .invoice import Invoice
+except ImportError:
+    import sys
+    Invoice = sys.modules[__package__ + '.invoice']
+try:
+    from .tailoredinvoice import TailoredInvoice
+except ImportError:
+    import sys
+    TailoredInvoice = sys.modules[__package__ + '.tailoredinvoice']
+try:
     from .customer import Customer
 except ImportError:
     import sys
     Customer = sys.modules[__package__ + '.customer']
-try:
-    from .customeraction import CustomerAction
-except ImportError:
-    import sys
-    CustomerAction = sys.modules[__package__ + '.customeraction']
 try:
     from .customertoken import CustomerToken
 except ImportError:
     import sys
     CustomerToken = sys.modules[__package__ + '.customertoken']
 try:
+    from .customeraction import CustomerAction
+except ImportError:
+    import sys
+    CustomerAction = sys.modules[__package__ + '.customeraction']
+try:
     from .event import Event
 except ImportError:
     import sys
     Event = sys.modules[__package__ + '.event']
 try:
-    from .invoice import Invoice
+    from .project import Project
 except ImportError:
     import sys
-    Invoice = sys.modules[__package__ + '.invoice']
+    Project = sys.modules[__package__ + '.project']
 try:
     from .paymentgateway import PaymentGateway
 except ImportError:
@@ -41,16 +51,6 @@ try:
 except ImportError:
     import sys
     PaymentGatewayPublicKey = sys.modules[__package__ + '.paymentgatewaypublickey']
-try:
-    from .project import Project
-except ImportError:
-    import sys
-    Project = sys.modules[__package__ + '.project']
-try:
-    from .tailoredinvoice import TailoredInvoice
-except ImportError:
-    import sys
-    TailoredInvoice = sys.modules[__package__ + '.tailoredinvoice']
 
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 from .networking.requestprocessoutpublic import RequestProcessoutPublic
@@ -64,57 +64,18 @@ class RecurringInvoice:
 
         self._instance = instance
 
-        self._currency = ""
-        self._ended = False
-        self._endedReason = ""
         self._id = ""
+        self._url = ""
         self._name = ""
         self._price = ""
-        self._recurringDays = 0
-        self._shipping = "0.00"
+        self._currency = ""
         self._taxes = "0.00"
+        self._shipping = "0.00"
+        self._recurringDays = 0
         self._trialDays = 0
-        self._url = ""
+        self._ended = False
+        self._endedReason = ""
         
-    @property
-    def currency(self):
-        """Get currency"""
-        return self._currency
-
-    @currency.setter
-    def currency(self, val):
-        """Set currency
-        Keyword argument:
-        val -- New currency value"""
-        self._currency = val
-        return self
-    
-    @property
-    def ended(self):
-        """Get ended"""
-        return self._ended
-
-    @ended.setter
-    def ended(self, val):
-        """Set ended
-        Keyword argument:
-        val -- New ended value"""
-        self._ended = val
-        return self
-    
-    @property
-    def endedReason(self):
-        """Get endedReason"""
-        return self._endedReason
-
-    @endedReason.setter
-    def endedReason(self, val):
-        """Set endedReason
-        Keyword argument:
-        val -- New endedReason value"""
-        self._endedReason = val
-        return self
-    
     @property
     def id(self):
         """Get id"""
@@ -126,6 +87,19 @@ class RecurringInvoice:
         Keyword argument:
         val -- New id value"""
         self._id = val
+        return self
+    
+    @property
+    def url(self):
+        """Get url"""
+        return self._url
+
+    @url.setter
+    def url(self, val):
+        """Set url
+        Keyword argument:
+        val -- New url value"""
+        self._url = val
         return self
     
     @property
@@ -155,29 +129,16 @@ class RecurringInvoice:
         return self
     
     @property
-    def recurringDays(self):
-        """Get recurringDays"""
-        return self._recurringDays
+    def currency(self):
+        """Get currency"""
+        return self._currency
 
-    @recurringDays.setter
-    def recurringDays(self, val):
-        """Set recurringDays
+    @currency.setter
+    def currency(self, val):
+        """Set currency
         Keyword argument:
-        val -- New recurringDays value"""
-        self._recurringDays = val
-        return self
-    
-    @property
-    def shipping(self):
-        """Get shipping"""
-        return self._shipping
-
-    @shipping.setter
-    def shipping(self, val):
-        """Set shipping
-        Keyword argument:
-        val -- New shipping value"""
-        self._shipping = val
+        val -- New currency value"""
+        self._currency = val
         return self
     
     @property
@@ -194,6 +155,32 @@ class RecurringInvoice:
         return self
     
     @property
+    def shipping(self):
+        """Get shipping"""
+        return self._shipping
+
+    @shipping.setter
+    def shipping(self, val):
+        """Set shipping
+        Keyword argument:
+        val -- New shipping value"""
+        self._shipping = val
+        return self
+    
+    @property
+    def recurringDays(self):
+        """Get recurringDays"""
+        return self._recurringDays
+
+    @recurringDays.setter
+    def recurringDays(self, val):
+        """Set recurringDays
+        Keyword argument:
+        val -- New recurringDays value"""
+        self._recurringDays = val
+        return self
+    
+    @property
     def trialDays(self):
         """Get trialDays"""
         return self._trialDays
@@ -207,16 +194,29 @@ class RecurringInvoice:
         return self
     
     @property
-    def url(self):
-        """Get url"""
-        return self._url
+    def ended(self):
+        """Get ended"""
+        return self._ended
 
-    @url.setter
-    def url(self, val):
-        """Set url
+    @ended.setter
+    def ended(self, val):
+        """Set ended
         Keyword argument:
-        val -- New url value"""
-        self._url = val
+        val -- New ended value"""
+        self._ended = val
+        return self
+    
+    @property
+    def endedReason(self):
+        """Get endedReason"""
+        return self._endedReason
+
+    @endedReason.setter
+    def endedReason(self, val):
+        """Set endedReason
+        Keyword argument:
+        val -- New endedReason value"""
+        self._endedReason = val
         return self
     
 
@@ -224,30 +224,47 @@ class RecurringInvoice:
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
-        if "currency" in data.keys():
-            self.currency = data["currency"]
-        if "ended" in data.keys():
-            self.ended = data["ended"]
-        if "ended_reason" in data.keys():
-            self.endedReason = data["ended_reason"]
-        if "id" in data.keys():
+        if "0" in data.keys():
             self.id = data["id"]
-        if "name" in data.keys():
-            self.name = data["name"]
-        if "price" in data.keys():
-            self.price = data["price"]
-        if "recurring_days" in data.keys():
-            self.recurringDays = data["recurring_days"]
-        if "shipping" in data.keys():
-            self.shipping = data["shipping"]
-        if "taxes" in data.keys():
-            self.taxes = data["taxes"]
-        if "trial_days" in data.keys():
-            self.trialDays = data["trial_days"]
-        if "url" in data.keys():
+        if "1" in data.keys():
             self.url = data["url"]
+        if "2" in data.keys():
+            self.name = data["name"]
+        if "3" in data.keys():
+            self.price = data["price"]
+        if "4" in data.keys():
+            self.currency = data["currency"]
+        if "5" in data.keys():
+            self.taxes = data["taxes"]
+        if "6" in data.keys():
+            self.shipping = data["shipping"]
+        if "7" in data.keys():
+            self.recurringDays = data["recurring_days"]
+        if "8" in data.keys():
+            self.trialDays = data["trial_days"]
+        if "9" in data.keys():
+            self.ended = data["ended"]
+        if "10" in data.keys():
+            self.endedReason = data["ended_reason"]
         
 
+    def invoice(self, options = None):
+        """Get the invoice representing the new recurring invoice iteration.
+        Keyword argument:
+		
+        options -- Options for the request"""
+        request = RequestProcessoutPublic(self._instance)
+        path    = "/recurring-invoices/" + quote_plus(self.id) + "/invoices"
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        body = response.body
+        body = body["invoice"]
+        invoice = Invoice(self._instance)
+        return invoice.fillWithData(body)
+        
     def create(self, customerId, options = None):
         """Create a new recurring invoice.
         Keyword argument:
@@ -321,22 +338,5 @@ class RecurringInvoice:
         body = body["customer"]
         customer = Customer(self._instance)
         return customer.fillWithData(body)
-        
-    def invoice(self, options = None):
-        """Get the invoice representing the new recurring invoice iteration.
-        Keyword argument:
-		
-        options -- Options for the request"""
-        request = RequestProcessoutPublic(self._instance)
-        path    = "/recurring-invoices/" + quote_plus(self.id) + "/invoices"
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        body = response.body
-        body = body["invoice"]
-        invoice = Invoice(self._instance)
-        return invoice.fillWithData(body)
         
     

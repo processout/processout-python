@@ -7,30 +7,40 @@ from .processout import ProcessOut
 from .networking.response import Response
 
 try:
+    from .invoice import Invoice
+except ImportError:
+    import sys
+    Invoice = sys.modules[__package__ + '.invoice']
+try:
+    from .recurringinvoice import RecurringInvoice
+except ImportError:
+    import sys
+    RecurringInvoice = sys.modules[__package__ + '.recurringinvoice']
+try:
     from .customer import Customer
 except ImportError:
     import sys
     Customer = sys.modules[__package__ + '.customer']
-try:
-    from .customeraction import CustomerAction
-except ImportError:
-    import sys
-    CustomerAction = sys.modules[__package__ + '.customeraction']
 try:
     from .customertoken import CustomerToken
 except ImportError:
     import sys
     CustomerToken = sys.modules[__package__ + '.customertoken']
 try:
+    from .customeraction import CustomerAction
+except ImportError:
+    import sys
+    CustomerAction = sys.modules[__package__ + '.customeraction']
+try:
     from .event import Event
 except ImportError:
     import sys
     Event = sys.modules[__package__ + '.event']
 try:
-    from .invoice import Invoice
+    from .project import Project
 except ImportError:
     import sys
-    Invoice = sys.modules[__package__ + '.invoice']
+    Project = sys.modules[__package__ + '.project']
 try:
     from .paymentgateway import PaymentGateway
 except ImportError:
@@ -41,16 +51,6 @@ try:
 except ImportError:
     import sys
     PaymentGatewayPublicKey = sys.modules[__package__ + '.paymentgatewaypublickey']
-try:
-    from .project import Project
-except ImportError:
-    import sys
-    Project = sys.modules[__package__ + '.project']
-try:
-    from .recurringinvoice import RecurringInvoice
-except ImportError:
-    import sys
-    RecurringInvoice = sys.modules[__package__ + '.recurringinvoice']
 
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 from .networking.requestprocessoutpublic import RequestProcessoutPublic
@@ -64,41 +64,15 @@ class TailoredInvoice:
 
         self._instance = instance
 
-        self._cancelUrl = ""
-        self._currency = ""
         self._id = ""
         self._name = ""
         self._price = ""
-        self._returnUrl = ""
-        self._shipping = "0.00"
+        self._currency = ""
         self._taxes = "0.00"
+        self._shipping = "0.00"
+        self._returnUrl = ""
+        self._cancelUrl = ""
         
-    @property
-    def cancelUrl(self):
-        """Get cancelUrl"""
-        return self._cancelUrl
-
-    @cancelUrl.setter
-    def cancelUrl(self, val):
-        """Set cancelUrl
-        Keyword argument:
-        val -- New cancelUrl value"""
-        self._cancelUrl = val
-        return self
-    
-    @property
-    def currency(self):
-        """Get currency"""
-        return self._currency
-
-    @currency.setter
-    def currency(self, val):
-        """Set currency
-        Keyword argument:
-        val -- New currency value"""
-        self._currency = val
-        return self
-    
     @property
     def id(self):
         """Get id"""
@@ -139,16 +113,29 @@ class TailoredInvoice:
         return self
     
     @property
-    def returnUrl(self):
-        """Get returnUrl"""
-        return self._returnUrl
+    def currency(self):
+        """Get currency"""
+        return self._currency
 
-    @returnUrl.setter
-    def returnUrl(self, val):
-        """Set returnUrl
+    @currency.setter
+    def currency(self, val):
+        """Set currency
         Keyword argument:
-        val -- New returnUrl value"""
-        self._returnUrl = val
+        val -- New currency value"""
+        self._currency = val
+        return self
+    
+    @property
+    def taxes(self):
+        """Get taxes"""
+        return self._taxes
+
+    @taxes.setter
+    def taxes(self, val):
+        """Set taxes
+        Keyword argument:
+        val -- New taxes value"""
+        self._taxes = val
         return self
     
     @property
@@ -165,16 +152,29 @@ class TailoredInvoice:
         return self
     
     @property
-    def taxes(self):
-        """Get taxes"""
-        return self._taxes
+    def returnUrl(self):
+        """Get returnUrl"""
+        return self._returnUrl
 
-    @taxes.setter
-    def taxes(self, val):
-        """Set taxes
+    @returnUrl.setter
+    def returnUrl(self, val):
+        """Set returnUrl
         Keyword argument:
-        val -- New taxes value"""
-        self._taxes = val
+        val -- New returnUrl value"""
+        self._returnUrl = val
+        return self
+    
+    @property
+    def cancelUrl(self):
+        """Get cancelUrl"""
+        return self._cancelUrl
+
+    @cancelUrl.setter
+    def cancelUrl(self, val):
+        """Set cancelUrl
+        Keyword argument:
+        val -- New cancelUrl value"""
+        self._cancelUrl = val
         return self
     
 
@@ -182,22 +182,22 @@ class TailoredInvoice:
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
-        if "cancel_url" in data.keys():
-            self.cancelUrl = data["cancel_url"]
-        if "currency" in data.keys():
-            self.currency = data["currency"]
-        if "id" in data.keys():
+        if "0" in data.keys():
             self.id = data["id"]
-        if "name" in data.keys():
+        if "1" in data.keys():
             self.name = data["name"]
-        if "price" in data.keys():
+        if "2" in data.keys():
             self.price = data["price"]
-        if "return_url" in data.keys():
-            self.returnUrl = data["return_url"]
-        if "shipping" in data.keys():
-            self.shipping = data["shipping"]
-        if "taxes" in data.keys():
+        if "3" in data.keys():
+            self.currency = data["currency"]
+        if "4" in data.keys():
             self.taxes = data["taxes"]
+        if "5" in data.keys():
+            self.shipping = data["shipping"]
+        if "6" in data.keys():
+            self.returnUrl = data["return_url"]
+        if "7" in data.keys():
+            self.cancelUrl = data["cancel_url"]
         
 
     def invoice(self, options = None):
