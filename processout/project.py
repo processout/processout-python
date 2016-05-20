@@ -1,4 +1,7 @@
-from urllib.parse import quote_plus
+try:
+    from urllib.parse import quote_plus
+except ImportError:
+    from urllib import quote_plus
 
 from .processout import ProcessOut
 from .networking.response import Response

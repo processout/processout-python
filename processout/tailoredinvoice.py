@@ -1,4 +1,7 @@
-from urllib.parse import quote_plus
+try:
+    from urllib.parse import quote_plus
+except ImportError:
+    from urllib import quote_plus
 
 from .processout import ProcessOut
 from .networking.response import Response
@@ -197,6 +200,23 @@ class TailoredInvoice:
             self.taxes = data["taxes"]
         
 
+    def invoice(self, options = None):
+        """Create an invoice from a tailored invoice.
+        Keyword argument:
+		
+        options -- Options for the request"""
+        request = RequestProcessoutPublic(self._instance)
+        path    = "/tailored-invoices/" + quote_plus(self.id) + "/invoices"
+        data    = {
+
+        }
+
+        response = Response(request.post(path, data, options))
+        body = response.body
+        body = body["invoice"]
+        invoice = Invoice(self._instance)
+        return invoice.fillWithData(body)
+        
     @staticmethod
     def all(self, options = None):
         """List all tailored invoices.
@@ -294,22 +314,5 @@ class TailoredInvoice:
 
         response = Response(request.delete(path, data, options))
         return response.success
-        
-    def invoice(self, options = None):
-        """Create an invoice from a tailored invoice.
-        Keyword argument:
-		
-        options -- Options for the request"""
-        request = RequestProcessoutPublic(self._instance)
-        path    = "/tailored-invoices/" + quote_plus(self.id) + "/invoices"
-        data    = {
-
-        }
-
-        response = Response(request.post(path, data, options))
-        body = response.body
-        body = body["invoice"]
-        invoice = Invoice(self._instance)
-        return invoice.fillWithData(body)
         
     

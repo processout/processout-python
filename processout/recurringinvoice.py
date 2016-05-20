@@ -1,4 +1,7 @@
-from urllib.parse import quote_plus
+try:
+    from urllib.parse import quote_plus
+except ImportError:
+    from urllib import quote_plus
 
 from .processout import ProcessOut
 from .networking.response import Response
@@ -271,6 +274,37 @@ class RecurringInvoice:
         recurringInvoice = RecurringInvoice(self._instance)
         return recurringInvoice.fillWithData(body)
         
+    @staticmethod
+    def find(self, id, options = None):
+        """Get the recurring invoice data.
+        Keyword argument:
+		id -- ID of the recurring invoice
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "/recurring-invoices/" + quote_plus(id) + ""
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        body = response.body
+        body = body["recurring_invoice"]
+        return self.fillWithData(body)
+        
+    def end(self, reason, options = None):
+        """End a recurring invoice.
+        Keyword argument:
+		reason -- Ending reason
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "/recurring-invoices/" + quote_plus(self.id) + ""
+        data    = {
+			'reason': reason
+        }
+
+        response = Response(request.delete(path, data, options))
+        return response.success
+        
     def customer(self, options = None):
         """Get the customer linked to the recurring invoice.
         Keyword argument:
@@ -304,36 +338,5 @@ class RecurringInvoice:
         body = body["invoice"]
         invoice = Invoice(self._instance)
         return invoice.fillWithData(body)
-        
-    @staticmethod
-    def find(self, id, options = None):
-        """Get the recurring invoice data.
-        Keyword argument:
-		id -- ID of the recurring invoice
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "/recurring-invoices/" + quote_plus(id) + ""
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        body = response.body
-        body = body["recurring_invoice"]
-        return self.fillWithData(body)
-        
-    def end(self, reason, options = None):
-        """End a recurring invoice.
-        Keyword argument:
-		reason -- Ending reason
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "/recurring-invoices/" + quote_plus(self.id) + ""
-        data    = {
-			'reason': reason
-        }
-
-        response = Response(request.delete(path, data, options))
-        return response.success
         
     

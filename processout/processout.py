@@ -40,13 +40,14 @@ class ProcessOut:
     @staticmethod
     def getDefault():
         """Get the default ProcessOut instance"""
-        if default == None:
+        if ProcessOut.default == None:
             raise ApiAuthenticationException(
                 'You need to define a default ProcessOut object (ProcessOut.setDefault()).')
+        return ProcessOut.default
 
     @staticmethod
-    def setDefault(processout):
+    def setDefault(instance):
         """Set the default ProcessOut instance
         Keyword argument:
-        processout -- ProcessOut's instance"""
-        ProcessOut.default = processout
+        instance -- ProcessOut's instance"""
+        ProcessOut.default = instance

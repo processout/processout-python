@@ -1,4 +1,7 @@
-from urllib.parse import quote_plus
+try:
+    from urllib.parse import quote_plus
+except ImportError:
+    from urllib import quote_plus
 
 from .processout import ProcessOut
 from .networking.response import Response
@@ -294,6 +297,50 @@ class Invoice:
         body = body["invoice"]
         return self.fillWithData(body)
         
+    def chargeWithToken(self, tokenId, options = None):
+        """Charge using a customer token.
+        Keyword argument:
+		tokenId -- ID of the customer token
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "/invoices/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + "/charges"
+        data    = {
+
+        }
+
+        response = Response(request.post(path, data, options))
+        body = response.body
+        body = body["customer_action"]
+        customerAction = CustomerAction(self._instance)
+        return customerAction.fillWithData(body)
+        
+    def create(self, options = None):
+        """Create an invoice.
+        Keyword argument:
+		
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "/invoices"
+        data    = {
+			'name': self.name, 
+			'price': self.price, 
+			'taxes': self.taxes, 
+			'shipping': self.shipping, 
+			'currency': self.currency, 
+			'request_email': self.requestEmail, 
+			'request_shipping': self.requestShipping, 
+			'return_url': self.returnUrl, 
+			'cancel_url': self.cancelUrl, 
+			'metas': self.metas, 
+			'custom': self.custom
+        }
+
+        response = Response(request.post(path, data, options))
+        body = response.body
+        body = body["invoice"]
+        invoice = Invoice(self._instance)
+        return invoice.fillWithData(body)
+        
     def customer(self, options = None):
         """Get the customer associated with the current invoice.
         Keyword argument:
@@ -344,49 +391,5 @@ class Invoice:
         body = body["customer_action"]
         customerAction = CustomerAction(self._instance)
         return customerAction.fillWithData(body)
-        
-    def chargeWithToken(self, tokenId, options = None):
-        """Charge using a customer token.
-        Keyword argument:
-		tokenId -- ID of the customer token
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "/invoices/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + "/charges"
-        data    = {
-
-        }
-
-        response = Response(request.post(path, data, options))
-        body = response.body
-        body = body["customer_action"]
-        customerAction = CustomerAction(self._instance)
-        return customerAction.fillWithData(body)
-        
-    def create(self, options = None):
-        """Create an invoice.
-        Keyword argument:
-		
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "/invoices"
-        data    = {
-			'name': self.name, 
-			'price': self.price, 
-			'taxes': self.taxes, 
-			'shipping': self.shipping, 
-			'currency': self.currency, 
-			'request_email': self.requestEmail, 
-			'request_shipping': self.requestShipping, 
-			'return_url': self.returnUrl, 
-			'cancel_url': self.cancelUrl, 
-			'metas': self.metas, 
-			'custom': self.custom
-        }
-
-        response = Response(request.post(path, data, options))
-        body = response.body
-        body = body["invoice"]
-        invoice = Invoice(self._instance)
-        return invoice.fillWithData(body)
         
     

@@ -1,5 +1,8 @@
 import requests
-import urllib.parse
+try:
+    import urllib.parse
+except ImportError:
+    import urllib
 
 from ..processout import ProcessOut
 
@@ -40,7 +43,7 @@ class RequestProcessoutPublic:
         options -- Options sent with the request
         """
         return requests.get(ProcessOut.HOST + path + '?' +
-                urllib.parse.urlencode(data),
+                urllib.urlencode(data),
             auth   = self._authenticate(),
             verify = True,
             headers = self._getHeaders(options))

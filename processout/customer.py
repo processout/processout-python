@@ -1,4 +1,7 @@
-from urllib.parse import quote_plus
+try:
+    from urllib.parse import quote_plus
+except ImportError:
+    from urllib import quote_plus
 
 from .processout import ProcessOut
 from .networking.response import Response
@@ -213,81 +216,6 @@ class Customer:
             self.zip = data["zip"]
         
 
-    @staticmethod
-    def find(self, id, options = None):
-        """Get the customer data.
-        Keyword argument:
-		id -- ID of the customer
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "/customers/" + quote_plus(id) + ""
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        body = response.body
-        body = body["customer"]
-        return self.fillWithData(body)
-        
-    def save(self, options = None):
-        """Update the customer data.
-        Keyword argument:
-		
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "/customers/" + quote_plus(self.id) + ""
-        data    = {
-			'email': self.email, 
-			'first_name': self.firstName, 
-			'last_name': self.lastName, 
-			'address1': self.address1, 
-			'address2': self.address2, 
-			'city': self.city, 
-			'zip': self.zip, 
-			'country_code': self.countryCode
-        }
-
-        response = Response(request.post(path, data, options))
-        body = response.body
-        body = body["customer"]
-        customer = Customer(self._instance)
-        return customer.fillWithData(body)
-        
-    def delete(self, options = None):
-        """Delete the customer.
-        Keyword argument:
-		
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "/customers/" + quote_plus(self.id) + ""
-        data    = {
-
-        }
-
-        response = Response(request.delete(path, data, options))
-        return response.success
-        
-    def tokens(self, options = None):
-        """Get all the authorization tokens of the customer.
-        Keyword argument:
-		
-        options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
-        path    = "customers/" + quote_plus(self.id) + "/tokens"
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        a    = []
-        body = response.body
-        for v in body['tokens']:
-            tmp = CustomerToken(self._instance)
-            tmp.fillWithData(v)
-            a.append(tmp)
-
-        return a
     def findToken(self, tokenId, options = None):
         """Find a specific customer token.
         Keyword argument:
@@ -305,7 +233,7 @@ class Customer:
         customerToken = CustomerToken(self._instance)
         return customerToken.fillWithData(body)
         
-    def revoke(self, tokenId, options = None):
+    def revokeToken(self, tokenId, options = None):
         """Revoke (delete) a specific customer token.
         Keyword argument:
 		tokenId -- ID of the customer token
@@ -384,4 +312,79 @@ class Customer:
         customerToken = CustomerToken(self._instance)
         return customerToken.fillWithData(body)
         
+    @staticmethod
+    def find(self, id, options = None):
+        """Get the customer data.
+        Keyword argument:
+		id -- ID of the customer
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "/customers/" + quote_plus(id) + ""
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        body = response.body
+        body = body["customer"]
+        return self.fillWithData(body)
+        
+    def save(self, options = None):
+        """Update the customer data.
+        Keyword argument:
+		
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "/customers/" + quote_plus(self.id) + ""
+        data    = {
+			'email': self.email, 
+			'first_name': self.firstName, 
+			'last_name': self.lastName, 
+			'address1': self.address1, 
+			'address2': self.address2, 
+			'city': self.city, 
+			'zip': self.zip, 
+			'country_code': self.countryCode
+        }
+
+        response = Response(request.post(path, data, options))
+        body = response.body
+        body = body["customer"]
+        customer = Customer(self._instance)
+        return customer.fillWithData(body)
+        
+    def delete(self, options = None):
+        """Delete the customer.
+        Keyword argument:
+		
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "/customers/" + quote_plus(self.id) + ""
+        data    = {
+
+        }
+
+        response = Response(request.delete(path, data, options))
+        return response.success
+        
+    def tokens(self, options = None):
+        """Get all the authorization tokens of the customer.
+        Keyword argument:
+		
+        options -- Options for the request"""
+        request = RequestProcessoutPrivate(self._instance)
+        path    = "customers/" + quote_plus(self.id) + "/tokens"
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        a    = []
+        body = response.body
+        for v in body['tokens']:
+            tmp = CustomerToken(self._instance)
+            tmp.fillWithData(v)
+            a.append(tmp)
+
+        return a
     
