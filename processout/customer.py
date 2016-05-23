@@ -218,7 +218,7 @@ class Customer:
         return self
 
     @staticmethod
-    def all(self, options = None):
+    def all(options = None):
         """Get the customers list belonging to the project.
         Keyword argument:
 		
@@ -238,6 +238,7 @@ class Customer:
             a.append(tmp)
 
         return a
+        
     def create(self, options = None):
         """Create a new customer.
         Keyword argument:
@@ -263,7 +264,7 @@ class Customer:
         return customer.fillWithData(body)
         
     @staticmethod
-    def find(self, id, options = None):
+    def find(id, options = None):
         """Get the customer data.
         Keyword argument:
 		id -- ID of the customer
@@ -337,6 +338,7 @@ class Customer:
             a.append(tmp)
 
         return a
+        
     def findToken(self, tokenId, options = None):
         """Find a specific customer token.
         Keyword argument:

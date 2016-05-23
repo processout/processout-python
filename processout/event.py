@@ -154,7 +154,7 @@ class Event:
         return self
 
     @staticmethod
-    def pull(self, options = None):
+    def pull(options = None):
         """Get the 15 oldest events pending processing.
         Keyword argument:
 		
@@ -174,8 +174,9 @@ class Event:
             a.append(tmp)
 
         return a
+        
     @staticmethod
-    def setAllProcessed(self, options = None):
+    def setAllProcessed(options = None):
         """Set all the events as processed.
         Keyword argument:
 		
@@ -190,7 +191,7 @@ class Event:
         return response.success
         
     @staticmethod
-    def find(self, id, options = None):
+    def find(id, options = None):
         """Get the information related to the specific event.
         Keyword argument:
 		id -- ID of the event

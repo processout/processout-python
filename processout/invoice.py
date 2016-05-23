@@ -309,7 +309,7 @@ class Invoice:
         return invoice.fillWithData(body)
         
     @staticmethod
-    def find(self, id, options = None):
+    def find(id, options = None):
         """Get the invoice data.
         Keyword argument:
 		id -- ID of the invoice

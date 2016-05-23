@@ -179,7 +179,7 @@ class PaymentGateway:
         return paymentGateway.fillWithData(body)
         
     @staticmethod
-    def delete(self, gatewayName, options = None):
+    def delete(gatewayName, options = None):
         """Remove the payment gateway and its settings from the current project.
         Keyword argument:
 		gatewayName -- Name of the payment gateway (ex: paypal)

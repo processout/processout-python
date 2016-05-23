@@ -341,7 +341,7 @@ class RecurringInvoice:
         return recurringInvoice.fillWithData(body)
         
     @staticmethod
-    def find(self, id, options = None):
+    def find(id, options = None):
         """Get the recurring invoice data.
         Keyword argument:
 		id -- ID of the recurring invoice

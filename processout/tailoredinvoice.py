@@ -219,7 +219,7 @@ class TailoredInvoice:
         return invoice.fillWithData(body)
         
     @staticmethod
-    def all(self, options = None):
+    def all(options = None):
         """List all tailored invoices.
         Keyword argument:
 		
@@ -239,6 +239,7 @@ class TailoredInvoice:
             a.append(tmp)
 
         return a
+        
     def create(self, options = None):
         """Create a new tailored invoice.
         Keyword argument:
@@ -263,7 +264,7 @@ class TailoredInvoice:
         return tailoredInvoice.fillWithData(body)
         
     @staticmethod
-    def find(self, id, options = None):
+    def find(id, options = None):
         """Get tailored invoice data.
         Keyword argument:
 		id -- Unique ID of your tailored invoice
