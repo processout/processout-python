@@ -223,7 +223,8 @@ class Customer:
         Keyword argument:
 		
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = ProcessOut.getDefault()
+        request = RequestProcessoutPrivate(instance)
         path    = "/customers"
         data    = {
 
@@ -233,7 +234,7 @@ class Customer:
         a    = []
         body = response.body
         for v in body['customers']:
-            tmp = Customer(self._instance)
+            tmp = Customer(instance)
             tmp.fillWithData(v)
             a.append(tmp)
 
@@ -244,7 +245,8 @@ class Customer:
         Keyword argument:
 		
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
         path    = "/customers"
         data    = {
 			'email': self.email, 
@@ -260,7 +262,7 @@ class Customer:
         response = Response(request.post(path, data, options))
         body = response.body
         body = body["customer"]
-        customer = Customer(self._instance)
+        customer = Customer(instance)
         return customer.fillWithData(body)
         
     @staticmethod
@@ -269,7 +271,8 @@ class Customer:
         Keyword argument:
 		id -- ID of the customer
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = ProcessOut.getDefault()
+        request = RequestProcessoutPrivate(instance)
         path    = "/customers/" + quote_plus(id) + ""
         data    = {
 
@@ -285,7 +288,8 @@ class Customer:
         Keyword argument:
 		
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
         path    = "/customers/" + quote_plus(self.id) + ""
         data    = {
 			'email': self.email, 
@@ -301,7 +305,7 @@ class Customer:
         response = Response(request.post(path, data, options))
         body = response.body
         body = body["customer"]
-        customer = Customer(self._instance)
+        customer = Customer(instance)
         return customer.fillWithData(body)
         
     def delete(self, options = None):
@@ -309,7 +313,8 @@ class Customer:
         Keyword argument:
 		
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
         path    = "/customers/" + quote_plus(self.id) + ""
         data    = {
 
@@ -323,7 +328,8 @@ class Customer:
         Keyword argument:
 		
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
         path    = "/customers/" + quote_plus(self.id) + "/tokens"
         data    = {
 
@@ -333,7 +339,7 @@ class Customer:
         a    = []
         body = response.body
         for v in body['tokens']:
-            tmp = CustomerToken(self._instance)
+            tmp = CustomerToken(instance)
             tmp.fillWithData(v)
             a.append(tmp)
 
@@ -344,7 +350,8 @@ class Customer:
         Keyword argument:
 		tokenId -- ID of the customer token
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
         path    = "/customers/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + ""
         data    = {
 
@@ -353,7 +360,7 @@ class Customer:
         response = Response(request.get(path, data, options))
         body = response.body
         body = body["token"]
-        customerToken = CustomerToken(self._instance)
+        customerToken = CustomerToken(instance)
         return customerToken.fillWithData(body)
         
     def revokeToken(self, tokenId, options = None):
@@ -361,7 +368,8 @@ class Customer:
         Keyword argument:
 		tokenId -- ID of the customer token
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
         path    = "/customers/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + ""
         data    = {
 
@@ -377,7 +385,8 @@ class Customer:
 		name -- Name of the customer token
 		token -- Payment gateway token (ex: stripe customer token)
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
         path    = "/customers/" + quote_plus(self.id) + "/gateways/" + quote_plus(gatewayName) + "/tokens"
         data    = {
 			'name': name, 
@@ -387,7 +396,7 @@ class Customer:
         response = Response(request.post(path, data, options))
         body = response.body
         body = body["token"]
-        customerToken = CustomerToken(self._instance)
+        customerToken = CustomerToken(instance)
         return customerToken.fillWithData(body)
         
     

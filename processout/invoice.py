@@ -286,7 +286,8 @@ class Invoice:
         Keyword argument:
 		
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
         path    = "/invoices"
         data    = {
 			'name': self.name, 
@@ -305,7 +306,7 @@ class Invoice:
         response = Response(request.post(path, data, options))
         body = response.body
         body = body["invoice"]
-        invoice = Invoice(self._instance)
+        invoice = Invoice(instance)
         return invoice.fillWithData(body)
         
     @staticmethod
@@ -314,7 +315,8 @@ class Invoice:
         Keyword argument:
 		id -- ID of the invoice
         options -- Options for the request"""
-        request = RequestProcessoutPublic(self._instance)
+        instance = ProcessOut.getDefault()
+        request = RequestProcessoutPublic(instance)
         path    = "/invoices/" + quote_plus(id) + ""
         data    = {
 
@@ -330,7 +332,8 @@ class Invoice:
         Keyword argument:
 		
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
         path    = "/invoices/" + quote_plus(self.id) + "/customers"
         data    = {
 
@@ -339,7 +342,7 @@ class Invoice:
         response = Response(request.get(path, data, options))
         body = response.body
         body = body["customer"]
-        customer = Customer(self._instance)
+        customer = Customer(instance)
         return customer.fillWithData(body)
         
     def setCustomer(self, customerId, options = None):
@@ -347,7 +350,8 @@ class Invoice:
         Keyword argument:
 		customerId -- ID of the customer
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
         path    = "/invoices/" + quote_plus(self.id) + "/customers"
         data    = {
 			'customer_id': customerId
@@ -356,7 +360,7 @@ class Invoice:
         response = Response(request.post(path, data, options))
         body = response.body
         body = body["customer"]
-        customer = Customer(self._instance)
+        customer = Customer(instance)
         return customer.fillWithData(body)
         
     def charge(self, token, options = None):
@@ -364,7 +368,8 @@ class Invoice:
         Keyword argument:
 		token -- Payment gateway token (ex: stripe card token)
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
         path    = "/invoices/" + quote_plus(self.id) + "/gateways/{gateway_name}/charges"
         data    = {
 			'token': token
@@ -373,7 +378,7 @@ class Invoice:
         response = Response(request.post(path, data, options))
         body = response.body
         body = body["customer_action"]
-        customerAction = CustomerAction(self._instance)
+        customerAction = CustomerAction(instance)
         return customerAction.fillWithData(body)
         
     def chargeWithToken(self, tokenId, options = None):
@@ -381,7 +386,8 @@ class Invoice:
         Keyword argument:
 		tokenId -- ID of the customer token
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
         path    = "/invoices/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + "/charges"
         data    = {
 
@@ -390,7 +396,7 @@ class Invoice:
         response = Response(request.post(path, data, options))
         body = response.body
         body = body["customer_action"]
-        customerAction = CustomerAction(self._instance)
+        customerAction = CustomerAction(instance)
         return customerAction.fillWithData(body)
         
     

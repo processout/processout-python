@@ -206,7 +206,8 @@ class TailoredInvoice:
         Keyword argument:
 		
         options -- Options for the request"""
-        request = RequestProcessoutPublic(self._instance)
+        instance = self._instance
+        request = RequestProcessoutPublic(instance)
         path    = "/tailored-invoices/" + quote_plus(self.id) + "/invoices"
         data    = {
 
@@ -215,7 +216,7 @@ class TailoredInvoice:
         response = Response(request.post(path, data, options))
         body = response.body
         body = body["invoice"]
-        invoice = Invoice(self._instance)
+        invoice = Invoice(instance)
         return invoice.fillWithData(body)
         
     @staticmethod
@@ -224,7 +225,8 @@ class TailoredInvoice:
         Keyword argument:
 		
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = ProcessOut.getDefault()
+        request = RequestProcessoutPrivate(instance)
         path    = "/tailored-invoices"
         data    = {
 
@@ -234,7 +236,7 @@ class TailoredInvoice:
         a    = []
         body = response.body
         for v in body['tailored_invoices']:
-            tmp = TailoredInvoice(self._instance)
+            tmp = TailoredInvoice(instance)
             tmp.fillWithData(v)
             a.append(tmp)
 
@@ -245,7 +247,8 @@ class TailoredInvoice:
         Keyword argument:
 		
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
         path    = "/tailored-invoices"
         data    = {
 			'name': self.name, 
@@ -260,7 +263,7 @@ class TailoredInvoice:
         response = Response(request.post(path, data, options))
         body = response.body
         body = body["tailored_invoice"]
-        tailoredInvoice = TailoredInvoice(self._instance)
+        tailoredInvoice = TailoredInvoice(instance)
         return tailoredInvoice.fillWithData(body)
         
     @staticmethod
@@ -269,7 +272,8 @@ class TailoredInvoice:
         Keyword argument:
 		id -- Unique ID of your tailored invoice
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = ProcessOut.getDefault()
+        request = RequestProcessoutPrivate(instance)
         path    = "/tailored-invoices/" + quote_plus(id) + ""
         data    = {
 
@@ -285,7 +289,8 @@ class TailoredInvoice:
         Keyword argument:
 		
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
         path    = "/tailored-invoices/" + quote_plus(self.id) + ""
         data    = {
 			'return_url': self.returnUrl, 
@@ -308,7 +313,8 @@ class TailoredInvoice:
         Keyword argument:
 		
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
         path    = "/tailored-invoices/" + quote_plus(self.id) + ""
         data    = {
 

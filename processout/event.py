@@ -159,7 +159,8 @@ class Event:
         Keyword argument:
 		
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = ProcessOut.getDefault()
+        request = RequestProcessoutPrivate(instance)
         path    = "/events"
         data    = {
 
@@ -169,7 +170,7 @@ class Event:
         a    = []
         body = response.body
         for v in body['events']:
-            tmp = Event(self._instance)
+            tmp = Event(instance)
             tmp.fillWithData(v)
             a.append(tmp)
 
@@ -181,7 +182,8 @@ class Event:
         Keyword argument:
 		
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = ProcessOut.getDefault()
+        request = RequestProcessoutPrivate(instance)
         path    = "/events"
         data    = {
 
@@ -196,7 +198,8 @@ class Event:
         Keyword argument:
 		id -- ID of the event
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = ProcessOut.getDefault()
+        request = RequestProcessoutPrivate(instance)
         path    = "/events/" + quote_plus(id) + ""
         data    = {
 
@@ -212,7 +215,8 @@ class Event:
         Keyword argument:
 		
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
         path    = "/events/" + quote_plus(self.id) + ""
         data    = {
 

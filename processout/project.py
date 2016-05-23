@@ -158,7 +158,8 @@ class Project:
         Keyword argument:
 		
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
         path    = "/projects/supervised"
         data    = {
 			'name': self.name, 

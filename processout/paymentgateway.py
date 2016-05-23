@@ -166,7 +166,8 @@ class PaymentGateway:
         Keyword argument:
 		gatewayName -- Name of the payment gateway (ex: paypal)
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
         path    = "/gateways/" + quote_plus(gatewayName) + ""
         data    = {
 			'settings': self.settings
@@ -175,7 +176,7 @@ class PaymentGateway:
         response = Response(request.put(path, data, options))
         body = response.body
         body = body["gateway"]
-        paymentGateway = PaymentGateway(self._instance)
+        paymentGateway = PaymentGateway(instance)
         return paymentGateway.fillWithData(body)
         
     @staticmethod
@@ -184,7 +185,8 @@ class PaymentGateway:
         Keyword argument:
 		gatewayName -- Name of the payment gateway (ex: paypal)
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = ProcessOut.getDefault()
+        request = RequestProcessoutPrivate(instance)
         path    = "/gateways/" + quote_plus(gatewayName) + ""
         data    = {
 

@@ -302,7 +302,8 @@ class RecurringInvoice:
         Keyword argument:
 		
         options -- Options for the request"""
-        request = RequestProcessoutPublic(self._instance)
+        instance = self._instance
+        request = RequestProcessoutPublic(instance)
         path    = "/recurring-invoices/" + quote_plus(self.id) + "/invoices"
         data    = {
 
@@ -311,7 +312,7 @@ class RecurringInvoice:
         response = Response(request.get(path, data, options))
         body = response.body
         body = body["invoice"]
-        invoice = Invoice(self._instance)
+        invoice = Invoice(instance)
         return invoice.fillWithData(body)
         
     def create(self, customerId, options = None):
@@ -319,7 +320,8 @@ class RecurringInvoice:
         Keyword argument:
 		customerId -- ID of the customer to which the recurring invoice will be linked
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
         path    = "/customers/" + quote_plus(customerId) + "/recurring-invoices"
         data    = {
 			'name': self.name, 
@@ -337,7 +339,7 @@ class RecurringInvoice:
         response = Response(request.post(path, data, options))
         body = response.body
         body = body["recurring_invoice"]
-        recurringInvoice = RecurringInvoice(self._instance)
+        recurringInvoice = RecurringInvoice(instance)
         return recurringInvoice.fillWithData(body)
         
     @staticmethod
@@ -346,7 +348,8 @@ class RecurringInvoice:
         Keyword argument:
 		id -- ID of the recurring invoice
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = ProcessOut.getDefault()
+        request = RequestProcessoutPrivate(instance)
         path    = "/recurring-invoices/" + quote_plus(id) + ""
         data    = {
 
@@ -362,7 +365,8 @@ class RecurringInvoice:
         Keyword argument:
 		reason -- Ending reason
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
         path    = "/recurring-invoices/" + quote_plus(self.id) + ""
         data    = {
 			'reason': reason
@@ -376,7 +380,8 @@ class RecurringInvoice:
         Keyword argument:
 		
         options -- Options for the request"""
-        request = RequestProcessoutPrivate(self._instance)
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
         path    = "/recurring-invoices/" + quote_plus(self.id) + "/customers"
         data    = {
 
@@ -385,7 +390,7 @@ class RecurringInvoice:
         response = Response(request.get(path, data, options))
         body = response.body
         body = body["customer"]
-        customer = Customer(self._instance)
+        customer = Customer(instance)
         return customer.fillWithData(body)
         
     
