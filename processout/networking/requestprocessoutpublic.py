@@ -84,8 +84,8 @@ class RequestProcessoutPublic:
         data -- Data to be passed along with the request
         options -- Options sent with the request
         """
-        return requests.delete(ProcessOut.HOST + path,
+        return requests.delete(ProcessOut.HOST + path + '?' +
+                urllib.urlencode(data),
             auth   = self._authenticate(),
-            json   = data,
             verify = True,
             headers = self._getHeaders(options))
