@@ -75,6 +75,9 @@ class RecurringInvoice:
         self._trialDays = 0
         self._ended = False
         self._endedReason = ""
+        self._returnUrl = ""
+        self._cancelUrl = ""
+        self._custom = ""
         
     @property
     def id(self):
@@ -219,6 +222,45 @@ class RecurringInvoice:
         self._endedReason = val
         return self
     
+    @property
+    def returnUrl(self):
+        """Get returnUrl"""
+        return self._returnUrl
+
+    @returnUrl.setter
+    def returnUrl(self, val):
+        """Set returnUrl
+        Keyword argument:
+        val -- New returnUrl value"""
+        self._returnUrl = val
+        return self
+    
+    @property
+    def cancelUrl(self):
+        """Get cancelUrl"""
+        return self._cancelUrl
+
+    @cancelUrl.setter
+    def cancelUrl(self, val):
+        """Set cancelUrl
+        Keyword argument:
+        val -- New cancelUrl value"""
+        self._cancelUrl = val
+        return self
+    
+    @property
+    def custom(self):
+        """Get custom"""
+        return self._custom
+
+    @custom.setter
+    def custom(self, val):
+        """Set custom
+        Keyword argument:
+        val -- New custom value"""
+        self._custom = val
+        return self
+    
 
     def fillWithData(self, data):
         """Fill the current object with the new values pulled from data
@@ -246,6 +288,12 @@ class RecurringInvoice:
             self.ended = data["ended"]
         if "ended_reason" in data.keys():
             self.endedReason = data["ended_reason"]
+        if "return_url" in data.keys():
+            self.returnUrl = data["return_url"]
+        if "cancel_url" in data.keys():
+            self.cancelUrl = data["cancel_url"]
+        if "custom" in data.keys():
+            self.custom = data["custom"]
         
 
     def invoice(self, options = None):
