@@ -151,6 +151,7 @@ class Event:
         if "sandbox" in data.keys():
             self.sandbox = data["sandbox"]
         
+        return self
 
     @staticmethod
     def pull(self, options = None):

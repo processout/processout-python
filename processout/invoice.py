@@ -279,6 +279,7 @@ class Invoice:
         if "custom" in data.keys():
             self.custom = data["custom"]
         
+        return self
 
     def create(self, options = None):
         """Create an invoice.

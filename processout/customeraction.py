@@ -87,5 +87,6 @@ class CustomerAction:
         if "url" in data.keys():
             self.url = data["url"]
         
+        return self
 
     

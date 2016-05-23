@@ -119,5 +119,6 @@ class CustomerToken:
         if "gateway" in data.keys():
             self.gateway = data["gateway"]
         
+        return self
 
     

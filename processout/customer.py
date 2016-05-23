@@ -215,6 +215,7 @@ class Customer:
         if "country_code" in data.keys():
             self.countryCode = data["country_code"]
         
+        return self
 
     @staticmethod
     def all(self, options = None):

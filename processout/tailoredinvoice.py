@@ -199,6 +199,7 @@ class TailoredInvoice:
         if "cancel_url" in data.keys():
             self.cancelUrl = data["cancel_url"]
         
+        return self
 
     def invoice(self, options = None):
         """Create an invoice from a tailored invoice.

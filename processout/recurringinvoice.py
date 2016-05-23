@@ -295,6 +295,7 @@ class RecurringInvoice:
         if "custom" in data.keys():
             self.custom = data["custom"]
         
+        return self
 
     def invoice(self, options = None):
         """Get the invoice representing the new recurring invoice iteration.

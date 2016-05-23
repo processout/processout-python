@@ -151,6 +151,7 @@ class Project:
         if "secret_key" in data.keys():
             self.secretKey = data["secret_key"]
         
+        return self
 
     def createSupervised(self, options = None):
         """Create a new supervised project which will belong to current project.

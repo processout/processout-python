@@ -103,5 +103,6 @@ class PaymentGatewayPublicKey:
         if "value" in data.keys():
             self.value = data["value"]
         
+        return self
 
     

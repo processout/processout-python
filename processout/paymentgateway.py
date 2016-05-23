@@ -159,6 +159,7 @@ class PaymentGateway:
         if "settings" in data.keys():
             self.settings = data["settings"]
         
+        return self
 
     def save(self, gatewayName, options = None):
         """Update or set the payment gateway settings.
