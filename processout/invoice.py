@@ -325,7 +325,8 @@ class Invoice:
         response = Response(request.get(path, data, options))
         body = response.body
         body = body["invoice"]
-        return self.fillWithData(body)
+        obj = Invoice()
+        return obj.fillWithData(body)
         
     def customer(self, options = None):
         """Get the customer associated with the current invoice.

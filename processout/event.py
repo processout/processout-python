@@ -208,7 +208,8 @@ class Event:
         response = Response(request.get(path, data, options))
         body = response.body
         body = body["event"]
-        return self.fillWithData(body)
+        obj = Event()
+        return obj.fillWithData(body)
         
     def markProcessed(self, options = None):
         """Set the specific event as processed.

@@ -281,7 +281,8 @@ class Customer:
         response = Response(request.get(path, data, options))
         body = response.body
         body = body["customer"]
-        return self.fillWithData(body)
+        obj = Customer()
+        return obj.fillWithData(body)
         
     def save(self, options = None):
         """Update the customer data.

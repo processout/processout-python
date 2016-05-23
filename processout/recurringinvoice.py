@@ -358,7 +358,8 @@ class RecurringInvoice:
         response = Response(request.get(path, data, options))
         body = response.body
         body = body["recurring_invoice"]
-        return self.fillWithData(body)
+        obj = RecurringInvoice()
+        return obj.fillWithData(body)
         
     def end(self, reason, options = None):
         """End a recurring invoice.

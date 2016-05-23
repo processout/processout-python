@@ -282,7 +282,8 @@ class TailoredInvoice:
         response = Response(request.get(path, data, options))
         body = response.body
         body = body["tailored_invoice"]
-        return self.fillWithData(body)
+        obj = TailoredInvoice()
+        return obj.fillWithData(body)
         
     def save(self, options = None):
         """Update the tailored invoice data.
