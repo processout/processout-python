@@ -65,6 +65,7 @@ class Customer:
         self._instance = instance
 
         self._id = ""
+        self._email = ""
         self._firstName = ""
         self._lastName = ""
         self._address1 = ""
@@ -85,6 +86,19 @@ class Customer:
         Keyword argument:
         val -- New id value"""
         self._id = val
+        return self
+    
+    @property
+    def email(self):
+        """Get email"""
+        return self._email
+
+    @email.setter
+    def email(self, val):
+        """Set email
+        Keyword argument:
+        val -- New email value"""
+        self._email = val
         return self
     
     @property
@@ -198,6 +212,8 @@ class Customer:
         data -- The data from which to pull the new values"""
         if "id" in data.keys():
             self.id = data["id"]
+        if "email" in data.keys():
+            self.email = data["email"]
         if "first_name" in data.keys():
             self.firstName = data["first_name"]
         if "last_name" in data.keys():
