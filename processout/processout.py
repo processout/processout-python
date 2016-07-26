@@ -1,17 +1,29 @@
 from .exceptions.apiauthenticationexception import ApiAuthenticationException
 
 class ProcessOut:
-    HOST = 'https://api.processout.com/'
-
     default = None
 
     def __init__(self):
         """Create a new instance of ProcessOut"""
+
+        _host = 'https://api.processout.com/'
         
         self._projectId = ""
         
         self._projectSecret = ""
         
+
+    @property
+    def host(self):
+        """Get the library host URL"""
+        return self._host
+
+    @host.setter
+    def host(self, val):
+        """Set the library host URL
+        Keyword argument:
+        val -- New host URL"""
+        self._host = val
 
     @property
     def projectId(self):

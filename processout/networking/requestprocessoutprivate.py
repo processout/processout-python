@@ -42,7 +42,7 @@ class RequestProcessoutPrivate:
         data -- Data to be passed along with the request
         options -- Options sent with the request
         """
-        return requests.get(ProcessOut.HOST + path + '?' +
+        return requests.get(self._instance.host + path + '?' +
                 urllib.urlencode(data),
             auth   = self._authenticate(),
             verify = True,
@@ -56,7 +56,7 @@ class RequestProcessoutPrivate:
         data -- Data to be passed along with the request
         options -- Options sent with the request
         """
-        return requests.post(ProcessOut.HOST + path,
+        return requests.post(self._instance.host + path,
             auth   = self._authenticate(),
             json   = data,
             verify = True,
@@ -70,7 +70,7 @@ class RequestProcessoutPrivate:
         data -- Data to be passed along with the request
         options -- Options sent with the request
         """
-        return requests.put(ProcessOut.HOST + path,
+        return requests.put(self._instance.host + path,
             auth   = self._authenticate(),
             json   = data,
             verify = True,
@@ -84,7 +84,7 @@ class RequestProcessoutPrivate:
         data -- Data to be passed along with the request
         options -- Options sent with the request
         """
-        return requests.delete(ProcessOut.HOST + path + '?' +
+        return requests.delete(self._instance.host + path + '?' +
                 urllib.urlencode(data),
             auth   = self._authenticate(),
             verify = True,
