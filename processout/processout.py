@@ -6,7 +6,7 @@ class ProcessOut:
     def __init__(self):
         """Create a new instance of ProcessOut"""
 
-        _host = 'https://api.processout.com/'
+        _host = 'https://api.processout.com'
         
         self._projectId = ""
         

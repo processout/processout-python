@@ -7,11 +7,6 @@ from .processout import ProcessOut
 from .networking.response import Response
 
 try:
-    from .authorization import Authorization
-except ImportError:
-    import sys
-    Authorization = sys.modules[__package__ + '.authorization']
-try:
     from .customer import Customer
 except ImportError:
     import sys
@@ -26,6 +21,11 @@ try:
 except ImportError:
     import sys
     Event = sys.modules[__package__ + '.event']
+try:
+    from .invoice import Invoice
+except ImportError:
+    import sys
+    Invoice = sys.modules[__package__ + '.invoice']
 try:
     from .activity import Activity
 except ImportError:
@@ -51,7 +51,7 @@ from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 from .networking.requestprocessoutpublic import RequestProcessoutPublic
 
 
-class Invoice:
+class Authorization:
 
     def __init__(self, instance = None):
         if instance == None:
@@ -62,12 +62,7 @@ class Invoice:
         self._id = ""
         self._url = ""
         self._name = ""
-        self._price = ""
         self._currency = ""
-        self._taxes = "0.00"
-        self._shipping = "0.00"
-        self._requestEmail = False
-        self._requestShipping = False
         self._returnUrl = ""
         self._cancelUrl = ""
         self._custom = ""
@@ -114,19 +109,6 @@ class Invoice:
         return self
     
     @property
-    def price(self):
-        """Get price"""
-        return self._price
-
-    @price.setter
-    def price(self, val):
-        """Set price
-        Keyword argument:
-        val -- New price value"""
-        self._price = val
-        return self
-    
-    @property
     def currency(self):
         """Get currency"""
         return self._currency
@@ -137,58 +119,6 @@ class Invoice:
         Keyword argument:
         val -- New currency value"""
         self._currency = val
-        return self
-    
-    @property
-    def taxes(self):
-        """Get taxes"""
-        return self._taxes
-
-    @taxes.setter
-    def taxes(self, val):
-        """Set taxes
-        Keyword argument:
-        val -- New taxes value"""
-        self._taxes = val
-        return self
-    
-    @property
-    def shipping(self):
-        """Get shipping"""
-        return self._shipping
-
-    @shipping.setter
-    def shipping(self, val):
-        """Set shipping
-        Keyword argument:
-        val -- New shipping value"""
-        self._shipping = val
-        return self
-    
-    @property
-    def requestEmail(self):
-        """Get requestEmail"""
-        return self._requestEmail
-
-    @requestEmail.setter
-    def requestEmail(self, val):
-        """Set requestEmail
-        Keyword argument:
-        val -- New requestEmail value"""
-        self._requestEmail = val
-        return self
-    
-    @property
-    def requestShipping(self):
-        """Get requestShipping"""
-        return self._requestShipping
-
-    @requestShipping.setter
-    def requestShipping(self, val):
-        """Set requestShipping
-        Keyword argument:
-        val -- New requestShipping value"""
-        self._requestShipping = val
         return self
     
     @property
@@ -267,18 +197,8 @@ class Invoice:
             self.url = data["url"]
         if "name" in data.keys():
             self.name = data["name"]
-        if "price" in data.keys():
-            self.price = data["price"]
         if "currency" in data.keys():
             self.currency = data["currency"]
-        if "taxes" in data.keys():
-            self.taxes = data["taxes"]
-        if "shipping" in data.keys():
-            self.shipping = data["shipping"]
-        if "request_email" in data.keys():
-            self.requestEmail = data["request_email"]
-        if "request_shipping" in data.keys():
-            self.requestShipping = data["request_shipping"]
         if "return_url" in data.keys():
             self.returnUrl = data["return_url"]
         if "cancel_url" in data.keys():
@@ -293,13 +213,13 @@ class Invoice:
         return self
 
     def customer(self, options = None):
-        """Get the customer linked to the invoice.
+        """Get the customer linked to the authorization.
         Keyword argument:
 		
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/invoices/" + quote_plus(self.invoiceId) + "/customers"
+        path    = "/authorizations/" + quote_plus(self.authorizationId) + "/customers"
         data    = {
 
         }
@@ -310,100 +230,80 @@ class Invoice:
         customer = Customer(instance)
         return customer.fillWithData(body)
         
-    def setCustomer(self, customerId, options = None):
-        """Link a customer to the invoice.
+    def authorize(self, gatewayName, name, token, options = None):
+        """Authorize (create) a new customer token on the given gateway.
         Keyword argument:
-		customerId -- ID of the customer to be linked to the invoice
+		gatewayName -- Name of the payment gateway
+		name -- Name of the customer token
+		token -- Payment gateway token (ex: Stripe customer token)
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/invoices/" + quote_plus(self.invoiceId) + "/customers"
+        path    = "/authorizations/" + quote_plus(self.authorizationId) + "/gateways/" + quote_plus(gatewayName) + "/tokens"
         data    = {
+			'name': name, 
+			'token': token
+        }
+
+        response = Response(request.post(path, data, options))
+        body = response.body
+        body = body["token"]
+        token = Token(instance)
+        return token.fillWithData(body)
+        
+    def create(self, customerId, options = None):
+        """Create a new authorization for the given customer ID.
+        Keyword argument:
+		customerId -- ID of the customer
+        options -- Options for the request"""
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
+        path    = "/authorizations"
+        data    = {
+			'name': self.name, 
+			'currency': self.currency, 
+			'return_url': self.returnUrl, 
+			'cancel_url': self.cancelUrl, 
+			'custom': self.custom, 
 			'customer_id': customerId
         }
 
         response = Response(request.post(path, data, options))
         body = response.body
-        body = body["customer"]
-        customer = Customer(instance)
-        return customer.fillWithData(body)
-        
-    def charge(self, tokenId, options = None):
-        """Charge the invoice using the given customer token ID.
-        Keyword argument:
-		tokenId -- ID of the customer token
-        options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
-        path    = "/invoices/" + quote_plus(self.invoiceId) + "/tokens/" + quote_plus(tokenId) + "/charges"
-        data    = {
-
-        }
-
-        response = Response(request.post(path, data, options))
-        return response.success
-        
-    def tokens(self, options = None):
-        """Get all the customer tokens available on the current invoice.
-        Keyword argument:
-		
-        options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
-        path    = "/invoices/" + quote_plus(self.invoiceId) + "/tokens"
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        a    = []
-        body = response.body
-        for v in body['tokens']:
-            tmp = Token(instance)
-            tmp.fillWithData(v)
-            a.append(tmp)
-
-        return a
+        body = body["authorization"]
+        authorization = Authorization(instance)
+        return authorization.fillWithData(body)
         
     @staticmethod
-    def all(options = None):
-        """Get all the invoices.
+    def find(authorizationId, options = None):
+        """Find an authorization by its ID.
         Keyword argument:
-		
+		authorizationId -- ID of the authorization
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
-        path    = "/invoices"
+        path    = "/authorizations/" + quote_plus(authorizationId) + ""
         data    = {
 
         }
 
         response = Response(request.get(path, data, options))
-        a    = []
         body = response.body
-        for v in body['invoices']:
-            tmp = Invoice(instance)
-            tmp.fillWithData(v)
-            a.append(tmp)
-
-        return a
+        body = body["authorization"]
+        obj = Authorization()
+        return obj.fillWithData(body)
         
-    def create(self, options = None):
-        """Create a new invoice.
+    def create(self, customerId, options = None):
+        """Create a new authorization for the given customer.
         Keyword argument:
-		
+		customerId -- ID of the customer the authorization will be linked to
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/invoices"
+        path    = "/customers/" + quote_plus(customerId) + "/authorizations"
         data    = {
 			'name': self.name, 
-			'price': self.price, 
-			'taxes': self.taxes, 
-			'shipping': self.shipping, 
 			'currency': self.currency, 
-			'request_email': self.requestEmail, 
-			'request_shipping': self.requestShipping, 
 			'return_url': self.returnUrl, 
 			'cancel_url': self.cancelUrl, 
 			'custom': self.custom
@@ -411,42 +311,8 @@ class Invoice:
 
         response = Response(request.post(path, data, options))
         body = response.body
-        body = body["invoice"]
-        invoice = Invoice(instance)
-        return invoice.fillWithData(body)
-        
-    @staticmethod
-    def find(invoiceId, options = None):
-        """Find an invoice by its ID.
-        Keyword argument:
-		invoiceId -- ID of the invoice
-        options -- Options for the request"""
-        instance = ProcessOut.getDefault()
-        request = RequestProcessoutPrivate(instance)
-        path    = "/invoices/" + quote_plus(invoiceId) + ""
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        body = response.body
-        body = body["invoice"]
-        invoice = Invoice(instance)
-        return invoice.fillWithData(body)
-        
-    def lock(self, options = None):
-        """Lock the invoice so it can't be interacted with anymore.
-        Keyword argument:
-		
-        options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
-        path    = "/invoices/" + quote_plus(self.invoiceId) + ""
-        data    = {
-
-        }
-
-        response = Response(request.delete(path, data, options))
-        return response.success
+        body = body["authorization"]
+        authorization = Authorization(instance)
+        return authorization.fillWithData(body)
         
     

@@ -7,50 +7,45 @@ from .processout import ProcessOut
 from .networking.response import Response
 
 try:
-    from .invoice import Invoice
+    from .authorization import Authorization
 except ImportError:
     import sys
-    Invoice = sys.modules[__package__ + '.invoice']
-try:
-    from .tailoredinvoice import TailoredInvoice
-except ImportError:
-    import sys
-    TailoredInvoice = sys.modules[__package__ + '.tailoredinvoice']
+    Authorization = sys.modules[__package__ + '.authorization']
 try:
     from .customer import Customer
 except ImportError:
     import sys
     Customer = sys.modules[__package__ + '.customer']
 try:
-    from .customertoken import CustomerToken
+    from .token import Token
 except ImportError:
     import sys
-    CustomerToken = sys.modules[__package__ + '.customertoken']
-try:
-    from .customeraction import CustomerAction
-except ImportError:
-    import sys
-    CustomerAction = sys.modules[__package__ + '.customeraction']
+    Token = sys.modules[__package__ + '.token']
 try:
     from .event import Event
 except ImportError:
     import sys
     Event = sys.modules[__package__ + '.event']
 try:
-    from .project import Project
+    from .invoice import Invoice
 except ImportError:
     import sys
-    Project = sys.modules[__package__ + '.project']
+    Invoice = sys.modules[__package__ + '.invoice']
 try:
-    from .paymentgateway import PaymentGateway
+    from .activity import Activity
 except ImportError:
     import sys
-    PaymentGateway = sys.modules[__package__ + '.paymentgateway']
+    Activity = sys.modules[__package__ + '.activity']
 try:
-    from .paymentgatewaypublickey import PaymentGatewayPublicKey
+    from .tailoredinvoice import TailoredInvoice
 except ImportError:
     import sys
-    PaymentGatewayPublicKey = sys.modules[__package__ + '.paymentgatewaypublickey']
+    TailoredInvoice = sys.modules[__package__ + '.tailoredinvoice']
+try:
+    from .transaction import Transaction
+except ImportError:
+    import sys
+    Transaction = sys.modules[__package__ + '.transaction']
 
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 from .networking.requestprocessoutpublic import RequestProcessoutPublic
@@ -71,13 +66,15 @@ class RecurringInvoice:
         self._currency = ""
         self._taxes = "0.00"
         self._shipping = "0.00"
-        self._recurringDays = 0
-        self._trialDays = 0
-        self._ended = False
-        self._endedReason = ""
         self._returnUrl = ""
         self._cancelUrl = ""
+        self._recurringDays = 0
+        self._trialDays = 0
         self._custom = ""
+        self._ended = False
+        self._endedReason = ""
+        self._sandbox = False
+        self._createdAt = ""
         
     @property
     def id(self):
@@ -171,6 +168,32 @@ class RecurringInvoice:
         return self
     
     @property
+    def returnUrl(self):
+        """Get returnUrl"""
+        return self._returnUrl
+
+    @returnUrl.setter
+    def returnUrl(self, val):
+        """Set returnUrl
+        Keyword argument:
+        val -- New returnUrl value"""
+        self._returnUrl = val
+        return self
+    
+    @property
+    def cancelUrl(self):
+        """Get cancelUrl"""
+        return self._cancelUrl
+
+    @cancelUrl.setter
+    def cancelUrl(self, val):
+        """Set cancelUrl
+        Keyword argument:
+        val -- New cancelUrl value"""
+        self._cancelUrl = val
+        return self
+    
+    @property
     def recurringDays(self):
         """Get recurringDays"""
         return self._recurringDays
@@ -194,6 +217,19 @@ class RecurringInvoice:
         Keyword argument:
         val -- New trialDays value"""
         self._trialDays = val
+        return self
+    
+    @property
+    def custom(self):
+        """Get custom"""
+        return self._custom
+
+    @custom.setter
+    def custom(self, val):
+        """Set custom
+        Keyword argument:
+        val -- New custom value"""
+        self._custom = val
         return self
     
     @property
@@ -223,42 +259,29 @@ class RecurringInvoice:
         return self
     
     @property
-    def returnUrl(self):
-        """Get returnUrl"""
-        return self._returnUrl
+    def sandbox(self):
+        """Get sandbox"""
+        return self._sandbox
 
-    @returnUrl.setter
-    def returnUrl(self, val):
-        """Set returnUrl
+    @sandbox.setter
+    def sandbox(self, val):
+        """Set sandbox
         Keyword argument:
-        val -- New returnUrl value"""
-        self._returnUrl = val
+        val -- New sandbox value"""
+        self._sandbox = val
         return self
     
     @property
-    def cancelUrl(self):
-        """Get cancelUrl"""
-        return self._cancelUrl
+    def createdAt(self):
+        """Get createdAt"""
+        return self._createdAt
 
-    @cancelUrl.setter
-    def cancelUrl(self, val):
-        """Set cancelUrl
+    @createdAt.setter
+    def createdAt(self, val):
+        """Set createdAt
         Keyword argument:
-        val -- New cancelUrl value"""
-        self._cancelUrl = val
-        return self
-    
-    @property
-    def custom(self):
-        """Get custom"""
-        return self._custom
-
-    @custom.setter
-    def custom(self, val):
-        """Set custom
-        Keyword argument:
-        val -- New custom value"""
-        self._custom = val
+        val -- New createdAt value"""
+        self._createdAt = val
         return self
     
 
@@ -280,31 +303,53 @@ class RecurringInvoice:
             self.taxes = data["taxes"]
         if "shipping" in data.keys():
             self.shipping = data["shipping"]
-        if "recurring_days" in data.keys():
-            self.recurringDays = data["recurring_days"]
-        if "trial_days" in data.keys():
-            self.trialDays = data["trial_days"]
-        if "ended" in data.keys():
-            self.ended = data["ended"]
-        if "ended_reason" in data.keys():
-            self.endedReason = data["ended_reason"]
         if "return_url" in data.keys():
             self.returnUrl = data["return_url"]
         if "cancel_url" in data.keys():
             self.cancelUrl = data["cancel_url"]
+        if "recurring_days" in data.keys():
+            self.recurringDays = data["recurring_days"]
+        if "trial_days" in data.keys():
+            self.trialDays = data["trial_days"]
         if "custom" in data.keys():
             self.custom = data["custom"]
+        if "ended" in data.keys():
+            self.ended = data["ended"]
+        if "ended_reason" in data.keys():
+            self.endedReason = data["ended_reason"]
+        if "sandbox" in data.keys():
+            self.sandbox = data["sandbox"]
+        if "created_at" in data.keys():
+            self.createdAt = data["created_at"]
         
         return self
 
-    def invoice(self, options = None):
-        """Get the invoice representing the new recurring invoice iteration.
+    def customer(self, options = None):
+        """Get the customer linked to the recurring invoice.
         Keyword argument:
 		
         options -- Options for the request"""
         instance = self._instance
-        request = RequestProcessoutPublic(instance)
-        path    = "/recurring-invoices/" + quote_plus(self.id) + "/invoices"
+        request = RequestProcessoutPrivate(instance)
+        path    = "/recurring-invoices/" + quote_plus(self.recurringInvoiceId) + "/customers"
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        body = response.body
+        body = body["customer"]
+        customer = Customer(instance)
+        return customer.fillWithData(body)
+        
+    def invoice(self, options = None):
+        """Get the invoice corresponding to the last iteration of the recurring invoice.
+        Keyword argument:
+		
+        options -- Options for the request"""
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
+        path    = "/recurring-invoices/" + quote_plus(self.recurringInvoiceId) + "/invoices"
         data    = {
 
         }
@@ -316,24 +361,26 @@ class RecurringInvoice:
         return invoice.fillWithData(body)
         
     def create(self, customerId, options = None):
-        """Create a new recurring invoice.
+        """Create a new recurring invoice for the given customer.
         Keyword argument:
-		customerId -- ID of the customer to which the recurring invoice will be linked
+		customerId -- ID of the customer
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/customers/" + quote_plus(customerId) + "/recurring-invoices"
+        path    = "/recurring-invoices"
         data    = {
 			'name': self.name, 
 			'price': self.price, 
-			'shipping': self.shipping, 
 			'taxes': self.taxes, 
+			'shipping': self.shipping, 
 			'currency': self.currency, 
-			'recurring_days': self.recurringDays, 
-			'trial_days': self.trialDays, 
 			'return_url': self.returnUrl, 
 			'cancel_url': self.cancelUrl, 
-			'custom': self.custom
+			'custom': self.custom, 
+			'recurring_days': self.recurringDays, 
+			'trial_days': self.trialDays, 
+			'ended_reason': self.endedReason, 
+			'customer_id': customerId
         }
 
         response = Response(request.post(path, data, options))
@@ -343,14 +390,14 @@ class RecurringInvoice:
         return recurringInvoice.fillWithData(body)
         
     @staticmethod
-    def find(id, options = None):
-        """Get the recurring invoice data.
+    def find(recurringInvoiceId, options = None):
+        """Find a recurring invoice by its ID.
         Keyword argument:
-		id -- ID of the recurring invoice
+		recurringInvoiceId -- ID of the recurring invoice
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
-        path    = "/recurring-invoices/" + quote_plus(id) + ""
+        path    = "/recurring-invoices/" + quote_plus(recurringInvoiceId) + ""
         data    = {
 
         }
@@ -358,40 +405,22 @@ class RecurringInvoice:
         response = Response(request.get(path, data, options))
         body = response.body
         body = body["recurring_invoice"]
-        obj = RecurringInvoice()
-        return obj.fillWithData(body)
+        recurringInvoice = RecurringInvoice(instance)
+        return recurringInvoice.fillWithData(body)
         
     def end(self, reason, options = None):
-        """End a recurring invoice.
+        """End a recurring invoice. The reason may be provided as well.
         Keyword argument:
 		reason -- Ending reason
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/recurring-invoices/" + quote_plus(self.id) + ""
+        path    = "/recurring-invoices/" + quote_plus(self.recurringInvoiceId) + ""
         data    = {
 			'reason': reason
         }
 
         response = Response(request.delete(path, data, options))
         return response.success
-        
-    def customer(self, options = None):
-        """Get the customer linked to the recurring invoice.
-        Keyword argument:
-		
-        options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
-        path    = "/recurring-invoices/" + quote_plus(self.id) + "/customers"
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        body = response.body
-        body = body["customer"]
-        customer = Customer(instance)
-        return customer.fillWithData(body)
         
     

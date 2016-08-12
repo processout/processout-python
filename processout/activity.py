@@ -22,15 +22,15 @@ except ImportError:
     import sys
     Token = sys.modules[__package__ + '.token']
 try:
+    from .event import Event
+except ImportError:
+    import sys
+    Event = sys.modules[__package__ + '.event']
+try:
     from .invoice import Invoice
 except ImportError:
     import sys
     Invoice = sys.modules[__package__ + '.invoice']
-try:
-    from .activity import Activity
-except ImportError:
-    import sys
-    Activity = sys.modules[__package__ + '.activity']
 try:
     from .recurringinvoice import RecurringInvoice
 except ImportError:
@@ -51,7 +51,7 @@ from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 from .networking.requestprocessoutpublic import RequestProcessoutPublic
 
 
-class Event:
+class Activity:
 
     def __init__(self, instance = None):
         if instance == None:
@@ -60,10 +60,9 @@ class Event:
         self._instance = instance
 
         self._id = ""
-        self._name = ""
-        self._data = {}
-        self._processed = False
-        self._sandbox = False
+        self._title = ""
+        self._content = ""
+        self._level = 0
         self._createdAt = ""
         
     @property
@@ -80,55 +79,42 @@ class Event:
         return self
     
     @property
-    def name(self):
-        """Get name"""
-        return self._name
+    def title(self):
+        """Get title"""
+        return self._title
 
-    @name.setter
-    def name(self, val):
-        """Set name
+    @title.setter
+    def title(self, val):
+        """Set title
         Keyword argument:
-        val -- New name value"""
-        self._name = val
+        val -- New title value"""
+        self._title = val
         return self
     
     @property
-    def data(self):
-        """Get data"""
-        return self._data
+    def content(self):
+        """Get content"""
+        return self._content
 
-    @data.setter
-    def data(self, val):
-        """Set data
+    @content.setter
+    def content(self, val):
+        """Set content
         Keyword argument:
-        val -- New data value"""
-        self._data = val
+        val -- New content value"""
+        self._content = val
         return self
     
     @property
-    def processed(self):
-        """Get processed"""
-        return self._processed
+    def level(self):
+        """Get level"""
+        return self._level
 
-    @processed.setter
-    def processed(self, val):
-        """Set processed
+    @level.setter
+    def level(self, val):
+        """Set level
         Keyword argument:
-        val -- New processed value"""
-        self._processed = val
-        return self
-    
-    @property
-    def sandbox(self):
-        """Get sandbox"""
-        return self._sandbox
-
-    @sandbox.setter
-    def sandbox(self, val):
-        """Set sandbox
-        Keyword argument:
-        val -- New sandbox value"""
-        self._sandbox = val
+        val -- New level value"""
+        self._level = val
         return self
     
     @property
@@ -151,14 +137,12 @@ class Event:
         data -- The data from which to pull the new values"""
         if "id" in data.keys():
             self.id = data["id"]
-        if "name" in data.keys():
-            self.name = data["name"]
-        if "data" in data.keys():
-            self.data = data["data"]
-        if "processed" in data.keys():
-            self.processed = data["processed"]
-        if "sandbox" in data.keys():
-            self.sandbox = data["sandbox"]
+        if "title" in data.keys():
+            self.title = data["title"]
+        if "content" in data.keys():
+            self.content = data["content"]
+        if "level" in data.keys():
+            self.level = data["level"]
         if "created_at" in data.keys():
             self.createdAt = data["created_at"]
         
@@ -166,13 +150,13 @@ class Event:
 
     @staticmethod
     def all(options = None):
-        """Get all the events.
+        """Get all the project activities.
         Keyword argument:
 		
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
-        path    = "/events"
+        path    = "/activities"
         data    = {
 
         }
@@ -180,45 +164,30 @@ class Event:
         response = Response(request.get(path, data, options))
         a    = []
         body = response.body
-        for v in body['events']:
-            tmp = Event(instance)
+        for v in body['activities']:
+            tmp = Activity(instance)
             tmp.fillWithData(v)
             a.append(tmp)
 
         return a
         
     @staticmethod
-    def find(eventId, options = None):
-        """Find an event by its ID.
+    def find(activityId, options = None):
+        """Find a specific activity and fetch its data.
         Keyword argument:
-		eventId -- ID of the event
+		activityId -- ID of the activity
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
-        path    = "/events/" + quote_plus(eventId) + ""
+        path    = "/activities/" + quote_plus(activityId) + ""
         data    = {
 
         }
 
         response = Response(request.get(path, data, options))
         body = response.body
-        body = body["event"]
-        event = Event(instance)
-        return event.fillWithData(body)
-        
-    def markProcessed(self, options = None):
-        """Mark the event as processed.
-        Keyword argument:
-		
-        options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
-        path    = "/events/" + quote_plus(self.eventId) + ""
-        data    = {
-
-        }
-
-        response = Response(request.put(path, data, options))
-        return response.success
+        body = body["activity"]
+        obj = Activity()
+        return obj.fillWithData(body)
         
     

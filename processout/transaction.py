@@ -22,6 +22,11 @@ except ImportError:
     import sys
     Token = sys.modules[__package__ + '.token']
 try:
+    from .event import Event
+except ImportError:
+    import sys
+    Event = sys.modules[__package__ + '.event']
+try:
     from .invoice import Invoice
 except ImportError:
     import sys
@@ -41,17 +46,12 @@ try:
 except ImportError:
     import sys
     TailoredInvoice = sys.modules[__package__ + '.tailoredinvoice']
-try:
-    from .transaction import Transaction
-except ImportError:
-    import sys
-    Transaction = sys.modules[__package__ + '.transaction']
 
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 from .networking.requestprocessoutpublic import RequestProcessoutPublic
 
 
-class Event:
+class Transaction:
 
     def __init__(self, instance = None):
         if instance == None:
@@ -60,9 +60,8 @@ class Event:
         self._instance = instance
 
         self._id = ""
-        self._name = ""
-        self._data = {}
-        self._processed = False
+        self._status = ""
+        self._fee = ""
         self._sandbox = False
         self._createdAt = ""
         
@@ -80,42 +79,29 @@ class Event:
         return self
     
     @property
-    def name(self):
-        """Get name"""
-        return self._name
+    def status(self):
+        """Get status"""
+        return self._status
 
-    @name.setter
-    def name(self, val):
-        """Set name
+    @status.setter
+    def status(self, val):
+        """Set status
         Keyword argument:
-        val -- New name value"""
-        self._name = val
+        val -- New status value"""
+        self._status = val
         return self
     
     @property
-    def data(self):
-        """Get data"""
-        return self._data
+    def fee(self):
+        """Get fee"""
+        return self._fee
 
-    @data.setter
-    def data(self, val):
-        """Set data
+    @fee.setter
+    def fee(self, val):
+        """Set fee
         Keyword argument:
-        val -- New data value"""
-        self._data = val
-        return self
-    
-    @property
-    def processed(self):
-        """Get processed"""
-        return self._processed
-
-    @processed.setter
-    def processed(self, val):
-        """Set processed
-        Keyword argument:
-        val -- New processed value"""
-        self._processed = val
+        val -- New fee value"""
+        self._fee = val
         return self
     
     @property
@@ -151,12 +137,10 @@ class Event:
         data -- The data from which to pull the new values"""
         if "id" in data.keys():
             self.id = data["id"]
-        if "name" in data.keys():
-            self.name = data["name"]
-        if "data" in data.keys():
-            self.data = data["data"]
-        if "processed" in data.keys():
-            self.processed = data["processed"]
+        if "status" in data.keys():
+            self.status = data["status"]
+        if "fee" in data.keys():
+            self.fee = data["fee"]
         if "sandbox" in data.keys():
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
@@ -166,13 +150,13 @@ class Event:
 
     @staticmethod
     def all(options = None):
-        """Get all the events.
+        """Get all the transactions.
         Keyword argument:
 		
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
-        path    = "/events"
+        path    = "/transactions"
         data    = {
 
         }
@@ -180,45 +164,30 @@ class Event:
         response = Response(request.get(path, data, options))
         a    = []
         body = response.body
-        for v in body['events']:
-            tmp = Event(instance)
+        for v in body['transactions']:
+            tmp = Transaction(instance)
             tmp.fillWithData(v)
             a.append(tmp)
 
         return a
         
     @staticmethod
-    def find(eventId, options = None):
-        """Find an event by its ID.
+    def find(transactionId, options = None):
+        """Find a transaction by its ID.
         Keyword argument:
-		eventId -- ID of the event
+		transactionId -- ID of the transaction
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
-        path    = "/events/" + quote_plus(eventId) + ""
+        path    = "/transactions/" + quote_plus(transactionId) + ""
         data    = {
 
         }
 
         response = Response(request.get(path, data, options))
         body = response.body
-        body = body["event"]
-        event = Event(instance)
-        return event.fillWithData(body)
-        
-    def markProcessed(self, options = None):
-        """Mark the event as processed.
-        Keyword argument:
-		
-        options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
-        path    = "/events/" + quote_plus(self.eventId) + ""
-        data    = {
-
-        }
-
-        response = Response(request.put(path, data, options))
-        return response.success
+        body = body["transaction"]
+        transaction = Transaction(instance)
+        return transaction.fillWithData(body)
         
     

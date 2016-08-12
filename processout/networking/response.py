@@ -19,10 +19,7 @@ class Response:
         self._headers    = resp.headers
         self._rawBody    = resp.text
 
-        if ("application/json" in resp.headers['content-type']):
-            self._body = resp.json()
-        else:
-            self._body = urlparse.parse_qs(resp.text)
+        self._body = resp.json()
 
         self._check()
 

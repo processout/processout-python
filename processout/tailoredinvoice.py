@@ -7,50 +7,45 @@ from .processout import ProcessOut
 from .networking.response import Response
 
 try:
-    from .invoice import Invoice
+    from .authorization import Authorization
 except ImportError:
     import sys
-    Invoice = sys.modules[__package__ + '.invoice']
-try:
-    from .recurringinvoice import RecurringInvoice
-except ImportError:
-    import sys
-    RecurringInvoice = sys.modules[__package__ + '.recurringinvoice']
+    Authorization = sys.modules[__package__ + '.authorization']
 try:
     from .customer import Customer
 except ImportError:
     import sys
     Customer = sys.modules[__package__ + '.customer']
 try:
-    from .customertoken import CustomerToken
+    from .token import Token
 except ImportError:
     import sys
-    CustomerToken = sys.modules[__package__ + '.customertoken']
-try:
-    from .customeraction import CustomerAction
-except ImportError:
-    import sys
-    CustomerAction = sys.modules[__package__ + '.customeraction']
+    Token = sys.modules[__package__ + '.token']
 try:
     from .event import Event
 except ImportError:
     import sys
     Event = sys.modules[__package__ + '.event']
 try:
-    from .project import Project
+    from .invoice import Invoice
 except ImportError:
     import sys
-    Project = sys.modules[__package__ + '.project']
+    Invoice = sys.modules[__package__ + '.invoice']
 try:
-    from .paymentgateway import PaymentGateway
+    from .activity import Activity
 except ImportError:
     import sys
-    PaymentGateway = sys.modules[__package__ + '.paymentgateway']
+    Activity = sys.modules[__package__ + '.activity']
 try:
-    from .paymentgatewaypublickey import PaymentGatewayPublicKey
+    from .recurringinvoice import RecurringInvoice
 except ImportError:
     import sys
-    PaymentGatewayPublicKey = sys.modules[__package__ + '.paymentgatewaypublickey']
+    RecurringInvoice = sys.modules[__package__ + '.recurringinvoice']
+try:
+    from .transaction import Transaction
+except ImportError:
+    import sys
+    Transaction = sys.modules[__package__ + '.transaction']
 
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 from .networking.requestprocessoutpublic import RequestProcessoutPublic
@@ -70,8 +65,12 @@ class TailoredInvoice:
         self._currency = ""
         self._taxes = "0.00"
         self._shipping = "0.00"
+        self._requestEmail = False
+        self._requestShipping = False
         self._returnUrl = ""
         self._cancelUrl = ""
+        self._custom = ""
+        self._createdAt = ""
         
     @property
     def id(self):
@@ -152,6 +151,32 @@ class TailoredInvoice:
         return self
     
     @property
+    def requestEmail(self):
+        """Get requestEmail"""
+        return self._requestEmail
+
+    @requestEmail.setter
+    def requestEmail(self, val):
+        """Set requestEmail
+        Keyword argument:
+        val -- New requestEmail value"""
+        self._requestEmail = val
+        return self
+    
+    @property
+    def requestShipping(self):
+        """Get requestShipping"""
+        return self._requestShipping
+
+    @requestShipping.setter
+    def requestShipping(self, val):
+        """Set requestShipping
+        Keyword argument:
+        val -- New requestShipping value"""
+        self._requestShipping = val
+        return self
+    
+    @property
     def returnUrl(self):
         """Get returnUrl"""
         return self._returnUrl
@@ -177,6 +202,32 @@ class TailoredInvoice:
         self._cancelUrl = val
         return self
     
+    @property
+    def custom(self):
+        """Get custom"""
+        return self._custom
+
+    @custom.setter
+    def custom(self, val):
+        """Set custom
+        Keyword argument:
+        val -- New custom value"""
+        self._custom = val
+        return self
+    
+    @property
+    def createdAt(self):
+        """Get createdAt"""
+        return self._createdAt
+
+    @createdAt.setter
+    def createdAt(self, val):
+        """Set createdAt
+        Keyword argument:
+        val -- New createdAt value"""
+        self._createdAt = val
+        return self
+    
 
     def fillWithData(self, data):
         """Fill the current object with the new values pulled from data
@@ -194,34 +245,24 @@ class TailoredInvoice:
             self.taxes = data["taxes"]
         if "shipping" in data.keys():
             self.shipping = data["shipping"]
+        if "request_email" in data.keys():
+            self.requestEmail = data["request_email"]
+        if "request_shipping" in data.keys():
+            self.requestShipping = data["request_shipping"]
         if "return_url" in data.keys():
             self.returnUrl = data["return_url"]
         if "cancel_url" in data.keys():
             self.cancelUrl = data["cancel_url"]
+        if "custom" in data.keys():
+            self.custom = data["custom"]
+        if "created_at" in data.keys():
+            self.createdAt = data["created_at"]
         
         return self
 
-    def invoice(self, options = None):
-        """Create an invoice from a tailored invoice.
-        Keyword argument:
-		
-        options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPublic(instance)
-        path    = "/tailored-invoices/" + quote_plus(self.id) + "/invoices"
-        data    = {
-
-        }
-
-        response = Response(request.post(path, data, options))
-        body = response.body
-        body = body["invoice"]
-        invoice = Invoice(instance)
-        return invoice.fillWithData(body)
-        
     @staticmethod
     def all(options = None):
-        """List all tailored invoices.
+        """Get all the tailored invoices.
         Keyword argument:
 		
         options -- Options for the request"""
@@ -256,8 +297,11 @@ class TailoredInvoice:
 			'taxes': self.taxes, 
 			'shipping': self.shipping, 
 			'currency': self.currency, 
+			'request_email': self.requestEmail, 
+			'request_shipping': self.requestShipping, 
 			'return_url': self.returnUrl, 
-			'cancel_url': self.cancelUrl
+			'cancel_url': self.cancelUrl, 
+			'custom': self.custom
         }
 
         response = Response(request.post(path, data, options))
@@ -267,14 +311,14 @@ class TailoredInvoice:
         return tailoredInvoice.fillWithData(body)
         
     @staticmethod
-    def find(id, options = None):
-        """Get tailored invoice data.
+    def find(tailoredInvoiceId, options = None):
+        """Find a tailored invoice by its ID.
         Keyword argument:
-		id -- Unique ID of your tailored invoice
+		tailoredInvoiceId -- ID of the tailored invoice
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
-        path    = "/tailored-invoices/" + quote_plus(id) + ""
+        path    = "/tailored-invoices/" + quote_plus(tailoredInvoiceId) + ""
         data    = {
 
         }
@@ -282,26 +326,19 @@ class TailoredInvoice:
         response = Response(request.get(path, data, options))
         body = response.body
         body = body["tailored_invoice"]
-        obj = TailoredInvoice()
-        return obj.fillWithData(body)
+        tailoredInvoice = TailoredInvoice(instance)
+        return tailoredInvoice.fillWithData(body)
         
     def save(self, options = None):
-        """Update the tailored invoice data.
+        """Save the updated tailored invoice attributes.
         Keyword argument:
 		
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/tailored-invoices/" + quote_plus(self.id) + ""
+        path    = "/tailored-invoices/" + quote_plus(self.tailoredInvoiceId) + ""
         data    = {
-			'return_url': self.returnUrl, 
-			'cancel_url': self.cancelUrl, 
-			'notify_url': self.notifyUrl, 
-			'name': self.name, 
-			'price': self.price, 
-			'currency': self.currency, 
-			'taxes': self.taxes, 
-			'shipping': self.shipping
+
         }
 
         response = Response(request.put(path, data, options))
@@ -310,13 +347,13 @@ class TailoredInvoice:
         return self.fillWithData(body)
         
     def delete(self, options = None):
-        """Delete a tailored invoice.
+        """Delete the tailored invoice.
         Keyword argument:
 		
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/tailored-invoices/" + quote_plus(self.id) + ""
+        path    = "/tailored-invoices/" + quote_plus(self.tailoredInvoiceId) + ""
         data    = {
 
         }

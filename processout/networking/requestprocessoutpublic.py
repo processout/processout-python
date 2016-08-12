@@ -24,7 +24,7 @@ class RequestProcessoutPublic:
     def _getHeaders(self, options):
         """Return the headers sent with the request"""
         headers = {}
-        headers["API-Version"] = "1.1.0.0"
+        headers["API-Version"] = "1.3.0.0"
 
         if options is None:
             return headers

@@ -7,10 +7,30 @@ from .processout import ProcessOut
 from .networking.response import Response
 
 try:
+    from .authorization import Authorization
+except ImportError:
+    import sys
+    Authorization = sys.modules[__package__ + '.authorization']
+try:
+    from .customer import Customer
+except ImportError:
+    import sys
+    Customer = sys.modules[__package__ + '.customer']
+try:
+    from .event import Event
+except ImportError:
+    import sys
+    Event = sys.modules[__package__ + '.event']
+try:
     from .invoice import Invoice
 except ImportError:
     import sys
     Invoice = sys.modules[__package__ + '.invoice']
+try:
+    from .activity import Activity
+except ImportError:
+    import sys
+    Activity = sys.modules[__package__ + '.activity']
 try:
     from .recurringinvoice import RecurringInvoice
 except ImportError:
@@ -22,41 +42,16 @@ except ImportError:
     import sys
     TailoredInvoice = sys.modules[__package__ + '.tailoredinvoice']
 try:
-    from .customer import Customer
+    from .transaction import Transaction
 except ImportError:
     import sys
-    Customer = sys.modules[__package__ + '.customer']
-try:
-    from .customeraction import CustomerAction
-except ImportError:
-    import sys
-    CustomerAction = sys.modules[__package__ + '.customeraction']
-try:
-    from .event import Event
-except ImportError:
-    import sys
-    Event = sys.modules[__package__ + '.event']
-try:
-    from .project import Project
-except ImportError:
-    import sys
-    Project = sys.modules[__package__ + '.project']
-try:
-    from .paymentgateway import PaymentGateway
-except ImportError:
-    import sys
-    PaymentGateway = sys.modules[__package__ + '.paymentgateway']
-try:
-    from .paymentgatewaypublickey import PaymentGatewayPublicKey
-except ImportError:
-    import sys
-    PaymentGatewayPublicKey = sys.modules[__package__ + '.paymentgatewaypublickey']
+    Transaction = sys.modules[__package__ + '.transaction']
 
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 from .networking.requestprocessoutpublic import RequestProcessoutPublic
 
 
-class CustomerToken:
+class Token:
 
     def __init__(self, instance = None):
         if instance == None:
@@ -66,7 +61,8 @@ class CustomerToken:
 
         self._id = ""
         self._name = ""
-        self._gateway = ""
+        self._isRecurringInvoice = ""
+        self._createdAt = ""
         
     @property
     def id(self):
@@ -95,16 +91,29 @@ class CustomerToken:
         return self
     
     @property
-    def gateway(self):
-        """Get gateway"""
-        return self._gateway
+    def isRecurringInvoice(self):
+        """Get isRecurringInvoice"""
+        return self._isRecurringInvoice
 
-    @gateway.setter
-    def gateway(self, val):
-        """Set gateway
+    @isRecurringInvoice.setter
+    def isRecurringInvoice(self, val):
+        """Set isRecurringInvoice
         Keyword argument:
-        val -- New gateway value"""
-        self._gateway = val
+        val -- New isRecurringInvoice value"""
+        self._isRecurringInvoice = val
+        return self
+    
+    @property
+    def createdAt(self):
+        """Get createdAt"""
+        return self._createdAt
+
+    @createdAt.setter
+    def createdAt(self, val):
+        """Set createdAt
+        Keyword argument:
+        val -- New createdAt value"""
+        self._createdAt = val
         return self
     
 
@@ -116,8 +125,10 @@ class CustomerToken:
             self.id = data["id"]
         if "name" in data.keys():
             self.name = data["name"]
-        if "gateway" in data.keys():
-            self.gateway = data["gateway"]
+        if "is_recurring_invoice" in data.keys():
+            self.isRecurringInvoice = data["is_recurring_invoice"]
+        if "created_at" in data.keys():
+            self.createdAt = data["created_at"]
         
         return self
 

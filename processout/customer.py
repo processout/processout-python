@@ -7,10 +7,30 @@ from .processout import ProcessOut
 from .networking.response import Response
 
 try:
+    from .authorization import Authorization
+except ImportError:
+    import sys
+    Authorization = sys.modules[__package__ + '.authorization']
+try:
+    from .token import Token
+except ImportError:
+    import sys
+    Token = sys.modules[__package__ + '.token']
+try:
+    from .event import Event
+except ImportError:
+    import sys
+    Event = sys.modules[__package__ + '.event']
+try:
     from .invoice import Invoice
 except ImportError:
     import sys
     Invoice = sys.modules[__package__ + '.invoice']
+try:
+    from .activity import Activity
+except ImportError:
+    import sys
+    Activity = sys.modules[__package__ + '.activity']
 try:
     from .recurringinvoice import RecurringInvoice
 except ImportError:
@@ -22,35 +42,10 @@ except ImportError:
     import sys
     TailoredInvoice = sys.modules[__package__ + '.tailoredinvoice']
 try:
-    from .customertoken import CustomerToken
+    from .transaction import Transaction
 except ImportError:
     import sys
-    CustomerToken = sys.modules[__package__ + '.customertoken']
-try:
-    from .customeraction import CustomerAction
-except ImportError:
-    import sys
-    CustomerAction = sys.modules[__package__ + '.customeraction']
-try:
-    from .event import Event
-except ImportError:
-    import sys
-    Event = sys.modules[__package__ + '.event']
-try:
-    from .project import Project
-except ImportError:
-    import sys
-    Project = sys.modules[__package__ + '.project']
-try:
-    from .paymentgateway import PaymentGateway
-except ImportError:
-    import sys
-    PaymentGateway = sys.modules[__package__ + '.paymentgateway']
-try:
-    from .paymentgatewaypublickey import PaymentGatewayPublicKey
-except ImportError:
-    import sys
-    PaymentGatewayPublicKey = sys.modules[__package__ + '.paymentgatewaypublickey']
+    Transaction = sys.modules[__package__ + '.transaction']
 
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 from .networking.requestprocessoutpublic import RequestProcessoutPublic
@@ -74,6 +69,8 @@ class Customer:
         self._state = ""
         self._zip = ""
         self._countryCode = ""
+        self._sandbox = False
+        self._createdAt = ""
         
     @property
     def id(self):
@@ -205,6 +202,32 @@ class Customer:
         self._countryCode = val
         return self
     
+    @property
+    def sandbox(self):
+        """Get sandbox"""
+        return self._sandbox
+
+    @sandbox.setter
+    def sandbox(self, val):
+        """Set sandbox
+        Keyword argument:
+        val -- New sandbox value"""
+        self._sandbox = val
+        return self
+    
+    @property
+    def createdAt(self):
+        """Get createdAt"""
+        return self._createdAt
+
+    @createdAt.setter
+    def createdAt(self, val):
+        """Set createdAt
+        Keyword argument:
+        val -- New createdAt value"""
+        self._createdAt = val
+        return self
+    
 
     def fillWithData(self, data):
         """Fill the current object with the new values pulled from data
@@ -230,12 +253,96 @@ class Customer:
             self.zip = data["zip"]
         if "country_code" in data.keys():
             self.countryCode = data["country_code"]
+        if "sandbox" in data.keys():
+            self.sandbox = data["sandbox"]
+        if "created_at" in data.keys():
+            self.createdAt = data["created_at"]
         
         return self
 
+    def recurringInvoices(self, options = None):
+        """Get the recurring invoices linked to the customer.
+        Keyword argument:
+		
+        options -- Options for the request"""
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
+        path    = "/customers/" + quote_plus(self.customerId) + "/recurring-invoices"
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        a    = []
+        body = response.body
+        for v in body['recurring_invoices']:
+            tmp = RecurringInvoice(instance)
+            tmp.fillWithData(v)
+            a.append(tmp)
+
+        return a
+        
+    def tokens(self, options = None):
+        """Get the customer's tokens.
+        Keyword argument:
+		
+        options -- Options for the request"""
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
+        path    = "/customers/" + quote_plus(self.customerId) + "/tokens"
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        a    = []
+        body = response.body
+        for v in body['tokens']:
+            tmp = Token(instance)
+            tmp.fillWithData(v)
+            a.append(tmp)
+
+        return a
+        
+    def token(self, tokenId, options = None):
+        """Get a specific customer's token by its ID.
+        Keyword argument:
+		tokenId -- ID of the token
+        options -- Options for the request"""
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
+        path    = "/customers/" + quote_plus(self.customerId) + "/tokens/" + quote_plus(tokenId) + ""
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        body = response.body
+        body = body["token"]
+        token = Token(instance)
+        return token.fillWithData(body)
+        
+    def delete(self, tokenId, options = None):
+        """Get a specific customer's token by its ID.
+        Keyword argument:
+		tokenId -- ID of the token
+        options -- Options for the request"""
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
+        path    = "/customers/" + quote_plus(self.customerId) + "/tokens/" + quote_plus(tokenId) + ""
+        data    = {
+
+        }
+
+        response = Response(request.delete(path, data, options))
+        body = response.body
+        body = body["token"]
+        token = Token(instance)
+        return token.fillWithData(body)
+        
     @staticmethod
     def all(options = None):
-        """Get the customers list belonging to the project.
+        """Get all the customers.
         Keyword argument:
 		
         options -- Options for the request"""
@@ -271,6 +378,7 @@ class Customer:
 			'address1': self.address1, 
 			'address2': self.address2, 
 			'city': self.city, 
+			'state': self.state, 
 			'zip': self.zip, 
 			'country_code': self.countryCode
         }
@@ -282,14 +390,14 @@ class Customer:
         return customer.fillWithData(body)
         
     @staticmethod
-    def find(id, options = None):
-        """Get the customer data.
+    def find(customerId, options = None):
+        """Find a customer by its ID.
         Keyword argument:
-		id -- ID of the customer
+		customerId -- ID of the customer
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
-        path    = "/customers/" + quote_plus(id) + ""
+        path    = "/customers/" + quote_plus(customerId) + ""
         data    = {
 
         }
@@ -297,33 +405,25 @@ class Customer:
         response = Response(request.get(path, data, options))
         body = response.body
         body = body["customer"]
-        obj = Customer()
-        return obj.fillWithData(body)
+        customer = Customer(instance)
+        return customer.fillWithData(body)
         
     def save(self, options = None):
-        """Update the customer data.
+        """Save the updated customer attributes.
         Keyword argument:
 		
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/customers/" + quote_plus(self.id) + ""
+        path    = "/customers/" + quote_plus(self.customerId) + ""
         data    = {
-			'email': self.email, 
-			'first_name': self.firstName, 
-			'last_name': self.lastName, 
-			'address1': self.address1, 
-			'address2': self.address2, 
-			'city': self.city, 
-			'zip': self.zip, 
-			'country_code': self.countryCode
+
         }
 
-        response = Response(request.post(path, data, options))
+        response = Response(request.put(path, data, options))
         body = response.body
         body = body["customer"]
-        customer = Customer(instance)
-        return customer.fillWithData(body)
+        return self.fillWithData(body)
         
     def delete(self, options = None):
         """Delete the customer.
@@ -332,88 +432,12 @@ class Customer:
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/customers/" + quote_plus(self.id) + ""
+        path    = "/customers/" + quote_plus(self.customerId) + ""
         data    = {
 
         }
 
         response = Response(request.delete(path, data, options))
         return response.success
-        
-    def tokens(self, options = None):
-        """Get all the authorization tokens of the customer.
-        Keyword argument:
-		
-        options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
-        path    = "/customers/" + quote_plus(self.id) + "/tokens"
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        a    = []
-        body = response.body
-        for v in body['tokens']:
-            tmp = CustomerToken(instance)
-            tmp.fillWithData(v)
-            a.append(tmp)
-
-        return a
-        
-    def findToken(self, tokenId, options = None):
-        """Find a specific customer token.
-        Keyword argument:
-		tokenId -- ID of the customer token
-        options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
-        path    = "/customers/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + ""
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        body = response.body
-        body = body["token"]
-        customerToken = CustomerToken(instance)
-        return customerToken.fillWithData(body)
-        
-    def revokeToken(self, tokenId, options = None):
-        """Revoke (delete) a specific customer token.
-        Keyword argument:
-		tokenId -- ID of the customer token
-        options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
-        path    = "/customers/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + ""
-        data    = {
-
-        }
-
-        response = Response(request.delete(path, data, options))
-        return response.success
-        
-    def authorize(self, gatewayName, name, token, options = None):
-        """Authorize (create) a new customer token.
-        Keyword argument:
-		gatewayName -- Name of the payment gateway
-		name -- Name of the customer token
-		token -- Payment gateway token (ex: stripe customer token)
-        options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
-        path    = "/customers/" + quote_plus(self.id) + "/gateways/" + quote_plus(gatewayName) + "/tokens"
-        data    = {
-			'name': name, 
-			'token': token
-        }
-
-        response = Response(request.post(path, data, options))
-        body = response.body
-        body = body["token"]
-        customerToken = CustomerToken(instance)
-        return customerToken.fillWithData(body)
         
     
