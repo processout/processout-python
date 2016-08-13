@@ -7,10 +7,10 @@ from .processout import ProcessOut
 from .networking.response import Response
 
 try:
-    from .authorization import Authorization
+    from .authorizationrequest import AuthorizationRequest
 except ImportError:
     import sys
-    Authorization = sys.modules[__package__ + '.authorization']
+    AuthorizationRequest = sys.modules[__package__ + '.authorizationrequest']
 try:
     from .token import Token
 except ImportError:
@@ -48,7 +48,6 @@ except ImportError:
     Transaction = sys.modules[__package__ + '.transaction']
 
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
-from .networking.requestprocessoutpublic import RequestProcessoutPublic
 
 
 class Customer:
@@ -69,6 +68,7 @@ class Customer:
         self._state = ""
         self._zip = ""
         self._countryCode = ""
+        self._hasPin = False
         self._sandbox = False
         self._createdAt = ""
         
@@ -203,6 +203,19 @@ class Customer:
         return self
     
     @property
+    def hasPin(self):
+        """Get hasPin"""
+        return self._hasPin
+
+    @hasPin.setter
+    def hasPin(self, val):
+        """Set hasPin
+        Keyword argument:
+        val -- New hasPin value"""
+        self._hasPin = val
+        return self
+    
+    @property
     def sandbox(self):
         """Get sandbox"""
         return self._sandbox
@@ -253,6 +266,8 @@ class Customer:
             self.zip = data["zip"]
         if "country_code" in data.keys():
             self.countryCode = data["country_code"]
+        if "has_pin" in data.keys():
+            self.hasPin = data["has_pin"]
         if "sandbox" in data.keys():
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():

@@ -48,10 +48,9 @@ except ImportError:
     Transaction = sys.modules[__package__ + '.transaction']
 
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
-from .networking.requestprocessoutpublic import RequestProcessoutPublic
 
 
-class Authorization:
+class AuthorizationRequest:
 
     def __init__(self, instance = None):
         if instance == None:
@@ -60,6 +59,7 @@ class Authorization:
         self._instance = instance
 
         self._id = ""
+        self._customer = None
         self._url = ""
         self._name = ""
         self._currency = ""
@@ -80,6 +80,24 @@ class Authorization:
         Keyword argument:
         val -- New id value"""
         self._id = val
+        return self
+    
+    @property
+    def customer(self):
+        """Get customer"""
+        return self._customer
+
+    @customer.setter
+    def customer(self, val):
+        """Set customer
+        Keyword argument:
+        val -- New customer value"""
+        if isinstance(val, Customer):
+            self._customer = val
+        else:
+            obj = Customer(self._instance)
+            obj.fillWithData(val)
+            self._customer = obj
         return self
     
     @property
@@ -193,6 +211,8 @@ class Authorization:
         data -- The data from which to pull the new values"""
         if "id" in data.keys():
             self.id = data["id"]
+        if "customer" in data.keys():
+            self.customer = data["customer"]
         if "url" in data.keys():
             self.url = data["url"]
         if "name" in data.keys():
@@ -213,13 +233,13 @@ class Authorization:
         return self
 
     def customer(self, options = None):
-        """Get the customer linked to the authorization.
+        """Get the customer linked to the authorization request.
         Keyword argument:
 		
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/authorizations/" + quote_plus(self.authorizationId) + "/customers"
+        path    = "/authorization-requests/" + quote_plus(self.authorizationRequestId) + "/customers"
         data    = {
 
         }
@@ -239,7 +259,7 @@ class Authorization:
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/authorizations/" + quote_plus(self.authorizationId) + "/gateways/" + quote_plus(gatewayName) + "/tokens"
+        path    = "/authorization-requests/" + quote_plus(self.authorizationRequestId) + "/gateways/" + quote_plus(gatewayName) + "/tokens"
         data    = {
 			'name': name, 
 			'token': token
@@ -252,13 +272,13 @@ class Authorization:
         return token.fillWithData(body)
         
     def create(self, customerId, options = None):
-        """Create a new authorization for the given customer ID.
+        """Create a new authorization request for the given customer ID.
         Keyword argument:
 		customerId -- ID of the customer
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/authorizations"
+        path    = "/authorization-requests"
         data    = {
 			'name': self.name, 
 			'currency': self.currency, 
@@ -270,49 +290,27 @@ class Authorization:
 
         response = Response(request.post(path, data, options))
         body = response.body
-        body = body["authorization"]
-        authorization = Authorization(instance)
-        return authorization.fillWithData(body)
+        body = body["authorization_request"]
+        authorizationRequest = AuthorizationRequest(instance)
+        return authorizationRequest.fillWithData(body)
         
     @staticmethod
-    def find(authorizationId, options = None):
-        """Find an authorization by its ID.
+    def find(authorizationRequestId, options = None):
+        """Find an authorization request by its ID.
         Keyword argument:
-		authorizationId -- ID of the authorization
+		authorizationRequestId -- ID of the authorization request
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
-        path    = "/authorizations/" + quote_plus(authorizationId) + ""
+        path    = "/authorization-requests/" + quote_plus(authorizationRequestId) + ""
         data    = {
 
         }
 
         response = Response(request.get(path, data, options))
         body = response.body
-        body = body["authorization"]
-        obj = Authorization()
+        body = body["authorization_request"]
+        obj = AuthorizationRequest()
         return obj.fillWithData(body)
-        
-    def create(self, customerId, options = None):
-        """Create a new authorization for the given customer.
-        Keyword argument:
-		customerId -- ID of the customer the authorization will be linked to
-        options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
-        path    = "/customers/" + quote_plus(customerId) + "/authorizations"
-        data    = {
-			'name': self.name, 
-			'currency': self.currency, 
-			'return_url': self.returnUrl, 
-			'cancel_url': self.cancelUrl, 
-			'custom': self.custom
-        }
-
-        response = Response(request.post(path, data, options))
-        body = response.body
-        body = body["authorization"]
-        authorization = Authorization(instance)
-        return authorization.fillWithData(body)
         
     

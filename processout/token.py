@@ -7,10 +7,10 @@ from .processout import ProcessOut
 from .networking.response import Response
 
 try:
-    from .authorization import Authorization
+    from .authorizationrequest import AuthorizationRequest
 except ImportError:
     import sys
-    Authorization = sys.modules[__package__ + '.authorization']
+    AuthorizationRequest = sys.modules[__package__ + '.authorizationrequest']
 try:
     from .customer import Customer
 except ImportError:
@@ -48,7 +48,6 @@ except ImportError:
     Transaction = sys.modules[__package__ + '.transaction']
 
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
-from .networking.requestprocessoutpublic import RequestProcessoutPublic
 
 
 class Token:
@@ -60,6 +59,7 @@ class Token:
         self._instance = instance
 
         self._id = ""
+        self._customer = None
         self._name = ""
         self._isRecurringInvoice = ""
         self._createdAt = ""
@@ -75,6 +75,24 @@ class Token:
         Keyword argument:
         val -- New id value"""
         self._id = val
+        return self
+    
+    @property
+    def customer(self):
+        """Get customer"""
+        return self._customer
+
+    @customer.setter
+    def customer(self, val):
+        """Set customer
+        Keyword argument:
+        val -- New customer value"""
+        if isinstance(val, Customer):
+            self._customer = val
+        else:
+            obj = Customer(self._instance)
+            obj.fillWithData(val)
+            self._customer = obj
         return self
     
     @property
@@ -123,6 +141,8 @@ class Token:
         data -- The data from which to pull the new values"""
         if "id" in data.keys():
             self.id = data["id"]
+        if "customer" in data.keys():
+            self.customer = data["customer"]
         if "name" in data.keys():
             self.name = data["name"]
         if "is_recurring_invoice" in data.keys():

@@ -7,10 +7,10 @@ from .processout import ProcessOut
 from .networking.response import Response
 
 try:
-    from .authorization import Authorization
+    from .authorizationrequest import AuthorizationRequest
 except ImportError:
     import sys
-    Authorization = sys.modules[__package__ + '.authorization']
+    AuthorizationRequest = sys.modules[__package__ + '.authorizationrequest']
 try:
     from .customer import Customer
 except ImportError:
@@ -48,7 +48,6 @@ except ImportError:
     Transaction = sys.modules[__package__ + '.transaction']
 
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
-from .networking.requestprocessoutpublic import RequestProcessoutPublic
 
 
 class Invoice:
@@ -60,6 +59,8 @@ class Invoice:
         self._instance = instance
 
         self._id = ""
+        self._customer = None
+        self._recurringInvoice = None
         self._url = ""
         self._name = ""
         self._price = ""
@@ -85,6 +86,42 @@ class Invoice:
         Keyword argument:
         val -- New id value"""
         self._id = val
+        return self
+    
+    @property
+    def customer(self):
+        """Get customer"""
+        return self._customer
+
+    @customer.setter
+    def customer(self, val):
+        """Set customer
+        Keyword argument:
+        val -- New customer value"""
+        if isinstance(val, Customer):
+            self._customer = val
+        else:
+            obj = Customer(self._instance)
+            obj.fillWithData(val)
+            self._customer = obj
+        return self
+    
+    @property
+    def recurringInvoice(self):
+        """Get recurringInvoice"""
+        return self._recurringInvoice
+
+    @recurringInvoice.setter
+    def recurringInvoice(self, val):
+        """Set recurringInvoice
+        Keyword argument:
+        val -- New recurringInvoice value"""
+        if isinstance(val, RecurringInvoice):
+            self._recurringInvoice = val
+        else:
+            obj = RecurringInvoice(self._instance)
+            obj.fillWithData(val)
+            self._recurringInvoice = obj
         return self
     
     @property
@@ -263,6 +300,10 @@ class Invoice:
         data -- The data from which to pull the new values"""
         if "id" in data.keys():
             self.id = data["id"]
+        if "customer" in data.keys():
+            self.customer = data["customer"]
+        if "recurring_invoice" in data.keys():
+            self.recurringInvoice = data["recurring_invoice"]
         if "url" in data.keys():
             self.url = data["url"]
         if "name" in data.keys():

@@ -7,10 +7,10 @@ from .processout import ProcessOut
 from .networking.response import Response
 
 try:
-    from .authorization import Authorization
+    from .authorizationrequest import AuthorizationRequest
 except ImportError:
     import sys
-    Authorization = sys.modules[__package__ + '.authorization']
+    AuthorizationRequest = sys.modules[__package__ + '.authorizationrequest']
 try:
     from .customer import Customer
 except ImportError:
@@ -48,7 +48,6 @@ except ImportError:
     Transaction = sys.modules[__package__ + '.transaction']
 
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
-from .networking.requestprocessoutpublic import RequestProcessoutPublic
 
 
 class Event:
@@ -64,7 +63,7 @@ class Event:
         self._data = {}
         self._processed = False
         self._sandbox = False
-        self._createdAt = ""
+        self._firedAt = ""
         
     @property
     def id(self):
@@ -132,16 +131,16 @@ class Event:
         return self
     
     @property
-    def createdAt(self):
-        """Get createdAt"""
-        return self._createdAt
+    def firedAt(self):
+        """Get firedAt"""
+        return self._firedAt
 
-    @createdAt.setter
-    def createdAt(self, val):
-        """Set createdAt
+    @firedAt.setter
+    def firedAt(self, val):
+        """Set firedAt
         Keyword argument:
-        val -- New createdAt value"""
-        self._createdAt = val
+        val -- New firedAt value"""
+        self._firedAt = val
         return self
     
 
@@ -159,8 +158,8 @@ class Event:
             self.processed = data["processed"]
         if "sandbox" in data.keys():
             self.sandbox = data["sandbox"]
-        if "created_at" in data.keys():
-            self.createdAt = data["created_at"]
+        if "fired_at" in data.keys():
+            self.firedAt = data["fired_at"]
         
         return self
 

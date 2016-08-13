@@ -7,10 +7,10 @@ from .processout import ProcessOut
 from .networking.response import Response
 
 try:
-    from .authorization import Authorization
+    from .authorizationrequest import AuthorizationRequest
 except ImportError:
     import sys
-    Authorization = sys.modules[__package__ + '.authorization']
+    AuthorizationRequest = sys.modules[__package__ + '.authorizationrequest']
 try:
     from .customer import Customer
 except ImportError:
@@ -48,7 +48,6 @@ except ImportError:
     Transaction = sys.modules[__package__ + '.transaction']
 
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
-from .networking.requestprocessoutpublic import RequestProcessoutPublic
 
 
 class Activity:
