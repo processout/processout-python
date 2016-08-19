@@ -7,6 +7,11 @@ from .processout import ProcessOut
 from .networking.response import Response
 
 try:
+    from .activity import Activity
+except ImportError:
+    import sys
+    Activity = sys.modules[__package__ + '.activity']
+try:
     from .authorizationrequest import AuthorizationRequest
 except ImportError:
     import sys
@@ -26,11 +31,6 @@ try:
 except ImportError:
     import sys
     Invoice = sys.modules[__package__ + '.invoice']
-try:
-    from .activity import Activity
-except ImportError:
-    import sys
-    Activity = sys.modules[__package__ + '.activity']
 try:
     from .recurringinvoice import RecurringInvoice
 except ImportError:
@@ -163,6 +163,28 @@ class Event:
         
         return self
 
+    def webhooks(self, options = None):
+        """Get all the webhooks of the event.
+        Keyword argument:
+		
+        options -- Options for the request"""
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
+        path    = "/events/" + quote_plus(self.eventId) + "/webhooks"
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        a    = []
+        body = response.body
+        for v in body['webhooks']:
+            tmp = Webhook(instance)
+            tmp.fillWithData(v)
+            a.append(tmp)
+
+        return a
+        
     @staticmethod
     def all(options = None):
         """Get all the events.

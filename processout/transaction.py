@@ -7,6 +7,11 @@ from .processout import ProcessOut
 from .networking.response import Response
 
 try:
+    from .activity import Activity
+except ImportError:
+    import sys
+    Activity = sys.modules[__package__ + '.activity']
+try:
     from .authorizationrequest import AuthorizationRequest
 except ImportError:
     import sys
@@ -31,11 +36,6 @@ try:
 except ImportError:
     import sys
     Invoice = sys.modules[__package__ + '.invoice']
-try:
-    from .activity import Activity
-except ImportError:
-    import sys
-    Activity = sys.modules[__package__ + '.activity']
 try:
     from .recurringinvoice import RecurringInvoice
 except ImportError:

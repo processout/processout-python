@@ -7,6 +7,11 @@ from .processout import ProcessOut
 from .networking.response import Response
 
 try:
+    from .activity import Activity
+except ImportError:
+    import sys
+    Activity = sys.modules[__package__ + '.activity']
+try:
     from .authorizationrequest import AuthorizationRequest
 except ImportError:
     import sys
@@ -31,11 +36,6 @@ try:
 except ImportError:
     import sys
     Invoice = sys.modules[__package__ + '.invoice']
-try:
-    from .activity import Activity
-except ImportError:
-    import sys
-    Activity = sys.modules[__package__ + '.activity']
 try:
     from .recurringinvoice import RecurringInvoice
 except ImportError:
@@ -259,6 +259,24 @@ class TailoredInvoice:
         
         return self
 
+    def invoice(self, options = None):
+        """Create a new invoice from the tailored invoice.
+        Keyword argument:
+		
+        options -- Options for the request"""
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
+        path    = "/tailored-invoices/" + quote_plus(self.tailoredInvoiceId) + "/invoices"
+        data    = {
+
+        }
+
+        response = Response(request.post(path, data, options))
+        body = response.body
+        body = body["invoice"]
+        invoice = Invoice(instance)
+        return invoice.fillWithData(body)
+        
     @staticmethod
     def all(options = None):
         """Get all the tailored invoices.

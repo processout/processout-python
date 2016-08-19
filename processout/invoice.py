@@ -7,6 +7,11 @@ from .processout import ProcessOut
 from .networking.response import Response
 
 try:
+    from .activity import Activity
+except ImportError:
+    import sys
+    Activity = sys.modules[__package__ + '.activity']
+try:
     from .authorizationrequest import AuthorizationRequest
 except ImportError:
     import sys
@@ -26,11 +31,6 @@ try:
 except ImportError:
     import sys
     Event = sys.modules[__package__ + '.event']
-try:
-    from .activity import Activity
-except ImportError:
-    import sys
-    Activity = sys.modules[__package__ + '.activity']
 try:
     from .recurringinvoice import RecurringInvoice
 except ImportError:
@@ -351,8 +351,8 @@ class Invoice:
         customer = Customer(instance)
         return customer.fillWithData(body)
         
-    def setCustomer(self, customerId, options = None):
-        """Link a customer to the invoice.
+    def assignCustomer(self, customerId, options = None):
+        """Assign a customer to the invoice.
         Keyword argument:
 		customerId -- ID of the customer to be linked to the invoice
         options -- Options for the request"""

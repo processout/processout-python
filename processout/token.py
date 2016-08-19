@@ -7,6 +7,11 @@ from .processout import ProcessOut
 from .networking.response import Response
 
 try:
+    from .activity import Activity
+except ImportError:
+    import sys
+    Activity = sys.modules[__package__ + '.activity']
+try:
     from .authorizationrequest import AuthorizationRequest
 except ImportError:
     import sys
@@ -26,11 +31,6 @@ try:
 except ImportError:
     import sys
     Invoice = sys.modules[__package__ + '.invoice']
-try:
-    from .activity import Activity
-except ImportError:
-    import sys
-    Activity = sys.modules[__package__ + '.activity']
 try:
     from .recurringinvoice import RecurringInvoice
 except ImportError:
@@ -152,4 +152,22 @@ class Token:
         
         return self
 
+    def delete(self, options = None):
+        """Delete a specific customer's token by its ID.
+        Keyword argument:
+		
+        options -- Options for the request"""
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
+        path    = "/customers/" + quote_plus(self.customerId) + "/tokens/" + quote_plus(self.tokenId) + ""
+        data    = {
+
+        }
+
+        response = Response(request.delete(path, data, options))
+        body = response.body
+        body = body["token"]
+        token = Token(instance)
+        return token.fillWithData(body)
+        
     
