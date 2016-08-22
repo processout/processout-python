@@ -46,6 +46,11 @@ try:
 except ImportError:
     import sys
     Transaction = sys.modules[__package__ + '.transaction']
+try:
+    from .webhook import Webhook
+except ImportError:
+    import sys
+    Webhook = sys.modules[__package__ + '.webhook']
 
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 

@@ -46,6 +46,11 @@ try:
 except ImportError:
     import sys
     Transaction = sys.modules[__package__ + '.transaction']
+try:
+    from .webhook import Webhook
+except ImportError:
+    import sys
+    Webhook = sys.modules[__package__ + '.webhook']
 
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 
@@ -60,6 +65,7 @@ class Token:
 
         self._id = ""
         self._customer = None
+        self._customerId = ""
         self._name = ""
         self._isRecurringInvoice = ""
         self._createdAt = ""
@@ -93,6 +99,19 @@ class Token:
             obj = Customer(self._instance)
             obj.fillWithData(val)
             self._customer = obj
+        return self
+    
+    @property
+    def customerId(self):
+        """Get customerId"""
+        return self._customerId
+
+    @customerId.setter
+    def customerId(self, val):
+        """Set customerId
+        Keyword argument:
+        val -- New customerId value"""
+        self._customerId = val
         return self
     
     @property
@@ -143,6 +162,8 @@ class Token:
             self.id = data["id"]
         if "customer" in data.keys():
             self.customer = data["customer"]
+        if "customer_id" in data.keys():
+            self.customerId = data["customer_id"]
         if "name" in data.keys():
             self.name = data["name"]
         if "is_recurring_invoice" in data.keys():
@@ -159,7 +180,7 @@ class Token:
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/customers/" + quote_plus(self.customerId) + "/tokens/" + quote_plus(self.tokenId) + ""
+        path    = "/customers/" + quote_plus(self.customerId) + "/tokens/" + quote_plus(self.id) + ""
         data    = {
 
         }

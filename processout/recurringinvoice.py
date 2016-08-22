@@ -46,6 +46,11 @@ try:
 except ImportError:
     import sys
     Transaction = sys.modules[__package__ + '.transaction']
+try:
+    from .webhook import Webhook
+except ImportError:
+    import sys
+    Webhook = sys.modules[__package__ + '.webhook']
 
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 
@@ -351,7 +356,7 @@ class RecurringInvoice:
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/recurring-invoices/" + quote_plus(self.recurringInvoiceId) + "/customers"
+        path    = "/recurring-invoices/" + quote_plus(self.id) + "/customers"
         data    = {
 
         }
@@ -369,7 +374,7 @@ class RecurringInvoice:
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/recurring-invoices/" + quote_plus(self.recurringInvoiceId) + "/invoices"
+        path    = "/recurring-invoices/" + quote_plus(self.id) + "/invoices"
         data    = {
 
         }
@@ -398,9 +403,7 @@ class RecurringInvoice:
 			'cancel_url': self.cancelUrl, 
 			'custom': self.custom, 
 			'interval': self.interval, 
-			'interval_days': self.intervalDays, 
 			'trial_period': self.trialPeriod, 
-			'trial_period_days': self.trialPeriodDays, 
 			'ended_reason': self.endedReason, 
 			'customer_id': customerId
         }
@@ -437,7 +440,7 @@ class RecurringInvoice:
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/recurring-invoices/" + quote_plus(self.recurringInvoiceId) + ""
+        path    = "/recurring-invoices/" + quote_plus(self.id) + ""
         data    = {
 			'reason': reason
         }

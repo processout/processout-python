@@ -46,6 +46,11 @@ try:
 except ImportError:
     import sys
     Transaction = sys.modules[__package__ + '.transaction']
+try:
+    from .webhook import Webhook
+except ImportError:
+    import sys
+    Webhook = sys.modules[__package__ + '.webhook']
 
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 
@@ -282,7 +287,7 @@ class Customer:
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/customers/" + quote_plus(self.customerId) + "/recurring-invoices"
+        path    = "/customers/" + quote_plus(self.id) + "/recurring-invoices"
         data    = {
 
         }
@@ -304,7 +309,7 @@ class Customer:
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/customers/" + quote_plus(self.customerId) + "/tokens"
+        path    = "/customers/" + quote_plus(self.id) + "/tokens"
         data    = {
 
         }
@@ -326,7 +331,7 @@ class Customer:
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/customers/" + quote_plus(self.customerId) + "/tokens/" + quote_plus(tokenId) + ""
+        path    = "/customers/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + ""
         data    = {
 
         }
@@ -412,7 +417,7 @@ class Customer:
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/customers/" + quote_plus(self.customerId) + ""
+        path    = "/customers/" + quote_plus(self.id) + ""
         data    = {
 
         }
@@ -429,7 +434,7 @@ class Customer:
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/customers/" + quote_plus(self.customerId) + ""
+        path    = "/customers/" + quote_plus(self.id) + ""
         data    = {
 
         }

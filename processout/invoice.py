@@ -46,6 +46,11 @@ try:
 except ImportError:
     import sys
     Transaction = sys.modules[__package__ + '.transaction']
+try:
+    from .webhook import Webhook
+except ImportError:
+    import sys
+    Webhook = sys.modules[__package__ + '.webhook']
 
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 
@@ -340,7 +345,7 @@ class Invoice:
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/invoices/" + quote_plus(self.invoiceId) + "/customers"
+        path    = "/invoices/" + quote_plus(self.id) + "/customers"
         data    = {
 
         }
@@ -358,7 +363,7 @@ class Invoice:
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/invoices/" + quote_plus(self.invoiceId) + "/customers"
+        path    = "/invoices/" + quote_plus(self.id) + "/customers"
         data    = {
 			'customer_id': customerId
         }
@@ -376,7 +381,7 @@ class Invoice:
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/invoices/" + quote_plus(self.invoiceId) + "/tokens/" + quote_plus(tokenId) + "/charges"
+        path    = "/invoices/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + "/charges"
         data    = {
 
         }
@@ -391,7 +396,7 @@ class Invoice:
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/invoices/" + quote_plus(self.invoiceId) + "/tokens"
+        path    = "/invoices/" + quote_plus(self.id) + "/tokens"
         data    = {
 
         }
@@ -482,7 +487,7 @@ class Invoice:
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/invoices/" + quote_plus(self.invoiceId) + ""
+        path    = "/invoices/" + quote_plus(self.id) + ""
         data    = {
 
         }

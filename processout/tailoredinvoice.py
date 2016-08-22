@@ -46,6 +46,11 @@ try:
 except ImportError:
     import sys
     Transaction = sys.modules[__package__ + '.transaction']
+try:
+    from .webhook import Webhook
+except ImportError:
+    import sys
+    Webhook = sys.modules[__package__ + '.webhook']
 
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 
@@ -266,7 +271,7 @@ class TailoredInvoice:
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/tailored-invoices/" + quote_plus(self.tailoredInvoiceId) + "/invoices"
+        path    = "/tailored-invoices/" + quote_plus(self.id) + "/invoices"
         data    = {
 
         }
@@ -353,7 +358,7 @@ class TailoredInvoice:
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/tailored-invoices/" + quote_plus(self.tailoredInvoiceId) + ""
+        path    = "/tailored-invoices/" + quote_plus(self.id) + ""
         data    = {
 
         }
@@ -370,7 +375,7 @@ class TailoredInvoice:
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/tailored-invoices/" + quote_plus(self.tailoredInvoiceId) + ""
+        path    = "/tailored-invoices/" + quote_plus(self.id) + ""
         data    = {
 
         }

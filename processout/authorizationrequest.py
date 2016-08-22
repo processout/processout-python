@@ -46,6 +46,11 @@ try:
 except ImportError:
     import sys
     Transaction = sys.modules[__package__ + '.transaction']
+try:
+    from .webhook import Webhook
+except ImportError:
+    import sys
+    Webhook = sys.modules[__package__ + '.webhook']
 
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 
@@ -239,7 +244,7 @@ class AuthorizationRequest:
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/authorization-requests/" + quote_plus(self.authorizationRequestId) + "/customers"
+        path    = "/authorization-requests/" + quote_plus(self.id) + "/customers"
         data    = {
 
         }
@@ -259,7 +264,7 @@ class AuthorizationRequest:
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/authorization-requests/" + quote_plus(self.authorizationRequestId) + "/gateways/" + quote_plus(gatewayName) + "/tokens"
+        path    = "/authorization-requests/" + quote_plus(self.id) + "/gateways/" + quote_plus(gatewayName) + "/tokens"
         data    = {
 			'name': name, 
 			'token': token

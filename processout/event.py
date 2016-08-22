@@ -46,6 +46,11 @@ try:
 except ImportError:
     import sys
     Transaction = sys.modules[__package__ + '.transaction']
+try:
+    from .webhook import Webhook
+except ImportError:
+    import sys
+    Webhook = sys.modules[__package__ + '.webhook']
 
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 
@@ -170,7 +175,7 @@ class Event:
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/events/" + quote_plus(self.eventId) + "/webhooks"
+        path    = "/events/" + quote_plus(self.id) + "/webhooks"
         data    = {
 
         }
@@ -234,7 +239,7 @@ class Event:
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/events/" + quote_plus(self.eventId) + ""
+        path    = "/events/" + quote_plus(self.id) + ""
         data    = {
 
         }
