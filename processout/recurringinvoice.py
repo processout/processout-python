@@ -68,8 +68,8 @@ class RecurringInvoice:
         self._shipping = "0.00"
         self._returnUrl = ""
         self._cancelUrl = ""
-        self._recurringDays = 0
-        self._trialDays = 0
+        self._interval = ""
+        self._trialPeriod = "0d"
         self._custom = ""
         self._ended = False
         self._endedReason = ""
@@ -212,29 +212,29 @@ class RecurringInvoice:
         return self
     
     @property
-    def recurringDays(self):
-        """Get recurringDays"""
-        return self._recurringDays
+    def interval(self):
+        """Get interval"""
+        return self._interval
 
-    @recurringDays.setter
-    def recurringDays(self, val):
-        """Set recurringDays
+    @interval.setter
+    def interval(self, val):
+        """Set interval
         Keyword argument:
-        val -- New recurringDays value"""
-        self._recurringDays = val
+        val -- New interval value"""
+        self._interval = val
         return self
     
     @property
-    def trialDays(self):
-        """Get trialDays"""
-        return self._trialDays
+    def trialPeriod(self):
+        """Get trialPeriod"""
+        return self._trialPeriod
 
-    @trialDays.setter
-    def trialDays(self, val):
-        """Set trialDays
+    @trialPeriod.setter
+    def trialPeriod(self, val):
+        """Set trialPeriod
         Keyword argument:
-        val -- New trialDays value"""
-        self._trialDays = val
+        val -- New trialPeriod value"""
+        self._trialPeriod = val
         return self
     
     @property
@@ -327,10 +327,10 @@ class RecurringInvoice:
             self.returnUrl = data["return_url"]
         if "cancel_url" in data.keys():
             self.cancelUrl = data["cancel_url"]
-        if "recurring_days" in data.keys():
-            self.recurringDays = data["recurring_days"]
-        if "trial_days" in data.keys():
-            self.trialDays = data["trial_days"]
+        if "interval" in data.keys():
+            self.interval = data["interval"]
+        if "trial_period" in data.keys():
+            self.trialPeriod = data["trial_period"]
         if "custom" in data.keys():
             self.custom = data["custom"]
         if "ended" in data.keys():
@@ -397,8 +397,10 @@ class RecurringInvoice:
 			'return_url': self.returnUrl, 
 			'cancel_url': self.cancelUrl, 
 			'custom': self.custom, 
-			'recurring_days': self.recurringDays, 
-			'trial_days': self.trialDays, 
+			'interval': self.interval, 
+			'interval_days': self.intervalDays, 
+			'trial_period': self.trialPeriod, 
+			'trial_period_days': self.trialPeriodDays, 
 			'ended_reason': self.endedReason, 
 			'customer_id': customerId
         }
