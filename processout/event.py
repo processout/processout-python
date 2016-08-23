@@ -65,8 +65,7 @@ class Event:
 
         self._id = ""
         self._name = ""
-        self._data = {}
-        self._processed = False
+        self._data = None
         self._sandbox = False
         self._firedAt = ""
         
@@ -110,19 +109,6 @@ class Event:
         return self
     
     @property
-    def processed(self):
-        """Get processed"""
-        return self._processed
-
-    @processed.setter
-    def processed(self, val):
-        """Set processed
-        Keyword argument:
-        val -- New processed value"""
-        self._processed = val
-        return self
-    
-    @property
     def sandbox(self):
         """Get sandbox"""
         return self._sandbox
@@ -159,8 +145,6 @@ class Event:
             self.name = data["name"]
         if "data" in data.keys():
             self.data = data["data"]
-        if "processed" in data.keys():
-            self.processed = data["processed"]
         if "sandbox" in data.keys():
             self.sandbox = data["sandbox"]
         if "fired_at" in data.keys():
@@ -231,20 +215,5 @@ class Event:
         body = body["event"]
         event = Event(instance)
         return event.fillWithData(body)
-        
-    def markProcessed(self, options = None):
-        """Mark the event as processed.
-        Keyword argument:
-		
-        options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
-        path    = "/events/" + quote_plus(self.id) + ""
-        data    = {
-
-        }
-
-        response = Response(request.put(path, data, options))
-        return response.success
         
     
