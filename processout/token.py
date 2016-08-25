@@ -67,6 +67,7 @@ class Token:
         self._customer = None
         self._customerId = ""
         self._name = ""
+        self._metadata = {}
         self._isRecurringInvoice = ""
         self._createdAt = ""
         
@@ -128,6 +129,19 @@ class Token:
         return self
     
     @property
+    def metadata(self):
+        """Get metadata"""
+        return self._metadata
+
+    @metadata.setter
+    def metadata(self, val):
+        """Set metadata
+        Keyword argument:
+        val -- New metadata value"""
+        self._metadata = val
+        return self
+    
+    @property
     def isRecurringInvoice(self):
         """Get isRecurringInvoice"""
         return self._isRecurringInvoice
@@ -166,6 +180,8 @@ class Token:
             self.customerId = data["customer_id"]
         if "name" in data.keys():
             self.name = data["name"]
+        if "metadata" in data.keys():
+            self.metadata = data["metadata"]
         if "is_recurring_invoice" in data.keys():
             self.isRecurringInvoice = data["is_recurring_invoice"]
         if "created_at" in data.keys():

@@ -73,6 +73,7 @@ class Customer:
         self._state = ""
         self._zip = ""
         self._countryCode = ""
+        self._metadata = {}
         self._hasPin = False
         self._sandbox = False
         self._createdAt = ""
@@ -208,6 +209,19 @@ class Customer:
         return self
     
     @property
+    def metadata(self):
+        """Get metadata"""
+        return self._metadata
+
+    @metadata.setter
+    def metadata(self, val):
+        """Set metadata
+        Keyword argument:
+        val -- New metadata value"""
+        self._metadata = val
+        return self
+    
+    @property
     def hasPin(self):
         """Get hasPin"""
         return self._hasPin
@@ -271,6 +285,8 @@ class Customer:
             self.zip = data["zip"]
         if "country_code" in data.keys():
             self.countryCode = data["country_code"]
+        if "metadata" in data.keys():
+            self.metadata = data["metadata"]
         if "has_pin" in data.keys():
             self.hasPin = data["has_pin"]
         if "sandbox" in data.keys():
@@ -382,7 +398,8 @@ class Customer:
 			'city': self.city, 
 			'state': self.state, 
 			'zip': self.zip, 
-			'country_code': self.countryCode
+			'country_code': self.countryCode, 
+			'metadata': self.metadata
         }
 
         response = Response(request.post(path, data, options))

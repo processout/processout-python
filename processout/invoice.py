@@ -68,15 +68,13 @@ class Invoice:
         self._recurringInvoice = None
         self._url = ""
         self._name = ""
-        self._price = ""
+        self._amount = ""
         self._currency = ""
-        self._taxes = "0.00"
-        self._shipping = "0.00"
+        self._metadata = {}
         self._requestEmail = False
         self._requestShipping = False
         self._returnUrl = ""
         self._cancelUrl = ""
-        self._custom = ""
         self._sandbox = False
         self._createdAt = ""
         
@@ -156,16 +154,16 @@ class Invoice:
         return self
     
     @property
-    def price(self):
-        """Get price"""
-        return self._price
+    def amount(self):
+        """Get amount"""
+        return self._amount
 
-    @price.setter
-    def price(self, val):
-        """Set price
+    @amount.setter
+    def amount(self, val):
+        """Set amount
         Keyword argument:
-        val -- New price value"""
-        self._price = val
+        val -- New amount value"""
+        self._amount = val
         return self
     
     @property
@@ -182,29 +180,16 @@ class Invoice:
         return self
     
     @property
-    def taxes(self):
-        """Get taxes"""
-        return self._taxes
+    def metadata(self):
+        """Get metadata"""
+        return self._metadata
 
-    @taxes.setter
-    def taxes(self, val):
-        """Set taxes
+    @metadata.setter
+    def metadata(self, val):
+        """Set metadata
         Keyword argument:
-        val -- New taxes value"""
-        self._taxes = val
-        return self
-    
-    @property
-    def shipping(self):
-        """Get shipping"""
-        return self._shipping
-
-    @shipping.setter
-    def shipping(self, val):
-        """Set shipping
-        Keyword argument:
-        val -- New shipping value"""
-        self._shipping = val
+        val -- New metadata value"""
+        self._metadata = val
         return self
     
     @property
@@ -260,19 +245,6 @@ class Invoice:
         return self
     
     @property
-    def custom(self):
-        """Get custom"""
-        return self._custom
-
-    @custom.setter
-    def custom(self, val):
-        """Set custom
-        Keyword argument:
-        val -- New custom value"""
-        self._custom = val
-        return self
-    
-    @property
     def sandbox(self):
         """Get sandbox"""
         return self._sandbox
@@ -313,14 +285,12 @@ class Invoice:
             self.url = data["url"]
         if "name" in data.keys():
             self.name = data["name"]
-        if "price" in data.keys():
-            self.price = data["price"]
+        if "amount" in data.keys():
+            self.amount = data["amount"]
         if "currency" in data.keys():
             self.currency = data["currency"]
-        if "taxes" in data.keys():
-            self.taxes = data["taxes"]
-        if "shipping" in data.keys():
-            self.shipping = data["shipping"]
+        if "metadata" in data.keys():
+            self.metadata = data["metadata"]
         if "request_email" in data.keys():
             self.requestEmail = data["request_email"]
         if "request_shipping" in data.keys():
@@ -329,8 +299,6 @@ class Invoice:
             self.returnUrl = data["return_url"]
         if "cancel_url" in data.keys():
             self.cancelUrl = data["cancel_url"]
-        if "custom" in data.keys():
-            self.custom = data["custom"]
         if "sandbox" in data.keys():
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
@@ -444,15 +412,13 @@ class Invoice:
         path    = "/invoices"
         data    = {
 			'name': self.name, 
-			'price': self.price, 
-			'taxes': self.taxes, 
-			'shipping': self.shipping, 
+			'amount': self.amount, 
 			'currency': self.currency, 
+			'metadata': self.metadata, 
 			'request_email': self.requestEmail, 
 			'request_shipping': self.requestShipping, 
 			'return_url': self.returnUrl, 
-			'cancel_url': self.cancelUrl, 
-			'custom': self.custom
+			'cancel_url': self.cancelUrl
         }
 
         response = Response(request.post(path, data, options))
