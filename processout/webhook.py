@@ -37,6 +37,11 @@ except ImportError:
     import sys
     Invoice = sys.modules[__package__ + '.invoice']
 try:
+    from .project import Project
+except ImportError:
+    import sys
+    Project = sys.modules[__package__ + '.project']
+try:
     from .recurringinvoice import RecurringInvoice
 except ImportError:
     import sys

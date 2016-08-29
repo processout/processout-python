@@ -32,6 +32,11 @@ except ImportError:
     import sys
     Event = sys.modules[__package__ + '.event']
 try:
+    from .project import Project
+except ImportError:
+    import sys
+    Project = sys.modules[__package__ + '.project']
+try:
     from .recurringinvoice import RecurringInvoice
 except ImportError:
     import sys

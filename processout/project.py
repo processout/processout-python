@@ -37,11 +37,6 @@ except ImportError:
     import sys
     Invoice = sys.modules[__package__ + '.invoice']
 try:
-    from .project import Project
-except ImportError:
-    import sys
-    Project = sys.modules[__package__ + '.project']
-try:
     from .recurringinvoice import RecurringInvoice
 except ImportError:
     import sys
@@ -52,6 +47,11 @@ except ImportError:
     import sys
     TailoredInvoice = sys.modules[__package__ + '.tailoredinvoice']
 try:
+    from .transaction import Transaction
+except ImportError:
+    import sys
+    Transaction = sys.modules[__package__ + '.transaction']
+try:
     from .webhook import Webhook
 except ImportError:
     import sys
@@ -60,7 +60,7 @@ except ImportError:
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 
 
-class Transaction:
+class Project:
 
     def __init__(self, instance = None):
         if instance == None:
@@ -69,9 +69,9 @@ class Transaction:
         self._instance = instance
 
         self._id = ""
-        self._status = ""
-        self._fee = ""
-        self._sandbox = False
+        self._name = ""
+        self._logoUrl = ""
+        self._email = ""
         self._createdAt = ""
         
     @property
@@ -88,42 +88,42 @@ class Transaction:
         return self
     
     @property
-    def status(self):
-        """Get status"""
-        return self._status
+    def name(self):
+        """Get name"""
+        return self._name
 
-    @status.setter
-    def status(self, val):
-        """Set status
+    @name.setter
+    def name(self, val):
+        """Set name
         Keyword argument:
-        val -- New status value"""
-        self._status = val
+        val -- New name value"""
+        self._name = val
         return self
     
     @property
-    def fee(self):
-        """Get fee"""
-        return self._fee
+    def logoUrl(self):
+        """Get logoUrl"""
+        return self._logoUrl
 
-    @fee.setter
-    def fee(self, val):
-        """Set fee
+    @logoUrl.setter
+    def logoUrl(self, val):
+        """Set logoUrl
         Keyword argument:
-        val -- New fee value"""
-        self._fee = val
+        val -- New logoUrl value"""
+        self._logoUrl = val
         return self
     
     @property
-    def sandbox(self):
-        """Get sandbox"""
-        return self._sandbox
+    def email(self):
+        """Get email"""
+        return self._email
 
-    @sandbox.setter
-    def sandbox(self, val):
-        """Set sandbox
+    @email.setter
+    def email(self, val):
+        """Set email
         Keyword argument:
-        val -- New sandbox value"""
-        self._sandbox = val
+        val -- New email value"""
+        self._email = val
         return self
     
     @property
@@ -146,57 +146,15 @@ class Transaction:
         data -- The data from which to pull the new values"""
         if "id" in data.keys():
             self.id = data["id"]
-        if "status" in data.keys():
-            self.status = data["status"]
-        if "fee" in data.keys():
-            self.fee = data["fee"]
-        if "sandbox" in data.keys():
-            self.sandbox = data["sandbox"]
+        if "name" in data.keys():
+            self.name = data["name"]
+        if "logo_url" in data.keys():
+            self.logoUrl = data["logo_url"]
+        if "email" in data.keys():
+            self.email = data["email"]
         if "created_at" in data.keys():
             self.createdAt = data["created_at"]
         
         return self
 
-    @staticmethod
-    def all(options = None):
-        """Get all the transactions.
-        Keyword argument:
-		
-        options -- Options for the request"""
-        instance = ProcessOut.getDefault()
-        request = RequestProcessoutPrivate(instance)
-        path    = "/transactions"
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        a    = []
-        body = response.body
-        for v in body['transactions']:
-            tmp = Transaction(instance)
-            tmp.fillWithData(v)
-            a.append(tmp)
-
-        return a
-        
-    @staticmethod
-    def find(transactionId, options = None):
-        """Find a transaction by its ID.
-        Keyword argument:
-		transactionId -- ID of the transaction
-        options -- Options for the request"""
-        instance = ProcessOut.getDefault()
-        request = RequestProcessoutPrivate(instance)
-        path    = "/transactions/" + quote_plus(transactionId) + ""
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        body = response.body
-        body = body["transaction"]
-        transaction = Transaction(instance)
-        return transaction.fillWithData(body)
-        
     
