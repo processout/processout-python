@@ -64,6 +64,7 @@ class RecurringInvoice:
         self._instance = instance
 
         self._id = ""
+        self._project = None
         self._customer = None
         self._url = ""
         self._name = ""
@@ -90,6 +91,24 @@ class RecurringInvoice:
         Keyword argument:
         val -- New id value"""
         self._id = val
+        return self
+    
+    @property
+    def project(self):
+        """Get project"""
+        return self._project
+
+    @project.setter
+    def project(self, val):
+        """Set project
+        Keyword argument:
+        val -- New project value"""
+        if isinstance(val, Project):
+            self._project = val
+        else:
+            obj = Project(self._instance)
+            obj.fillWithData(val)
+            self._project = obj
         return self
     
     @property
@@ -286,6 +305,8 @@ class RecurringInvoice:
         data -- The data from which to pull the new values"""
         if "id" in data.keys():
             self.id = data["id"]
+        if "project" in data.keys():
+            self.project = data["project"]
         if "customer" in data.keys():
             self.customer = data["customer"]
         if "url" in data.keys():

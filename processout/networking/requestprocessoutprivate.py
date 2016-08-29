@@ -34,6 +34,16 @@ class RequestProcessoutPrivate:
 
         return headers
 
+    def _getData(self, data, options):
+        """Return the data processed with the given options"""
+        if optiosn is None:
+            return data
+
+        if "expand" in options:
+            data["expand"] = options["expand"]
+
+        return data
+
     def get(self, path, data, options):
         """Perform a GET request
 
@@ -43,7 +53,7 @@ class RequestProcessoutPrivate:
         options -- Options sent with the request
         """
         return requests.get(self._instance.host + path + '?' +
-                urllib.urlencode(data),
+                urllib.urlencode(self._getData(data, options)),
             auth   = self._authenticate(),
             verify = True,
             headers = self._getHeaders(options))
@@ -58,7 +68,7 @@ class RequestProcessoutPrivate:
         """
         return requests.post(self._instance.host + path,
             auth   = self._authenticate(),
-            json   = data,
+            json   = self._getData(data, options),
             verify = True,
             headers = self._getHeaders(options))
 
@@ -72,7 +82,7 @@ class RequestProcessoutPrivate:
         """
         return requests.put(self._instance.host + path,
             auth   = self._authenticate(),
-            json   = data,
+            json   = self._getData(data, options),
             verify = True,
             headers = self._getHeaders(options))
 
@@ -85,7 +95,7 @@ class RequestProcessoutPrivate:
         options -- Options sent with the request
         """
         return requests.delete(self._instance.host + path + '?' +
-                urllib.urlencode(data),
+                urllib.urlencode(self._getData(data, options)),
             auth   = self._authenticate(),
             verify = True,
             headers = self._getHeaders(options))
