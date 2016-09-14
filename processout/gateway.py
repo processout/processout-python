@@ -7,6 +7,11 @@ from .processout import ProcessOut
 from .networking.response import Response
 
 try:
+    from .activity import Activity
+except ImportError:
+    import sys
+    Activity = sys.modules[__package__ + '.activity']
+try:
     from .authorizationrequest import AuthorizationRequest
 except ImportError:
     import sys
@@ -26,11 +31,6 @@ try:
 except ImportError:
     import sys
     Event = sys.modules[__package__ + '.event']
-try:
-    from .gateway import Gateway
-except ImportError:
-    import sys
-    Gateway = sys.modules[__package__ + '.gateway']
 try:
     from .gatewayconfiguration import GatewayConfiguration
 except ImportError:
@@ -80,7 +80,7 @@ except ImportError:
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 
 
-class Activity:
+class Gateway:
 
     def __init__(self, instance = None):
         if instance == None:
@@ -89,11 +89,12 @@ class Activity:
         self._instance = instance
 
         self._id = ""
-        self._project = None
-        self._title = ""
-        self._content = ""
-        self._level = 0
-        self._createdAt = ""
+        self._name = ""
+        self._displayName = ""
+        self._logoUrl = ""
+        self._url = ""
+        self._flows = []
+        self._description = ""
         
     @property
     def id(self):
@@ -109,73 +110,81 @@ class Activity:
         return self
     
     @property
-    def project(self):
-        """Get project"""
-        return self._project
+    def name(self):
+        """Get name"""
+        return self._name
 
-    @project.setter
-    def project(self, val):
-        """Set project
+    @name.setter
+    def name(self, val):
+        """Set name
         Keyword argument:
-        val -- New project value"""
-        if isinstance(val, Project):
-            self._project = val
-        else:
-            obj = Project(self._instance)
-            obj.fillWithData(val)
-            self._project = obj
+        val -- New name value"""
+        self._name = val
         return self
     
     @property
-    def title(self):
-        """Get title"""
-        return self._title
+    def displayName(self):
+        """Get displayName"""
+        return self._displayName
 
-    @title.setter
-    def title(self, val):
-        """Set title
+    @displayName.setter
+    def displayName(self, val):
+        """Set displayName
         Keyword argument:
-        val -- New title value"""
-        self._title = val
+        val -- New displayName value"""
+        self._displayName = val
         return self
     
     @property
-    def content(self):
-        """Get content"""
-        return self._content
+    def logoUrl(self):
+        """Get logoUrl"""
+        return self._logoUrl
 
-    @content.setter
-    def content(self, val):
-        """Set content
+    @logoUrl.setter
+    def logoUrl(self, val):
+        """Set logoUrl
         Keyword argument:
-        val -- New content value"""
-        self._content = val
+        val -- New logoUrl value"""
+        self._logoUrl = val
         return self
     
     @property
-    def level(self):
-        """Get level"""
-        return self._level
+    def url(self):
+        """Get url"""
+        return self._url
 
-    @level.setter
-    def level(self, val):
-        """Set level
+    @url.setter
+    def url(self, val):
+        """Set url
         Keyword argument:
-        val -- New level value"""
-        self._level = val
+        val -- New url value"""
+        self._url = val
         return self
     
     @property
-    def createdAt(self):
-        """Get createdAt"""
-        return self._createdAt
+    def flows(self):
+        """Get flows"""
+        return self._flows
 
-    @createdAt.setter
-    def createdAt(self, val):
-        """Set createdAt
+    @flows.setter
+    def flows(self, val):
+        """Set flows
         Keyword argument:
-        val -- New createdAt value"""
-        self._createdAt = val
+        val -- New flows value"""
+        self._flows = val
+        return self
+    
+    @property
+    def description(self):
+        """Get description"""
+        return self._description
+
+    @description.setter
+    def description(self, val):
+        """Set description
+        Keyword argument:
+        val -- New description value"""
+        self._description = val
         return self
     
 
@@ -185,59 +194,19 @@ class Activity:
         data -- The data from which to pull the new values"""
         if "id" in data.keys():
             self.id = data["id"]
-        if "project" in data.keys():
-            self.project = data["project"]
-        if "title" in data.keys():
-            self.title = data["title"]
-        if "content" in data.keys():
-            self.content = data["content"]
-        if "level" in data.keys():
-            self.level = data["level"]
-        if "created_at" in data.keys():
-            self.createdAt = data["created_at"]
+        if "name" in data.keys():
+            self.name = data["name"]
+        if "display_name" in data.keys():
+            self.displayName = data["display_name"]
+        if "logo_url" in data.keys():
+            self.logoUrl = data["logo_url"]
+        if "url" in data.keys():
+            self.url = data["url"]
+        if "flows" in data.keys():
+            self.flows = data["flows"]
+        if "description" in data.keys():
+            self.description = data["description"]
         
         return self
 
-    @staticmethod
-    def all(options = None):
-        """Get all the project activities.
-        Keyword argument:
-		
-        options -- Options for the request"""
-        instance = ProcessOut.getDefault()
-        request = RequestProcessoutPrivate(instance)
-        path    = "/activities"
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        a    = []
-        body = response.body
-        for v in body['activities']:
-            tmp = Activity(instance)
-            tmp.fillWithData(v)
-            a.append(tmp)
-
-        return a
-        
-    @staticmethod
-    def find(activityId, options = None):
-        """Find a specific activity and fetch its data.
-        Keyword argument:
-		activityId -- ID of the activity
-        options -- Options for the request"""
-        instance = ProcessOut.getDefault()
-        request = RequestProcessoutPrivate(instance)
-        path    = "/activities/" + quote_plus(activityId) + ""
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        body = response.body
-        body = body["activity"]
-        obj = Activity()
-        return obj.fillWithData(body)
-        
     

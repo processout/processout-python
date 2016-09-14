@@ -7,6 +7,11 @@ from .processout import ProcessOut
 from .networking.response import Response
 
 try:
+    from .activity import Activity
+except ImportError:
+    import sys
+    Activity = sys.modules[__package__ + '.activity']
+try:
     from .authorizationrequest import AuthorizationRequest
 except ImportError:
     import sys
@@ -31,11 +36,6 @@ try:
 except ImportError:
     import sys
     Gateway = sys.modules[__package__ + '.gateway']
-try:
-    from .gatewayconfiguration import GatewayConfiguration
-except ImportError:
-    import sys
-    GatewayConfiguration = sys.modules[__package__ + '.gatewayconfiguration']
 try:
     from .invoice import Invoice
 except ImportError:
@@ -80,7 +80,7 @@ except ImportError:
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 
 
-class Activity:
+class GatewayConfiguration:
 
     def __init__(self, instance = None):
         if instance == None:
@@ -90,10 +90,9 @@ class Activity:
 
         self._id = ""
         self._project = None
-        self._title = ""
-        self._content = ""
-        self._level = 0
-        self._createdAt = ""
+        self._gateway = None
+        self._enabled = False
+        self._publicKeys = {}
         
     @property
     def id(self):
@@ -127,55 +126,47 @@ class Activity:
         return self
     
     @property
-    def title(self):
-        """Get title"""
-        return self._title
+    def gateway(self):
+        """Get gateway"""
+        return self._gateway
 
-    @title.setter
-    def title(self, val):
-        """Set title
+    @gateway.setter
+    def gateway(self, val):
+        """Set gateway
         Keyword argument:
-        val -- New title value"""
-        self._title = val
+        val -- New gateway value"""
+        if isinstance(val, Gateway):
+            self._gateway = val
+        else:
+            obj = Gateway(self._instance)
+            obj.fillWithData(val)
+            self._gateway = obj
         return self
     
     @property
-    def content(self):
-        """Get content"""
-        return self._content
+    def enabled(self):
+        """Get enabled"""
+        return self._enabled
 
-    @content.setter
-    def content(self, val):
-        """Set content
+    @enabled.setter
+    def enabled(self, val):
+        """Set enabled
         Keyword argument:
-        val -- New content value"""
-        self._content = val
+        val -- New enabled value"""
+        self._enabled = val
         return self
     
     @property
-    def level(self):
-        """Get level"""
-        return self._level
+    def publicKeys(self):
+        """Get publicKeys"""
+        return self._publicKeys
 
-    @level.setter
-    def level(self, val):
-        """Set level
+    @publicKeys.setter
+    def publicKeys(self, val):
+        """Set publicKeys
         Keyword argument:
-        val -- New level value"""
-        self._level = val
-        return self
-    
-    @property
-    def createdAt(self):
-        """Get createdAt"""
-        return self._createdAt
-
-    @createdAt.setter
-    def createdAt(self, val):
-        """Set createdAt
-        Keyword argument:
-        val -- New createdAt value"""
-        self._createdAt = val
+        val -- New publicKeys value"""
+        self._publicKeys = val
         return self
     
 
@@ -187,57 +178,13 @@ class Activity:
             self.id = data["id"]
         if "project" in data.keys():
             self.project = data["project"]
-        if "title" in data.keys():
-            self.title = data["title"]
-        if "content" in data.keys():
-            self.content = data["content"]
-        if "level" in data.keys():
-            self.level = data["level"]
-        if "created_at" in data.keys():
-            self.createdAt = data["created_at"]
+        if "gateway" in data.keys():
+            self.gateway = data["gateway"]
+        if "enabled" in data.keys():
+            self.enabled = data["enabled"]
+        if "public_keys" in data.keys():
+            self.publicKeys = data["public_keys"]
         
         return self
 
-    @staticmethod
-    def all(options = None):
-        """Get all the project activities.
-        Keyword argument:
-		
-        options -- Options for the request"""
-        instance = ProcessOut.getDefault()
-        request = RequestProcessoutPrivate(instance)
-        path    = "/activities"
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        a    = []
-        body = response.body
-        for v in body['activities']:
-            tmp = Activity(instance)
-            tmp.fillWithData(v)
-            a.append(tmp)
-
-        return a
-        
-    @staticmethod
-    def find(activityId, options = None):
-        """Find a specific activity and fetch its data.
-        Keyword argument:
-		activityId -- ID of the activity
-        options -- Options for the request"""
-        instance = ProcessOut.getDefault()
-        request = RequestProcessoutPrivate(instance)
-        path    = "/activities/" + quote_plus(activityId) + ""
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        body = response.body
-        body = body["activity"]
-        obj = Activity()
-        return obj.fillWithData(body)
-        
     

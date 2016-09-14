@@ -27,20 +27,40 @@ except ImportError:
     import sys
     Token = sys.modules[__package__ + '.token']
 try:
+    from .gateway import Gateway
+except ImportError:
+    import sys
+    Gateway = sys.modules[__package__ + '.gateway']
+try:
+    from .gatewayconfiguration import GatewayConfiguration
+except ImportError:
+    import sys
+    GatewayConfiguration = sys.modules[__package__ + '.gatewayconfiguration']
+try:
     from .invoice import Invoice
 except ImportError:
     import sys
     Invoice = sys.modules[__package__ + '.invoice']
+try:
+    from .customeraction import CustomerAction
+except ImportError:
+    import sys
+    CustomerAction = sys.modules[__package__ + '.customeraction']
 try:
     from .project import Project
 except ImportError:
     import sys
     Project = sys.modules[__package__ + '.project']
 try:
-    from .recurringinvoice import RecurringInvoice
+    from .refund import Refund
 except ImportError:
     import sys
-    RecurringInvoice = sys.modules[__package__ + '.recurringinvoice']
+    Refund = sys.modules[__package__ + '.refund']
+try:
+    from .subscription import Subscription
+except ImportError:
+    import sys
+    Subscription = sys.modules[__package__ + '.subscription']
 try:
     from .tailoredinvoice import TailoredInvoice
 except ImportError:
@@ -239,7 +259,7 @@ class Event:
         response = Response(request.get(path, data, options))
         body = response.body
         body = body["event"]
-        event = Event(instance)
-        return event.fillWithData(body)
+        obj = Event()
+        return obj.fillWithData(body)
         
     

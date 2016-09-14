@@ -27,20 +27,40 @@ except ImportError:
     import sys
     Event = sys.modules[__package__ + '.event']
 try:
+    from .gateway import Gateway
+except ImportError:
+    import sys
+    Gateway = sys.modules[__package__ + '.gateway']
+try:
+    from .gatewayconfiguration import GatewayConfiguration
+except ImportError:
+    import sys
+    GatewayConfiguration = sys.modules[__package__ + '.gatewayconfiguration']
+try:
     from .invoice import Invoice
 except ImportError:
     import sys
     Invoice = sys.modules[__package__ + '.invoice']
+try:
+    from .customeraction import CustomerAction
+except ImportError:
+    import sys
+    CustomerAction = sys.modules[__package__ + '.customeraction']
 try:
     from .project import Project
 except ImportError:
     import sys
     Project = sys.modules[__package__ + '.project']
 try:
-    from .recurringinvoice import RecurringInvoice
+    from .refund import Refund
 except ImportError:
     import sys
-    RecurringInvoice = sys.modules[__package__ + '.recurringinvoice']
+    Refund = sys.modules[__package__ + '.refund']
+try:
+    from .subscription import Subscription
+except ImportError:
+    import sys
+    Subscription = sys.modules[__package__ + '.subscription']
 try:
     from .tailoredinvoice import TailoredInvoice
 except ImportError:
@@ -71,6 +91,7 @@ class AuthorizationRequest:
         self._id = ""
         self._project = None
         self._customer = None
+        self._token = None
         self._url = ""
         self._name = ""
         self._currency = ""
@@ -127,6 +148,24 @@ class AuthorizationRequest:
             obj = Customer(self._instance)
             obj.fillWithData(val)
             self._customer = obj
+        return self
+    
+    @property
+    def token(self):
+        """Get token"""
+        return self._token
+
+    @token.setter
+    def token(self, val):
+        """Set token
+        Keyword argument:
+        val -- New token value"""
+        if isinstance(val, Token):
+            self._token = val
+        else:
+            obj = Token(self._instance)
+            obj.fillWithData(val)
+            self._token = obj
         return self
     
     @property
@@ -244,6 +283,8 @@ class AuthorizationRequest:
             self.project = data["project"]
         if "customer" in data.keys():
             self.customer = data["customer"]
+        if "token" in data.keys():
+            self.token = data["token"]
         if "url" in data.keys():
             self.url = data["url"]
         if "name" in data.keys():
@@ -281,26 +322,23 @@ class AuthorizationRequest:
         customer = Customer(instance)
         return customer.fillWithData(body)
         
-    def authorize(self, gatewayName, name, token, options = None):
-        """Authorize (create) a new customer token on the given gateway.
+    def customerAction(self, gatewayConfigurationId, options = None):
+        """Get the customer action needed to be continue the token authorization flow on the given gateway.
         Keyword argument:
-		gatewayName -- Name of the payment gateway
-		name -- Name of the customer token
-		token -- Payment gateway token (ex: Stripe customer token)
+		gatewayConfigurationId -- ID of the gateway configuration to be used
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/authorization-requests/" + quote_plus(self.id) + "/gateways/" + quote_plus(gatewayName) + "/tokens"
+        path    = "/authorization-requests/" + quote_plus(self.id) + "/gateway-configurations/" + quote_plus(gatewayConfigurationId) + "/customer-action"
         data    = {
-			'name': name, 
-			'token': token
+
         }
 
-        response = Response(request.post(path, data, options))
+        response = Response(request.get(path, data, options))
         body = response.body
-        body = body["token"]
-        token = Token(instance)
-        return token.fillWithData(body)
+        body = body["customer_action"]
+        customerAction = CustomerAction(instance)
+        return customerAction.fillWithData(body)
         
     def create(self, customerId, options = None):
         """Create a new authorization request for the given customer ID.
@@ -322,8 +360,7 @@ class AuthorizationRequest:
         response = Response(request.post(path, data, options))
         body = response.body
         body = body["authorization_request"]
-        authorizationRequest = AuthorizationRequest(instance)
-        return authorizationRequest.fillWithData(body)
+        return self.fillWithData(body)
         
     @staticmethod
     def find(authorizationRequestId, options = None):

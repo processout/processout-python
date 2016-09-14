@@ -27,20 +27,40 @@ except ImportError:
     import sys
     Event = sys.modules[__package__ + '.event']
 try:
+    from .gateway import Gateway
+except ImportError:
+    import sys
+    Gateway = sys.modules[__package__ + '.gateway']
+try:
+    from .gatewayconfiguration import GatewayConfiguration
+except ImportError:
+    import sys
+    GatewayConfiguration = sys.modules[__package__ + '.gatewayconfiguration']
+try:
     from .invoice import Invoice
 except ImportError:
     import sys
     Invoice = sys.modules[__package__ + '.invoice']
+try:
+    from .customeraction import CustomerAction
+except ImportError:
+    import sys
+    CustomerAction = sys.modules[__package__ + '.customeraction']
 try:
     from .project import Project
 except ImportError:
     import sys
     Project = sys.modules[__package__ + '.project']
 try:
-    from .recurringinvoice import RecurringInvoice
+    from .refund import Refund
 except ImportError:
     import sys
-    RecurringInvoice = sys.modules[__package__ + '.recurringinvoice']
+    Refund = sys.modules[__package__ + '.refund']
+try:
+    from .subscription import Subscription
+except ImportError:
+    import sys
+    Subscription = sys.modules[__package__ + '.subscription']
 try:
     from .tailoredinvoice import TailoredInvoice
 except ImportError:
@@ -322,14 +342,14 @@ class Customer:
         
         return self
 
-    def recurringInvoices(self, options = None):
-        """Get the recurring invoices linked to the customer.
+    def subscriptions(self, options = None):
+        """Get the subscriptions belonging to the customer.
         Keyword argument:
 		
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/customers/" + quote_plus(self.id) + "/recurring-invoices"
+        path    = "/customers/" + quote_plus(self.id) + "/subscriptions"
         data    = {
 
         }
@@ -337,8 +357,8 @@ class Customer:
         response = Response(request.get(path, data, options))
         a    = []
         body = response.body
-        for v in body['recurring_invoices']:
-            tmp = RecurringInvoice(instance)
+        for v in body['subscriptions']:
+            tmp = Subscription(instance)
             tmp.fillWithData(v)
             a.append(tmp)
 
@@ -365,24 +385,6 @@ class Customer:
             a.append(tmp)
 
         return a
-        
-    def token(self, tokenId, options = None):
-        """Get a specific customer's token by its ID.
-        Keyword argument:
-		tokenId -- ID of the token
-        options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
-        path    = "/customers/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + ""
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        body = response.body
-        body = body["token"]
-        token = Token(instance)
-        return token.fillWithData(body)
         
     @staticmethod
     def all(options = None):
@@ -431,8 +433,7 @@ class Customer:
         response = Response(request.post(path, data, options))
         body = response.body
         body = body["customer"]
-        customer = Customer(instance)
-        return customer.fillWithData(body)
+        return self.fillWithData(body)
         
     @staticmethod
     def find(customerId, options = None):
@@ -450,8 +451,8 @@ class Customer:
         response = Response(request.get(path, data, options))
         body = response.body
         body = body["customer"]
-        customer = Customer(instance)
-        return customer.fillWithData(body)
+        obj = Customer()
+        return obj.fillWithData(body)
         
     def save(self, options = None):
         """Save the updated customer attributes.
@@ -462,7 +463,16 @@ class Customer:
         request = RequestProcessoutPrivate(instance)
         path    = "/customers/" + quote_plus(self.id) + ""
         data    = {
-
+			'email': self.email, 
+			'first_name': self.firstName, 
+			'last_name': self.lastName, 
+			'address1': self.address1, 
+			'address2': self.address2, 
+			'city': self.city, 
+			'state': self.state, 
+			'zip': self.zip, 
+			'country_code': self.countryCode, 
+			'metadata': self.metadata
         }
 
         response = Response(request.put(path, data, options))

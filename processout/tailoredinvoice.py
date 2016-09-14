@@ -32,20 +32,40 @@ except ImportError:
     import sys
     Event = sys.modules[__package__ + '.event']
 try:
+    from .gateway import Gateway
+except ImportError:
+    import sys
+    Gateway = sys.modules[__package__ + '.gateway']
+try:
+    from .gatewayconfiguration import GatewayConfiguration
+except ImportError:
+    import sys
+    GatewayConfiguration = sys.modules[__package__ + '.gatewayconfiguration']
+try:
     from .invoice import Invoice
 except ImportError:
     import sys
     Invoice = sys.modules[__package__ + '.invoice']
+try:
+    from .customeraction import CustomerAction
+except ImportError:
+    import sys
+    CustomerAction = sys.modules[__package__ + '.customeraction']
 try:
     from .project import Project
 except ImportError:
     import sys
     Project = sys.modules[__package__ + '.project']
 try:
-    from .recurringinvoice import RecurringInvoice
+    from .refund import Refund
 except ImportError:
     import sys
-    RecurringInvoice = sys.modules[__package__ + '.recurringinvoice']
+    Refund = sys.modules[__package__ + '.refund']
+try:
+    from .subscription import Subscription
+except ImportError:
+    import sys
+    Subscription = sys.modules[__package__ + '.subscription']
 try:
     from .transaction import Transaction
 except ImportError:
@@ -316,8 +336,7 @@ class TailoredInvoice:
         response = Response(request.post(path, data, options))
         body = response.body
         body = body["tailored_invoice"]
-        tailoredInvoice = TailoredInvoice(instance)
-        return tailoredInvoice.fillWithData(body)
+        return self.fillWithData(body)
         
     @staticmethod
     def find(tailoredInvoiceId, options = None):
@@ -335,8 +354,8 @@ class TailoredInvoice:
         response = Response(request.get(path, data, options))
         body = response.body
         body = body["tailored_invoice"]
-        tailoredInvoice = TailoredInvoice(instance)
-        return tailoredInvoice.fillWithData(body)
+        obj = TailoredInvoice()
+        return obj.fillWithData(body)
         
     def save(self, options = None):
         """Save the updated tailored invoice attributes.
@@ -347,7 +366,14 @@ class TailoredInvoice:
         request = RequestProcessoutPrivate(instance)
         path    = "/tailored-invoices/" + quote_plus(self.id) + ""
         data    = {
-
+			'name': self.name, 
+			'amount': self.amount, 
+			'currency': self.currency, 
+			'metadata': self.metadata, 
+			'request_email': self.requestEmail, 
+			'request_shipping': self.requestShipping, 
+			'return_url': self.returnUrl, 
+			'cancel_url': self.cancelUrl
         }
 
         response = Response(request.put(path, data, options))

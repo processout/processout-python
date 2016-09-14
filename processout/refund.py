@@ -57,11 +57,6 @@ except ImportError:
     import sys
     Project = sys.modules[__package__ + '.project']
 try:
-    from .refund import Refund
-except ImportError:
-    import sys
-    Refund = sys.modules[__package__ + '.refund']
-try:
     from .subscription import Subscription
 except ImportError:
     import sys
@@ -72,6 +67,11 @@ except ImportError:
     import sys
     TailoredInvoice = sys.modules[__package__ + '.tailoredinvoice']
 try:
+    from .transaction import Transaction
+except ImportError:
+    import sys
+    Transaction = sys.modules[__package__ + '.transaction']
+try:
     from .webhook import Webhook
 except ImportError:
     import sys
@@ -80,7 +80,7 @@ except ImportError:
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 
 
-class Transaction:
+class Refund:
 
     def __init__(self, instance = None):
         if instance == None:
@@ -89,11 +89,10 @@ class Transaction:
         self._instance = instance
 
         self._id = ""
-        self._name = ""
+        self._transaction = None
+        self._reason = ""
+        self._information = ""
         self._amount = ""
-        self._currency = ""
-        self._status = ""
-        self._processoutFee = ""
         self._metadata = {}
         self._sandbox = False
         self._createdAt = ""
@@ -112,16 +111,47 @@ class Transaction:
         return self
     
     @property
-    def name(self):
-        """Get name"""
-        return self._name
+    def transaction(self):
+        """Get transaction"""
+        return self._transaction
 
-    @name.setter
-    def name(self, val):
-        """Set name
+    @transaction.setter
+    def transaction(self, val):
+        """Set transaction
         Keyword argument:
-        val -- New name value"""
-        self._name = val
+        val -- New transaction value"""
+        if isinstance(val, Transaction):
+            self._transaction = val
+        else:
+            obj = Transaction(self._instance)
+            obj.fillWithData(val)
+            self._transaction = obj
+        return self
+    
+    @property
+    def reason(self):
+        """Get reason"""
+        return self._reason
+
+    @reason.setter
+    def reason(self, val):
+        """Set reason
+        Keyword argument:
+        val -- New reason value"""
+        self._reason = val
+        return self
+    
+    @property
+    def information(self):
+        """Get information"""
+        return self._information
+
+    @information.setter
+    def information(self, val):
+        """Set information
+        Keyword argument:
+        val -- New information value"""
+        self._information = val
         return self
     
     @property
@@ -135,45 +165,6 @@ class Transaction:
         Keyword argument:
         val -- New amount value"""
         self._amount = val
-        return self
-    
-    @property
-    def currency(self):
-        """Get currency"""
-        return self._currency
-
-    @currency.setter
-    def currency(self, val):
-        """Set currency
-        Keyword argument:
-        val -- New currency value"""
-        self._currency = val
-        return self
-    
-    @property
-    def status(self):
-        """Get status"""
-        return self._status
-
-    @status.setter
-    def status(self, val):
-        """Set status
-        Keyword argument:
-        val -- New status value"""
-        self._status = val
-        return self
-    
-    @property
-    def processoutFee(self):
-        """Get processoutFee"""
-        return self._processoutFee
-
-    @processoutFee.setter
-    def processoutFee(self, val):
-        """Set processoutFee
-        Keyword argument:
-        val -- New processoutFee value"""
-        self._processoutFee = val
         return self
     
     @property
@@ -222,16 +213,14 @@ class Transaction:
         data -- The data from which to pull the new values"""
         if "id" in data.keys():
             self.id = data["id"]
-        if "name" in data.keys():
-            self.name = data["name"]
+        if "transaction" in data.keys():
+            self.transaction = data["transaction"]
+        if "reason" in data.keys():
+            self.reason = data["reason"]
+        if "information" in data.keys():
+            self.information = data["information"]
         if "amount" in data.keys():
             self.amount = data["amount"]
-        if "currency" in data.keys():
-            self.currency = data["currency"]
-        if "status" in data.keys():
-            self.status = data["status"]
-        if "processout_fee" in data.keys():
-            self.processoutFee = data["processout_fee"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
         if "sandbox" in data.keys():
@@ -241,68 +230,42 @@ class Transaction:
         
         return self
 
-    def refunds(self, options = None):
-        """Get the transaction's refunds.
-        Keyword argument:
-		
-        options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
-        path    = "/transactions/" + quote_plus(self.id) + "/refunds"
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        a    = []
-        body = response.body
-        for v in body['refunds']:
-            tmp = Refund(instance)
-            tmp.fillWithData(v)
-            a.append(tmp)
-
-        return a
-        
     @staticmethod
-    def all(options = None):
-        """Get all the transactions.
+    def find(transactionId, refundId, options = None):
+        """Find a transaction's refund by its ID.
         Keyword argument:
-		
+		transactionId -- ID of the transaction
+		refundId -- ID of the refund
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
-        path    = "/transactions"
+        path    = "/transactions/" + quote_plus(transactionId) + "/refunds/" + quote_plus(refundId) + ""
         data    = {
 
         }
 
         response = Response(request.get(path, data, options))
-        a    = []
         body = response.body
-        for v in body['transactions']:
-            tmp = Transaction(instance)
-            tmp.fillWithData(v)
-            a.append(tmp)
-
-        return a
+        body = body["refund"]
+        obj = Refund()
+        return obj.fillWithData(body)
         
-    @staticmethod
-    def find(transactionId, options = None):
-        """Find a transaction by its ID.
+    def apply(self, transactionId, options = None):
+        """Apply a refund to a transaction.
         Keyword argument:
 		transactionId -- ID of the transaction
         options -- Options for the request"""
-        instance = ProcessOut.getDefault()
+        instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/transactions/" + quote_plus(transactionId) + ""
+        path    = "/transactions/{transactions_id}/refunds"
         data    = {
-
+			'amount': self.amount, 
+			'metadata': self.metadata, 
+			'reason': self.reason, 
+			'information': self.information
         }
 
-        response = Response(request.get(path, data, options))
-        body = response.body
-        body = body["transaction"]
-        obj = Transaction()
-        return obj.fillWithData(body)
+        response = Response(request.post(path, data, options))
+        return response.success
         
     

@@ -32,15 +32,35 @@ except ImportError:
     import sys
     Event = sys.modules[__package__ + '.event']
 try:
+    from .gateway import Gateway
+except ImportError:
+    import sys
+    Gateway = sys.modules[__package__ + '.gateway']
+try:
+    from .gatewayconfiguration import GatewayConfiguration
+except ImportError:
+    import sys
+    GatewayConfiguration = sys.modules[__package__ + '.gatewayconfiguration']
+try:
     from .invoice import Invoice
 except ImportError:
     import sys
     Invoice = sys.modules[__package__ + '.invoice']
 try:
+    from .customeraction import CustomerAction
+except ImportError:
+    import sys
+    CustomerAction = sys.modules[__package__ + '.customeraction']
+try:
     from .project import Project
 except ImportError:
     import sys
     Project = sys.modules[__package__ + '.project']
+try:
+    from .refund import Refund
+except ImportError:
+    import sys
+    Refund = sys.modules[__package__ + '.refund']
 try:
     from .tailoredinvoice import TailoredInvoice
 except ImportError:
@@ -60,7 +80,7 @@ except ImportError:
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 
 
-class RecurringInvoice:
+class Subscription:
 
     def __init__(self, instance = None):
         if instance == None:
@@ -71,6 +91,7 @@ class RecurringInvoice:
         self._id = ""
         self._project = None
         self._customer = None
+        self._token = None
         self._url = ""
         self._name = ""
         self._amount = ""
@@ -80,6 +101,7 @@ class RecurringInvoice:
         self._cancelUrl = ""
         self._interval = ""
         self._trialPeriod = "0d"
+        self._activated = False
         self._ended = False
         self._endedReason = ""
         self._sandbox = False
@@ -132,6 +154,24 @@ class RecurringInvoice:
             obj = Customer(self._instance)
             obj.fillWithData(val)
             self._customer = obj
+        return self
+    
+    @property
+    def token(self):
+        """Get token"""
+        return self._token
+
+    @token.setter
+    def token(self, val):
+        """Set token
+        Keyword argument:
+        val -- New token value"""
+        if isinstance(val, Token):
+            self._token = val
+        else:
+            obj = Token(self._instance)
+            obj.fillWithData(val)
+            self._token = obj
         return self
     
     @property
@@ -252,6 +292,19 @@ class RecurringInvoice:
         return self
     
     @property
+    def activated(self):
+        """Get activated"""
+        return self._activated
+
+    @activated.setter
+    def activated(self, val):
+        """Set activated
+        Keyword argument:
+        val -- New activated value"""
+        self._activated = val
+        return self
+    
+    @property
     def ended(self):
         """Get ended"""
         return self._ended
@@ -314,6 +367,8 @@ class RecurringInvoice:
             self.project = data["project"]
         if "customer" in data.keys():
             self.customer = data["customer"]
+        if "token" in data.keys():
+            self.token = data["token"]
         if "url" in data.keys():
             self.url = data["url"]
         if "name" in data.keys():
@@ -332,6 +387,8 @@ class RecurringInvoice:
             self.interval = data["interval"]
         if "trial_period" in data.keys():
             self.trialPeriod = data["trial_period"]
+        if "activated" in data.keys():
+            self.activated = data["activated"]
         if "ended" in data.keys():
             self.ended = data["ended"]
         if "ended_reason" in data.keys():
@@ -344,13 +401,13 @@ class RecurringInvoice:
         return self
 
     def customer(self, options = None):
-        """Get the customer linked to the recurring invoice.
+        """Get the customer owning the subscription.
         Keyword argument:
 		
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/recurring-invoices/" + quote_plus(self.id) + "/customers"
+        path    = "/subscriptions/" + quote_plus(self.id) + "/customers"
         data    = {
 
         }
@@ -361,14 +418,32 @@ class RecurringInvoice:
         customer = Customer(instance)
         return customer.fillWithData(body)
         
+    def customerAction(self, gatewayConfigurationId, options = None):
+        """Get the customer action needed to be continue the subscription authorization flow on the given gateway.
+        Keyword argument:
+		gatewayConfigurationId -- ID of the gateway configuration to be used
+        options -- Options for the request"""
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
+        path    = "/subscriptions/" + quote_plus(self.id) + "/gateway-configurations/" + quote_plus(gatewayConfigurationId) + "/customer-action"
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        body = response.body
+        body = body["customer_action"]
+        customerAction = CustomerAction(instance)
+        return customerAction.fillWithData(body)
+        
     def invoice(self, options = None):
-        """Get the invoice corresponding to the last iteration of the recurring invoice.
+        """Get the invoice corresponding to the last iteration of the subscription.
         Keyword argument:
 		
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/recurring-invoices/" + quote_plus(self.id) + "/invoices"
+        path    = "/subscriptions/" + quote_plus(self.id) + "/invoices"
         data    = {
 
         }
@@ -380,13 +455,13 @@ class RecurringInvoice:
         return invoice.fillWithData(body)
         
     def create(self, customerId, options = None):
-        """Create a new recurring invoice for the given customer.
+        """Create a new subscription for the given customer.
         Keyword argument:
 		customerId -- ID of the customer
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/recurring-invoices"
+        path    = "/subscriptions"
         data    = {
 			'name': self.name, 
 			'amount': self.amount, 
@@ -402,37 +477,51 @@ class RecurringInvoice:
 
         response = Response(request.post(path, data, options))
         body = response.body
-        body = body["recurring_invoice"]
-        recurringInvoice = RecurringInvoice(instance)
-        return recurringInvoice.fillWithData(body)
+        body = body["subscription"]
+        return self.fillWithData(body)
         
     @staticmethod
-    def find(recurringInvoiceId, options = None):
-        """Find a recurring invoice by its ID.
+    def find(subscriptionId, options = None):
+        """Find a subscription by its ID.
         Keyword argument:
-		recurringInvoiceId -- ID of the recurring invoice
+		subscriptionId -- ID of the subscription
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
-        path    = "/recurring-invoices/" + quote_plus(recurringInvoiceId) + ""
+        path    = "/subscriptions/" + quote_plus(subscriptionId) + ""
         data    = {
 
         }
 
         response = Response(request.get(path, data, options))
         body = response.body
-        body = body["recurring_invoice"]
-        recurringInvoice = RecurringInvoice(instance)
-        return recurringInvoice.fillWithData(body)
+        body = body["subscription"]
+        obj = Subscription()
+        return obj.fillWithData(body)
+        
+    def activate(self, source, options = None):
+        """Activate the subscription with the provided token.
+        Keyword argument:
+		source -- Source to activate the subscription, such as a token
+        options -- Options for the request"""
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
+        path    = "/subscriptions/" + quote_plus(self.id) + ""
+        data    = {
+			'source': source
+        }
+
+        response = Response(request.put(path, data, options))
+        return response.success
         
     def end(self, reason, options = None):
-        """End a recurring invoice. The reason may be provided as well.
+        """End a subscription. The reason may be provided as well.
         Keyword argument:
 		reason -- Ending reason
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/recurring-invoices/" + quote_plus(self.id) + ""
+        path    = "/subscriptions/" + quote_plus(self.id) + ""
         data    = {
 			'reason': reason
         }

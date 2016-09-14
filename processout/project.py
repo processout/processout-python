@@ -32,15 +32,35 @@ except ImportError:
     import sys
     Event = sys.modules[__package__ + '.event']
 try:
+    from .gateway import Gateway
+except ImportError:
+    import sys
+    Gateway = sys.modules[__package__ + '.gateway']
+try:
+    from .gatewayconfiguration import GatewayConfiguration
+except ImportError:
+    import sys
+    GatewayConfiguration = sys.modules[__package__ + '.gatewayconfiguration']
+try:
     from .invoice import Invoice
 except ImportError:
     import sys
     Invoice = sys.modules[__package__ + '.invoice']
 try:
-    from .recurringinvoice import RecurringInvoice
+    from .customeraction import CustomerAction
 except ImportError:
     import sys
-    RecurringInvoice = sys.modules[__package__ + '.recurringinvoice']
+    CustomerAction = sys.modules[__package__ + '.customeraction']
+try:
+    from .refund import Refund
+except ImportError:
+    import sys
+    Refund = sys.modules[__package__ + '.refund']
+try:
+    from .subscription import Subscription
+except ImportError:
+    import sys
+    Subscription = sys.modules[__package__ + '.subscription']
 try:
     from .tailoredinvoice import TailoredInvoice
 except ImportError:
@@ -157,4 +177,45 @@ class Project:
         
         return self
 
+    def gatewayConfigurations(self, options = None):
+        """Get all the gateway configurations of the project
+        Keyword argument:
+		
+        options -- Options for the request"""
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
+        path    = "/projects/" + quote_plus(self.id) + "/gateway-configurations"
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        a    = []
+        body = response.body
+        for v in body['gateway_configurations']:
+            tmp = GatewayConfiguration(instance)
+            tmp.fillWithData(v)
+            a.append(tmp)
+
+        return a
+        
+    @staticmethod
+    def find(projectId, options = None):
+        """Find a project by its ID.
+        Keyword argument:
+		projectId -- ID of the project
+        options -- Options for the request"""
+        instance = ProcessOut.getDefault()
+        request = RequestProcessoutPrivate(instance)
+        path    = "/projects/" + quote_plus(projectId) + ""
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        body = response.body
+        body = body["project"]
+        obj = Project()
+        return obj.fillWithData(body)
+        
     

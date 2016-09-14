@@ -27,20 +27,40 @@ except ImportError:
     import sys
     Event = sys.modules[__package__ + '.event']
 try:
+    from .gateway import Gateway
+except ImportError:
+    import sys
+    Gateway = sys.modules[__package__ + '.gateway']
+try:
+    from .gatewayconfiguration import GatewayConfiguration
+except ImportError:
+    import sys
+    GatewayConfiguration = sys.modules[__package__ + '.gatewayconfiguration']
+try:
     from .invoice import Invoice
 except ImportError:
     import sys
     Invoice = sys.modules[__package__ + '.invoice']
+try:
+    from .customeraction import CustomerAction
+except ImportError:
+    import sys
+    CustomerAction = sys.modules[__package__ + '.customeraction']
 try:
     from .project import Project
 except ImportError:
     import sys
     Project = sys.modules[__package__ + '.project']
 try:
-    from .recurringinvoice import RecurringInvoice
+    from .refund import Refund
 except ImportError:
     import sys
-    RecurringInvoice = sys.modules[__package__ + '.recurringinvoice']
+    Refund = sys.modules[__package__ + '.refund']
+try:
+    from .subscription import Subscription
+except ImportError:
+    import sys
+    Subscription = sys.modules[__package__ + '.subscription']
 try:
     from .tailoredinvoice import TailoredInvoice
 except ImportError:
@@ -71,9 +91,8 @@ class Token:
         self._id = ""
         self._customer = None
         self._customerId = ""
-        self._name = ""
         self._metadata = {}
-        self._isRecurringInvoice = ""
+        self._isSubscriptionOnly = False
         self._createdAt = ""
         
     @property
@@ -121,19 +140,6 @@ class Token:
         return self
     
     @property
-    def name(self):
-        """Get name"""
-        return self._name
-
-    @name.setter
-    def name(self, val):
-        """Set name
-        Keyword argument:
-        val -- New name value"""
-        self._name = val
-        return self
-    
-    @property
     def metadata(self):
         """Get metadata"""
         return self._metadata
@@ -147,16 +153,16 @@ class Token:
         return self
     
     @property
-    def isRecurringInvoice(self):
-        """Get isRecurringInvoice"""
-        return self._isRecurringInvoice
+    def isSubscriptionOnly(self):
+        """Get isSubscriptionOnly"""
+        return self._isSubscriptionOnly
 
-    @isRecurringInvoice.setter
-    def isRecurringInvoice(self, val):
-        """Set isRecurringInvoice
+    @isSubscriptionOnly.setter
+    def isSubscriptionOnly(self, val):
+        """Set isSubscriptionOnly
         Keyword argument:
-        val -- New isRecurringInvoice value"""
-        self._isRecurringInvoice = val
+        val -- New isSubscriptionOnly value"""
+        self._isSubscriptionOnly = val
         return self
     
     @property
@@ -183,33 +189,54 @@ class Token:
             self.customer = data["customer"]
         if "customer_id" in data.keys():
             self.customerId = data["customer_id"]
-        if "name" in data.keys():
-            self.name = data["name"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
-        if "is_recurring_invoice" in data.keys():
-            self.isRecurringInvoice = data["is_recurring_invoice"]
+        if "is_subscription_only" in data.keys():
+            self.isSubscriptionOnly = data["is_subscription_only"]
         if "created_at" in data.keys():
             self.createdAt = data["created_at"]
         
         return self
 
-    def delete(self, options = None):
-        """Delete a specific customer's token by its ID.
+    @staticmethod
+    def find(customerId, tokenId, options = None):
+        """Find a customer's token by its ID.
         Keyword argument:
-		
+		customerId -- ID of the customer
+		tokenId -- ID of the token
         options -- Options for the request"""
-        instance = self._instance
+        instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
-        path    = "/customers/" + quote_plus(self.customerId) + "/tokens/" + quote_plus(self.id) + ""
+        path    = "/customers/" + quote_plus(customerId) + "/tokens/" + quote_plus(tokenId) + ""
         data    = {
 
         }
 
-        response = Response(request.delete(path, data, options))
+        response = Response(request.get(path, data, options))
         body = response.body
         body = body["token"]
-        token = Token(instance)
-        return token.fillWithData(body)
+        obj = Token()
+        return obj.fillWithData(body)
+        
+    def create(self, customerId, target, source, options = None):
+        """Create a new token for the given customer ID.
+        Keyword argument:
+		customerId -- ID of the customer
+		target -- Target authorization request UID to be authorized
+		source -- Source of the token. Should be a gateway request
+        options -- Options for the request"""
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
+        path    = "/customers/" + quote_plus(customerId) + "/tokens"
+        data    = {
+			'metadata': self.metadata, 
+			'target': target, 
+			'source': source
+        }
+
+        response = Response(request.post(path, data, options))
+        body = response.body
+        body = body["token"]
+        return self.fillWithData(body)
         
     
