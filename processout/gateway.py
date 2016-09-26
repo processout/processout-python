@@ -94,6 +94,7 @@ class Gateway:
         self._logoUrl = ""
         self._url = ""
         self._flows = []
+        self._tags = []
         self._description = ""
         
     @property
@@ -175,6 +176,19 @@ class Gateway:
         return self
     
     @property
+    def tags(self):
+        """Get tags"""
+        return self._tags
+
+    @tags.setter
+    def tags(self, val):
+        """Set tags
+        Keyword argument:
+        val -- New tags value"""
+        self._tags = val
+        return self
+    
+    @property
     def description(self):
         """Get description"""
         return self._description
@@ -204,6 +218,8 @@ class Gateway:
             self.url = data["url"]
         if "flows" in data.keys():
             self.flows = data["flows"]
+        if "tags" in data.keys():
+            self.tags = data["tags"]
         if "description" in data.keys():
             self.description = data["description"]
         

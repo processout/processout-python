@@ -257,7 +257,7 @@ class Refund:
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/transactions/{transactions_id}/refunds"
+        path    = "/transactions/" + quote_plus(transactionId) + "/refunds"
         data    = {
 			'amount': self.amount, 
 			'metadata': self.metadata, 

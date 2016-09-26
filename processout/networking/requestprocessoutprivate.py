@@ -42,6 +42,9 @@ class RequestProcessoutPrivate:
         if "expand" in options:
             data["expand"] = options["expand"]
 
+        if "filter" in options:
+            data["filter"] = options["filter"]
+
         return data
 
     def get(self, path, data, options):
