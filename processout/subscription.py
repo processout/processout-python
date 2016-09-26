@@ -511,7 +511,7 @@ class Subscription:
 			'source': source
         }
 
-        response = Response(request.put(path, data, options))
+        response = Response(request.post(path, data, options))
         return response.success
         
     def end(self, reason, options = None):
