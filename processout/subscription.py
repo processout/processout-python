@@ -514,6 +514,23 @@ class Subscription:
         response = Response(request.post(path, data, options))
         return response.success
         
+    def update(self, options = None):
+        """Update the subscription.
+        Keyword argument:
+		
+        options -- Options for the request"""
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
+        path    = "/subscriptions/" + quote_plus(self.id) + ""
+        data    = {
+
+        }
+
+        response = Response(request.put(path, data, options))
+        body = response.body
+        body = body["subscription"]
+        return self.fillWithData(body)
+        
     def end(self, reason, options = None):
         """End a subscription. The reason may be provided as well.
         Keyword argument:

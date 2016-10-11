@@ -31,6 +31,8 @@ class RequestProcessoutPrivate:
 
         if "idempotency_key" in options:
             headers["Idempotency-Key"] = options["idempotency_key"]
+        if "disable_logging" in options:
+            headers["Disable-Logging"] = options["disable_logging"]
 
         return headers
 

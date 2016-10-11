@@ -90,6 +90,7 @@ class Customer:
 
         self._id = ""
         self._project = None
+        self._balance = ""
         self._email = ""
         self._firstName = ""
         self._lastName = ""
@@ -133,6 +134,19 @@ class Customer:
             obj = Project(self._instance)
             obj.fillWithData(val)
             self._project = obj
+        return self
+    
+    @property
+    def balance(self):
+        """Get balance"""
+        return self._balance
+
+    @balance.setter
+    def balance(self, val):
+        """Set balance
+        Keyword argument:
+        val -- New balance value"""
+        self._balance = val
         return self
     
     @property
@@ -313,6 +327,8 @@ class Customer:
             self.id = data["id"]
         if "project" in data.keys():
             self.project = data["project"]
+        if "balance" in data.keys():
+            self.balance = data["balance"]
         if "email" in data.keys():
             self.email = data["email"]
         if "first_name" in data.keys():
@@ -381,6 +397,28 @@ class Customer:
         body = response.body
         for v in body['tokens']:
             tmp = Token(instance)
+            tmp.fillWithData(v)
+            a.append(tmp)
+
+        return a
+        
+    def transactions(self, options = None):
+        """Get the transactions belonging to the customer.
+        Keyword argument:
+		
+        options -- Options for the request"""
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
+        path    = "/customers/" + quote_plus(self.id) + "/transactions"
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        a    = []
+        body = response.body
+        for v in body['transactions']:
+            tmp = Transaction(instance)
             tmp.fillWithData(v)
             a.append(tmp)
 
