@@ -80,7 +80,7 @@ except ImportError:
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 
 
-class TailoredInvoice:
+class Product:
 
     def __init__(self, instance = None):
         if instance == None:
@@ -97,7 +97,7 @@ class TailoredInvoice:
         self._requestShipping = False
         self._returnUrl = ""
         self._cancelUrl = ""
-        self._custom = ""
+        self._sandbox = False
         self._createdAt = ""
         
     @property
@@ -218,16 +218,16 @@ class TailoredInvoice:
         return self
     
     @property
-    def custom(self):
-        """Get custom"""
-        return self._custom
+    def sandbox(self):
+        """Get sandbox"""
+        return self._sandbox
 
-    @custom.setter
-    def custom(self, val):
-        """Set custom
+    @sandbox.setter
+    def sandbox(self, val):
+        """Set sandbox
         Keyword argument:
-        val -- New custom value"""
-        self._custom = val
+        val -- New sandbox value"""
+        self._sandbox = val
         return self
     
     @property
@@ -266,21 +266,21 @@ class TailoredInvoice:
             self.returnUrl = data["return_url"]
         if "cancel_url" in data.keys():
             self.cancelUrl = data["cancel_url"]
-        if "custom" in data.keys():
-            self.custom = data["custom"]
+        if "sandbox" in data.keys():
+            self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
             self.createdAt = data["created_at"]
         
         return self
 
     def invoice(self, options = None):
-        """Create a new invoice from the tailored invoice.
+        """Create a new invoice from the product.
         Keyword argument:
 		
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/tailored-invoices/" + quote_plus(self.id) + "/invoices"
+        path    = "/products/" + quote_plus(self.id) + "/invoices"
         data    = {
 
         }
@@ -293,13 +293,13 @@ class TailoredInvoice:
         
     @staticmethod
     def all(options = None):
-        """Get all the tailored invoices.
+        """Get all the products.
         Keyword argument:
 		
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
-        path    = "/tailored-invoices"
+        path    = "/products"
         data    = {
 
         }
@@ -307,21 +307,21 @@ class TailoredInvoice:
         response = Response(request.get(path, data, options))
         a    = []
         body = response.body
-        for v in body['tailored_invoices']:
-            tmp = TailoredInvoice(instance)
+        for v in body['products']:
+            tmp = Product(instance)
             tmp.fillWithData(v)
             a.append(tmp)
 
         return a
         
     def create(self, options = None):
-        """Create a new tailored invoice.
+        """Create a new product.
         Keyword argument:
 		
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/tailored-invoices"
+        path    = "/products"
         data    = {
 			'name': self.name, 
 			'amount': self.amount, 
@@ -335,36 +335,36 @@ class TailoredInvoice:
 
         response = Response(request.post(path, data, options))
         body = response.body
-        body = body["tailored_invoice"]
+        body = body["product"]
         return self.fillWithData(body)
         
     @staticmethod
-    def find(tailoredInvoiceId, options = None):
-        """Find a tailored invoice by its ID.
+    def find(productId, options = None):
+        """Find a product by its ID.
         Keyword argument:
-		tailoredInvoiceId -- ID of the tailored invoice
+		productId -- ID of the product
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
-        path    = "/tailored-invoices/" + quote_plus(tailoredInvoiceId) + ""
+        path    = "/products/" + quote_plus(productId) + ""
         data    = {
 
         }
 
         response = Response(request.get(path, data, options))
         body = response.body
-        body = body["tailored_invoice"]
-        obj = TailoredInvoice()
+        body = body["product"]
+        obj = Product()
         return obj.fillWithData(body)
         
     def save(self, options = None):
-        """Save the updated tailored invoice attributes.
+        """Save the updated product attributes.
         Keyword argument:
 		
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/tailored-invoices/" + quote_plus(self.id) + ""
+        path    = "/products/{tailored_invoice_id}"
         data    = {
 			'name': self.name, 
 			'amount': self.amount, 
@@ -378,17 +378,17 @@ class TailoredInvoice:
 
         response = Response(request.put(path, data, options))
         body = response.body
-        body = body["tailored_invoice"]
+        body = body["product"]
         return self.fillWithData(body)
         
     def delete(self, options = None):
-        """Delete the tailored invoice.
+        """Delete the product.
         Keyword argument:
 		
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/tailored-invoices/" + quote_plus(self.id) + ""
+        path    = "/products/" + quote_plus(self.id) + ""
         data    = {
 
         }

@@ -47,6 +47,11 @@ except ImportError:
     import sys
     Invoice = sys.modules[__package__ + '.invoice']
 try:
+    from .product import Product
+except ImportError:
+    import sys
+    Product = sys.modules[__package__ + '.product']
+try:
     from .project import Project
 except ImportError:
     import sys
@@ -61,11 +66,6 @@ try:
 except ImportError:
     import sys
     Subscription = sys.modules[__package__ + '.subscription']
-try:
-    from .tailoredinvoice import TailoredInvoice
-except ImportError:
-    import sys
-    TailoredInvoice = sys.modules[__package__ + '.tailoredinvoice']
 try:
     from .transaction import Transaction
 except ImportError:

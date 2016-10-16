@@ -52,6 +52,11 @@ except ImportError:
     import sys
     CustomerAction = sys.modules[__package__ + '.customeraction']
 try:
+    from .product import Product
+except ImportError:
+    import sys
+    Product = sys.modules[__package__ + '.product']
+try:
     from .project import Project
 except ImportError:
     import sys
@@ -66,11 +71,6 @@ try:
 except ImportError:
     import sys
     Subscription = sys.modules[__package__ + '.subscription']
-try:
-    from .tailoredinvoice import TailoredInvoice
-except ImportError:
-    import sys
-    TailoredInvoice = sys.modules[__package__ + '.tailoredinvoice']
 try:
     from .webhook import Webhook
 except ImportError:
@@ -241,6 +241,29 @@ class Transaction:
         
         return self
 
+    @staticmethod
+    def all(options = None):
+        """Get all the subscriptions.
+        Keyword argument:
+		
+        options -- Options for the request"""
+        instance = ProcessOut.getDefault()
+        request = RequestProcessoutPrivate(instance)
+        path    = "/subscriptions"
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        a    = []
+        body = response.body
+        for v in body['subscriptions']:
+            tmp = Subscription(instance)
+            tmp.fillWithData(v)
+            a.append(tmp)
+
+        return a
+        
     def refunds(self, options = None):
         """Get the transaction's refunds.
         Keyword argument:
