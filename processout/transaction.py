@@ -241,29 +241,6 @@ class Transaction:
         
         return self
 
-    @staticmethod
-    def all(options = None):
-        """Get all the subscriptions.
-        Keyword argument:
-		
-        options -- Options for the request"""
-        instance = ProcessOut.getDefault()
-        request = RequestProcessoutPrivate(instance)
-        path    = "/subscriptions"
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        a    = []
-        body = response.body
-        for v in body['subscriptions']:
-            tmp = Subscription(instance)
-            tmp.fillWithData(v)
-            a.append(tmp)
-
-        return a
-        
     def refunds(self, options = None):
         """Get the transaction's refunds.
         Keyword argument:

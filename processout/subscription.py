@@ -454,6 +454,29 @@ class Subscription:
         invoice = Invoice(instance)
         return invoice.fillWithData(body)
         
+    @staticmethod
+    def all(options = None):
+        """Get all the subscriptions.
+        Keyword argument:
+		
+        options -- Options for the request"""
+        instance = ProcessOut.getDefault()
+        request = RequestProcessoutPrivate(instance)
+        path    = "/subscriptions"
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        a    = []
+        body = response.body
+        for v in body['subscriptions']:
+            tmp = Subscription(instance)
+            tmp.fillWithData(v)
+            a.append(tmp)
+
+        return a
+        
     def create(self, customerId, options = None):
         """Create a new subscription for the given customer.
         Keyword argument:
