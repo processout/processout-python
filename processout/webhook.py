@@ -17,6 +17,16 @@ except ImportError:
     import sys
     AuthorizationRequest = sys.modules[__package__ + '.authorizationrequest']
 try:
+    from .card import Card
+except ImportError:
+    import sys
+    Card = sys.modules[__package__ + '.card']
+try:
+    from .coupon import Coupon
+except ImportError:
+    import sys
+    Coupon = sys.modules[__package__ + '.coupon']
+try:
     from .customer import Customer
 except ImportError:
     import sys
@@ -26,6 +36,11 @@ try:
 except ImportError:
     import sys
     Token = sys.modules[__package__ + '.token']
+try:
+    from .discount import Discount
+except ImportError:
+    import sys
+    Discount = sys.modules[__package__ + '.discount']
 try:
     from .event import Event
 except ImportError:
@@ -51,6 +66,11 @@ try:
 except ImportError:
     import sys
     CustomerAction = sys.modules[__package__ + '.customeraction']
+try:
+    from .plan import Plan
+except ImportError:
+    import sys
+    Plan = sys.modules[__package__ + '.plan']
 try:
     from .product import Product
 except ImportError:
@@ -80,6 +100,8 @@ except ImportError:
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 
 
+# The content of this file was automatically generated
+
 class Webhook:
 
     def __init__(self, instance = None):
@@ -89,6 +111,7 @@ class Webhook:
         self._instance = instance
 
         self._id = ""
+        self._project = None
         self._event = None
         self._requestUrl = ""
         self._requestMethod = ""
@@ -111,6 +134,24 @@ class Webhook:
         Keyword argument:
         val -- New id value"""
         self._id = val
+        return self
+    
+    @property
+    def project(self):
+        """Get project"""
+        return self._project
+
+    @project.setter
+    def project(self, val):
+        """Set project
+        Keyword argument:
+        val -- New project value"""
+        if isinstance(val, Project):
+            self._project = val
+        else:
+            obj = Project(self._instance)
+            obj.fillWithData(val)
+            self._project = obj
         return self
     
     @property
@@ -255,6 +296,8 @@ class Webhook:
         data -- The data from which to pull the new values"""
         if "id" in data.keys():
             self.id = data["id"]
+        if "project" in data.keys():
+            self.project = data["project"]
         if "event" in data.keys():
             self.event = data["event"]
         if "request_url" in data.keys():

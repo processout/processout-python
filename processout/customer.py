@@ -17,10 +17,25 @@ except ImportError:
     import sys
     AuthorizationRequest = sys.modules[__package__ + '.authorizationrequest']
 try:
+    from .card import Card
+except ImportError:
+    import sys
+    Card = sys.modules[__package__ + '.card']
+try:
+    from .coupon import Coupon
+except ImportError:
+    import sys
+    Coupon = sys.modules[__package__ + '.coupon']
+try:
     from .token import Token
 except ImportError:
     import sys
     Token = sys.modules[__package__ + '.token']
+try:
+    from .discount import Discount
+except ImportError:
+    import sys
+    Discount = sys.modules[__package__ + '.discount']
 try:
     from .event import Event
 except ImportError:
@@ -46,6 +61,11 @@ try:
 except ImportError:
     import sys
     CustomerAction = sys.modules[__package__ + '.customeraction']
+try:
+    from .plan import Plan
+except ImportError:
+    import sys
+    Plan = sys.modules[__package__ + '.plan']
 try:
     from .product import Product
 except ImportError:
@@ -80,6 +100,8 @@ except ImportError:
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 
 
+# The content of this file was automatically generated
+
 class Customer:
 
     def __init__(self, instance = None):
@@ -90,7 +112,6 @@ class Customer:
 
         self._id = ""
         self._project = None
-        self._balance = ""
         self._email = ""
         self._firstName = ""
         self._lastName = ""
@@ -100,6 +121,8 @@ class Customer:
         self._state = ""
         self._zip = ""
         self._countryCode = ""
+        self._balance = "0"
+        self._currency = ""
         self._metadata = {}
         self._hasPin = False
         self._sandbox = False
@@ -134,19 +157,6 @@ class Customer:
             obj = Project(self._instance)
             obj.fillWithData(val)
             self._project = obj
-        return self
-    
-    @property
-    def balance(self):
-        """Get balance"""
-        return self._balance
-
-    @balance.setter
-    def balance(self, val):
-        """Set balance
-        Keyword argument:
-        val -- New balance value"""
-        self._balance = val
         return self
     
     @property
@@ -267,6 +277,32 @@ class Customer:
         return self
     
     @property
+    def balance(self):
+        """Get balance"""
+        return self._balance
+
+    @balance.setter
+    def balance(self, val):
+        """Set balance
+        Keyword argument:
+        val -- New balance value"""
+        self._balance = val
+        return self
+    
+    @property
+    def currency(self):
+        """Get currency"""
+        return self._currency
+
+    @currency.setter
+    def currency(self, val):
+        """Set currency
+        Keyword argument:
+        val -- New currency value"""
+        self._currency = val
+        return self
+    
+    @property
     def metadata(self):
         """Get metadata"""
         return self._metadata
@@ -327,8 +363,6 @@ class Customer:
             self.id = data["id"]
         if "project" in data.keys():
             self.project = data["project"]
-        if "balance" in data.keys():
-            self.balance = data["balance"]
         if "email" in data.keys():
             self.email = data["email"]
         if "first_name" in data.keys():
@@ -347,6 +381,10 @@ class Customer:
             self.zip = data["zip"]
         if "country_code" in data.keys():
             self.countryCode = data["country_code"]
+        if "balance" in data.keys():
+            self.balance = data["balance"]
+        if "currency" in data.keys():
+            self.currency = data["currency"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
         if "has_pin" in data.keys():
@@ -371,6 +409,8 @@ class Customer:
         }
 
         response = Response(request.get(path, data, options))
+        returnValues = []
+        
         a    = []
         body = response.body
         for v in body['subscriptions']:
@@ -378,8 +418,11 @@ class Customer:
             tmp.fillWithData(v)
             a.append(tmp)
 
-        return a
-        
+        returnValues.append(a)
+            
+
+        return tuple(returnValues)
+
     def tokens(self, options = None):
         """Get the customer's tokens.
         Keyword argument:
@@ -393,6 +436,8 @@ class Customer:
         }
 
         response = Response(request.get(path, data, options))
+        returnValues = []
+        
         a    = []
         body = response.body
         for v in body['tokens']:
@@ -400,8 +445,11 @@ class Customer:
             tmp.fillWithData(v)
             a.append(tmp)
 
-        return a
-        
+        returnValues.append(a)
+            
+
+        return tuple(returnValues)
+
     def transactions(self, options = None):
         """Get the transactions belonging to the customer.
         Keyword argument:
@@ -415,6 +463,8 @@ class Customer:
         }
 
         response = Response(request.get(path, data, options))
+        returnValues = []
+        
         a    = []
         body = response.body
         for v in body['transactions']:
@@ -422,8 +472,11 @@ class Customer:
             tmp.fillWithData(v)
             a.append(tmp)
 
-        return a
-        
+        returnValues.append(a)
+            
+
+        return tuple(returnValues)
+
     @staticmethod
     def all(options = None):
         """Get all the customers.
@@ -438,6 +491,8 @@ class Customer:
         }
 
         response = Response(request.get(path, data, options))
+        returnValues = []
+        
         a    = []
         body = response.body
         for v in body['customers']:
@@ -445,8 +500,11 @@ class Customer:
             tmp.fillWithData(v)
             a.append(tmp)
 
-        return a
-        
+        returnValues.append(a)
+            
+
+        return tuple(returnValues)
+
     def create(self, options = None):
         """Create a new customer.
         Keyword argument:
@@ -456,6 +514,8 @@ class Customer:
         request = RequestProcessoutPrivate(instance)
         path    = "/customers"
         data    = {
+			'balance': self.balance, 
+			'currency': self.currency, 
 			'email': self.email, 
 			'first_name': self.firstName, 
 			'last_name': self.lastName, 
@@ -469,10 +529,17 @@ class Customer:
         }
 
         response = Response(request.post(path, data, options))
+        returnValues = []
+        
         body = response.body
         body = body["customer"]
-        return self.fillWithData(body)
-        
+                
+                
+        returnValues.append(self.fillWithData(body))
+                
+
+        return tuple(returnValues)
+
     @staticmethod
     def find(customerId, options = None):
         """Find a customer by its ID.
@@ -487,11 +554,18 @@ class Customer:
         }
 
         response = Response(request.get(path, data, options))
+        returnValues = []
+        
         body = response.body
         body = body["customer"]
+                
+                
         obj = Customer()
-        return obj.fillWithData(body)
-        
+        returnValues.append(obj.fillWithData(body))
+                
+
+        return tuple(returnValues)
+
     def save(self, options = None):
         """Save the updated customer attributes.
         Keyword argument:
@@ -501,6 +575,7 @@ class Customer:
         request = RequestProcessoutPrivate(instance)
         path    = "/customers/" + quote_plus(self.id) + ""
         data    = {
+			'balance': self.balance, 
 			'email': self.email, 
 			'first_name': self.firstName, 
 			'last_name': self.lastName, 
@@ -514,10 +589,17 @@ class Customer:
         }
 
         response = Response(request.put(path, data, options))
+        returnValues = []
+        
         body = response.body
         body = body["customer"]
-        return self.fillWithData(body)
-        
+                
+                
+        returnValues.append(self.fillWithData(body))
+                
+
+        return tuple(returnValues)
+
     def delete(self, options = None):
         """Delete the customer.
         Keyword argument:
@@ -531,6 +613,10 @@ class Customer:
         }
 
         response = Response(request.delete(path, data, options))
-        return response.success
+        returnValues = []
         
+        returnValues.append(response.success)
+
+        return tuple(returnValues)
+
     

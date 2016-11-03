@@ -17,6 +17,16 @@ except ImportError:
     import sys
     AuthorizationRequest = sys.modules[__package__ + '.authorizationrequest']
 try:
+    from .card import Card
+except ImportError:
+    import sys
+    Card = sys.modules[__package__ + '.card']
+try:
+    from .coupon import Coupon
+except ImportError:
+    import sys
+    Coupon = sys.modules[__package__ + '.coupon']
+try:
     from .customer import Customer
 except ImportError:
     import sys
@@ -26,6 +36,11 @@ try:
 except ImportError:
     import sys
     Token = sys.modules[__package__ + '.token']
+try:
+    from .discount import Discount
+except ImportError:
+    import sys
+    Discount = sys.modules[__package__ + '.discount']
 try:
     from .event import Event
 except ImportError:
@@ -51,6 +66,11 @@ try:
 except ImportError:
     import sys
     CustomerAction = sys.modules[__package__ + '.customeraction']
+try:
+    from .plan import Plan
+except ImportError:
+    import sys
+    Plan = sys.modules[__package__ + '.plan']
 try:
     from .product import Product
 except ImportError:
@@ -79,6 +99,8 @@ except ImportError:
 
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 
+
+# The content of this file was automatically generated
 
 class Project:
 
@@ -190,6 +212,8 @@ class Project:
         }
 
         response = Response(request.get(path, data, options))
+        returnValues = []
+        
         a    = []
         body = response.body
         for v in body['gateway_configurations']:
@@ -197,25 +221,9 @@ class Project:
             tmp.fillWithData(v)
             a.append(tmp)
 
-        return a
-        
-    @staticmethod
-    def find(projectId, options = None):
-        """Find a project by its ID.
-        Keyword argument:
-		projectId -- ID of the project
-        options -- Options for the request"""
-        instance = ProcessOut.getDefault()
-        request = RequestProcessoutPrivate(instance)
-        path    = "/projects/" + quote_plus(projectId) + ""
-        data    = {
+        returnValues.append(a)
+            
 
-        }
+        return tuple(returnValues)
 
-        response = Response(request.get(path, data, options))
-        body = response.body
-        body = body["project"]
-        obj = Project()
-        return obj.fillWithData(body)
-        
     

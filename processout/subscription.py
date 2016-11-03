@@ -17,6 +17,16 @@ except ImportError:
     import sys
     AuthorizationRequest = sys.modules[__package__ + '.authorizationrequest']
 try:
+    from .card import Card
+except ImportError:
+    import sys
+    Card = sys.modules[__package__ + '.card']
+try:
+    from .coupon import Coupon
+except ImportError:
+    import sys
+    Coupon = sys.modules[__package__ + '.coupon']
+try:
     from .customer import Customer
 except ImportError:
     import sys
@@ -26,6 +36,11 @@ try:
 except ImportError:
     import sys
     Token = sys.modules[__package__ + '.token']
+try:
+    from .discount import Discount
+except ImportError:
+    import sys
+    Discount = sys.modules[__package__ + '.discount']
 try:
     from .event import Event
 except ImportError:
@@ -51,6 +66,11 @@ try:
 except ImportError:
     import sys
     CustomerAction = sys.modules[__package__ + '.customeraction']
+try:
+    from .plan import Plan
+except ImportError:
+    import sys
+    Plan = sys.modules[__package__ + '.plan']
 try:
     from .product import Product
 except ImportError:
@@ -80,6 +100,8 @@ except ImportError:
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 
 
+# The content of this file was automatically generated
+
 class Subscription:
 
     def __init__(self, instance = None):
@@ -90,6 +112,7 @@ class Subscription:
 
         self._id = ""
         self._project = None
+        self._plan = None
         self._customer = None
         self._token = None
         self._url = ""
@@ -97,15 +120,20 @@ class Subscription:
         self._amount = ""
         self._currency = ""
         self._metadata = {}
+        self._interval = ""
+        self._trialEndAt = ""
+        self._activated = False
+        self._active = False
+        self._canceled = False
+        self._cancellationReason = ""
+        self._pendingCancellation = False
+        self._cancelAt = ""
         self._returnUrl = ""
         self._cancelUrl = ""
-        self._interval = ""
-        self._trialPeriod = "0d"
-        self._activated = False
-        self._ended = False
-        self._endedReason = ""
         self._sandbox = False
         self._createdAt = ""
+        self._activatedAt = ""
+        self._iterateAt = ""
         
     @property
     def id(self):
@@ -136,6 +164,24 @@ class Subscription:
             obj = Project(self._instance)
             obj.fillWithData(val)
             self._project = obj
+        return self
+    
+    @property
+    def plan(self):
+        """Get plan"""
+        return self._plan
+
+    @plan.setter
+    def plan(self, val):
+        """Set plan
+        Keyword argument:
+        val -- New plan value"""
+        if isinstance(val, Plan):
+            self._plan = val
+        else:
+            obj = Plan(self._instance)
+            obj.fillWithData(val)
+            self._plan = obj
         return self
     
     @property
@@ -240,6 +286,110 @@ class Subscription:
         return self
     
     @property
+    def interval(self):
+        """Get interval"""
+        return self._interval
+
+    @interval.setter
+    def interval(self, val):
+        """Set interval
+        Keyword argument:
+        val -- New interval value"""
+        self._interval = val
+        return self
+    
+    @property
+    def trialEndAt(self):
+        """Get trialEndAt"""
+        return self._trialEndAt
+
+    @trialEndAt.setter
+    def trialEndAt(self, val):
+        """Set trialEndAt
+        Keyword argument:
+        val -- New trialEndAt value"""
+        self._trialEndAt = val
+        return self
+    
+    @property
+    def activated(self):
+        """Get activated"""
+        return self._activated
+
+    @activated.setter
+    def activated(self, val):
+        """Set activated
+        Keyword argument:
+        val -- New activated value"""
+        self._activated = val
+        return self
+    
+    @property
+    def active(self):
+        """Get active"""
+        return self._active
+
+    @active.setter
+    def active(self, val):
+        """Set active
+        Keyword argument:
+        val -- New active value"""
+        self._active = val
+        return self
+    
+    @property
+    def canceled(self):
+        """Get canceled"""
+        return self._canceled
+
+    @canceled.setter
+    def canceled(self, val):
+        """Set canceled
+        Keyword argument:
+        val -- New canceled value"""
+        self._canceled = val
+        return self
+    
+    @property
+    def cancellationReason(self):
+        """Get cancellationReason"""
+        return self._cancellationReason
+
+    @cancellationReason.setter
+    def cancellationReason(self, val):
+        """Set cancellationReason
+        Keyword argument:
+        val -- New cancellationReason value"""
+        self._cancellationReason = val
+        return self
+    
+    @property
+    def pendingCancellation(self):
+        """Get pendingCancellation"""
+        return self._pendingCancellation
+
+    @pendingCancellation.setter
+    def pendingCancellation(self, val):
+        """Set pendingCancellation
+        Keyword argument:
+        val -- New pendingCancellation value"""
+        self._pendingCancellation = val
+        return self
+    
+    @property
+    def cancelAt(self):
+        """Get cancelAt"""
+        return self._cancelAt
+
+    @cancelAt.setter
+    def cancelAt(self, val):
+        """Set cancelAt
+        Keyword argument:
+        val -- New cancelAt value"""
+        self._cancelAt = val
+        return self
+    
+    @property
     def returnUrl(self):
         """Get returnUrl"""
         return self._returnUrl
@@ -263,71 +413,6 @@ class Subscription:
         Keyword argument:
         val -- New cancelUrl value"""
         self._cancelUrl = val
-        return self
-    
-    @property
-    def interval(self):
-        """Get interval"""
-        return self._interval
-
-    @interval.setter
-    def interval(self, val):
-        """Set interval
-        Keyword argument:
-        val -- New interval value"""
-        self._interval = val
-        return self
-    
-    @property
-    def trialPeriod(self):
-        """Get trialPeriod"""
-        return self._trialPeriod
-
-    @trialPeriod.setter
-    def trialPeriod(self, val):
-        """Set trialPeriod
-        Keyword argument:
-        val -- New trialPeriod value"""
-        self._trialPeriod = val
-        return self
-    
-    @property
-    def activated(self):
-        """Get activated"""
-        return self._activated
-
-    @activated.setter
-    def activated(self, val):
-        """Set activated
-        Keyword argument:
-        val -- New activated value"""
-        self._activated = val
-        return self
-    
-    @property
-    def ended(self):
-        """Get ended"""
-        return self._ended
-
-    @ended.setter
-    def ended(self, val):
-        """Set ended
-        Keyword argument:
-        val -- New ended value"""
-        self._ended = val
-        return self
-    
-    @property
-    def endedReason(self):
-        """Get endedReason"""
-        return self._endedReason
-
-    @endedReason.setter
-    def endedReason(self, val):
-        """Set endedReason
-        Keyword argument:
-        val -- New endedReason value"""
-        self._endedReason = val
         return self
     
     @property
@@ -356,6 +441,32 @@ class Subscription:
         self._createdAt = val
         return self
     
+    @property
+    def activatedAt(self):
+        """Get activatedAt"""
+        return self._activatedAt
+
+    @activatedAt.setter
+    def activatedAt(self, val):
+        """Set activatedAt
+        Keyword argument:
+        val -- New activatedAt value"""
+        self._activatedAt = val
+        return self
+    
+    @property
+    def iterateAt(self):
+        """Get iterateAt"""
+        return self._iterateAt
+
+    @iterateAt.setter
+    def iterateAt(self, val):
+        """Set iterateAt
+        Keyword argument:
+        val -- New iterateAt value"""
+        self._iterateAt = val
+        return self
+    
 
     def fillWithData(self, data):
         """Fill the current object with the new values pulled from data
@@ -365,6 +476,8 @@ class Subscription:
             self.id = data["id"]
         if "project" in data.keys():
             self.project = data["project"]
+        if "plan" in data.keys():
+            self.plan = data["plan"]
         if "customer" in data.keys():
             self.customer = data["customer"]
         if "token" in data.keys():
@@ -379,24 +492,34 @@ class Subscription:
             self.currency = data["currency"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
+        if "interval" in data.keys():
+            self.interval = data["interval"]
+        if "trial_end_at" in data.keys():
+            self.trialEndAt = data["trial_end_at"]
+        if "activated" in data.keys():
+            self.activated = data["activated"]
+        if "active" in data.keys():
+            self.active = data["active"]
+        if "canceled" in data.keys():
+            self.canceled = data["canceled"]
+        if "cancellation_reason" in data.keys():
+            self.cancellationReason = data["cancellation_reason"]
+        if "pending_cancellation" in data.keys():
+            self.pendingCancellation = data["pending_cancellation"]
+        if "cancel_at" in data.keys():
+            self.cancelAt = data["cancel_at"]
         if "return_url" in data.keys():
             self.returnUrl = data["return_url"]
         if "cancel_url" in data.keys():
             self.cancelUrl = data["cancel_url"]
-        if "interval" in data.keys():
-            self.interval = data["interval"]
-        if "trial_period" in data.keys():
-            self.trialPeriod = data["trial_period"]
-        if "activated" in data.keys():
-            self.activated = data["activated"]
-        if "ended" in data.keys():
-            self.ended = data["ended"]
-        if "ended_reason" in data.keys():
-            self.endedReason = data["ended_reason"]
         if "sandbox" in data.keys():
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
             self.createdAt = data["created_at"]
+        if "activated_at" in data.keys():
+            self.activatedAt = data["activated_at"]
+        if "iterate_at" in data.keys():
+            self.iterateAt = data["iterate_at"]
         
         return self
 
@@ -413,47 +536,69 @@ class Subscription:
         }
 
         response = Response(request.get(path, data, options))
+        returnValues = []
+        
         body = response.body
         body = body["customer"]
         customer = Customer(instance)
-        return customer.fillWithData(body)
-        
-    def customerAction(self, gatewayConfigurationId, options = None):
-        """Get the customer action needed to be continue the subscription authorization flow on the given gateway.
-        Keyword argument:
-		gatewayConfigurationId -- ID of the gateway configuration to be used
-        options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
-        path    = "/subscriptions/" + quote_plus(self.id) + "/gateway-configurations/" + quote_plus(gatewayConfigurationId) + "/customer-action"
-        data    = {
+        returnValues.append(customer.fillWithData(body))
 
-        }
+        return tuple(returnValues)
 
-        response = Response(request.get(path, data, options))
-        body = response.body
-        body = body["customer_action"]
-        customerAction = CustomerAction(instance)
-        return customerAction.fillWithData(body)
-        
-    def invoice(self, options = None):
-        """Get the invoice corresponding to the last iteration of the subscription.
+    def discounts(self, options = None):
+        """Get the discounts applied to the subscription.
         Keyword argument:
 		
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/subscriptions/" + quote_plus(self.id) + "/invoices"
+        path    = "/subscriptions/" + quote_plus(self.id) + "/discounts"
         data    = {
 
         }
 
         response = Response(request.get(path, data, options))
-        body = response.body
-        body = body["invoice"]
-        invoice = Invoice(instance)
-        return invoice.fillWithData(body)
+        returnValues = []
         
+        a    = []
+        body = response.body
+        for v in body['discounts']:
+            tmp = Discount(instance)
+            tmp.fillWithData(v)
+            a.append(tmp)
+
+        returnValues.append(a)
+            
+
+        return tuple(returnValues)
+
+    def transactions(self, options = None):
+        """Get the subscriptions past transactions.
+        Keyword argument:
+		
+        options -- Options for the request"""
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
+        path    = "/subscriptions/" + quote_plus(self.id) + "/transactions"
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        returnValues = []
+        
+        a    = []
+        body = response.body
+        for v in body['transactions']:
+            tmp = Transaction(instance)
+            tmp.fillWithData(v)
+            a.append(tmp)
+
+        returnValues.append(a)
+            
+
+        return tuple(returnValues)
+
     @staticmethod
     def all(options = None):
         """Get all the subscriptions.
@@ -468,6 +613,8 @@ class Subscription:
         }
 
         response = Response(request.get(path, data, options))
+        returnValues = []
+        
         a    = []
         body = response.body
         for v in body['subscriptions']:
@@ -475,8 +622,11 @@ class Subscription:
             tmp.fillWithData(v)
             a.append(tmp)
 
-        return a
-        
+        returnValues.append(a)
+            
+
+        return tuple(returnValues)
+
     def create(self, customerId, options = None):
         """Create a new subscription for the given customer.
         Keyword argument:
@@ -486,23 +636,65 @@ class Subscription:
         request = RequestProcessoutPrivate(instance)
         path    = "/subscriptions"
         data    = {
+			'cancel_at': self.cancelAt, 
 			'name': self.name, 
 			'amount': self.amount, 
 			'currency': self.currency, 
 			'metadata': self.metadata, 
+			'interval': self.interval, 
+			'trial_end_at': self.trialEndAt, 
 			'return_url': self.returnUrl, 
 			'cancel_url': self.cancelUrl, 
-			'interval': self.interval, 
-			'trial_period': self.trialPeriod, 
-			'ended_reason': self.endedReason, 
 			'customer_id': customerId
         }
 
         response = Response(request.post(path, data, options))
+        returnValues = []
+        
         body = response.body
         body = body["subscription"]
-        return self.fillWithData(body)
+                
+                
+        returnValues.append(self.fillWithData(body))
+                
+
+        return tuple(returnValues)
+
+    def createFromPlan(self, customerId, planId, options = None):
+        """Create a new subscription for the customer from the given plan ID.
+        Keyword argument:
+		customerId -- ID of the customer
+		planId -- ID of the plan
+        options -- Options for the request"""
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
+        path    = "/subscriptions"
+        data    = {
+			'cancel_at': self.cancelAt, 
+			'name': self.name, 
+			'amount': self.amount, 
+			'currency': self.currency, 
+			'metadata': self.metadata, 
+			'interval': self.interval, 
+			'trial_end_at': self.trialEndAt, 
+			'return_url': self.returnUrl, 
+			'cancel_url': self.cancelUrl, 
+			'customer_id': customerId, 
+			'plan_id': planId
+        }
+
+        response = Response(request.post(path, data, options))
+        returnValues = []
         
+        body = response.body
+        body = body["subscription"]
+                
+                
+        returnValues.append(self.fillWithData(body))
+                
+
+        return tuple(returnValues)
+
     @staticmethod
     def find(subscriptionId, options = None):
         """Find a subscription by its ID.
@@ -517,26 +709,18 @@ class Subscription:
         }
 
         response = Response(request.get(path, data, options))
+        returnValues = []
+        
         body = response.body
         body = body["subscription"]
+                
+                
         obj = Subscription()
-        return obj.fillWithData(body)
-        
-    def activate(self, source, options = None):
-        """Activate the subscription with the provided token.
-        Keyword argument:
-		source -- Source to activate the subscription, such as a token
-        options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
-        path    = "/subscriptions/" + quote_plus(self.id) + ""
-        data    = {
-			'source': source
-        }
+        returnValues.append(obj.fillWithData(body))
+                
 
-        response = Response(request.post(path, data, options))
-        return response.success
-        
+        return tuple(returnValues)
+
     def update(self, options = None):
         """Update the subscription.
         Keyword argument:
@@ -546,27 +730,119 @@ class Subscription:
         request = RequestProcessoutPrivate(instance)
         path    = "/subscriptions/" + quote_plus(self.id) + ""
         data    = {
-
+			'trial_end_at': self.trialEndAt
         }
 
         response = Response(request.put(path, data, options))
+        returnValues = []
+        
         body = response.body
         body = body["subscription"]
-        return self.fillWithData(body)
-        
-    def end(self, reason, options = None):
-        """End a subscription. The reason may be provided as well.
+                
+                
+        returnValues.append(self.fillWithData(body))
+                
+
+        return tuple(returnValues)
+
+    def updatePlan(self, planId, prorate, options = None):
+        """Update the subscription's plan.
         Keyword argument:
-		reason -- Ending reason
+		planId -- ID of the new plan to be applied on the subscription
+		prorate -- Define if proration should be done when updating the plan
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
         path    = "/subscriptions/" + quote_plus(self.id) + ""
         data    = {
-			'reason': reason
+			'plan_id': planId, 
+			'prorate': prorate
+        }
+
+        response = Response(request.put(path, data, options))
+        returnValues = []
+        
+        body = response.body
+        body = body["subscription"]
+                
+                
+        returnValues.append(self.fillWithData(body))
+                
+
+        return tuple(returnValues)
+
+    def applySource(self, source, options = None):
+        """Apply a source to the subscription to activate or update the subscription's source.
+        Keyword argument:
+		source -- Source to be applied on the subscription and used to pay future invoices. Can be a card, a token or a gateway request
+        options -- Options for the request"""
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
+        path    = "/subscriptions/" + quote_plus(self.id) + ""
+        data    = {
+			'source': source
+        }
+
+        response = Response(request.put(path, data, options))
+        returnValues = []
+        
+        body = response.body
+        body = body["subscription"]
+                
+                
+        returnValues.append(self.fillWithData(body))
+                
+
+        return tuple(returnValues)
+
+    def cancel(self, cancellationReason, options = None):
+        """Cancel a subscription. The reason may be provided as well.
+        Keyword argument:
+		cancellationReason -- Cancellation reason
+        options -- Options for the request"""
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
+        path    = "/subscriptions/" + quote_plus(self.id) + ""
+        data    = {
+			'cancellation_reason': cancellationReason
         }
 
         response = Response(request.delete(path, data, options))
-        return response.success
+        returnValues = []
         
+        body = response.body
+        body = body["subscription"]
+                
+                
+        returnValues.append(self.fillWithData(body))
+                
+
+        return tuple(returnValues)
+
+    def cancelAt(self, cancelAt, cancellationReason, options = None):
+        """Schedule the cancellation of the subscription. The reason may be provided as well.
+        Keyword argument:
+		cancelAt -- Cancellation date, in the form of a string
+		cancellationReason -- Cancellation reason
+        options -- Options for the request"""
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
+        path    = "/subscriptions/" + quote_plus(self.id) + ""
+        data    = {
+			'cancel_at': cancelAt, 
+			'cancellation_reason': cancellationReason
+        }
+
+        response = Response(request.delete(path, data, options))
+        returnValues = []
+        
+        body = response.body
+        body = body["subscription"]
+                
+                
+        returnValues.append(self.fillWithData(body))
+                
+
+        return tuple(returnValues)
+
     

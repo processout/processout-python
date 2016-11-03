@@ -12,15 +12,15 @@ except ImportError:
     import sys
     Activity = sys.modules[__package__ + '.activity']
 try:
+    from .authorizationrequest import AuthorizationRequest
+except ImportError:
+    import sys
+    AuthorizationRequest = sys.modules[__package__ + '.authorizationrequest']
+try:
     from .card import Card
 except ImportError:
     import sys
     Card = sys.modules[__package__ + '.card']
-try:
-    from .coupon import Coupon
-except ImportError:
-    import sys
-    Coupon = sys.modules[__package__ + '.coupon']
 try:
     from .customer import Customer
 except ImportError:
@@ -102,7 +102,7 @@ from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 
 # The content of this file was automatically generated
 
-class AuthorizationRequest:
+class Coupon:
 
     def __init__(self, instance = None):
         if instance == None:
@@ -112,15 +112,15 @@ class AuthorizationRequest:
 
         self._id = ""
         self._project = None
-        self._customer = None
-        self._token = None
-        self._url = ""
-        self._authorized = False
         self._name = ""
+        self._amountOff = ""
+        self._percentOff = 0
         self._currency = ""
-        self._returnUrl = ""
-        self._cancelUrl = ""
-        self._custom = ""
+        self._maxRedemptions = 0
+        self._expiresAt = ""
+        self._metadata = {}
+        self._iterationCount = 0
+        self._redeemedNumber = 0
         self._sandbox = False
         self._createdAt = ""
         
@@ -156,68 +156,6 @@ class AuthorizationRequest:
         return self
     
     @property
-    def customer(self):
-        """Get customer"""
-        return self._customer
-
-    @customer.setter
-    def customer(self, val):
-        """Set customer
-        Keyword argument:
-        val -- New customer value"""
-        if isinstance(val, Customer):
-            self._customer = val
-        else:
-            obj = Customer(self._instance)
-            obj.fillWithData(val)
-            self._customer = obj
-        return self
-    
-    @property
-    def token(self):
-        """Get token"""
-        return self._token
-
-    @token.setter
-    def token(self, val):
-        """Set token
-        Keyword argument:
-        val -- New token value"""
-        if isinstance(val, Token):
-            self._token = val
-        else:
-            obj = Token(self._instance)
-            obj.fillWithData(val)
-            self._token = obj
-        return self
-    
-    @property
-    def url(self):
-        """Get url"""
-        return self._url
-
-    @url.setter
-    def url(self, val):
-        """Set url
-        Keyword argument:
-        val -- New url value"""
-        self._url = val
-        return self
-    
-    @property
-    def authorized(self):
-        """Get authorized"""
-        return self._authorized
-
-    @authorized.setter
-    def authorized(self, val):
-        """Set authorized
-        Keyword argument:
-        val -- New authorized value"""
-        self._authorized = val
-        return self
-    
-    @property
     def name(self):
         """Get name"""
         return self._name
@@ -228,6 +166,32 @@ class AuthorizationRequest:
         Keyword argument:
         val -- New name value"""
         self._name = val
+        return self
+    
+    @property
+    def amountOff(self):
+        """Get amountOff"""
+        return self._amountOff
+
+    @amountOff.setter
+    def amountOff(self, val):
+        """Set amountOff
+        Keyword argument:
+        val -- New amountOff value"""
+        self._amountOff = val
+        return self
+    
+    @property
+    def percentOff(self):
+        """Get percentOff"""
+        return self._percentOff
+
+    @percentOff.setter
+    def percentOff(self, val):
+        """Set percentOff
+        Keyword argument:
+        val -- New percentOff value"""
+        self._percentOff = val
         return self
     
     @property
@@ -244,42 +208,68 @@ class AuthorizationRequest:
         return self
     
     @property
-    def returnUrl(self):
-        """Get returnUrl"""
-        return self._returnUrl
+    def maxRedemptions(self):
+        """Get maxRedemptions"""
+        return self._maxRedemptions
 
-    @returnUrl.setter
-    def returnUrl(self, val):
-        """Set returnUrl
+    @maxRedemptions.setter
+    def maxRedemptions(self, val):
+        """Set maxRedemptions
         Keyword argument:
-        val -- New returnUrl value"""
-        self._returnUrl = val
+        val -- New maxRedemptions value"""
+        self._maxRedemptions = val
         return self
     
     @property
-    def cancelUrl(self):
-        """Get cancelUrl"""
-        return self._cancelUrl
+    def expiresAt(self):
+        """Get expiresAt"""
+        return self._expiresAt
 
-    @cancelUrl.setter
-    def cancelUrl(self, val):
-        """Set cancelUrl
+    @expiresAt.setter
+    def expiresAt(self, val):
+        """Set expiresAt
         Keyword argument:
-        val -- New cancelUrl value"""
-        self._cancelUrl = val
+        val -- New expiresAt value"""
+        self._expiresAt = val
         return self
     
     @property
-    def custom(self):
-        """Get custom"""
-        return self._custom
+    def metadata(self):
+        """Get metadata"""
+        return self._metadata
 
-    @custom.setter
-    def custom(self, val):
-        """Set custom
+    @metadata.setter
+    def metadata(self, val):
+        """Set metadata
         Keyword argument:
-        val -- New custom value"""
-        self._custom = val
+        val -- New metadata value"""
+        self._metadata = val
+        return self
+    
+    @property
+    def iterationCount(self):
+        """Get iterationCount"""
+        return self._iterationCount
+
+    @iterationCount.setter
+    def iterationCount(self, val):
+        """Set iterationCount
+        Keyword argument:
+        val -- New iterationCount value"""
+        self._iterationCount = val
+        return self
+    
+    @property
+    def redeemedNumber(self):
+        """Get redeemedNumber"""
+        return self._redeemedNumber
+
+    @redeemedNumber.setter
+    def redeemedNumber(self, val):
+        """Set redeemedNumber
+        Keyword argument:
+        val -- New redeemedNumber value"""
+        self._redeemedNumber = val
         return self
     
     @property
@@ -317,24 +307,24 @@ class AuthorizationRequest:
             self.id = data["id"]
         if "project" in data.keys():
             self.project = data["project"]
-        if "customer" in data.keys():
-            self.customer = data["customer"]
-        if "token" in data.keys():
-            self.token = data["token"]
-        if "url" in data.keys():
-            self.url = data["url"]
-        if "authorized" in data.keys():
-            self.authorized = data["authorized"]
         if "name" in data.keys():
             self.name = data["name"]
+        if "amount_off" in data.keys():
+            self.amountOff = data["amount_off"]
+        if "percent_off" in data.keys():
+            self.percentOff = data["percent_off"]
         if "currency" in data.keys():
             self.currency = data["currency"]
-        if "return_url" in data.keys():
-            self.returnUrl = data["return_url"]
-        if "cancel_url" in data.keys():
-            self.cancelUrl = data["cancel_url"]
-        if "custom" in data.keys():
-            self.custom = data["custom"]
+        if "max_redemptions" in data.keys():
+            self.maxRedemptions = data["max_redemptions"]
+        if "expires_at" in data.keys():
+            self.expiresAt = data["expires_at"]
+        if "metadata" in data.keys():
+            self.metadata = data["metadata"]
+        if "iteration_count" in data.keys():
+            self.iterationCount = data["iteration_count"]
+        if "redeemed_number" in data.keys():
+            self.redeemedNumber = data["redeemed_number"]
         if "sandbox" in data.keys():
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
@@ -342,14 +332,15 @@ class AuthorizationRequest:
         
         return self
 
-    def customer(self, options = None):
-        """Get the customer linked to the authorization request.
+    @staticmethod
+    def all(options = None):
+        """Get all the coupons.
         Keyword argument:
 		
         options -- Options for the request"""
-        instance = self._instance
+        instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
-        path    = "/authorization-requests/" + quote_plus(self.id) + "/customers"
+        path    = "/coupons"
         data    = {
 
         }
@@ -357,35 +348,42 @@ class AuthorizationRequest:
         response = Response(request.get(path, data, options))
         returnValues = []
         
+        a    = []
         body = response.body
-        body = body["customer"]
-        customer = Customer(instance)
-        returnValues.append(customer.fillWithData(body))
+        for v in body['coupons']:
+            tmp = Coupon(instance)
+            tmp.fillWithData(v)
+            a.append(tmp)
+
+        returnValues.append(a)
+            
 
         return tuple(returnValues)
 
-    def create(self, customerId, options = None):
-        """Create a new authorization request for the given customer ID.
+    def create(self, options = None):
+        """Create a new coupon.
         Keyword argument:
-		customerId -- ID of the customer
+		
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/authorization-requests"
+        path    = "/coupons"
         data    = {
-			'name': self.name, 
+			'id': self.id, 
+			'amount_off': self.amountOff, 
+			'percent_off': self.percentOff, 
 			'currency': self.currency, 
-			'return_url': self.returnUrl, 
-			'cancel_url': self.cancelUrl, 
-			'custom': self.custom, 
-			'customer_id': customerId
+			'iteration_count': self.iterationCount, 
+			'max_redemptions': self.maxRedemptions, 
+			'expires_at': self.expiresAt, 
+			'metadata': self.metadata
         }
 
         response = Response(request.post(path, data, options))
         returnValues = []
         
         body = response.body
-        body = body["authorization_request"]
+        body = body["coupon"]
                 
                 
         returnValues.append(self.fillWithData(body))
@@ -394,14 +392,14 @@ class AuthorizationRequest:
         return tuple(returnValues)
 
     @staticmethod
-    def find(authorizationRequestId, options = None):
-        """Find an authorization request by its ID.
+    def find(couponId, options = None):
+        """Find a coupon by its ID.
         Keyword argument:
-		authorizationRequestId -- ID of the authorization request
+		couponId -- ID of the coupon
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
-        path    = "/authorization-requests/" + quote_plus(authorizationRequestId) + ""
+        path    = "/coupons/" + quote_plus(couponId) + ""
         data    = {
 
         }
@@ -410,12 +408,55 @@ class AuthorizationRequest:
         returnValues = []
         
         body = response.body
-        body = body["authorization_request"]
+        body = body["coupon"]
                 
                 
-        obj = AuthorizationRequest()
+        obj = Coupon()
         returnValues.append(obj.fillWithData(body))
                 
+
+        return tuple(returnValues)
+
+    def save(self, options = None):
+        """Save the updated coupon attributes.
+        Keyword argument:
+		
+        options -- Options for the request"""
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
+        path    = "/coupons/" + quote_plus(self.id) + ""
+        data    = {
+			'metadata': self.metadata
+        }
+
+        response = Response(request.put(path, data, options))
+        returnValues = []
+        
+        body = response.body
+        body = body["coupon"]
+                
+                
+        returnValues.append(self.fillWithData(body))
+                
+
+        return tuple(returnValues)
+
+    def delete(self, options = None):
+        """Delete the coupon.
+        Keyword argument:
+		
+        options -- Options for the request"""
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
+        path    = "/coupons/" + quote_plus(self.id) + ""
+        data    = {
+
+        }
+
+        response = Response(request.delete(path, data, options))
+        returnValues = []
+        
+        returnValues.append(response.success)
 
         return tuple(returnValues)
 

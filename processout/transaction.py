@@ -17,6 +17,16 @@ except ImportError:
     import sys
     AuthorizationRequest = sys.modules[__package__ + '.authorizationrequest']
 try:
+    from .card import Card
+except ImportError:
+    import sys
+    Card = sys.modules[__package__ + '.card']
+try:
+    from .coupon import Coupon
+except ImportError:
+    import sys
+    Coupon = sys.modules[__package__ + '.coupon']
+try:
     from .customer import Customer
 except ImportError:
     import sys
@@ -26,6 +36,11 @@ try:
 except ImportError:
     import sys
     Token = sys.modules[__package__ + '.token']
+try:
+    from .discount import Discount
+except ImportError:
+    import sys
+    Discount = sys.modules[__package__ + '.discount']
 try:
     from .event import Event
 except ImportError:
@@ -51,6 +66,11 @@ try:
 except ImportError:
     import sys
     CustomerAction = sys.modules[__package__ + '.customeraction']
+try:
+    from .plan import Plan
+except ImportError:
+    import sys
+    Plan = sys.modules[__package__ + '.plan']
 try:
     from .product import Product
 except ImportError:
@@ -80,6 +100,8 @@ except ImportError:
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 
 
+# The content of this file was automatically generated
+
 class Transaction:
 
     def __init__(self, instance = None):
@@ -89,10 +111,18 @@ class Transaction:
         self._instance = instance
 
         self._id = ""
+        self._project = None
+        self._subscription = None
+        self._customer = None
+        self._token = None
+        self._card = None
         self._name = ""
-        self._amount = ""
+        self._authorizedAmount = ""
+        self._capturedAmount = ""
         self._currency = ""
         self._status = ""
+        self._authorized = False
+        self._captured = False
         self._processoutFee = ""
         self._metadata = {}
         self._sandbox = False
@@ -112,6 +142,96 @@ class Transaction:
         return self
     
     @property
+    def project(self):
+        """Get project"""
+        return self._project
+
+    @project.setter
+    def project(self, val):
+        """Set project
+        Keyword argument:
+        val -- New project value"""
+        if isinstance(val, Project):
+            self._project = val
+        else:
+            obj = Project(self._instance)
+            obj.fillWithData(val)
+            self._project = obj
+        return self
+    
+    @property
+    def subscription(self):
+        """Get subscription"""
+        return self._subscription
+
+    @subscription.setter
+    def subscription(self, val):
+        """Set subscription
+        Keyword argument:
+        val -- New subscription value"""
+        if isinstance(val, Subscription):
+            self._subscription = val
+        else:
+            obj = Subscription(self._instance)
+            obj.fillWithData(val)
+            self._subscription = obj
+        return self
+    
+    @property
+    def customer(self):
+        """Get customer"""
+        return self._customer
+
+    @customer.setter
+    def customer(self, val):
+        """Set customer
+        Keyword argument:
+        val -- New customer value"""
+        if isinstance(val, Customer):
+            self._customer = val
+        else:
+            obj = Customer(self._instance)
+            obj.fillWithData(val)
+            self._customer = obj
+        return self
+    
+    @property
+    def token(self):
+        """Get token"""
+        return self._token
+
+    @token.setter
+    def token(self, val):
+        """Set token
+        Keyword argument:
+        val -- New token value"""
+        if isinstance(val, Token):
+            self._token = val
+        else:
+            obj = Token(self._instance)
+            obj.fillWithData(val)
+            self._token = obj
+        return self
+    
+    @property
+    def card(self):
+        """Get card"""
+        return self._card
+
+    @card.setter
+    def card(self, val):
+        """Set card
+        Keyword argument:
+        val -- New card value"""
+        if isinstance(val, Card):
+            self._card = val
+        else:
+            obj = Card(self._instance)
+            obj.fillWithData(val)
+            self._card = obj
+        return self
+    
+    @property
     def name(self):
         """Get name"""
         return self._name
@@ -125,16 +245,29 @@ class Transaction:
         return self
     
     @property
-    def amount(self):
-        """Get amount"""
-        return self._amount
+    def authorizedAmount(self):
+        """Get authorizedAmount"""
+        return self._authorizedAmount
 
-    @amount.setter
-    def amount(self, val):
-        """Set amount
+    @authorizedAmount.setter
+    def authorizedAmount(self, val):
+        """Set authorizedAmount
         Keyword argument:
-        val -- New amount value"""
-        self._amount = val
+        val -- New authorizedAmount value"""
+        self._authorizedAmount = val
+        return self
+    
+    @property
+    def capturedAmount(self):
+        """Get capturedAmount"""
+        return self._capturedAmount
+
+    @capturedAmount.setter
+    def capturedAmount(self, val):
+        """Set capturedAmount
+        Keyword argument:
+        val -- New capturedAmount value"""
+        self._capturedAmount = val
         return self
     
     @property
@@ -161,6 +294,32 @@ class Transaction:
         Keyword argument:
         val -- New status value"""
         self._status = val
+        return self
+    
+    @property
+    def authorized(self):
+        """Get authorized"""
+        return self._authorized
+
+    @authorized.setter
+    def authorized(self, val):
+        """Set authorized
+        Keyword argument:
+        val -- New authorized value"""
+        self._authorized = val
+        return self
+    
+    @property
+    def captured(self):
+        """Get captured"""
+        return self._captured
+
+    @captured.setter
+    def captured(self, val):
+        """Set captured
+        Keyword argument:
+        val -- New captured value"""
+        self._captured = val
         return self
     
     @property
@@ -222,14 +381,30 @@ class Transaction:
         data -- The data from which to pull the new values"""
         if "id" in data.keys():
             self.id = data["id"]
+        if "project" in data.keys():
+            self.project = data["project"]
+        if "subscription" in data.keys():
+            self.subscription = data["subscription"]
+        if "customer" in data.keys():
+            self.customer = data["customer"]
+        if "token" in data.keys():
+            self.token = data["token"]
+        if "card" in data.keys():
+            self.card = data["card"]
         if "name" in data.keys():
             self.name = data["name"]
-        if "amount" in data.keys():
-            self.amount = data["amount"]
+        if "authorized_amount" in data.keys():
+            self.authorizedAmount = data["authorized_amount"]
+        if "captured_amount" in data.keys():
+            self.capturedAmount = data["captured_amount"]
         if "currency" in data.keys():
             self.currency = data["currency"]
         if "status" in data.keys():
             self.status = data["status"]
+        if "authorized" in data.keys():
+            self.authorized = data["authorized"]
+        if "captured" in data.keys():
+            self.captured = data["captured"]
         if "processout_fee" in data.keys():
             self.processoutFee = data["processout_fee"]
         if "metadata" in data.keys():
@@ -254,6 +429,8 @@ class Transaction:
         }
 
         response = Response(request.get(path, data, options))
+        returnValues = []
+        
         a    = []
         body = response.body
         for v in body['refunds']:
@@ -261,8 +438,11 @@ class Transaction:
             tmp.fillWithData(v)
             a.append(tmp)
 
-        return a
-        
+        returnValues.append(a)
+            
+
+        return tuple(returnValues)
+
     @staticmethod
     def all(options = None):
         """Get all the transactions.
@@ -277,6 +457,8 @@ class Transaction:
         }
 
         response = Response(request.get(path, data, options))
+        returnValues = []
+        
         a    = []
         body = response.body
         for v in body['transactions']:
@@ -284,8 +466,11 @@ class Transaction:
             tmp.fillWithData(v)
             a.append(tmp)
 
-        return a
-        
+        returnValues.append(a)
+            
+
+        return tuple(returnValues)
+
     @staticmethod
     def find(transactionId, options = None):
         """Find a transaction by its ID.
@@ -300,9 +485,16 @@ class Transaction:
         }
 
         response = Response(request.get(path, data, options))
+        returnValues = []
+        
         body = response.body
         body = body["transaction"]
+                
+                
         obj = Transaction()
-        return obj.fillWithData(body)
-        
+        returnValues.append(obj.fillWithData(body))
+                
+
+        return tuple(returnValues)
+
     

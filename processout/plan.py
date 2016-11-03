@@ -12,6 +12,11 @@ except ImportError:
     import sys
     Activity = sys.modules[__package__ + '.activity']
 try:
+    from .authorizationrequest import AuthorizationRequest
+except ImportError:
+    import sys
+    AuthorizationRequest = sys.modules[__package__ + '.authorizationrequest']
+try:
     from .card import Card
 except ImportError:
     import sys
@@ -62,11 +67,6 @@ except ImportError:
     import sys
     CustomerAction = sys.modules[__package__ + '.customeraction']
 try:
-    from .plan import Plan
-except ImportError:
-    import sys
-    Plan = sys.modules[__package__ + '.plan']
-try:
     from .product import Product
 except ImportError:
     import sys
@@ -102,7 +102,7 @@ from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 
 # The content of this file was automatically generated
 
-class AuthorizationRequest:
+class Plan:
 
     def __init__(self, instance = None):
         if instance == None:
@@ -112,15 +112,14 @@ class AuthorizationRequest:
 
         self._id = ""
         self._project = None
-        self._customer = None
-        self._token = None
-        self._url = ""
-        self._authorized = False
         self._name = ""
+        self._amount = ""
         self._currency = ""
+        self._metadata = {}
+        self._interval = ""
+        self._trialPeriod = "0d"
         self._returnUrl = ""
         self._cancelUrl = ""
-        self._custom = ""
         self._sandbox = False
         self._createdAt = ""
         
@@ -156,68 +155,6 @@ class AuthorizationRequest:
         return self
     
     @property
-    def customer(self):
-        """Get customer"""
-        return self._customer
-
-    @customer.setter
-    def customer(self, val):
-        """Set customer
-        Keyword argument:
-        val -- New customer value"""
-        if isinstance(val, Customer):
-            self._customer = val
-        else:
-            obj = Customer(self._instance)
-            obj.fillWithData(val)
-            self._customer = obj
-        return self
-    
-    @property
-    def token(self):
-        """Get token"""
-        return self._token
-
-    @token.setter
-    def token(self, val):
-        """Set token
-        Keyword argument:
-        val -- New token value"""
-        if isinstance(val, Token):
-            self._token = val
-        else:
-            obj = Token(self._instance)
-            obj.fillWithData(val)
-            self._token = obj
-        return self
-    
-    @property
-    def url(self):
-        """Get url"""
-        return self._url
-
-    @url.setter
-    def url(self, val):
-        """Set url
-        Keyword argument:
-        val -- New url value"""
-        self._url = val
-        return self
-    
-    @property
-    def authorized(self):
-        """Get authorized"""
-        return self._authorized
-
-    @authorized.setter
-    def authorized(self, val):
-        """Set authorized
-        Keyword argument:
-        val -- New authorized value"""
-        self._authorized = val
-        return self
-    
-    @property
     def name(self):
         """Get name"""
         return self._name
@@ -231,6 +168,19 @@ class AuthorizationRequest:
         return self
     
     @property
+    def amount(self):
+        """Get amount"""
+        return self._amount
+
+    @amount.setter
+    def amount(self, val):
+        """Set amount
+        Keyword argument:
+        val -- New amount value"""
+        self._amount = val
+        return self
+    
+    @property
     def currency(self):
         """Get currency"""
         return self._currency
@@ -241,6 +191,45 @@ class AuthorizationRequest:
         Keyword argument:
         val -- New currency value"""
         self._currency = val
+        return self
+    
+    @property
+    def metadata(self):
+        """Get metadata"""
+        return self._metadata
+
+    @metadata.setter
+    def metadata(self, val):
+        """Set metadata
+        Keyword argument:
+        val -- New metadata value"""
+        self._metadata = val
+        return self
+    
+    @property
+    def interval(self):
+        """Get interval"""
+        return self._interval
+
+    @interval.setter
+    def interval(self, val):
+        """Set interval
+        Keyword argument:
+        val -- New interval value"""
+        self._interval = val
+        return self
+    
+    @property
+    def trialPeriod(self):
+        """Get trialPeriod"""
+        return self._trialPeriod
+
+    @trialPeriod.setter
+    def trialPeriod(self, val):
+        """Set trialPeriod
+        Keyword argument:
+        val -- New trialPeriod value"""
+        self._trialPeriod = val
         return self
     
     @property
@@ -267,19 +256,6 @@ class AuthorizationRequest:
         Keyword argument:
         val -- New cancelUrl value"""
         self._cancelUrl = val
-        return self
-    
-    @property
-    def custom(self):
-        """Get custom"""
-        return self._custom
-
-    @custom.setter
-    def custom(self, val):
-        """Set custom
-        Keyword argument:
-        val -- New custom value"""
-        self._custom = val
         return self
     
     @property
@@ -317,24 +293,22 @@ class AuthorizationRequest:
             self.id = data["id"]
         if "project" in data.keys():
             self.project = data["project"]
-        if "customer" in data.keys():
-            self.customer = data["customer"]
-        if "token" in data.keys():
-            self.token = data["token"]
-        if "url" in data.keys():
-            self.url = data["url"]
-        if "authorized" in data.keys():
-            self.authorized = data["authorized"]
         if "name" in data.keys():
             self.name = data["name"]
+        if "amount" in data.keys():
+            self.amount = data["amount"]
         if "currency" in data.keys():
             self.currency = data["currency"]
+        if "metadata" in data.keys():
+            self.metadata = data["metadata"]
+        if "interval" in data.keys():
+            self.interval = data["interval"]
+        if "trial_period" in data.keys():
+            self.trialPeriod = data["trial_period"]
         if "return_url" in data.keys():
             self.returnUrl = data["return_url"]
         if "cancel_url" in data.keys():
             self.cancelUrl = data["cancel_url"]
-        if "custom" in data.keys():
-            self.custom = data["custom"]
         if "sandbox" in data.keys():
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
@@ -342,14 +316,15 @@ class AuthorizationRequest:
         
         return self
 
-    def customer(self, options = None):
-        """Get the customer linked to the authorization request.
+    @staticmethod
+    def all(options = None):
+        """Get all the plans.
         Keyword argument:
 		
         options -- Options for the request"""
-        instance = self._instance
+        instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
-        path    = "/authorization-requests/" + quote_plus(self.id) + "/customers"
+        path    = "/plans"
         data    = {
 
         }
@@ -357,35 +332,43 @@ class AuthorizationRequest:
         response = Response(request.get(path, data, options))
         returnValues = []
         
+        a    = []
         body = response.body
-        body = body["customer"]
-        customer = Customer(instance)
-        returnValues.append(customer.fillWithData(body))
+        for v in body['plans']:
+            tmp = Plan(instance)
+            tmp.fillWithData(v)
+            a.append(tmp)
+
+        returnValues.append(a)
+            
 
         return tuple(returnValues)
 
-    def create(self, customerId, options = None):
-        """Create a new authorization request for the given customer ID.
+    def create(self, options = None):
+        """Create a new plan.
         Keyword argument:
-		customerId -- ID of the customer
+		
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/authorization-requests"
+        path    = "/plans"
         data    = {
+			'id': self.id, 
 			'name': self.name, 
+			'amount': self.amount, 
 			'currency': self.currency, 
+			'interval': self.interval, 
+			'trial_period': self.trialPeriod, 
+			'metadata': self.metadata, 
 			'return_url': self.returnUrl, 
-			'cancel_url': self.cancelUrl, 
-			'custom': self.custom, 
-			'customer_id': customerId
+			'cancel_url': self.cancelUrl
         }
 
         response = Response(request.post(path, data, options))
         returnValues = []
         
         body = response.body
-        body = body["authorization_request"]
+        body = body["plan"]
                 
                 
         returnValues.append(self.fillWithData(body))
@@ -394,14 +377,14 @@ class AuthorizationRequest:
         return tuple(returnValues)
 
     @staticmethod
-    def find(authorizationRequestId, options = None):
-        """Find an authorization request by its ID.
+    def find(planId, options = None):
+        """Find a plan by its ID.
         Keyword argument:
-		authorizationRequestId -- ID of the authorization request
+		planId -- ID of the plan
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
-        path    = "/authorization-requests/" + quote_plus(authorizationRequestId) + ""
+        path    = "/plans/" + quote_plus(planId) + ""
         data    = {
 
         }
@@ -410,12 +393,59 @@ class AuthorizationRequest:
         returnValues = []
         
         body = response.body
-        body = body["authorization_request"]
+        body = body["plan"]
                 
                 
-        obj = AuthorizationRequest()
+        obj = Plan()
         returnValues.append(obj.fillWithData(body))
                 
+
+        return tuple(returnValues)
+
+    def update(self, options = None):
+        """Update the plan. This action won't affect subscriptions already linked to this plan.
+        Keyword argument:
+		
+        options -- Options for the request"""
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
+        path    = "/plans/" + quote_plus(self.id) + ""
+        data    = {
+			'name': self.name, 
+			'trial_period': self.trialPeriod, 
+			'metadata': self.metadata, 
+			'return_url': self.returnUrl, 
+			'cancel_url': self.cancelUrl
+        }
+
+        response = Response(request.put(path, data, options))
+        returnValues = []
+        
+        body = response.body
+        body = body["plan"]
+                
+                
+        returnValues.append(self.fillWithData(body))
+                
+
+        return tuple(returnValues)
+
+    def end(self, options = None):
+        """Delete a plan. Subscriptions linked to this plan won't be affected.
+        Keyword argument:
+		
+        options -- Options for the request"""
+        instance = self._instance
+        request = RequestProcessoutPrivate(instance)
+        path    = "/plans/" + quote_plus(self.id) + ""
+        data    = {
+
+        }
+
+        response = Response(request.delete(path, data, options))
+        returnValues = []
+        
+        returnValues.append(response.success)
 
         return tuple(returnValues)
 

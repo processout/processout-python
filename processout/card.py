@@ -17,11 +17,6 @@ except ImportError:
     import sys
     AuthorizationRequest = sys.modules[__package__ + '.authorizationrequest']
 try:
-    from .card import Card
-except ImportError:
-    import sys
-    Card = sys.modules[__package__ + '.card']
-try:
     from .coupon import Coupon
 except ImportError:
     import sys
@@ -31,6 +26,11 @@ try:
 except ImportError:
     import sys
     Customer = sys.modules[__package__ + '.customer']
+try:
+    from .token import Token
+except ImportError:
+    import sys
+    Token = sys.modules[__package__ + '.token']
 try:
     from .discount import Discount
 except ImportError:
@@ -102,7 +102,7 @@ from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 
 # The content of this file was automatically generated
 
-class Token:
+class Card:
 
     def __init__(self, instance = None):
         if instance == None:
@@ -111,9 +111,17 @@ class Token:
         self._instance = instance
 
         self._id = ""
-        self._customer = None
+        self._project = None
+        self._brand = ""
+        self._type = ""
+        self._bankName = ""
+        self._level = ""
+        self._iin = ""
+        self._last4Digits = ""
+        self._expMonth = 0
+        self._expYear = 0
         self._metadata = {}
-        self._isSubscriptionOnly = False
+        self._sandbox = False
         self._createdAt = ""
         
     @property
@@ -130,21 +138,125 @@ class Token:
         return self
     
     @property
-    def customer(self):
-        """Get customer"""
-        return self._customer
+    def project(self):
+        """Get project"""
+        return self._project
 
-    @customer.setter
-    def customer(self, val):
-        """Set customer
+    @project.setter
+    def project(self, val):
+        """Set project
         Keyword argument:
-        val -- New customer value"""
-        if isinstance(val, Customer):
-            self._customer = val
+        val -- New project value"""
+        if isinstance(val, Project):
+            self._project = val
         else:
-            obj = Customer(self._instance)
+            obj = Project(self._instance)
             obj.fillWithData(val)
-            self._customer = obj
+            self._project = obj
+        return self
+    
+    @property
+    def brand(self):
+        """Get brand"""
+        return self._brand
+
+    @brand.setter
+    def brand(self, val):
+        """Set brand
+        Keyword argument:
+        val -- New brand value"""
+        self._brand = val
+        return self
+    
+    @property
+    def type(self):
+        """Get type"""
+        return self._type
+
+    @type.setter
+    def type(self, val):
+        """Set type
+        Keyword argument:
+        val -- New type value"""
+        self._type = val
+        return self
+    
+    @property
+    def bankName(self):
+        """Get bankName"""
+        return self._bankName
+
+    @bankName.setter
+    def bankName(self, val):
+        """Set bankName
+        Keyword argument:
+        val -- New bankName value"""
+        self._bankName = val
+        return self
+    
+    @property
+    def level(self):
+        """Get level"""
+        return self._level
+
+    @level.setter
+    def level(self, val):
+        """Set level
+        Keyword argument:
+        val -- New level value"""
+        self._level = val
+        return self
+    
+    @property
+    def iin(self):
+        """Get iin"""
+        return self._iin
+
+    @iin.setter
+    def iin(self, val):
+        """Set iin
+        Keyword argument:
+        val -- New iin value"""
+        self._iin = val
+        return self
+    
+    @property
+    def last4Digits(self):
+        """Get last4Digits"""
+        return self._last4Digits
+
+    @last4Digits.setter
+    def last4Digits(self, val):
+        """Set last4Digits
+        Keyword argument:
+        val -- New last4Digits value"""
+        self._last4Digits = val
+        return self
+    
+    @property
+    def expMonth(self):
+        """Get expMonth"""
+        return self._expMonth
+
+    @expMonth.setter
+    def expMonth(self, val):
+        """Set expMonth
+        Keyword argument:
+        val -- New expMonth value"""
+        self._expMonth = val
+        return self
+    
+    @property
+    def expYear(self):
+        """Get expYear"""
+        return self._expYear
+
+    @expYear.setter
+    def expYear(self, val):
+        """Set expYear
+        Keyword argument:
+        val -- New expYear value"""
+        self._expYear = val
         return self
     
     @property
@@ -161,16 +273,16 @@ class Token:
         return self
     
     @property
-    def isSubscriptionOnly(self):
-        """Get isSubscriptionOnly"""
-        return self._isSubscriptionOnly
+    def sandbox(self):
+        """Get sandbox"""
+        return self._sandbox
 
-    @isSubscriptionOnly.setter
-    def isSubscriptionOnly(self, val):
-        """Set isSubscriptionOnly
+    @sandbox.setter
+    def sandbox(self, val):
+        """Set sandbox
         Keyword argument:
-        val -- New isSubscriptionOnly value"""
-        self._isSubscriptionOnly = val
+        val -- New sandbox value"""
+        self._sandbox = val
         return self
     
     @property
@@ -193,96 +305,31 @@ class Token:
         data -- The data from which to pull the new values"""
         if "id" in data.keys():
             self.id = data["id"]
-        if "customer" in data.keys():
-            self.customer = data["customer"]
+        if "project" in data.keys():
+            self.project = data["project"]
+        if "brand" in data.keys():
+            self.brand = data["brand"]
+        if "type" in data.keys():
+            self.type = data["type"]
+        if "bank_name" in data.keys():
+            self.bankName = data["bank_name"]
+        if "level" in data.keys():
+            self.level = data["level"]
+        if "iin" in data.keys():
+            self.iin = data["iin"]
+        if "last_4_digits" in data.keys():
+            self.last4Digits = data["last_4_digits"]
+        if "exp_month" in data.keys():
+            self.expMonth = data["exp_month"]
+        if "exp_year" in data.keys():
+            self.expYear = data["exp_year"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
-        if "is_subscription_only" in data.keys():
-            self.isSubscriptionOnly = data["is_subscription_only"]
+        if "sandbox" in data.keys():
+            self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
             self.createdAt = data["created_at"]
         
         return self
-
-    @staticmethod
-    def find(customerId, tokenId, options = None):
-        """Find a customer's token by its ID.
-        Keyword argument:
-		customerId -- ID of the customer
-		tokenId -- ID of the token
-        options -- Options for the request"""
-        instance = ProcessOut.getDefault()
-        request = RequestProcessoutPrivate(instance)
-        path    = "/customers/" + quote_plus(customerId) + "/tokens/" + quote_plus(tokenId) + ""
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        returnValues = []
-        
-        body = response.body
-        body = body["token"]
-                
-                
-        obj = Token()
-        returnValues.append(obj.fillWithData(body))
-                
-
-        return tuple(returnValues)
-
-    def create(self, customerId, source, options = None):
-        """Create a new token for the given customer ID.
-        Keyword argument:
-		customerId -- ID of the customer
-		source -- Source used to create the token (most likely a card token generated by ProcessOut.js)
-        options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
-        path    = "/customers/" + quote_plus(customerId) + "/tokens"
-        data    = {
-			'metadata': self.metadata, 
-			'source': source
-        }
-
-        response = Response(request.post(path, data, options))
-        returnValues = []
-        
-        body = response.body
-        body = body["token"]
-                
-                
-        returnValues.append(self.fillWithData(body))
-                
-
-        return tuple(returnValues)
-
-    def createFromRequest(self, customerId, source, target, options = None):
-        """Create a new token for the given customer ID from an authorization request
-        Keyword argument:
-		customerId -- ID of the customer
-		source -- Source used to create the token (most likely a card token generated by ProcessOut.js)
-		target -- Authorization request ID
-        options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
-        path    = "/customers/" + quote_plus(customerId) + "/tokens"
-        data    = {
-			'metadata': self.metadata, 
-			'source': source, 
-			'target': target
-        }
-
-        response = Response(request.post(path, data, options))
-        returnValues = []
-        
-        body = response.body
-        body = body["token"]
-                
-                
-        returnValues.append(self.fillWithData(body))
-                
-
-        return tuple(returnValues)
 
     

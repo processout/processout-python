@@ -17,6 +17,16 @@ except ImportError:
     import sys
     AuthorizationRequest = sys.modules[__package__ + '.authorizationrequest']
 try:
+    from .card import Card
+except ImportError:
+    import sys
+    Card = sys.modules[__package__ + '.card']
+try:
+    from .coupon import Coupon
+except ImportError:
+    import sys
+    Coupon = sys.modules[__package__ + '.coupon']
+try:
     from .customer import Customer
 except ImportError:
     import sys
@@ -26,6 +36,11 @@ try:
 except ImportError:
     import sys
     Token = sys.modules[__package__ + '.token']
+try:
+    from .discount import Discount
+except ImportError:
+    import sys
+    Discount = sys.modules[__package__ + '.discount']
 try:
     from .event import Event
 except ImportError:
@@ -51,6 +66,11 @@ try:
 except ImportError:
     import sys
     CustomerAction = sys.modules[__package__ + '.customeraction']
+try:
+    from .plan import Plan
+except ImportError:
+    import sys
+    Plan = sys.modules[__package__ + '.plan']
 try:
     from .project import Project
 except ImportError:
@@ -80,6 +100,8 @@ except ImportError:
 from .networking.requestprocessoutprivate import RequestProcessoutPrivate
 
 
+# The content of this file was automatically generated
+
 class Product:
 
     def __init__(self, instance = None):
@@ -89,6 +111,8 @@ class Product:
         self._instance = instance
 
         self._id = ""
+        self._project = None
+        self._url = ""
         self._name = ""
         self._amount = ""
         self._currency = ""
@@ -111,6 +135,37 @@ class Product:
         Keyword argument:
         val -- New id value"""
         self._id = val
+        return self
+    
+    @property
+    def project(self):
+        """Get project"""
+        return self._project
+
+    @project.setter
+    def project(self, val):
+        """Set project
+        Keyword argument:
+        val -- New project value"""
+        if isinstance(val, Project):
+            self._project = val
+        else:
+            obj = Project(self._instance)
+            obj.fillWithData(val)
+            self._project = obj
+        return self
+    
+    @property
+    def url(self):
+        """Get url"""
+        return self._url
+
+    @url.setter
+    def url(self, val):
+        """Set url
+        Keyword argument:
+        val -- New url value"""
+        self._url = val
         return self
     
     @property
@@ -250,6 +305,10 @@ class Product:
         data -- The data from which to pull the new values"""
         if "id" in data.keys():
             self.id = data["id"]
+        if "project" in data.keys():
+            self.project = data["project"]
+        if "url" in data.keys():
+            self.url = data["url"]
         if "name" in data.keys():
             self.name = data["name"]
         if "amount" in data.keys():
@@ -286,11 +345,15 @@ class Product:
         }
 
         response = Response(request.post(path, data, options))
+        returnValues = []
+        
         body = response.body
         body = body["invoice"]
         invoice = Invoice(instance)
-        return invoice.fillWithData(body)
-        
+        returnValues.append(invoice.fillWithData(body))
+
+        return tuple(returnValues)
+
     @staticmethod
     def all(options = None):
         """Get all the products.
@@ -305,6 +368,8 @@ class Product:
         }
 
         response = Response(request.get(path, data, options))
+        returnValues = []
+        
         a    = []
         body = response.body
         for v in body['products']:
@@ -312,8 +377,11 @@ class Product:
             tmp.fillWithData(v)
             a.append(tmp)
 
-        return a
-        
+        returnValues.append(a)
+            
+
+        return tuple(returnValues)
+
     def create(self, options = None):
         """Create a new product.
         Keyword argument:
@@ -334,10 +402,17 @@ class Product:
         }
 
         response = Response(request.post(path, data, options))
+        returnValues = []
+        
         body = response.body
         body = body["product"]
-        return self.fillWithData(body)
-        
+                
+                
+        returnValues.append(self.fillWithData(body))
+                
+
+        return tuple(returnValues)
+
     @staticmethod
     def find(productId, options = None):
         """Find a product by its ID.
@@ -352,11 +427,18 @@ class Product:
         }
 
         response = Response(request.get(path, data, options))
+        returnValues = []
+        
         body = response.body
         body = body["product"]
+                
+                
         obj = Product()
-        return obj.fillWithData(body)
-        
+        returnValues.append(obj.fillWithData(body))
+                
+
+        return tuple(returnValues)
+
     def save(self, options = None):
         """Save the updated product attributes.
         Keyword argument:
@@ -364,7 +446,7 @@ class Product:
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
-        path    = "/products/{tailored_invoice_id}"
+        path    = "/products/" + quote_plus(self.id) + ""
         data    = {
 			'name': self.name, 
 			'amount': self.amount, 
@@ -377,10 +459,17 @@ class Product:
         }
 
         response = Response(request.put(path, data, options))
+        returnValues = []
+        
         body = response.body
         body = body["product"]
-        return self.fillWithData(body)
-        
+                
+                
+        returnValues.append(self.fillWithData(body))
+                
+
+        return tuple(returnValues)
+
     def delete(self, options = None):
         """Delete the product.
         Keyword argument:
@@ -394,6 +483,10 @@ class Product:
         }
 
         response = Response(request.delete(path, data, options))
-        return response.success
+        returnValues = []
         
+        returnValues.append(response.success)
+
+        return tuple(returnValues)
+
     
