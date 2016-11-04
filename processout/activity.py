@@ -224,7 +224,7 @@ class Activity:
     def all(options = None):
         """Get all the project activities.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
@@ -252,7 +252,7 @@ class Activity:
     def find(activityId, options = None):
         """Find a specific activity and fetch its data.
         Keyword argument:
-		activityId -- ID of the activity
+        activityId -- ID of the activity
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)

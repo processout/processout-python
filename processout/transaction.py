@@ -419,7 +419,7 @@ class Transaction:
     def refunds(self, options = None):
         """Get the transaction's refunds.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
@@ -447,7 +447,7 @@ class Transaction:
     def all(options = None):
         """Get all the transactions.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
@@ -475,7 +475,7 @@ class Transaction:
     def find(transactionId, options = None):
         """Find a transaction by its ID.
         Keyword argument:
-		transactionId -- ID of the transaction
+        transactionId -- ID of the transaction
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)

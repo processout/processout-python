@@ -281,15 +281,15 @@ class Discount:
     def apply(self, subscriptionId, options = None):
         """Apply a new discount to the given subscription ID.
         Keyword argument:
-		subscriptionId -- ID of the subscription
+        subscriptionId -- ID of the subscription
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
         path    = "/subscriptions/" + quote_plus(subscriptionId) + "/discounts"
         data    = {
-			'amount': self.amount, 
-			'expires_at': self.expiresAt, 
-			'metadata': self.metadata
+            'amount': self.amount, 
+            'expires_at': self.expiresAt, 
+            'metadata': self.metadata
         }
 
         response = Response(request.post(path, data, options))
@@ -307,17 +307,17 @@ class Discount:
     def applyCoupon(self, subscriptionId, couponId, options = None):
         """Apply a new discount to the given subscription ID from a coupon ID.
         Keyword argument:
-		subscriptionId -- ID of the subscription
-		couponId -- ID of the coupon
+        subscriptionId -- ID of the subscription
+        couponId -- ID of the coupon
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
         path    = "/subscriptions/" + quote_plus(subscriptionId) + "/discounts"
         data    = {
-			'amount': self.amount, 
-			'expires_at': self.expiresAt, 
-			'metadata': self.metadata, 
-			'coupon_id': couponId
+            'amount': self.amount, 
+            'expires_at': self.expiresAt, 
+            'metadata': self.metadata, 
+            'coupon_id': couponId
         }
 
         response = Response(request.post(path, data, options))
@@ -336,8 +336,8 @@ class Discount:
     def find(subscriptionId, discountId, options = None):
         """Find a subscription's discount by its ID.
         Keyword argument:
-		subscriptionId -- ID of the subscription
-		discountId -- ID of the discount
+        subscriptionId -- ID of the subscription
+        discountId -- ID of the discount
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)

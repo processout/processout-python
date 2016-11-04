@@ -202,7 +202,7 @@ class Project:
     def gatewayConfigurations(self, options = None):
         """Get all the gateway configurations of the project
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)

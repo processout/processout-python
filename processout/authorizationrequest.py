@@ -345,7 +345,7 @@ class AuthorizationRequest:
     def customer(self, options = None):
         """Get the customer linked to the authorization request.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
@@ -367,18 +367,18 @@ class AuthorizationRequest:
     def create(self, customerId, options = None):
         """Create a new authorization request for the given customer ID.
         Keyword argument:
-		customerId -- ID of the customer
+        customerId -- ID of the customer
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
         path    = "/authorization-requests"
         data    = {
-			'name': self.name, 
-			'currency': self.currency, 
-			'return_url': self.returnUrl, 
-			'cancel_url': self.cancelUrl, 
-			'custom': self.custom, 
-			'customer_id': customerId
+            'name': self.name, 
+            'currency': self.currency, 
+            'return_url': self.returnUrl, 
+            'cancel_url': self.cancelUrl, 
+            'custom': self.custom, 
+            'customer_id': customerId
         }
 
         response = Response(request.post(path, data, options))
@@ -397,7 +397,7 @@ class AuthorizationRequest:
     def find(authorizationRequestId, options = None):
         """Find an authorization request by its ID.
         Keyword argument:
-		authorizationRequestId -- ID of the authorization request
+        authorizationRequestId -- ID of the authorization request
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)

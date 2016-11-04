@@ -336,7 +336,7 @@ class Coupon:
     def all(options = None):
         """Get all the coupons.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
@@ -363,20 +363,20 @@ class Coupon:
     def create(self, options = None):
         """Create a new coupon.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
         path    = "/coupons"
         data    = {
-			'id': self.id, 
-			'amount_off': self.amountOff, 
-			'percent_off': self.percentOff, 
-			'currency': self.currency, 
-			'iteration_count': self.iterationCount, 
-			'max_redemptions': self.maxRedemptions, 
-			'expires_at': self.expiresAt, 
-			'metadata': self.metadata
+            'id': self.id, 
+            'amount_off': self.amountOff, 
+            'percent_off': self.percentOff, 
+            'currency': self.currency, 
+            'iteration_count': self.iterationCount, 
+            'max_redemptions': self.maxRedemptions, 
+            'expires_at': self.expiresAt, 
+            'metadata': self.metadata
         }
 
         response = Response(request.post(path, data, options))
@@ -395,7 +395,7 @@ class Coupon:
     def find(couponId, options = None):
         """Find a coupon by its ID.
         Keyword argument:
-		couponId -- ID of the coupon
+        couponId -- ID of the coupon
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
@@ -420,13 +420,13 @@ class Coupon:
     def save(self, options = None):
         """Save the updated coupon attributes.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
         path    = "/coupons/" + quote_plus(self.id) + ""
         data    = {
-			'metadata': self.metadata
+            'metadata': self.metadata
         }
 
         response = Response(request.put(path, data, options))
@@ -444,7 +444,7 @@ class Coupon:
     def delete(self, options = None):
         """Delete the coupon.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)

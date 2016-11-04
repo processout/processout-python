@@ -398,13 +398,13 @@ class Invoice:
     def authorize(self, source, options = None):
         """Authorize the invoice using the given source (customer or token)
         Keyword argument:
-		source -- Source used to authorization the payment. Can be a card, a token or a gateway request
+        source -- Source used to authorization the payment. Can be a card, a token or a gateway request
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
         path    = "/invoices/" + quote_plus(self.id) + "/authorize"
         data    = {
-			'source': source
+            'source': source
         }
 
         response = Response(request.post(path, data, options))
@@ -420,13 +420,13 @@ class Invoice:
     def capture(self, source, options = None):
         """Capture the invoice using the given source (customer or token)
         Keyword argument:
-		source -- Source used to authorization the payment. Can be a card, a token or a gateway request
+        source -- Source used to authorization the payment. Can be a card, a token or a gateway request
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
         path    = "/invoices/" + quote_plus(self.id) + "/capture"
         data    = {
-			'source': source
+            'source': source
         }
 
         response = Response(request.post(path, data, options))
@@ -442,7 +442,7 @@ class Invoice:
     def customer(self, options = None):
         """Get the customer linked to the invoice.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
@@ -464,13 +464,13 @@ class Invoice:
     def assignCustomer(self, customerId, options = None):
         """Assign a customer to the invoice.
         Keyword argument:
-		customerId -- ID of the customer to be linked to the invoice
+        customerId -- ID of the customer to be linked to the invoice
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
         path    = "/invoices/" + quote_plus(self.id) + "/customers"
         data    = {
-			'customer_id': customerId
+            'customer_id': customerId
         }
 
         response = Response(request.post(path, data, options))
@@ -486,7 +486,7 @@ class Invoice:
     def transaction(self, options = None):
         """Get the transaction of the invoice.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
@@ -508,7 +508,7 @@ class Invoice:
     def void(self, options = None):
         """Void the invoice
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
@@ -531,7 +531,7 @@ class Invoice:
     def all(options = None):
         """Get all the invoices.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
@@ -558,20 +558,20 @@ class Invoice:
     def create(self, options = None):
         """Create a new invoice.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
         path    = "/invoices"
         data    = {
-			'name': self.name, 
-			'amount': self.amount, 
-			'currency': self.currency, 
-			'metadata': self.metadata, 
-			'request_email': self.requestEmail, 
-			'request_shipping': self.requestShipping, 
-			'return_url': self.returnUrl, 
-			'cancel_url': self.cancelUrl
+            'name': self.name, 
+            'amount': self.amount, 
+            'currency': self.currency, 
+            'metadata': self.metadata, 
+            'request_email': self.requestEmail, 
+            'request_shipping': self.requestShipping, 
+            'return_url': self.returnUrl, 
+            'cancel_url': self.cancelUrl
         }
 
         response = Response(request.post(path, data, options))
@@ -589,21 +589,21 @@ class Invoice:
     def createForCustomer(self, customerId, options = None):
         """Create a new invoice for the given customer ID.
         Keyword argument:
-		customerId -- ID of the customer
+        customerId -- ID of the customer
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
         path    = "/invoices"
         data    = {
-			'name': self.name, 
-			'amount': self.amount, 
-			'currency': self.currency, 
-			'metadata': self.metadata, 
-			'request_email': self.requestEmail, 
-			'request_shipping': self.requestShipping, 
-			'return_url': self.returnUrl, 
-			'cancel_url': self.cancelUrl, 
-			'customer_id': customerId
+            'name': self.name, 
+            'amount': self.amount, 
+            'currency': self.currency, 
+            'metadata': self.metadata, 
+            'request_email': self.requestEmail, 
+            'request_shipping': self.requestShipping, 
+            'return_url': self.returnUrl, 
+            'cancel_url': self.cancelUrl, 
+            'customer_id': customerId
         }
 
         response = Response(request.post(path, data, options))
@@ -622,7 +622,7 @@ class Invoice:
     def find(invoiceId, options = None):
         """Find an invoice by its ID.
         Keyword argument:
-		invoiceId -- ID of the invoice
+        invoiceId -- ID of the invoice
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)

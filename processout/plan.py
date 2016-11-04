@@ -320,7 +320,7 @@ class Plan:
     def all(options = None):
         """Get all the plans.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
@@ -347,21 +347,21 @@ class Plan:
     def create(self, options = None):
         """Create a new plan.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
         path    = "/plans"
         data    = {
-			'id': self.id, 
-			'name': self.name, 
-			'amount': self.amount, 
-			'currency': self.currency, 
-			'interval': self.interval, 
-			'trial_period': self.trialPeriod, 
-			'metadata': self.metadata, 
-			'return_url': self.returnUrl, 
-			'cancel_url': self.cancelUrl
+            'id': self.id, 
+            'name': self.name, 
+            'amount': self.amount, 
+            'currency': self.currency, 
+            'interval': self.interval, 
+            'trial_period': self.trialPeriod, 
+            'metadata': self.metadata, 
+            'return_url': self.returnUrl, 
+            'cancel_url': self.cancelUrl
         }
 
         response = Response(request.post(path, data, options))
@@ -380,7 +380,7 @@ class Plan:
     def find(planId, options = None):
         """Find a plan by its ID.
         Keyword argument:
-		planId -- ID of the plan
+        planId -- ID of the plan
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
@@ -405,17 +405,17 @@ class Plan:
     def update(self, options = None):
         """Update the plan. This action won't affect subscriptions already linked to this plan.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
         path    = "/plans/" + quote_plus(self.id) + ""
         data    = {
-			'name': self.name, 
-			'trial_period': self.trialPeriod, 
-			'metadata': self.metadata, 
-			'return_url': self.returnUrl, 
-			'cancel_url': self.cancelUrl
+            'name': self.name, 
+            'trial_period': self.trialPeriod, 
+            'metadata': self.metadata, 
+            'return_url': self.returnUrl, 
+            'cancel_url': self.cancelUrl
         }
 
         response = Response(request.put(path, data, options))
@@ -433,7 +433,7 @@ class Plan:
     def end(self, options = None):
         """Delete a plan. Subscriptions linked to this plan won't be affected.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)

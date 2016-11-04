@@ -526,7 +526,7 @@ class Subscription:
     def customer(self, options = None):
         """Get the customer owning the subscription.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
@@ -548,7 +548,7 @@ class Subscription:
     def discounts(self, options = None):
         """Get the discounts applied to the subscription.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
@@ -575,7 +575,7 @@ class Subscription:
     def transactions(self, options = None):
         """Get the subscriptions past transactions.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
@@ -603,7 +603,7 @@ class Subscription:
     def all(options = None):
         """Get all the subscriptions.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
@@ -630,22 +630,22 @@ class Subscription:
     def create(self, customerId, options = None):
         """Create a new subscription for the given customer.
         Keyword argument:
-		customerId -- ID of the customer
+        customerId -- ID of the customer
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
         path    = "/subscriptions"
         data    = {
-			'cancel_at': self.cancelAt, 
-			'name': self.name, 
-			'amount': self.amount, 
-			'currency': self.currency, 
-			'metadata': self.metadata, 
-			'interval': self.interval, 
-			'trial_end_at': self.trialEndAt, 
-			'return_url': self.returnUrl, 
-			'cancel_url': self.cancelUrl, 
-			'customer_id': customerId
+            'cancel_at': self.cancelAt, 
+            'name': self.name, 
+            'amount': self.amount, 
+            'currency': self.currency, 
+            'metadata': self.metadata, 
+            'interval': self.interval, 
+            'trial_end_at': self.trialEndAt, 
+            'return_url': self.returnUrl, 
+            'cancel_url': self.cancelUrl, 
+            'customer_id': customerId
         }
 
         response = Response(request.post(path, data, options))
@@ -663,24 +663,24 @@ class Subscription:
     def createFromPlan(self, customerId, planId, options = None):
         """Create a new subscription for the customer from the given plan ID.
         Keyword argument:
-		customerId -- ID of the customer
-		planId -- ID of the plan
+        customerId -- ID of the customer
+        planId -- ID of the plan
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
         path    = "/subscriptions"
         data    = {
-			'cancel_at': self.cancelAt, 
-			'name': self.name, 
-			'amount': self.amount, 
-			'currency': self.currency, 
-			'metadata': self.metadata, 
-			'interval': self.interval, 
-			'trial_end_at': self.trialEndAt, 
-			'return_url': self.returnUrl, 
-			'cancel_url': self.cancelUrl, 
-			'customer_id': customerId, 
-			'plan_id': planId
+            'cancel_at': self.cancelAt, 
+            'name': self.name, 
+            'amount': self.amount, 
+            'currency': self.currency, 
+            'metadata': self.metadata, 
+            'interval': self.interval, 
+            'trial_end_at': self.trialEndAt, 
+            'return_url': self.returnUrl, 
+            'cancel_url': self.cancelUrl, 
+            'customer_id': customerId, 
+            'plan_id': planId
         }
 
         response = Response(request.post(path, data, options))
@@ -699,7 +699,7 @@ class Subscription:
     def find(subscriptionId, options = None):
         """Find a subscription by its ID.
         Keyword argument:
-		subscriptionId -- ID of the subscription
+        subscriptionId -- ID of the subscription
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
@@ -724,13 +724,13 @@ class Subscription:
     def update(self, options = None):
         """Update the subscription.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
         path    = "/subscriptions/" + quote_plus(self.id) + ""
         data    = {
-			'trial_end_at': self.trialEndAt
+            'trial_end_at': self.trialEndAt
         }
 
         response = Response(request.put(path, data, options))
@@ -748,15 +748,15 @@ class Subscription:
     def updatePlan(self, planId, prorate, options = None):
         """Update the subscription's plan.
         Keyword argument:
-		planId -- ID of the new plan to be applied on the subscription
-		prorate -- Define if proration should be done when updating the plan
+        planId -- ID of the new plan to be applied on the subscription
+        prorate -- Define if proration should be done when updating the plan
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
         path    = "/subscriptions/" + quote_plus(self.id) + ""
         data    = {
-			'plan_id': planId, 
-			'prorate': prorate
+            'plan_id': planId, 
+            'prorate': prorate
         }
 
         response = Response(request.put(path, data, options))
@@ -774,13 +774,13 @@ class Subscription:
     def applySource(self, source, options = None):
         """Apply a source to the subscription to activate or update the subscription's source.
         Keyword argument:
-		source -- Source to be applied on the subscription and used to pay future invoices. Can be a card, a token or a gateway request
+        source -- Source to be applied on the subscription and used to pay future invoices. Can be a card, a token or a gateway request
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
         path    = "/subscriptions/" + quote_plus(self.id) + ""
         data    = {
-			'source': source
+            'source': source
         }
 
         response = Response(request.put(path, data, options))
@@ -798,13 +798,13 @@ class Subscription:
     def cancel(self, cancellationReason, options = None):
         """Cancel a subscription. The reason may be provided as well.
         Keyword argument:
-		cancellationReason -- Cancellation reason
+        cancellationReason -- Cancellation reason
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
         path    = "/subscriptions/" + quote_plus(self.id) + ""
         data    = {
-			'cancellation_reason': cancellationReason
+            'cancellation_reason': cancellationReason
         }
 
         response = Response(request.delete(path, data, options))
@@ -822,15 +822,15 @@ class Subscription:
     def cancelAt(self, cancelAt, cancellationReason, options = None):
         """Schedule the cancellation of the subscription. The reason may be provided as well.
         Keyword argument:
-		cancelAt -- Cancellation date, in the form of a string
-		cancellationReason -- Cancellation reason
+        cancelAt -- Cancellation date, in the form of a string
+        cancellationReason -- Cancellation reason
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
         path    = "/subscriptions/" + quote_plus(self.id) + ""
         data    = {
-			'cancel_at': cancelAt, 
-			'cancellation_reason': cancellationReason
+            'cancel_at': cancelAt, 
+            'cancellation_reason': cancellationReason
         }
 
         response = Response(request.delete(path, data, options))

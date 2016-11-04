@@ -335,7 +335,7 @@ class Product:
     def invoice(self, options = None):
         """Create a new invoice from the product.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
@@ -358,7 +358,7 @@ class Product:
     def all(options = None):
         """Get all the products.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
@@ -385,20 +385,20 @@ class Product:
     def create(self, options = None):
         """Create a new product.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
         path    = "/products"
         data    = {
-			'name': self.name, 
-			'amount': self.amount, 
-			'currency': self.currency, 
-			'metadata': self.metadata, 
-			'request_email': self.requestEmail, 
-			'request_shipping': self.requestShipping, 
-			'return_url': self.returnUrl, 
-			'cancel_url': self.cancelUrl
+            'name': self.name, 
+            'amount': self.amount, 
+            'currency': self.currency, 
+            'metadata': self.metadata, 
+            'request_email': self.requestEmail, 
+            'request_shipping': self.requestShipping, 
+            'return_url': self.returnUrl, 
+            'cancel_url': self.cancelUrl
         }
 
         response = Response(request.post(path, data, options))
@@ -417,7 +417,7 @@ class Product:
     def find(productId, options = None):
         """Find a product by its ID.
         Keyword argument:
-		productId -- ID of the product
+        productId -- ID of the product
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
@@ -442,20 +442,20 @@ class Product:
     def save(self, options = None):
         """Save the updated product attributes.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
         path    = "/products/" + quote_plus(self.id) + ""
         data    = {
-			'name': self.name, 
-			'amount': self.amount, 
-			'currency': self.currency, 
-			'metadata': self.metadata, 
-			'request_email': self.requestEmail, 
-			'request_shipping': self.requestShipping, 
-			'return_url': self.returnUrl, 
-			'cancel_url': self.cancelUrl
+            'name': self.name, 
+            'amount': self.amount, 
+            'currency': self.currency, 
+            'metadata': self.metadata, 
+            'request_email': self.requestEmail, 
+            'request_shipping': self.requestShipping, 
+            'return_url': self.returnUrl, 
+            'cancel_url': self.cancelUrl
         }
 
         response = Response(request.put(path, data, options))
@@ -473,7 +473,7 @@ class Product:
     def delete(self, options = None):
         """Delete the product.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)

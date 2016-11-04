@@ -256,8 +256,8 @@ class Refund:
     def find(transactionId, refundId, options = None):
         """Find a transaction's refund by its ID.
         Keyword argument:
-		transactionId -- ID of the transaction
-		refundId -- ID of the refund
+        transactionId -- ID of the transaction
+        refundId -- ID of the refund
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
@@ -282,16 +282,16 @@ class Refund:
     def apply(self, transactionId, options = None):
         """Apply a refund to a transaction.
         Keyword argument:
-		transactionId -- ID of the transaction
+        transactionId -- ID of the transaction
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
         path    = "/transactions/" + quote_plus(transactionId) + "/refunds"
         data    = {
-			'amount': self.amount, 
-			'metadata': self.metadata, 
-			'reason': self.reason, 
-			'information': self.information
+            'amount': self.amount, 
+            'metadata': self.metadata, 
+            'reason': self.reason, 
+            'information': self.information
         }
 
         response = Response(request.post(path, data, options))

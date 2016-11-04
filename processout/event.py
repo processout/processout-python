@@ -223,7 +223,7 @@ class Event:
     def webhooks(self, options = None):
         """Get all the webhooks of the event.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
@@ -251,7 +251,7 @@ class Event:
     def all(options = None):
         """Get all the events.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
@@ -279,7 +279,7 @@ class Event:
     def find(eventId, options = None):
         """Find an event by its ID.
         Keyword argument:
-		eventId -- ID of the event
+        eventId -- ID of the event
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)

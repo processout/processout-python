@@ -399,7 +399,7 @@ class Customer:
     def subscriptions(self, options = None):
         """Get the subscriptions belonging to the customer.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
@@ -426,7 +426,7 @@ class Customer:
     def tokens(self, options = None):
         """Get the customer's tokens.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
@@ -453,7 +453,7 @@ class Customer:
     def transactions(self, options = None):
         """Get the transactions belonging to the customer.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
@@ -481,7 +481,7 @@ class Customer:
     def all(options = None):
         """Get all the customers.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
@@ -508,24 +508,24 @@ class Customer:
     def create(self, options = None):
         """Create a new customer.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
         path    = "/customers"
         data    = {
-			'balance': self.balance, 
-			'currency': self.currency, 
-			'email': self.email, 
-			'first_name': self.firstName, 
-			'last_name': self.lastName, 
-			'address1': self.address1, 
-			'address2': self.address2, 
-			'city': self.city, 
-			'state': self.state, 
-			'zip': self.zip, 
-			'country_code': self.countryCode, 
-			'metadata': self.metadata
+            'balance': self.balance, 
+            'currency': self.currency, 
+            'email': self.email, 
+            'first_name': self.firstName, 
+            'last_name': self.lastName, 
+            'address1': self.address1, 
+            'address2': self.address2, 
+            'city': self.city, 
+            'state': self.state, 
+            'zip': self.zip, 
+            'country_code': self.countryCode, 
+            'metadata': self.metadata
         }
 
         response = Response(request.post(path, data, options))
@@ -544,7 +544,7 @@ class Customer:
     def find(customerId, options = None):
         """Find a customer by its ID.
         Keyword argument:
-		customerId -- ID of the customer
+        customerId -- ID of the customer
         options -- Options for the request"""
         instance = ProcessOut.getDefault()
         request = RequestProcessoutPrivate(instance)
@@ -569,23 +569,23 @@ class Customer:
     def save(self, options = None):
         """Save the updated customer attributes.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
         path    = "/customers/" + quote_plus(self.id) + ""
         data    = {
-			'balance': self.balance, 
-			'email': self.email, 
-			'first_name': self.firstName, 
-			'last_name': self.lastName, 
-			'address1': self.address1, 
-			'address2': self.address2, 
-			'city': self.city, 
-			'state': self.state, 
-			'zip': self.zip, 
-			'country_code': self.countryCode, 
-			'metadata': self.metadata
+            'balance': self.balance, 
+            'email': self.email, 
+            'first_name': self.firstName, 
+            'last_name': self.lastName, 
+            'address1': self.address1, 
+            'address2': self.address2, 
+            'city': self.city, 
+            'state': self.state, 
+            'zip': self.zip, 
+            'country_code': self.countryCode, 
+            'metadata': self.metadata
         }
 
         response = Response(request.put(path, data, options))
@@ -603,7 +603,7 @@ class Customer:
     def delete(self, options = None):
         """Delete the customer.
         Keyword argument:
-		
+        
         options -- Options for the request"""
         instance = self._instance
         request = RequestProcessoutPrivate(instance)
