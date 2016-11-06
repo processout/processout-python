@@ -3,14 +3,13 @@ from .exceptions.apiauthenticationexception import ApiAuthenticationException
 class ProcessOut:
     default = None
 
-    def __init__(self):
+    def __init__(self, projectId, projectSecret):
         """Create a new instance of ProcessOut"""
 
         _host = 'https://api.processout.com'
         
-        self._projectId = ""
-        
-        self._projectSecret = ""
+        self._projectId = projectId
+        self._projectSecret = projectSecret
         
 
     @property
