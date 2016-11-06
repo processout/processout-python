@@ -10,6 +10,9 @@ class ProcessOut:
         
         self._projectId = projectId
         self._projectSecret = projectSecret
+
+        if ProcessOut.default == None:
+            ProcessOut.setDefault(self)
         
 
     @property
