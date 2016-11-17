@@ -3,112 +3,16 @@ try:
 except ImportError:
     from urllib import quote_plus
 
-from .processout import ProcessOut
-from .networking.response import Response
+import processout
 
-try:
-    from .activity import Activity
-except ImportError:
-    import sys
-    Activity = sys.modules[__package__ + '.activity']
-try:
-    from .authorizationrequest import AuthorizationRequest
-except ImportError:
-    import sys
-    AuthorizationRequest = sys.modules[__package__ + '.authorizationrequest']
-try:
-    from .card import Card
-except ImportError:
-    import sys
-    Card = sys.modules[__package__ + '.card']
-try:
-    from .coupon import Coupon
-except ImportError:
-    import sys
-    Coupon = sys.modules[__package__ + '.coupon']
-try:
-    from .customer import Customer
-except ImportError:
-    import sys
-    Customer = sys.modules[__package__ + '.customer']
-try:
-    from .token import Token
-except ImportError:
-    import sys
-    Token = sys.modules[__package__ + '.token']
-try:
-    from .discount import Discount
-except ImportError:
-    import sys
-    Discount = sys.modules[__package__ + '.discount']
-try:
-    from .event import Event
-except ImportError:
-    import sys
-    Event = sys.modules[__package__ + '.event']
-try:
-    from .gateway import Gateway
-except ImportError:
-    import sys
-    Gateway = sys.modules[__package__ + '.gateway']
-try:
-    from .gatewayconfiguration import GatewayConfiguration
-except ImportError:
-    import sys
-    GatewayConfiguration = sys.modules[__package__ + '.gatewayconfiguration']
-try:
-    from .invoice import Invoice
-except ImportError:
-    import sys
-    Invoice = sys.modules[__package__ + '.invoice']
-try:
-    from .customeraction import CustomerAction
-except ImportError:
-    import sys
-    CustomerAction = sys.modules[__package__ + '.customeraction']
-try:
-    from .plan import Plan
-except ImportError:
-    import sys
-    Plan = sys.modules[__package__ + '.plan']
-try:
-    from .product import Product
-except ImportError:
-    import sys
-    Product = sys.modules[__package__ + '.product']
-try:
-    from .project import Project
-except ImportError:
-    import sys
-    Project = sys.modules[__package__ + '.project']
-try:
-    from .subscription import Subscription
-except ImportError:
-    import sys
-    Subscription = sys.modules[__package__ + '.subscription']
-try:
-    from .transaction import Transaction
-except ImportError:
-    import sys
-    Transaction = sys.modules[__package__ + '.transaction']
-try:
-    from .webhook import Webhook
-except ImportError:
-    import sys
-    Webhook = sys.modules[__package__ + '.webhook']
-
-from .networking.requestprocessoutprivate import RequestProcessoutPrivate
-
+from processout.networking.request  import Request
+from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
 class Refund:
-
-    def __init__(self, instance = None):
-        if instance == None:
-            instance = ProcessOut.getDefault()
-
-        self._instance = instance
+    def __init__(self, client, prefill = None):
+        self._client = client
 
         self._id = ""
         self._transaction = None
@@ -118,7 +22,10 @@ class Refund:
         self._metadata = {}
         self._sandbox = False
         self._createdAt = ""
-        
+        if prefill != None:
+            self.fillWithData(prefill)
+
+    
     @property
     def id(self):
         """Get id"""
@@ -145,7 +52,7 @@ class Refund:
         if isinstance(val, Transaction):
             self._transaction = val
         else:
-            obj = Transaction(self._instance)
+            obj = processout.Transaction(self._client)
             obj.fillWithData(val)
             self._transaction = obj
         return self
@@ -252,15 +159,13 @@ class Refund:
         
         return self
 
-    @staticmethod
-    def find(transactionId, refundId, options = None):
+    def find(self, transactionId, refundId, options = None):
         """Find a transaction's refund by its ID.
         Keyword argument:
-        transactionId -- ID of the transaction
+        transactionId -- ID of the transaction on which the refund was applied
         refundId -- ID of the refund
         options -- Options for the request"""
-        instance = ProcessOut.getDefault()
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/transactions/" + quote_plus(transactionId) + "/refunds/" + quote_plus(refundId) + ""
         data    = {
 
@@ -273,19 +178,19 @@ class Refund:
         body = body["refund"]
                 
                 
-        obj = Refund()
+        obj = processout.Refund(self._client)
         returnValues.append(obj.fillWithData(body))
                 
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
     def apply(self, transactionId, options = None):
         """Apply a refund to a transaction.
         Keyword argument:
         transactionId -- ID of the transaction
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/transactions/" + quote_plus(transactionId) + "/refunds"
         data    = {
             'amount': self.amount, 
@@ -299,6 +204,7 @@ class Refund:
         
         returnValues.append(response.success)
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
     

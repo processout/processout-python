@@ -4,21 +4,21 @@ try:
 except ImportError:
     import urllib
 
-from ..processout import ProcessOut
+from processout.client import ProcessOut
 
-class RequestProcessoutPrivate:
-    def __init__(self, instance):
+class Request:
+    def __init__(self, client):
         """Create a new Request instance
 
         Keyword argument:
-        instance -- ProcessOut instance
+        client -- ProcessOut client instance
         """
-        self._instance = instance
+        self._client = client
 
     def _authenticate(self):
         """Return the correct needed authentication"""
-        username = self._instance.projectId
-        password = self._instance.projectSecret
+        username = self._client.projectID
+        password = self._client.projectSecret
         return (username, password)
 
     def _getHeaders(self, options):
@@ -38,14 +38,21 @@ class RequestProcessoutPrivate:
 
     def _getData(self, data, options):
         """Return the data processed with the given options"""
-        if optiosn is None:
+        if options is None:
             return data
 
         if "expand" in options:
             data["expand"] = options["expand"]
-
         if "filter" in options:
             data["filter"] = options["filter"]
+        if "limit" in options:
+            data["limit"] = options["limit"]
+        if "page" in options:
+            data["page"] = options["page"]
+        if "end_before" in options:
+            data["end_before"] = options["end_before"]
+        if "start_after" in options:
+            data["start_after"] = options["start_after"]
 
         return data
 
@@ -57,7 +64,7 @@ class RequestProcessoutPrivate:
         data -- Data to be passed along with the request
         options -- Options sent with the request
         """
-        return requests.get(self._instance.host + path + '?' +
+        return requests.get(self._client.host + path + '?' +
                 urllib.urlencode(self._getData(data, options)),
             auth   = self._authenticate(),
             verify = True,
@@ -71,7 +78,7 @@ class RequestProcessoutPrivate:
         data -- Data to be passed along with the request
         options -- Options sent with the request
         """
-        return requests.post(self._instance.host + path,
+        return requests.post(self._client.host + path,
             auth   = self._authenticate(),
             json   = self._getData(data, options),
             verify = True,
@@ -85,7 +92,7 @@ class RequestProcessoutPrivate:
         data -- Data to be passed along with the request
         options -- Options sent with the request
         """
-        return requests.put(self._instance.host + path,
+        return requests.put(self._client.host + path,
             auth   = self._authenticate(),
             json   = self._getData(data, options),
             verify = True,
@@ -99,7 +106,7 @@ class RequestProcessoutPrivate:
         data -- Data to be passed along with the request
         options -- Options sent with the request
         """
-        return requests.delete(self._instance.host + path + '?' +
+        return requests.delete(self._client.host + path + '?' +
                 urllib.urlencode(self._getData(data, options)),
             auth   = self._authenticate(),
             verify = True,

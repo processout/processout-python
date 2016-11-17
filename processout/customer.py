@@ -3,112 +3,16 @@ try:
 except ImportError:
     from urllib import quote_plus
 
-from .processout import ProcessOut
-from .networking.response import Response
+import processout
 
-try:
-    from .activity import Activity
-except ImportError:
-    import sys
-    Activity = sys.modules[__package__ + '.activity']
-try:
-    from .authorizationrequest import AuthorizationRequest
-except ImportError:
-    import sys
-    AuthorizationRequest = sys.modules[__package__ + '.authorizationrequest']
-try:
-    from .card import Card
-except ImportError:
-    import sys
-    Card = sys.modules[__package__ + '.card']
-try:
-    from .coupon import Coupon
-except ImportError:
-    import sys
-    Coupon = sys.modules[__package__ + '.coupon']
-try:
-    from .token import Token
-except ImportError:
-    import sys
-    Token = sys.modules[__package__ + '.token']
-try:
-    from .discount import Discount
-except ImportError:
-    import sys
-    Discount = sys.modules[__package__ + '.discount']
-try:
-    from .event import Event
-except ImportError:
-    import sys
-    Event = sys.modules[__package__ + '.event']
-try:
-    from .gateway import Gateway
-except ImportError:
-    import sys
-    Gateway = sys.modules[__package__ + '.gateway']
-try:
-    from .gatewayconfiguration import GatewayConfiguration
-except ImportError:
-    import sys
-    GatewayConfiguration = sys.modules[__package__ + '.gatewayconfiguration']
-try:
-    from .invoice import Invoice
-except ImportError:
-    import sys
-    Invoice = sys.modules[__package__ + '.invoice']
-try:
-    from .customeraction import CustomerAction
-except ImportError:
-    import sys
-    CustomerAction = sys.modules[__package__ + '.customeraction']
-try:
-    from .plan import Plan
-except ImportError:
-    import sys
-    Plan = sys.modules[__package__ + '.plan']
-try:
-    from .product import Product
-except ImportError:
-    import sys
-    Product = sys.modules[__package__ + '.product']
-try:
-    from .project import Project
-except ImportError:
-    import sys
-    Project = sys.modules[__package__ + '.project']
-try:
-    from .refund import Refund
-except ImportError:
-    import sys
-    Refund = sys.modules[__package__ + '.refund']
-try:
-    from .subscription import Subscription
-except ImportError:
-    import sys
-    Subscription = sys.modules[__package__ + '.subscription']
-try:
-    from .transaction import Transaction
-except ImportError:
-    import sys
-    Transaction = sys.modules[__package__ + '.transaction']
-try:
-    from .webhook import Webhook
-except ImportError:
-    import sys
-    Webhook = sys.modules[__package__ + '.webhook']
-
-from .networking.requestprocessoutprivate import RequestProcessoutPrivate
-
+from processout.networking.request  import Request
+from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
 class Customer:
-
-    def __init__(self, instance = None):
-        if instance == None:
-            instance = ProcessOut.getDefault()
-
-        self._instance = instance
+    def __init__(self, client, prefill = None):
+        self._client = client
 
         self._id = ""
         self._project = None
@@ -127,7 +31,10 @@ class Customer:
         self._hasPin = False
         self._sandbox = False
         self._createdAt = ""
-        
+        if prefill != None:
+            self.fillWithData(prefill)
+
+    
     @property
     def id(self):
         """Get id"""
@@ -154,7 +61,7 @@ class Customer:
         if isinstance(val, Project):
             self._project = val
         else:
-            obj = Project(self._instance)
+            obj = processout.Project(self._client)
             obj.fillWithData(val)
             self._project = obj
         return self
@@ -396,13 +303,12 @@ class Customer:
         
         return self
 
-    def subscriptions(self, options = None):
+    def fetchSubscriptions(self, options = None):
         """Get the subscriptions belonging to the customer.
         Keyword argument:
         
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/customers/" + quote_plus(self.id) + "/subscriptions"
         data    = {
 
@@ -414,22 +320,22 @@ class Customer:
         a    = []
         body = response.body
         for v in body['subscriptions']:
-            tmp = Subscription(instance)
+            tmp = Subscription(self._client)
             tmp.fillWithData(v)
             a.append(tmp)
 
         returnValues.append(a)
             
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
-    def tokens(self, options = None):
+    def fetchTokens(self, options = None):
         """Get the customer's tokens.
         Keyword argument:
         
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/customers/" + quote_plus(self.id) + "/tokens"
         data    = {
 
@@ -441,22 +347,44 @@ class Customer:
         a    = []
         body = response.body
         for v in body['tokens']:
-            tmp = Token(instance)
+            tmp = Token(self._client)
             tmp.fillWithData(v)
             a.append(tmp)
 
         returnValues.append(a)
             
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
-    def transactions(self, options = None):
+    def findToken(self, tokenId, options = None):
+        """Find a customer's token by its ID.
+        Keyword argument:
+        tokenId -- ID of the token
+        options -- Options for the request"""
+        request = Request(self._client)
+        path    = "/customers/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + ""
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        returnValues = []
+        
+        body = response.body
+        body = body["token"]
+        token = Token(self._client)
+        returnValues.append(token.fillWithData(body))
+
+        
+        return returnValues[0];
+
+    def fetchTransactions(self, options = None):
         """Get the transactions belonging to the customer.
         Keyword argument:
         
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/customers/" + quote_plus(self.id) + "/transactions"
         data    = {
 
@@ -468,23 +396,22 @@ class Customer:
         a    = []
         body = response.body
         for v in body['transactions']:
-            tmp = Transaction(instance)
+            tmp = Transaction(self._client)
             tmp.fillWithData(v)
             a.append(tmp)
 
         returnValues.append(a)
             
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
-    @staticmethod
-    def all(options = None):
+    def all(self, options = None):
         """Get all the customers.
         Keyword argument:
         
         options -- Options for the request"""
-        instance = ProcessOut.getDefault()
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/customers"
         data    = {
 
@@ -496,22 +423,22 @@ class Customer:
         a    = []
         body = response.body
         for v in body['customers']:
-            tmp = Customer(instance)
+            tmp = Customer(self._client)
             tmp.fillWithData(v)
             a.append(tmp)
 
         returnValues.append(a)
             
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
     def create(self, options = None):
         """Create a new customer.
         Keyword argument:
         
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/customers"
         data    = {
             'balance': self.balance, 
@@ -538,16 +465,15 @@ class Customer:
         returnValues.append(self.fillWithData(body))
                 
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
-    @staticmethod
-    def find(customerId, options = None):
+    def find(self, customerId, options = None):
         """Find a customer by its ID.
         Keyword argument:
         customerId -- ID of the customer
         options -- Options for the request"""
-        instance = ProcessOut.getDefault()
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/customers/" + quote_plus(customerId) + ""
         data    = {
 
@@ -560,19 +486,19 @@ class Customer:
         body = body["customer"]
                 
                 
-        obj = Customer()
+        obj = processout.Customer(self._client)
         returnValues.append(obj.fillWithData(body))
                 
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
     def save(self, options = None):
         """Save the updated customer attributes.
         Keyword argument:
         
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/customers/" + quote_plus(self.id) + ""
         data    = {
             'balance': self.balance, 
@@ -598,15 +524,15 @@ class Customer:
         returnValues.append(self.fillWithData(body))
                 
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
     def delete(self, options = None):
         """Delete the customer.
         Keyword argument:
         
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/customers/" + quote_plus(self.id) + ""
         data    = {
 
@@ -617,6 +543,7 @@ class Customer:
         
         returnValues.append(response.success)
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
     

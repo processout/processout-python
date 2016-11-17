@@ -3,9 +3,11 @@ try:
 except ImportError:
     from urlparse import urlparse
 
-from ..exceptions.apiexception               import ApiException
-from ..exceptions.notfoundexception          import NotFoundException
-from ..exceptions.apiauthenticationexception import ApiAuthenticationException
+from processout.errors.authenticationerror import AuthenticationError
+from processout.errors.genericerror        import GenericError
+from processout.errors.internalerror       import InternalError
+from processout.errors.notfounderror       import NotFoundError
+from processout.errors.validationerror     import ValidationError
 
 class Response:
     def __init__(self, resp, checkStatusCode = True):
@@ -66,16 +68,19 @@ class Response:
         return message
 
     def _check(self):
-        """Check if response was successful, or raise an exception"""
+        """Check if response was successful, or raise an error"""
         if (not self.success):
             if self.statusCode == 404:
-                raise ApiException(
-                    'The resource could not be found (404): ' + self.message)
+                raise NotFoundError(self.message)
             if self.statusCode == 401:
-                raise ApiException(
-                    'Your ProcessOut credentials could not be verified (401): ' +
-                        self.message)
+                raise AuthenticationError(self.message)
+            if self.statusCode == 400:
+                raise ValidationError(self.message)
+            if self.statusCode >= 500:
+                raise InternalError(
+                    'ProcessOut returned an internal error (' +
+                        str(self.statusCode) + '): ' + self.message)
 
-            raise ApiException(
+            raise GenericError(
                 'ProcessOut returned an error (' +
                     str(self.statusCode) + '): ' + self.message)

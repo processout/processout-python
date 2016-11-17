@@ -3,112 +3,16 @@ try:
 except ImportError:
     from urllib import quote_plus
 
-from .processout import ProcessOut
-from .networking.response import Response
+import processout
 
-try:
-    from .activity import Activity
-except ImportError:
-    import sys
-    Activity = sys.modules[__package__ + '.activity']
-try:
-    from .card import Card
-except ImportError:
-    import sys
-    Card = sys.modules[__package__ + '.card']
-try:
-    from .coupon import Coupon
-except ImportError:
-    import sys
-    Coupon = sys.modules[__package__ + '.coupon']
-try:
-    from .customer import Customer
-except ImportError:
-    import sys
-    Customer = sys.modules[__package__ + '.customer']
-try:
-    from .token import Token
-except ImportError:
-    import sys
-    Token = sys.modules[__package__ + '.token']
-try:
-    from .discount import Discount
-except ImportError:
-    import sys
-    Discount = sys.modules[__package__ + '.discount']
-try:
-    from .event import Event
-except ImportError:
-    import sys
-    Event = sys.modules[__package__ + '.event']
-try:
-    from .gateway import Gateway
-except ImportError:
-    import sys
-    Gateway = sys.modules[__package__ + '.gateway']
-try:
-    from .gatewayconfiguration import GatewayConfiguration
-except ImportError:
-    import sys
-    GatewayConfiguration = sys.modules[__package__ + '.gatewayconfiguration']
-try:
-    from .invoice import Invoice
-except ImportError:
-    import sys
-    Invoice = sys.modules[__package__ + '.invoice']
-try:
-    from .customeraction import CustomerAction
-except ImportError:
-    import sys
-    CustomerAction = sys.modules[__package__ + '.customeraction']
-try:
-    from .plan import Plan
-except ImportError:
-    import sys
-    Plan = sys.modules[__package__ + '.plan']
-try:
-    from .product import Product
-except ImportError:
-    import sys
-    Product = sys.modules[__package__ + '.product']
-try:
-    from .project import Project
-except ImportError:
-    import sys
-    Project = sys.modules[__package__ + '.project']
-try:
-    from .refund import Refund
-except ImportError:
-    import sys
-    Refund = sys.modules[__package__ + '.refund']
-try:
-    from .subscription import Subscription
-except ImportError:
-    import sys
-    Subscription = sys.modules[__package__ + '.subscription']
-try:
-    from .transaction import Transaction
-except ImportError:
-    import sys
-    Transaction = sys.modules[__package__ + '.transaction']
-try:
-    from .webhook import Webhook
-except ImportError:
-    import sys
-    Webhook = sys.modules[__package__ + '.webhook']
-
-from .networking.requestprocessoutprivate import RequestProcessoutPrivate
-
+from processout.networking.request  import Request
+from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
 class AuthorizationRequest:
-
-    def __init__(self, instance = None):
-        if instance == None:
-            instance = ProcessOut.getDefault()
-
-        self._instance = instance
+    def __init__(self, client, prefill = None):
+        self._client = client
 
         self._id = ""
         self._project = None
@@ -123,7 +27,10 @@ class AuthorizationRequest:
         self._custom = ""
         self._sandbox = False
         self._createdAt = ""
-        
+        if prefill != None:
+            self.fillWithData(prefill)
+
+    
     @property
     def id(self):
         """Get id"""
@@ -150,7 +57,7 @@ class AuthorizationRequest:
         if isinstance(val, Project):
             self._project = val
         else:
-            obj = Project(self._instance)
+            obj = processout.Project(self._client)
             obj.fillWithData(val)
             self._project = obj
         return self
@@ -168,7 +75,7 @@ class AuthorizationRequest:
         if isinstance(val, Customer):
             self._customer = val
         else:
-            obj = Customer(self._instance)
+            obj = processout.Customer(self._client)
             obj.fillWithData(val)
             self._customer = obj
         return self
@@ -186,7 +93,7 @@ class AuthorizationRequest:
         if isinstance(val, Token):
             self._token = val
         else:
-            obj = Token(self._instance)
+            obj = processout.Token(self._client)
             obj.fillWithData(val)
             self._token = obj
         return self
@@ -342,13 +249,12 @@ class AuthorizationRequest:
         
         return self
 
-    def customer(self, options = None):
+    def fetchCustomer(self, options = None):
         """Get the customer linked to the authorization request.
         Keyword argument:
         
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/authorization-requests/" + quote_plus(self.id) + "/customers"
         data    = {
 
@@ -359,18 +265,18 @@ class AuthorizationRequest:
         
         body = response.body
         body = body["customer"]
-        customer = Customer(instance)
+        customer = Customer(self._client)
         returnValues.append(customer.fillWithData(body))
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
     def create(self, customerId, options = None):
         """Create a new authorization request for the given customer ID.
         Keyword argument:
         customerId -- ID of the customer
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/authorization-requests"
         data    = {
             'name': self.name, 
@@ -391,16 +297,15 @@ class AuthorizationRequest:
         returnValues.append(self.fillWithData(body))
                 
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
-    @staticmethod
-    def find(authorizationRequestId, options = None):
+    def find(self, authorizationRequestId, options = None):
         """Find an authorization request by its ID.
         Keyword argument:
         authorizationRequestId -- ID of the authorization request
         options -- Options for the request"""
-        instance = ProcessOut.getDefault()
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/authorization-requests/" + quote_plus(authorizationRequestId) + ""
         data    = {
 
@@ -413,10 +318,11 @@ class AuthorizationRequest:
         body = body["authorization_request"]
                 
                 
-        obj = AuthorizationRequest()
+        obj = processout.AuthorizationRequest(self._client)
         returnValues.append(obj.fillWithData(body))
                 
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
     

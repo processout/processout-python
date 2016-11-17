@@ -3,112 +3,16 @@ try:
 except ImportError:
     from urllib import quote_plus
 
-from .processout import ProcessOut
-from .networking.response import Response
+import processout
 
-try:
-    from .activity import Activity
-except ImportError:
-    import sys
-    Activity = sys.modules[__package__ + '.activity']
-try:
-    from .authorizationrequest import AuthorizationRequest
-except ImportError:
-    import sys
-    AuthorizationRequest = sys.modules[__package__ + '.authorizationrequest']
-try:
-    from .card import Card
-except ImportError:
-    import sys
-    Card = sys.modules[__package__ + '.card']
-try:
-    from .coupon import Coupon
-except ImportError:
-    import sys
-    Coupon = sys.modules[__package__ + '.coupon']
-try:
-    from .customer import Customer
-except ImportError:
-    import sys
-    Customer = sys.modules[__package__ + '.customer']
-try:
-    from .token import Token
-except ImportError:
-    import sys
-    Token = sys.modules[__package__ + '.token']
-try:
-    from .discount import Discount
-except ImportError:
-    import sys
-    Discount = sys.modules[__package__ + '.discount']
-try:
-    from .event import Event
-except ImportError:
-    import sys
-    Event = sys.modules[__package__ + '.event']
-try:
-    from .gateway import Gateway
-except ImportError:
-    import sys
-    Gateway = sys.modules[__package__ + '.gateway']
-try:
-    from .gatewayconfiguration import GatewayConfiguration
-except ImportError:
-    import sys
-    GatewayConfiguration = sys.modules[__package__ + '.gatewayconfiguration']
-try:
-    from .invoice import Invoice
-except ImportError:
-    import sys
-    Invoice = sys.modules[__package__ + '.invoice']
-try:
-    from .customeraction import CustomerAction
-except ImportError:
-    import sys
-    CustomerAction = sys.modules[__package__ + '.customeraction']
-try:
-    from .plan import Plan
-except ImportError:
-    import sys
-    Plan = sys.modules[__package__ + '.plan']
-try:
-    from .product import Product
-except ImportError:
-    import sys
-    Product = sys.modules[__package__ + '.product']
-try:
-    from .project import Project
-except ImportError:
-    import sys
-    Project = sys.modules[__package__ + '.project']
-try:
-    from .refund import Refund
-except ImportError:
-    import sys
-    Refund = sys.modules[__package__ + '.refund']
-try:
-    from .transaction import Transaction
-except ImportError:
-    import sys
-    Transaction = sys.modules[__package__ + '.transaction']
-try:
-    from .webhook import Webhook
-except ImportError:
-    import sys
-    Webhook = sys.modules[__package__ + '.webhook']
-
-from .networking.requestprocessoutprivate import RequestProcessoutPrivate
-
+from processout.networking.request  import Request
+from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
 class Subscription:
-
-    def __init__(self, instance = None):
-        if instance == None:
-            instance = ProcessOut.getDefault()
-
-        self._instance = instance
+    def __init__(self, client, prefill = None):
+        self._client = client
 
         self._id = ""
         self._project = None
@@ -134,7 +38,10 @@ class Subscription:
         self._createdAt = ""
         self._activatedAt = ""
         self._iterateAt = ""
-        
+        if prefill != None:
+            self.fillWithData(prefill)
+
+    
     @property
     def id(self):
         """Get id"""
@@ -161,7 +68,7 @@ class Subscription:
         if isinstance(val, Project):
             self._project = val
         else:
-            obj = Project(self._instance)
+            obj = processout.Project(self._client)
             obj.fillWithData(val)
             self._project = obj
         return self
@@ -179,7 +86,7 @@ class Subscription:
         if isinstance(val, Plan):
             self._plan = val
         else:
-            obj = Plan(self._instance)
+            obj = processout.Plan(self._client)
             obj.fillWithData(val)
             self._plan = obj
         return self
@@ -197,7 +104,7 @@ class Subscription:
         if isinstance(val, Customer):
             self._customer = val
         else:
-            obj = Customer(self._instance)
+            obj = processout.Customer(self._client)
             obj.fillWithData(val)
             self._customer = obj
         return self
@@ -215,7 +122,7 @@ class Subscription:
         if isinstance(val, Token):
             self._token = val
         else:
-            obj = Token(self._instance)
+            obj = processout.Token(self._client)
             obj.fillWithData(val)
             self._token = obj
         return self
@@ -523,13 +430,12 @@ class Subscription:
         
         return self
 
-    def customer(self, options = None):
+    def fetchCustomer(self, options = None):
         """Get the customer owning the subscription.
         Keyword argument:
         
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(self.id) + "/customers"
         data    = {
 
@@ -540,18 +446,18 @@ class Subscription:
         
         body = response.body
         body = body["customer"]
-        customer = Customer(instance)
+        customer = Customer(self._client)
         returnValues.append(customer.fillWithData(body))
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
-    def discounts(self, options = None):
+    def fetchDiscounts(self, options = None):
         """Get the discounts applied to the subscription.
         Keyword argument:
         
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(self.id) + "/discounts"
         data    = {
 
@@ -563,22 +469,68 @@ class Subscription:
         a    = []
         body = response.body
         for v in body['discounts']:
-            tmp = Discount(instance)
+            tmp = Discount(self._client)
             tmp.fillWithData(v)
             a.append(tmp)
 
         returnValues.append(a)
             
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
-    def transactions(self, options = None):
+    def findDiscount(self, discountId, options = None):
+        """Find a subscription's discount by its ID.
+        Keyword argument:
+        discountId -- ID of the discount
+        options -- Options for the request"""
+        request = Request(self._client)
+        path    = "/subscriptions/" + quote_plus(self.id) + "/discounts/" + quote_plus(discountId) + ""
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        returnValues = []
+        
+        body = response.body
+        body = body["discount"]
+        discount = Discount(self._client)
+        returnValues.append(discount.fillWithData(body))
+
+        
+        return returnValues[0];
+
+    def removeDiscount(self, discountId, options = None):
+        """Remove a discount applied to a subscription.
+        Keyword argument:
+        discountId -- ID of the discount or coupon to be removed from the subscription
+        options -- Options for the request"""
+        request = Request(self._client)
+        path    = "/subscriptions/" + quote_plus(self.id) + "/discounts/" + quote_plus(discountId) + ""
+        data    = {
+
+        }
+
+        response = Response(request.delete(path, data, options))
+        returnValues = []
+        
+        body = response.body
+        body = body["discount"]
+                
+                
+        returnValues.append(self.fillWithData(body))
+                
+
+        
+        return returnValues[0];
+
+    def fetchTransactions(self, options = None):
         """Get the subscriptions past transactions.
         Keyword argument:
         
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(self.id) + "/transactions"
         data    = {
 
@@ -590,23 +542,22 @@ class Subscription:
         a    = []
         body = response.body
         for v in body['transactions']:
-            tmp = Transaction(instance)
+            tmp = Transaction(self._client)
             tmp.fillWithData(v)
             a.append(tmp)
 
         returnValues.append(a)
             
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
-    @staticmethod
-    def all(options = None):
+    def all(self, options = None):
         """Get all the subscriptions.
         Keyword argument:
         
         options -- Options for the request"""
-        instance = ProcessOut.getDefault()
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/subscriptions"
         data    = {
 
@@ -618,22 +569,22 @@ class Subscription:
         a    = []
         body = response.body
         for v in body['subscriptions']:
-            tmp = Subscription(instance)
+            tmp = Subscription(self._client)
             tmp.fillWithData(v)
             a.append(tmp)
 
         returnValues.append(a)
             
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
     def create(self, customerId, options = None):
         """Create a new subscription for the given customer.
         Keyword argument:
         customerId -- ID of the customer
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/subscriptions"
         data    = {
             'cancel_at': self.cancelAt, 
@@ -658,7 +609,8 @@ class Subscription:
         returnValues.append(self.fillWithData(body))
                 
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
     def createFromPlan(self, customerId, planId, options = None):
         """Create a new subscription for the customer from the given plan ID.
@@ -666,8 +618,7 @@ class Subscription:
         customerId -- ID of the customer
         planId -- ID of the plan
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/subscriptions"
         data    = {
             'cancel_at': self.cancelAt, 
@@ -693,16 +644,15 @@ class Subscription:
         returnValues.append(self.fillWithData(body))
                 
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
-    @staticmethod
-    def find(subscriptionId, options = None):
+    def find(self, subscriptionId, options = None):
         """Find a subscription by its ID.
         Keyword argument:
         subscriptionId -- ID of the subscription
         options -- Options for the request"""
-        instance = ProcessOut.getDefault()
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(subscriptionId) + ""
         data    = {
 
@@ -715,22 +665,23 @@ class Subscription:
         body = body["subscription"]
                 
                 
-        obj = Subscription()
+        obj = processout.Subscription(self._client)
         returnValues.append(obj.fillWithData(body))
                 
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
-    def update(self, options = None):
+    def update(self, prorate, options = None):
         """Update the subscription.
         Keyword argument:
-        
+        prorate -- Define if proration should be done when updating the plan
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(self.id) + ""
         data    = {
-            'trial_end_at': self.trialEndAt
+            'trial_end_at': self.trialEndAt, 
+            'prorate': prorate
         }
 
         response = Response(request.put(path, data, options))
@@ -743,7 +694,8 @@ class Subscription:
         returnValues.append(self.fillWithData(body))
                 
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
     def updatePlan(self, planId, prorate, options = None):
         """Update the subscription's plan.
@@ -751,8 +703,7 @@ class Subscription:
         planId -- ID of the new plan to be applied on the subscription
         prorate -- Define if proration should be done when updating the plan
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(self.id) + ""
         data    = {
             'plan_id': planId, 
@@ -769,15 +720,15 @@ class Subscription:
         returnValues.append(self.fillWithData(body))
                 
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
     def applySource(self, source, options = None):
         """Apply a source to the subscription to activate or update the subscription's source.
         Keyword argument:
         source -- Source to be applied on the subscription and used to pay future invoices. Can be a card, a token or a gateway request
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(self.id) + ""
         data    = {
             'source': source
@@ -793,15 +744,15 @@ class Subscription:
         returnValues.append(self.fillWithData(body))
                 
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
     def cancel(self, cancellationReason, options = None):
         """Cancel a subscription. The reason may be provided as well.
         Keyword argument:
         cancellationReason -- Cancellation reason
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(self.id) + ""
         data    = {
             'cancellation_reason': cancellationReason
@@ -817,16 +768,16 @@ class Subscription:
         returnValues.append(self.fillWithData(body))
                 
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
-    def cancelAt(self, cancelAt, cancellationReason, options = None):
+    def cancelAtDate(self, cancelAt, cancellationReason, options = None):
         """Schedule the cancellation of the subscription. The reason may be provided as well.
         Keyword argument:
         cancelAt -- Cancellation date, in the form of a string
         cancellationReason -- Cancellation reason
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(self.id) + ""
         data    = {
             'cancel_at': cancelAt, 
@@ -843,6 +794,7 @@ class Subscription:
         returnValues.append(self.fillWithData(body))
                 
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
     

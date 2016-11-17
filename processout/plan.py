@@ -3,112 +3,16 @@ try:
 except ImportError:
     from urllib import quote_plus
 
-from .processout import ProcessOut
-from .networking.response import Response
+import processout
 
-try:
-    from .activity import Activity
-except ImportError:
-    import sys
-    Activity = sys.modules[__package__ + '.activity']
-try:
-    from .authorizationrequest import AuthorizationRequest
-except ImportError:
-    import sys
-    AuthorizationRequest = sys.modules[__package__ + '.authorizationrequest']
-try:
-    from .card import Card
-except ImportError:
-    import sys
-    Card = sys.modules[__package__ + '.card']
-try:
-    from .coupon import Coupon
-except ImportError:
-    import sys
-    Coupon = sys.modules[__package__ + '.coupon']
-try:
-    from .customer import Customer
-except ImportError:
-    import sys
-    Customer = sys.modules[__package__ + '.customer']
-try:
-    from .token import Token
-except ImportError:
-    import sys
-    Token = sys.modules[__package__ + '.token']
-try:
-    from .discount import Discount
-except ImportError:
-    import sys
-    Discount = sys.modules[__package__ + '.discount']
-try:
-    from .event import Event
-except ImportError:
-    import sys
-    Event = sys.modules[__package__ + '.event']
-try:
-    from .gateway import Gateway
-except ImportError:
-    import sys
-    Gateway = sys.modules[__package__ + '.gateway']
-try:
-    from .gatewayconfiguration import GatewayConfiguration
-except ImportError:
-    import sys
-    GatewayConfiguration = sys.modules[__package__ + '.gatewayconfiguration']
-try:
-    from .invoice import Invoice
-except ImportError:
-    import sys
-    Invoice = sys.modules[__package__ + '.invoice']
-try:
-    from .customeraction import CustomerAction
-except ImportError:
-    import sys
-    CustomerAction = sys.modules[__package__ + '.customeraction']
-try:
-    from .product import Product
-except ImportError:
-    import sys
-    Product = sys.modules[__package__ + '.product']
-try:
-    from .project import Project
-except ImportError:
-    import sys
-    Project = sys.modules[__package__ + '.project']
-try:
-    from .refund import Refund
-except ImportError:
-    import sys
-    Refund = sys.modules[__package__ + '.refund']
-try:
-    from .subscription import Subscription
-except ImportError:
-    import sys
-    Subscription = sys.modules[__package__ + '.subscription']
-try:
-    from .transaction import Transaction
-except ImportError:
-    import sys
-    Transaction = sys.modules[__package__ + '.transaction']
-try:
-    from .webhook import Webhook
-except ImportError:
-    import sys
-    Webhook = sys.modules[__package__ + '.webhook']
-
-from .networking.requestprocessoutprivate import RequestProcessoutPrivate
-
+from processout.networking.request  import Request
+from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
 class Plan:
-
-    def __init__(self, instance = None):
-        if instance == None:
-            instance = ProcessOut.getDefault()
-
-        self._instance = instance
+    def __init__(self, client, prefill = None):
+        self._client = client
 
         self._id = ""
         self._project = None
@@ -122,7 +26,10 @@ class Plan:
         self._cancelUrl = ""
         self._sandbox = False
         self._createdAt = ""
-        
+        if prefill != None:
+            self.fillWithData(prefill)
+
+    
     @property
     def id(self):
         """Get id"""
@@ -149,7 +56,7 @@ class Plan:
         if isinstance(val, Project):
             self._project = val
         else:
-            obj = Project(self._instance)
+            obj = processout.Project(self._client)
             obj.fillWithData(val)
             self._project = obj
         return self
@@ -316,14 +223,12 @@ class Plan:
         
         return self
 
-    @staticmethod
-    def all(options = None):
+    def all(self, options = None):
         """Get all the plans.
         Keyword argument:
         
         options -- Options for the request"""
-        instance = ProcessOut.getDefault()
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/plans"
         data    = {
 
@@ -335,22 +240,22 @@ class Plan:
         a    = []
         body = response.body
         for v in body['plans']:
-            tmp = Plan(instance)
+            tmp = Plan(self._client)
             tmp.fillWithData(v)
             a.append(tmp)
 
         returnValues.append(a)
             
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
     def create(self, options = None):
         """Create a new plan.
         Keyword argument:
         
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/plans"
         data    = {
             'id': self.id, 
@@ -374,16 +279,15 @@ class Plan:
         returnValues.append(self.fillWithData(body))
                 
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
-    @staticmethod
-    def find(planId, options = None):
+    def find(self, planId, options = None):
         """Find a plan by its ID.
         Keyword argument:
         planId -- ID of the plan
         options -- Options for the request"""
-        instance = ProcessOut.getDefault()
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/plans/" + quote_plus(planId) + ""
         data    = {
 
@@ -396,19 +300,19 @@ class Plan:
         body = body["plan"]
                 
                 
-        obj = Plan()
+        obj = processout.Plan(self._client)
         returnValues.append(obj.fillWithData(body))
                 
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
     def update(self, options = None):
         """Update the plan. This action won't affect subscriptions already linked to this plan.
         Keyword argument:
         
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/plans/" + quote_plus(self.id) + ""
         data    = {
             'name': self.name, 
@@ -428,15 +332,15 @@ class Plan:
         returnValues.append(self.fillWithData(body))
                 
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
     def end(self, options = None):
         """Delete a plan. Subscriptions linked to this plan won't be affected.
         Keyword argument:
         
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/plans/" + quote_plus(self.id) + ""
         data    = {
 
@@ -447,6 +351,7 @@ class Plan:
         
         returnValues.append(response.success)
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
     

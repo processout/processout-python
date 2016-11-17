@@ -3,117 +3,21 @@ try:
 except ImportError:
     from urllib import quote_plus
 
-from .processout import ProcessOut
-from .networking.response import Response
+import processout
 
-try:
-    from .activity import Activity
-except ImportError:
-    import sys
-    Activity = sys.modules[__package__ + '.activity']
-try:
-    from .authorizationrequest import AuthorizationRequest
-except ImportError:
-    import sys
-    AuthorizationRequest = sys.modules[__package__ + '.authorizationrequest']
-try:
-    from .card import Card
-except ImportError:
-    import sys
-    Card = sys.modules[__package__ + '.card']
-try:
-    from .coupon import Coupon
-except ImportError:
-    import sys
-    Coupon = sys.modules[__package__ + '.coupon']
-try:
-    from .customer import Customer
-except ImportError:
-    import sys
-    Customer = sys.modules[__package__ + '.customer']
-try:
-    from .token import Token
-except ImportError:
-    import sys
-    Token = sys.modules[__package__ + '.token']
-try:
-    from .discount import Discount
-except ImportError:
-    import sys
-    Discount = sys.modules[__package__ + '.discount']
-try:
-    from .event import Event
-except ImportError:
-    import sys
-    Event = sys.modules[__package__ + '.event']
-try:
-    from .gateway import Gateway
-except ImportError:
-    import sys
-    Gateway = sys.modules[__package__ + '.gateway']
-try:
-    from .gatewayconfiguration import GatewayConfiguration
-except ImportError:
-    import sys
-    GatewayConfiguration = sys.modules[__package__ + '.gatewayconfiguration']
-try:
-    from .invoice import Invoice
-except ImportError:
-    import sys
-    Invoice = sys.modules[__package__ + '.invoice']
-try:
-    from .customeraction import CustomerAction
-except ImportError:
-    import sys
-    CustomerAction = sys.modules[__package__ + '.customeraction']
-try:
-    from .plan import Plan
-except ImportError:
-    import sys
-    Plan = sys.modules[__package__ + '.plan']
-try:
-    from .product import Product
-except ImportError:
-    import sys
-    Product = sys.modules[__package__ + '.product']
-try:
-    from .project import Project
-except ImportError:
-    import sys
-    Project = sys.modules[__package__ + '.project']
-try:
-    from .refund import Refund
-except ImportError:
-    import sys
-    Refund = sys.modules[__package__ + '.refund']
-try:
-    from .subscription import Subscription
-except ImportError:
-    import sys
-    Subscription = sys.modules[__package__ + '.subscription']
-try:
-    from .webhook import Webhook
-except ImportError:
-    import sys
-    Webhook = sys.modules[__package__ + '.webhook']
-
-from .networking.requestprocessoutprivate import RequestProcessoutPrivate
-
+from processout.networking.request  import Request
+from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
 class Transaction:
-
-    def __init__(self, instance = None):
-        if instance == None:
-            instance = ProcessOut.getDefault()
-
-        self._instance = instance
+    def __init__(self, client, prefill = None):
+        self._client = client
 
         self._id = ""
         self._project = None
-        self._subscription = None
         self._customer = None
+        self._subscription = None
         self._token = None
         self._card = None
         self._name = ""
@@ -127,7 +31,10 @@ class Transaction:
         self._metadata = {}
         self._sandbox = False
         self._createdAt = ""
-        
+        if prefill != None:
+            self.fillWithData(prefill)
+
+    
     @property
     def id(self):
         """Get id"""
@@ -154,27 +61,9 @@ class Transaction:
         if isinstance(val, Project):
             self._project = val
         else:
-            obj = Project(self._instance)
+            obj = processout.Project(self._client)
             obj.fillWithData(val)
             self._project = obj
-        return self
-    
-    @property
-    def subscription(self):
-        """Get subscription"""
-        return self._subscription
-
-    @subscription.setter
-    def subscription(self, val):
-        """Set subscription
-        Keyword argument:
-        val -- New subscription value"""
-        if isinstance(val, Subscription):
-            self._subscription = val
-        else:
-            obj = Subscription(self._instance)
-            obj.fillWithData(val)
-            self._subscription = obj
         return self
     
     @property
@@ -190,9 +79,27 @@ class Transaction:
         if isinstance(val, Customer):
             self._customer = val
         else:
-            obj = Customer(self._instance)
+            obj = processout.Customer(self._client)
             obj.fillWithData(val)
             self._customer = obj
+        return self
+    
+    @property
+    def subscription(self):
+        """Get subscription"""
+        return self._subscription
+
+    @subscription.setter
+    def subscription(self, val):
+        """Set subscription
+        Keyword argument:
+        val -- New subscription value"""
+        if isinstance(val, Subscription):
+            self._subscription = val
+        else:
+            obj = processout.Subscription(self._client)
+            obj.fillWithData(val)
+            self._subscription = obj
         return self
     
     @property
@@ -208,7 +115,7 @@ class Transaction:
         if isinstance(val, Token):
             self._token = val
         else:
-            obj = Token(self._instance)
+            obj = processout.Token(self._client)
             obj.fillWithData(val)
             self._token = obj
         return self
@@ -226,7 +133,7 @@ class Transaction:
         if isinstance(val, Card):
             self._card = val
         else:
-            obj = Card(self._instance)
+            obj = processout.Card(self._client)
             obj.fillWithData(val)
             self._card = obj
         return self
@@ -383,10 +290,10 @@ class Transaction:
             self.id = data["id"]
         if "project" in data.keys():
             self.project = data["project"]
-        if "subscription" in data.keys():
-            self.subscription = data["subscription"]
         if "customer" in data.keys():
             self.customer = data["customer"]
+        if "subscription" in data.keys():
+            self.subscription = data["subscription"]
         if "token" in data.keys():
             self.token = data["token"]
         if "card" in data.keys():
@@ -416,13 +323,12 @@ class Transaction:
         
         return self
 
-    def refunds(self, options = None):
+    def fetchRefunds(self, options = None):
         """Get the transaction's refunds.
         Keyword argument:
         
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/transactions/" + quote_plus(self.id) + "/refunds"
         data    = {
 
@@ -434,23 +340,44 @@ class Transaction:
         a    = []
         body = response.body
         for v in body['refunds']:
-            tmp = Refund(instance)
+            tmp = Refund(self._client)
             tmp.fillWithData(v)
             a.append(tmp)
 
         returnValues.append(a)
             
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
-    @staticmethod
-    def all(options = None):
+    def findRefund(self, refundId, options = None):
+        """Find a transaction's refund by its ID.
+        Keyword argument:
+        refundId -- ID of the refund
+        options -- Options for the request"""
+        request = Request(self._client)
+        path    = "/transactions/" + quote_plus(self.id) + "/refunds/" + quote_plus(refundId) + ""
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        returnValues = []
+        
+        body = response.body
+        body = body["refund"]
+        refund = Refund(self._client)
+        returnValues.append(refund.fillWithData(body))
+
+        
+        return returnValues[0];
+
+    def all(self, options = None):
         """Get all the transactions.
         Keyword argument:
         
         options -- Options for the request"""
-        instance = ProcessOut.getDefault()
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/transactions"
         data    = {
 
@@ -462,23 +389,22 @@ class Transaction:
         a    = []
         body = response.body
         for v in body['transactions']:
-            tmp = Transaction(instance)
+            tmp = Transaction(self._client)
             tmp.fillWithData(v)
             a.append(tmp)
 
         returnValues.append(a)
             
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
-    @staticmethod
-    def find(transactionId, options = None):
+    def find(self, transactionId, options = None):
         """Find a transaction by its ID.
         Keyword argument:
         transactionId -- ID of the transaction
         options -- Options for the request"""
-        instance = ProcessOut.getDefault()
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/transactions/" + quote_plus(transactionId) + ""
         data    = {
 
@@ -491,10 +417,11 @@ class Transaction:
         body = body["transaction"]
                 
                 
-        obj = Transaction()
+        obj = processout.Transaction(self._client)
         returnValues.append(obj.fillWithData(body))
                 
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
     

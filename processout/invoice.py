@@ -3,112 +3,16 @@ try:
 except ImportError:
     from urllib import quote_plus
 
-from .processout import ProcessOut
-from .networking.response import Response
+import processout
 
-try:
-    from .activity import Activity
-except ImportError:
-    import sys
-    Activity = sys.modules[__package__ + '.activity']
-try:
-    from .authorizationrequest import AuthorizationRequest
-except ImportError:
-    import sys
-    AuthorizationRequest = sys.modules[__package__ + '.authorizationrequest']
-try:
-    from .card import Card
-except ImportError:
-    import sys
-    Card = sys.modules[__package__ + '.card']
-try:
-    from .coupon import Coupon
-except ImportError:
-    import sys
-    Coupon = sys.modules[__package__ + '.coupon']
-try:
-    from .customer import Customer
-except ImportError:
-    import sys
-    Customer = sys.modules[__package__ + '.customer']
-try:
-    from .token import Token
-except ImportError:
-    import sys
-    Token = sys.modules[__package__ + '.token']
-try:
-    from .discount import Discount
-except ImportError:
-    import sys
-    Discount = sys.modules[__package__ + '.discount']
-try:
-    from .event import Event
-except ImportError:
-    import sys
-    Event = sys.modules[__package__ + '.event']
-try:
-    from .gateway import Gateway
-except ImportError:
-    import sys
-    Gateway = sys.modules[__package__ + '.gateway']
-try:
-    from .gatewayconfiguration import GatewayConfiguration
-except ImportError:
-    import sys
-    GatewayConfiguration = sys.modules[__package__ + '.gatewayconfiguration']
-try:
-    from .customeraction import CustomerAction
-except ImportError:
-    import sys
-    CustomerAction = sys.modules[__package__ + '.customeraction']
-try:
-    from .plan import Plan
-except ImportError:
-    import sys
-    Plan = sys.modules[__package__ + '.plan']
-try:
-    from .product import Product
-except ImportError:
-    import sys
-    Product = sys.modules[__package__ + '.product']
-try:
-    from .project import Project
-except ImportError:
-    import sys
-    Project = sys.modules[__package__ + '.project']
-try:
-    from .refund import Refund
-except ImportError:
-    import sys
-    Refund = sys.modules[__package__ + '.refund']
-try:
-    from .subscription import Subscription
-except ImportError:
-    import sys
-    Subscription = sys.modules[__package__ + '.subscription']
-try:
-    from .transaction import Transaction
-except ImportError:
-    import sys
-    Transaction = sys.modules[__package__ + '.transaction']
-try:
-    from .webhook import Webhook
-except ImportError:
-    import sys
-    Webhook = sys.modules[__package__ + '.webhook']
-
-from .networking.requestprocessoutprivate import RequestProcessoutPrivate
-
+from processout.networking.request  import Request
+from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
 class Invoice:
-
-    def __init__(self, instance = None):
-        if instance == None:
-            instance = ProcessOut.getDefault()
-
-        self._instance = instance
+    def __init__(self, client, prefill = None):
+        self._client = client
 
         self._id = ""
         self._project = None
@@ -126,7 +30,10 @@ class Invoice:
         self._cancelUrl = ""
         self._sandbox = False
         self._createdAt = ""
-        
+        if prefill != None:
+            self.fillWithData(prefill)
+
+    
     @property
     def id(self):
         """Get id"""
@@ -153,7 +60,7 @@ class Invoice:
         if isinstance(val, Project):
             self._project = val
         else:
-            obj = Project(self._instance)
+            obj = processout.Project(self._client)
             obj.fillWithData(val)
             self._project = obj
         return self
@@ -171,7 +78,7 @@ class Invoice:
         if isinstance(val, Transaction):
             self._transaction = val
         else:
-            obj = Transaction(self._instance)
+            obj = processout.Transaction(self._client)
             obj.fillWithData(val)
             self._transaction = obj
         return self
@@ -189,7 +96,7 @@ class Invoice:
         if isinstance(val, Customer):
             self._customer = val
         else:
-            obj = Customer(self._instance)
+            obj = processout.Customer(self._client)
             obj.fillWithData(val)
             self._customer = obj
         return self
@@ -207,7 +114,7 @@ class Invoice:
         if isinstance(val, Subscription):
             self._subscription = val
         else:
-            obj = Subscription(self._instance)
+            obj = processout.Subscription(self._client)
             obj.fillWithData(val)
             self._subscription = obj
         return self
@@ -400,8 +307,7 @@ class Invoice:
         Keyword argument:
         source -- Source used to authorization the payment. Can be a card, a token or a gateway request
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/invoices/" + quote_plus(self.id) + "/authorize"
         data    = {
             'source': source
@@ -412,18 +318,18 @@ class Invoice:
         
         body = response.body
         body = body["transaction"]
-        transaction = Transaction(instance)
+        transaction = Transaction(self._client)
         returnValues.append(transaction.fillWithData(body))
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
     def capture(self, source, options = None):
         """Capture the invoice using the given source (customer or token)
         Keyword argument:
         source -- Source used to authorization the payment. Can be a card, a token or a gateway request
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/invoices/" + quote_plus(self.id) + "/capture"
         data    = {
             'source': source
@@ -434,18 +340,18 @@ class Invoice:
         
         body = response.body
         body = body["transaction"]
-        transaction = Transaction(instance)
+        transaction = Transaction(self._client)
         returnValues.append(transaction.fillWithData(body))
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
-    def customer(self, options = None):
+    def fetchCustomer(self, options = None):
         """Get the customer linked to the invoice.
         Keyword argument:
         
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/invoices/" + quote_plus(self.id) + "/customers"
         data    = {
 
@@ -456,18 +362,18 @@ class Invoice:
         
         body = response.body
         body = body["customer"]
-        customer = Customer(instance)
+        customer = Customer(self._client)
         returnValues.append(customer.fillWithData(body))
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
     def assignCustomer(self, customerId, options = None):
         """Assign a customer to the invoice.
         Keyword argument:
         customerId -- ID of the customer to be linked to the invoice
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/invoices/" + quote_plus(self.id) + "/customers"
         data    = {
             'customer_id': customerId
@@ -478,18 +384,18 @@ class Invoice:
         
         body = response.body
         body = body["customer"]
-        customer = Customer(instance)
+        customer = Customer(self._client)
         returnValues.append(customer.fillWithData(body))
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
-    def transaction(self, options = None):
+    def fetchTransaction(self, options = None):
         """Get the transaction of the invoice.
         Keyword argument:
         
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/invoices/" + quote_plus(self.id) + "/transactions"
         data    = {
 
@@ -500,18 +406,18 @@ class Invoice:
         
         body = response.body
         body = body["transaction"]
-        transaction = Transaction(instance)
+        transaction = Transaction(self._client)
         returnValues.append(transaction.fillWithData(body))
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
     def void(self, options = None):
         """Void the invoice
         Keyword argument:
         
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/invoices/" + quote_plus(self.id) + "/void"
         data    = {
 
@@ -522,19 +428,18 @@ class Invoice:
         
         body = response.body
         body = body["transaction"]
-        transaction = Transaction(instance)
+        transaction = Transaction(self._client)
         returnValues.append(transaction.fillWithData(body))
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
-    @staticmethod
-    def all(options = None):
+    def all(self, options = None):
         """Get all the invoices.
         Keyword argument:
         
         options -- Options for the request"""
-        instance = ProcessOut.getDefault()
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/invoices"
         data    = {
 
@@ -546,22 +451,22 @@ class Invoice:
         a    = []
         body = response.body
         for v in body['invoices']:
-            tmp = Invoice(instance)
+            tmp = Invoice(self._client)
             tmp.fillWithData(v)
             a.append(tmp)
 
         returnValues.append(a)
             
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
     def create(self, options = None):
         """Create a new invoice.
         Keyword argument:
         
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/invoices"
         data    = {
             'name': self.name, 
@@ -584,15 +489,15 @@ class Invoice:
         returnValues.append(self.fillWithData(body))
                 
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
     def createForCustomer(self, customerId, options = None):
         """Create a new invoice for the given customer ID.
         Keyword argument:
         customerId -- ID of the customer
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/invoices"
         data    = {
             'name': self.name, 
@@ -616,16 +521,15 @@ class Invoice:
         returnValues.append(self.fillWithData(body))
                 
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
-    @staticmethod
-    def find(invoiceId, options = None):
+    def find(self, invoiceId, options = None):
         """Find an invoice by its ID.
         Keyword argument:
         invoiceId -- ID of the invoice
         options -- Options for the request"""
-        instance = ProcessOut.getDefault()
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/invoices/" + quote_plus(invoiceId) + ""
         data    = {
 
@@ -638,10 +542,11 @@ class Invoice:
         body = body["invoice"]
                 
                 
-        obj = Invoice()
+        obj = processout.Invoice(self._client)
         returnValues.append(obj.fillWithData(body))
                 
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
     

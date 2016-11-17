@@ -3,119 +3,27 @@ try:
 except ImportError:
     from urllib import quote_plus
 
-from .processout import ProcessOut
-from .networking.response import Response
+import processout
 
-try:
-    from .activity import Activity
-except ImportError:
-    import sys
-    Activity = sys.modules[__package__ + '.activity']
-try:
-    from .authorizationrequest import AuthorizationRequest
-except ImportError:
-    import sys
-    AuthorizationRequest = sys.modules[__package__ + '.authorizationrequest']
-try:
-    from .card import Card
-except ImportError:
-    import sys
-    Card = sys.modules[__package__ + '.card']
-try:
-    from .coupon import Coupon
-except ImportError:
-    import sys
-    Coupon = sys.modules[__package__ + '.coupon']
-try:
-    from .customer import Customer
-except ImportError:
-    import sys
-    Customer = sys.modules[__package__ + '.customer']
-try:
-    from .discount import Discount
-except ImportError:
-    import sys
-    Discount = sys.modules[__package__ + '.discount']
-try:
-    from .event import Event
-except ImportError:
-    import sys
-    Event = sys.modules[__package__ + '.event']
-try:
-    from .gateway import Gateway
-except ImportError:
-    import sys
-    Gateway = sys.modules[__package__ + '.gateway']
-try:
-    from .gatewayconfiguration import GatewayConfiguration
-except ImportError:
-    import sys
-    GatewayConfiguration = sys.modules[__package__ + '.gatewayconfiguration']
-try:
-    from .invoice import Invoice
-except ImportError:
-    import sys
-    Invoice = sys.modules[__package__ + '.invoice']
-try:
-    from .customeraction import CustomerAction
-except ImportError:
-    import sys
-    CustomerAction = sys.modules[__package__ + '.customeraction']
-try:
-    from .plan import Plan
-except ImportError:
-    import sys
-    Plan = sys.modules[__package__ + '.plan']
-try:
-    from .product import Product
-except ImportError:
-    import sys
-    Product = sys.modules[__package__ + '.product']
-try:
-    from .project import Project
-except ImportError:
-    import sys
-    Project = sys.modules[__package__ + '.project']
-try:
-    from .refund import Refund
-except ImportError:
-    import sys
-    Refund = sys.modules[__package__ + '.refund']
-try:
-    from .subscription import Subscription
-except ImportError:
-    import sys
-    Subscription = sys.modules[__package__ + '.subscription']
-try:
-    from .transaction import Transaction
-except ImportError:
-    import sys
-    Transaction = sys.modules[__package__ + '.transaction']
-try:
-    from .webhook import Webhook
-except ImportError:
-    import sys
-    Webhook = sys.modules[__package__ + '.webhook']
-
-from .networking.requestprocessoutprivate import RequestProcessoutPrivate
-
+from processout.networking.request  import Request
+from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
 class Token:
-
-    def __init__(self, instance = None):
-        if instance == None:
-            instance = ProcessOut.getDefault()
-
-        self._instance = instance
+    def __init__(self, client, prefill = None):
+        self._client = client
 
         self._id = ""
         self._customer = None
+        self._card = None
         self._metadata = {}
         self._isSubscriptionOnly = False
         self._createdAt = ""
-        
+        if prefill != None:
+            self.fillWithData(prefill)
+
+    
     @property
     def id(self):
         """Get id"""
@@ -142,9 +50,27 @@ class Token:
         if isinstance(val, Customer):
             self._customer = val
         else:
-            obj = Customer(self._instance)
+            obj = processout.Customer(self._client)
             obj.fillWithData(val)
             self._customer = obj
+        return self
+    
+    @property
+    def card(self):
+        """Get card"""
+        return self._card
+
+    @card.setter
+    def card(self, val):
+        """Set card
+        Keyword argument:
+        val -- New card value"""
+        if isinstance(val, Card):
+            self._card = val
+        else:
+            obj = processout.Card(self._client)
+            obj.fillWithData(val)
+            self._card = obj
         return self
     
     @property
@@ -195,6 +121,8 @@ class Token:
             self.id = data["id"]
         if "customer" in data.keys():
             self.customer = data["customer"]
+        if "card" in data.keys():
+            self.card = data["card"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
         if "is_subscription_only" in data.keys():
@@ -204,15 +132,13 @@ class Token:
         
         return self
 
-    @staticmethod
-    def find(customerId, tokenId, options = None):
+    def find(self, customerId, tokenId, options = None):
         """Find a customer's token by its ID.
         Keyword argument:
         customerId -- ID of the customer
         tokenId -- ID of the token
         options -- Options for the request"""
-        instance = ProcessOut.getDefault()
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/customers/" + quote_plus(customerId) + "/tokens/" + quote_plus(tokenId) + ""
         data    = {
 
@@ -225,11 +151,12 @@ class Token:
         body = body["token"]
                 
                 
-        obj = Token()
+        obj = processout.Token(self._client)
         returnValues.append(obj.fillWithData(body))
                 
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
     def create(self, customerId, source, options = None):
         """Create a new token for the given customer ID.
@@ -237,8 +164,7 @@ class Token:
         customerId -- ID of the customer
         source -- Source used to create the token (most likely a card token generated by ProcessOut.js)
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/customers/" + quote_plus(customerId) + "/tokens"
         data    = {
             'metadata': self.metadata, 
@@ -255,7 +181,8 @@ class Token:
         returnValues.append(self.fillWithData(body))
                 
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
     def createFromRequest(self, customerId, source, target, options = None):
         """Create a new token for the given customer ID from an authorization request
@@ -264,8 +191,7 @@ class Token:
         source -- Source used to create the token (most likely a card token generated by ProcessOut.js)
         target -- Authorization request ID
         options -- Options for the request"""
-        instance = self._instance
-        request = RequestProcessoutPrivate(instance)
+        request = Request(self._client)
         path    = "/customers/" + quote_plus(customerId) + "/tokens"
         data    = {
             'metadata': self.metadata, 
@@ -283,6 +209,7 @@ class Token:
         returnValues.append(self.fillWithData(body))
                 
 
-        return tuple(returnValues)
+        
+        return returnValues[0];
 
     
