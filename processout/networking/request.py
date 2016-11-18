@@ -1,8 +1,8 @@
 import requests
 try:
-    import urllib.parse
+    from urllib.parse import urlencode
 except ImportError:
-    import urllib
+    from urllib import urlencode
 
 from processout.client import ProcessOut
 
@@ -65,7 +65,7 @@ class Request:
         options -- Options sent with the request
         """
         return requests.get(self._client.host + path + '?' +
-                urllib.urlencode(self._getData(data, options)),
+                urlencode(self._getData(data, options)),
             auth   = self._authenticate(),
             verify = True,
             headers = self._getHeaders(options))
@@ -107,7 +107,7 @@ class Request:
         options -- Options sent with the request
         """
         return requests.delete(self._client.host + path + '?' +
-                urllib.urlencode(self._getData(data, options)),
+                urlencode(self._getData(data, options)),
             auth   = self._authenticate(),
             verify = True,
             headers = self._getHeaders(options))

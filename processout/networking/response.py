@@ -1,8 +1,3 @@
-try:
-    from urllib.parse import urlparse
-except ImportError:
-    from urlparse import urlparse
-
 from processout.errors.authenticationerror import AuthenticationError
 from processout.errors.genericerror        import GenericError
 from processout.errors.internalerror       import InternalError

@@ -212,7 +212,7 @@ class Discount:
         return returnValues[0];
 
     def applyCoupon(self, subscriptionId, couponId, options = None):
-        """Apply a new discount to the given subscription ID from a coupon ID.
+        """Apply a new discount on the subscription from a coupon ID.
         Keyword argument:
         subscriptionId -- ID of the subscription
         couponId -- ID of the coupon
@@ -220,9 +220,6 @@ class Discount:
         request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(subscriptionId) + "/discounts"
         data    = {
-            'amount': self.amount, 
-            'expires_at': self.expiresAt, 
-            'metadata': self.metadata, 
             'coupon_id': couponId
         }
 
@@ -233,7 +230,8 @@ class Discount:
         body = body["discount"]
                 
                 
-        returnValues.append(self.fillWithData(body))
+        obj = processout.Discount(self._client)
+        returnValues.append(obj.fillWithData(body))
                 
 
         

@@ -106,7 +106,7 @@ class Project:
         
         return self
 
-    def gatewayConfigurations(self, options = None):
+    def fetchGatewayConfigurations(self, options = None):
         """Get all the gateway configurations of the project
         Keyword argument:
         

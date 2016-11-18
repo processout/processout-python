@@ -479,6 +479,28 @@ class Subscription:
         
         return returnValues[0];
 
+    def applyCoupon(self, couponId, options = None):
+        """Apply a coupon on the subscription.
+        Keyword argument:
+        couponId -- ID of the coupon
+        options -- Options for the request"""
+        request = Request(self._client)
+        path    = "/subscriptions/" + quote_plus(self.id) + "/discounts"
+        data    = {
+            'coupon_id': couponId
+        }
+
+        response = Response(request.post(path, data, options))
+        returnValues = []
+        
+        body = response.body
+        body = body["discount"]
+        discount = Discount(self._client)
+        returnValues.append(discount.fillWithData(body))
+
+        
+        return returnValues[0];
+
     def findDiscount(self, discountId, options = None):
         """Find a subscription's discount by its ID.
         Keyword argument:
