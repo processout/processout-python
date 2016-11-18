@@ -10,7 +10,7 @@ from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
-class GatewayConfiguration:
+class GatewayConfiguration(object):
     def __init__(self, client, prefill = None):
         self._client = client
 
@@ -46,12 +46,12 @@ class GatewayConfiguration:
         """Set project
         Keyword argument:
         val -- New project value"""
-        if isinstance(val, Project):
-            self._project = val
-        else:
+        if isinstance(val, dict):
             obj = processout.Project(self._client)
             obj.fillWithData(val)
             self._project = obj
+        else:
+            self._project = val
         return self
     
     @property
@@ -64,12 +64,12 @@ class GatewayConfiguration:
         """Set gateway
         Keyword argument:
         val -- New gateway value"""
-        if isinstance(val, Gateway):
-            self._gateway = val
-        else:
+        if isinstance(val, dict):
             obj = processout.Gateway(self._client)
             obj.fillWithData(val)
             self._gateway = obj
+        else:
+            self._gateway = val
         return self
     
     @property

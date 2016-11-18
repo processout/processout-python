@@ -10,7 +10,7 @@ from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
-class Plan:
+class Plan(object):
     def __init__(self, client, prefill = None):
         self._client = client
 
@@ -53,12 +53,12 @@ class Plan:
         """Set project
         Keyword argument:
         val -- New project value"""
-        if isinstance(val, Project):
-            self._project = val
-        else:
+        if isinstance(val, dict):
             obj = processout.Project(self._client)
             obj.fillWithData(val)
             self._project = obj
+        else:
+            self._project = val
         return self
     
     @property

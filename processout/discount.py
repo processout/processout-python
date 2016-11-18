@@ -10,7 +10,7 @@ from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
-class Discount:
+class Discount(object):
     def __init__(self, client, prefill = None):
         self._client = client
 
@@ -50,12 +50,12 @@ class Discount:
         """Set project
         Keyword argument:
         val -- New project value"""
-        if isinstance(val, Project):
-            self._project = val
-        else:
+        if isinstance(val, dict):
             obj = processout.Project(self._client)
             obj.fillWithData(val)
             self._project = obj
+        else:
+            self._project = val
         return self
     
     @property
@@ -68,12 +68,12 @@ class Discount:
         """Set subscription
         Keyword argument:
         val -- New subscription value"""
-        if isinstance(val, Subscription):
-            self._subscription = val
-        else:
+        if isinstance(val, dict):
             obj = processout.Subscription(self._client)
             obj.fillWithData(val)
             self._subscription = obj
+        else:
+            self._subscription = val
         return self
     
     @property
@@ -86,12 +86,12 @@ class Discount:
         """Set coupon
         Keyword argument:
         val -- New coupon value"""
-        if isinstance(val, Coupon):
-            self._coupon = val
-        else:
+        if isinstance(val, dict):
             obj = processout.Coupon(self._client)
             obj.fillWithData(val)
             self._coupon = obj
+        else:
+            self._coupon = val
         return self
     
     @property

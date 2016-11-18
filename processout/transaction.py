@@ -10,7 +10,7 @@ from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
-class Transaction:
+class Transaction(object):
     def __init__(self, client, prefill = None):
         self._client = client
 
@@ -58,12 +58,12 @@ class Transaction:
         """Set project
         Keyword argument:
         val -- New project value"""
-        if isinstance(val, Project):
-            self._project = val
-        else:
+        if isinstance(val, dict):
             obj = processout.Project(self._client)
             obj.fillWithData(val)
             self._project = obj
+        else:
+            self._project = val
         return self
     
     @property
@@ -76,12 +76,12 @@ class Transaction:
         """Set customer
         Keyword argument:
         val -- New customer value"""
-        if isinstance(val, Customer):
-            self._customer = val
-        else:
+        if isinstance(val, dict):
             obj = processout.Customer(self._client)
             obj.fillWithData(val)
             self._customer = obj
+        else:
+            self._customer = val
         return self
     
     @property
@@ -94,12 +94,12 @@ class Transaction:
         """Set subscription
         Keyword argument:
         val -- New subscription value"""
-        if isinstance(val, Subscription):
-            self._subscription = val
-        else:
+        if isinstance(val, dict):
             obj = processout.Subscription(self._client)
             obj.fillWithData(val)
             self._subscription = obj
+        else:
+            self._subscription = val
         return self
     
     @property
@@ -112,12 +112,12 @@ class Transaction:
         """Set token
         Keyword argument:
         val -- New token value"""
-        if isinstance(val, Token):
-            self._token = val
-        else:
+        if isinstance(val, dict):
             obj = processout.Token(self._client)
             obj.fillWithData(val)
             self._token = obj
+        else:
+            self._token = val
         return self
     
     @property
@@ -130,12 +130,12 @@ class Transaction:
         """Set card
         Keyword argument:
         val -- New card value"""
-        if isinstance(val, Card):
-            self._card = val
-        else:
+        if isinstance(val, dict):
             obj = processout.Card(self._client)
             obj.fillWithData(val)
             self._card = obj
+        else:
+            self._card = val
         return self
     
     @property

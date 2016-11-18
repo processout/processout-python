@@ -10,7 +10,7 @@ from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
-class Token:
+class Token(object):
     def __init__(self, client, prefill = None):
         self._client = client
 
@@ -47,12 +47,12 @@ class Token:
         """Set customer
         Keyword argument:
         val -- New customer value"""
-        if isinstance(val, Customer):
-            self._customer = val
-        else:
+        if isinstance(val, dict):
             obj = processout.Customer(self._client)
             obj.fillWithData(val)
             self._customer = obj
+        else:
+            self._customer = val
         return self
     
     @property
@@ -65,12 +65,12 @@ class Token:
         """Set card
         Keyword argument:
         val -- New card value"""
-        if isinstance(val, Card):
-            self._card = val
-        else:
+        if isinstance(val, dict):
             obj = processout.Card(self._client)
             obj.fillWithData(val)
             self._card = obj
+        else:
+            self._card = val
         return self
     
     @property

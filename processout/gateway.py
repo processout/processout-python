@@ -10,7 +10,7 @@ from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
-class Gateway:
+class Gateway(object):
     def __init__(self, client, prefill = None):
         self._client = client
 

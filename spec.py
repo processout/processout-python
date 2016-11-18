@@ -32,5 +32,11 @@ def main(argv):
 	}).create(customer.id)
 	assert subscription.id != "", "The created subscription ID should not be empty"
 
-if __name__ == '__main__':
+	# Expand a customers' project and fetch gateways
+	customer = client.newCustomer().create({"expand": ["project"]});
+	assert customer.project != None, "The customer project should be expanded"
+
+	confs = customer.project.fetchGatewayConfigurations()
+
+if __name__ == "__main__":
 	main(sys.argv[1:])

@@ -10,7 +10,7 @@ from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
-class Subscription:
+class Subscription(object):
     def __init__(self, client, prefill = None):
         self._client = client
 
@@ -65,12 +65,12 @@ class Subscription:
         """Set project
         Keyword argument:
         val -- New project value"""
-        if isinstance(val, Project):
-            self._project = val
-        else:
+        if isinstance(val, dict):
             obj = processout.Project(self._client)
             obj.fillWithData(val)
             self._project = obj
+        else:
+            self._project = val
         return self
     
     @property
@@ -83,12 +83,12 @@ class Subscription:
         """Set plan
         Keyword argument:
         val -- New plan value"""
-        if isinstance(val, Plan):
-            self._plan = val
-        else:
+        if isinstance(val, dict):
             obj = processout.Plan(self._client)
             obj.fillWithData(val)
             self._plan = obj
+        else:
+            self._plan = val
         return self
     
     @property
@@ -101,12 +101,12 @@ class Subscription:
         """Set customer
         Keyword argument:
         val -- New customer value"""
-        if isinstance(val, Customer):
-            self._customer = val
-        else:
+        if isinstance(val, dict):
             obj = processout.Customer(self._client)
             obj.fillWithData(val)
             self._customer = obj
+        else:
+            self._customer = val
         return self
     
     @property
@@ -119,12 +119,12 @@ class Subscription:
         """Set token
         Keyword argument:
         val -- New token value"""
-        if isinstance(val, Token):
-            self._token = val
-        else:
+        if isinstance(val, dict):
             obj = processout.Token(self._client)
             obj.fillWithData(val)
             self._token = obj
+        else:
+            self._token = val
         return self
     
     @property

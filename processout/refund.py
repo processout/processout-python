@@ -10,7 +10,7 @@ from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
-class Refund:
+class Refund(object):
     def __init__(self, client, prefill = None):
         self._client = client
 
@@ -49,12 +49,12 @@ class Refund:
         """Set transaction
         Keyword argument:
         val -- New transaction value"""
-        if isinstance(val, Transaction):
-            self._transaction = val
-        else:
+        if isinstance(val, dict):
             obj = processout.Transaction(self._client)
             obj.fillWithData(val)
             self._transaction = obj
+        else:
+            self._transaction = val
         return self
     
     @property
