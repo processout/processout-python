@@ -17,6 +17,7 @@ class Token(object):
         self._id = ""
         self._customer = None
         self._card = None
+        self._type = ""
         self._metadata = {}
         self._isSubscriptionOnly = False
         self._createdAt = ""
@@ -74,6 +75,19 @@ class Token(object):
         return self
     
     @property
+    def type(self):
+        """Get type"""
+        return self._type
+
+    @type.setter
+    def type(self, val):
+        """Set type
+        Keyword argument:
+        val -- New type value"""
+        self._type = val
+        return self
+    
+    @property
     def metadata(self):
         """Get metadata"""
         return self._metadata
@@ -123,6 +137,8 @@ class Token(object):
             self.customer = data["customer"]
         if "card" in data.keys():
             self.card = data["card"]
+        if "type" in data.keys():
+            self.type = data["type"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
         if "is_subscription_only" in data.keys():
