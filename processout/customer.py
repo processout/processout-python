@@ -379,6 +379,25 @@ class Customer(object):
         
         return returnValues[0];
 
+    def deleteToken(self, tokenId, options = None):
+        """Delete a customer's token by its ID.
+        Keyword argument:
+        tokenId -- ID of the token
+        options -- Options for the request"""
+        request = Request(self._client)
+        path    = "customers/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + ""
+        data    = {
+
+        }
+
+        response = Response(request.delete(path, data, options))
+        returnValues = []
+        
+        returnValues.append(response.success)
+
+        
+        return returnValues[0];
+
     def fetchTransactions(self, options = None):
         """Get the transactions belonging to the customer.
         Keyword argument:

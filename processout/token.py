@@ -16,6 +16,7 @@ class Token(object):
 
         self._id = ""
         self._customer = None
+        self._customerId = ""
         self._card = None
         self._type = ""
         self._metadata = {}
@@ -54,6 +55,19 @@ class Token(object):
             self._customer = obj
         else:
             self._customer = val
+        return self
+    
+    @property
+    def customerId(self):
+        """Get customerId"""
+        return self._customerId
+
+    @customerId.setter
+    def customerId(self, val):
+        """Set customerId
+        Keyword argument:
+        val -- New customerId value"""
+        self._customerId = val
         return self
     
     @property
@@ -135,6 +149,8 @@ class Token(object):
             self.id = data["id"]
         if "customer" in data.keys():
             self.customer = data["customer"]
+        if "customer_id" in data.keys():
+            self.customerId = data["customer_id"]
         if "card" in data.keys():
             self.card = data["card"]
         if "type" in data.keys():
@@ -224,6 +240,25 @@ class Token(object):
                 
         returnValues.append(self.fillWithData(body))
                 
+
+        
+        return returnValues[0];
+
+    def delete(self, options = None):
+        """Delete a customer token
+        Keyword argument:
+        
+        options -- Options for the request"""
+        request = Request(self._client)
+        path    = "customers/" + quote_plus(self.customerId) + "/tokens/" + quote_plus(self.id) + ""
+        data    = {
+
+        }
+
+        response = Response(request.delete(path, data, options))
+        returnValues = []
+        
+        returnValues.append(response.success)
 
         
         return returnValues[0];
