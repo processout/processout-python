@@ -16,10 +16,10 @@ class Card(object):
 
         self._id = ""
         self._project = None
-        self._brand = ""
+        self._scheme = ""
         self._type = ""
         self._bankName = ""
-        self._level = ""
+        self._brand = ""
         self._iin = ""
         self._last4Digits = ""
         self._expMonth = 0
@@ -63,16 +63,16 @@ class Card(object):
         return self
     
     @property
-    def brand(self):
-        """Get brand"""
-        return self._brand
+    def scheme(self):
+        """Get scheme"""
+        return self._scheme
 
-    @brand.setter
-    def brand(self, val):
-        """Set brand
+    @scheme.setter
+    def scheme(self, val):
+        """Set scheme
         Keyword argument:
-        val -- New brand value"""
-        self._brand = val
+        val -- New scheme value"""
+        self._scheme = val
         return self
     
     @property
@@ -102,16 +102,16 @@ class Card(object):
         return self
     
     @property
-    def level(self):
-        """Get level"""
-        return self._level
+    def brand(self):
+        """Get brand"""
+        return self._brand
 
-    @level.setter
-    def level(self, val):
-        """Set level
+    @brand.setter
+    def brand(self, val):
+        """Set brand
         Keyword argument:
-        val -- New level value"""
-        self._level = val
+        val -- New brand value"""
+        self._brand = val
         return self
     
     @property
@@ -214,14 +214,14 @@ class Card(object):
             self.id = data["id"]
         if "project" in data.keys():
             self.project = data["project"]
-        if "brand" in data.keys():
-            self.brand = data["brand"]
+        if "scheme" in data.keys():
+            self.scheme = data["scheme"]
         if "type" in data.keys():
             self.type = data["type"]
         if "bank_name" in data.keys():
             self.bankName = data["bank_name"]
-        if "level" in data.keys():
-            self.level = data["level"]
+        if "brand" in data.keys():
+            self.brand = data["brand"]
         if "iin" in data.keys():
             self.iin = data["iin"]
         if "last_4_digits" in data.keys():
