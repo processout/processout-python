@@ -14,15 +14,15 @@ class Discount(object):
     def __init__(self, client, prefill = None):
         self._client = client
 
-        self._id = ""
+        self._id = None
         self._project = None
         self._subscription = None
         self._coupon = None
-        self._amount = ""
-        self._expiresAt = ""
-        self._metadata = {}
-        self._sandbox = False
-        self._createdAt = ""
+        self._amount = None
+        self._expiresAt = None
+        self._metadata = None
+        self._sandbox = None
+        self._createdAt = None
         if prefill != None:
             self.fillWithData(prefill)
 

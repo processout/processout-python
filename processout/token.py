@@ -14,14 +14,14 @@ class Token(object):
     def __init__(self, client, prefill = None):
         self._client = client
 
-        self._id = ""
+        self._id = None
         self._customer = None
-        self._customerId = ""
+        self._customerId = None
         self._card = None
-        self._type = ""
-        self._metadata = {}
-        self._isSubscriptionOnly = False
-        self._createdAt = ""
+        self._type = None
+        self._metadata = None
+        self._isSubscriptionOnly = None
+        self._createdAt = None
         if prefill != None:
             self.fillWithData(prefill)
 

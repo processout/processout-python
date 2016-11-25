@@ -14,19 +14,19 @@ class Card(object):
     def __init__(self, client, prefill = None):
         self._client = client
 
-        self._id = ""
+        self._id = None
         self._project = None
-        self._scheme = ""
-        self._type = ""
-        self._bankName = ""
-        self._brand = ""
-        self._iin = ""
-        self._last4Digits = ""
-        self._expMonth = 0
-        self._expYear = 0
-        self._metadata = {}
-        self._sandbox = False
-        self._createdAt = ""
+        self._scheme = None
+        self._type = None
+        self._bankName = None
+        self._brand = None
+        self._iin = None
+        self._last4Digits = None
+        self._expMonth = None
+        self._expYear = None
+        self._metadata = None
+        self._sandbox = None
+        self._createdAt = None
         if prefill != None:
             self.fillWithData(prefill)
 

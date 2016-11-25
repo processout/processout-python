@@ -14,12 +14,12 @@ class Activity(object):
     def __init__(self, client, prefill = None):
         self._client = client
 
-        self._id = ""
+        self._id = None
         self._project = None
-        self._title = ""
-        self._content = ""
-        self._level = 0
-        self._createdAt = ""
+        self._title = None
+        self._content = None
+        self._level = None
+        self._createdAt = None
         if prefill != None:
             self.fillWithData(prefill)
 

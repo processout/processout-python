@@ -14,14 +14,14 @@ class Gateway(object):
     def __init__(self, client, prefill = None):
         self._client = client
 
-        self._id = ""
-        self._name = ""
-        self._displayName = ""
-        self._logoUrl = ""
-        self._url = ""
-        self._flows = []
-        self._tags = []
-        self._description = ""
+        self._id = None
+        self._name = None
+        self._displayName = None
+        self._logoUrl = None
+        self._url = None
+        self._flows = None
+        self._tags = None
+        self._description = None
         if prefill != None:
             self.fillWithData(prefill)
 

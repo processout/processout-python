@@ -14,11 +14,11 @@ class GatewayConfiguration(object):
     def __init__(self, client, prefill = None):
         self._client = client
 
-        self._id = ""
+        self._id = None
         self._project = None
         self._gateway = None
-        self._enabled = False
-        self._publicKeys = {}
+        self._enabled = None
+        self._publicKeys = None
         if prefill != None:
             self.fillWithData(prefill)
 

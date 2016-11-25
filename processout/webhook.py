@@ -14,18 +14,18 @@ class Webhook(object):
     def __init__(self, client, prefill = None):
         self._client = client
 
-        self._id = ""
+        self._id = None
         self._project = None
         self._event = None
-        self._requestUrl = ""
-        self._requestMethod = ""
-        self._responseBody = ""
-        self._responseCode = ""
-        self._responseHeaders = ""
-        self._responseTimeMs = 0
-        self._status = 0
-        self._createdAt = ""
-        self._releaseAt = ""
+        self._requestUrl = None
+        self._requestMethod = None
+        self._responseBody = None
+        self._responseCode = None
+        self._responseHeaders = None
+        self._responseTimeMs = None
+        self._status = None
+        self._createdAt = None
+        self._releaseAt = None
         if prefill != None:
             self.fillWithData(prefill)
 

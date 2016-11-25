@@ -14,19 +14,19 @@ class Coupon(object):
     def __init__(self, client, prefill = None):
         self._client = client
 
-        self._id = ""
+        self._id = None
         self._project = None
-        self._name = ""
-        self._amountOff = ""
-        self._percentOff = 0
-        self._currency = ""
-        self._maxRedemptions = 0
-        self._expiresAt = ""
-        self._metadata = {}
-        self._iterationCount = 0
-        self._redeemedNumber = 0
-        self._sandbox = False
-        self._createdAt = ""
+        self._name = None
+        self._amountOff = None
+        self._percentOff = None
+        self._currency = None
+        self._maxRedemptions = None
+        self._expiresAt = None
+        self._metadata = None
+        self._iterationCount = None
+        self._redeemedNumber = None
+        self._sandbox = None
+        self._createdAt = None
         if prefill != None:
             self.fillWithData(prefill)
 

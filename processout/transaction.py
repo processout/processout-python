@@ -14,23 +14,23 @@ class Transaction(object):
     def __init__(self, client, prefill = None):
         self._client = client
 
-        self._id = ""
+        self._id = None
         self._project = None
         self._customer = None
         self._subscription = None
         self._token = None
         self._card = None
-        self._name = ""
-        self._authorizedAmount = ""
-        self._capturedAmount = ""
-        self._currency = ""
-        self._status = ""
-        self._authorized = False
-        self._captured = False
-        self._processoutFee = ""
-        self._metadata = {}
-        self._sandbox = False
-        self._createdAt = ""
+        self._name = None
+        self._authorizedAmount = None
+        self._capturedAmount = None
+        self._currency = None
+        self._status = None
+        self._authorized = None
+        self._captured = None
+        self._processoutFee = None
+        self._metadata = None
+        self._sandbox = None
+        self._createdAt = None
         if prefill != None:
             self.fillWithData(prefill)
 

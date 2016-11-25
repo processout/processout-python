@@ -14,8 +14,8 @@ class CustomerAction(object):
     def __init__(self, client, prefill = None):
         self._client = client
 
-        self._type = ""
-        self._value = ""
+        self._type = None
+        self._value = None
         if prefill != None:
             self.fillWithData(prefill)
 

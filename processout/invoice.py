@@ -14,22 +14,22 @@ class Invoice(object):
     def __init__(self, client, prefill = None):
         self._client = client
 
-        self._id = ""
+        self._id = None
         self._project = None
         self._transaction = None
         self._customer = None
         self._subscription = None
-        self._url = ""
-        self._name = ""
-        self._amount = ""
-        self._currency = ""
-        self._metadata = {}
-        self._requestEmail = False
-        self._requestShipping = False
-        self._returnUrl = ""
-        self._cancelUrl = ""
-        self._sandbox = False
-        self._createdAt = ""
+        self._url = None
+        self._name = None
+        self._amount = None
+        self._currency = None
+        self._metadata = None
+        self._requestEmail = None
+        self._requestShipping = None
+        self._returnUrl = None
+        self._cancelUrl = None
+        self._sandbox = None
+        self._createdAt = None
         if prefill != None:
             self.fillWithData(prefill)
 

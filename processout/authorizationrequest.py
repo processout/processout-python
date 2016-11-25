@@ -14,19 +14,18 @@ class AuthorizationRequest(object):
     def __init__(self, client, prefill = None):
         self._client = client
 
-        self._id = ""
+        self._id = None
         self._project = None
         self._customer = None
         self._token = None
-        self._url = ""
-        self._authorized = False
-        self._name = ""
-        self._currency = ""
-        self._returnUrl = ""
-        self._cancelUrl = ""
-        self._custom = ""
-        self._sandbox = False
-        self._createdAt = ""
+        self._url = None
+        self._authorized = None
+        self._name = None
+        self._currency = None
+        self._returnUrl = None
+        self._cancelUrl = None
+        self._sandbox = None
+        self._createdAt = None
         if prefill != None:
             self.fillWithData(prefill)
 
@@ -177,19 +176,6 @@ class AuthorizationRequest(object):
         return self
     
     @property
-    def custom(self):
-        """Get custom"""
-        return self._custom
-
-    @custom.setter
-    def custom(self, val):
-        """Set custom
-        Keyword argument:
-        val -- New custom value"""
-        self._custom = val
-        return self
-    
-    @property
     def sandbox(self):
         """Get sandbox"""
         return self._sandbox
@@ -240,8 +226,6 @@ class AuthorizationRequest(object):
             self.returnUrl = data["return_url"]
         if "cancel_url" in data.keys():
             self.cancelUrl = data["cancel_url"]
-        if "custom" in data.keys():
-            self.custom = data["custom"]
         if "sandbox" in data.keys():
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
@@ -283,7 +267,6 @@ class AuthorizationRequest(object):
             'currency': self.currency, 
             'return_url': self.returnUrl, 
             'cancel_url': self.cancelUrl, 
-            'custom': self.custom, 
             'customer_id': customerId
         }
 

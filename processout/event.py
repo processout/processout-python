@@ -14,12 +14,12 @@ class Event(object):
     def __init__(self, client, prefill = None):
         self._client = client
 
-        self._id = ""
+        self._id = None
         self._project = None
-        self._name = ""
+        self._name = None
         self._data = None
-        self._sandbox = False
-        self._firedAt = ""
+        self._sandbox = None
+        self._firedAt = None
         if prefill != None:
             self.fillWithData(prefill)
 

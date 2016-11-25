@@ -14,11 +14,11 @@ class Project(object):
     def __init__(self, client, prefill = None):
         self._client = client
 
-        self._id = ""
-        self._name = ""
-        self._logoUrl = ""
-        self._email = ""
-        self._createdAt = ""
+        self._id = None
+        self._name = None
+        self._logoUrl = None
+        self._email = None
+        self._createdAt = None
         if prefill != None:
             self.fillWithData(prefill)
 

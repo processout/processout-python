@@ -14,18 +14,18 @@ class Plan(object):
     def __init__(self, client, prefill = None):
         self._client = client
 
-        self._id = ""
+        self._id = None
         self._project = None
-        self._name = ""
-        self._amount = ""
-        self._currency = ""
-        self._metadata = {}
-        self._interval = ""
-        self._trialPeriod = "0d"
-        self._returnUrl = ""
-        self._cancelUrl = ""
-        self._sandbox = False
-        self._createdAt = ""
+        self._name = None
+        self._amount = None
+        self._currency = None
+        self._metadata = None
+        self._interval = None
+        self._trialPeriod = None
+        self._returnUrl = None
+        self._cancelUrl = None
+        self._sandbox = None
+        self._createdAt = None
         if prefill != None:
             self.fillWithData(prefill)
 
@@ -307,8 +307,8 @@ class Plan(object):
         
         return returnValues[0];
 
-    def update(self, options = None):
-        """Update the plan. This action won't affect subscriptions already linked to this plan.
+    def save(self, options = None):
+        """Save the updated plan attributes. This action won't affect subscriptions already linked to this plan.
         Keyword argument:
         
         options -- Options for the request"""

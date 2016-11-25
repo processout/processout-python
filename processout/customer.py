@@ -14,23 +14,22 @@ class Customer(object):
     def __init__(self, client, prefill = None):
         self._client = client
 
-        self._id = ""
+        self._id = None
         self._project = None
-        self._email = ""
-        self._firstName = ""
-        self._lastName = ""
-        self._address1 = ""
-        self._address2 = ""
-        self._city = ""
-        self._state = ""
-        self._zip = ""
-        self._countryCode = ""
-        self._balance = "0"
-        self._currency = ""
-        self._metadata = {}
-        self._hasPin = False
-        self._sandbox = False
-        self._createdAt = ""
+        self._email = None
+        self._firstName = None
+        self._lastName = None
+        self._address1 = None
+        self._address2 = None
+        self._city = None
+        self._state = None
+        self._zip = None
+        self._countryCode = None
+        self._balance = None
+        self._currency = None
+        self._metadata = None
+        self._sandbox = None
+        self._createdAt = None
         if prefill != None:
             self.fillWithData(prefill)
 
@@ -223,19 +222,6 @@ class Customer(object):
         return self
     
     @property
-    def hasPin(self):
-        """Get hasPin"""
-        return self._hasPin
-
-    @hasPin.setter
-    def hasPin(self, val):
-        """Set hasPin
-        Keyword argument:
-        val -- New hasPin value"""
-        self._hasPin = val
-        return self
-    
-    @property
     def sandbox(self):
         """Get sandbox"""
         return self._sandbox
@@ -294,8 +280,6 @@ class Customer(object):
             self.currency = data["currency"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
-        if "has_pin" in data.keys():
-            self.hasPin = data["has_pin"]
         if "sandbox" in data.keys():
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():

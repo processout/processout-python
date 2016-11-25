@@ -14,30 +14,30 @@ class Subscription(object):
     def __init__(self, client, prefill = None):
         self._client = client
 
-        self._id = ""
+        self._id = None
         self._project = None
         self._plan = None
         self._customer = None
         self._token = None
-        self._url = ""
-        self._name = ""
-        self._amount = ""
-        self._currency = ""
-        self._metadata = {}
-        self._interval = ""
-        self._trialEndAt = ""
-        self._activated = False
-        self._active = False
-        self._canceled = False
-        self._cancellationReason = ""
-        self._pendingCancellation = False
-        self._cancelAt = ""
-        self._returnUrl = ""
-        self._cancelUrl = ""
-        self._sandbox = False
-        self._createdAt = ""
-        self._activatedAt = ""
-        self._iterateAt = ""
+        self._url = None
+        self._name = None
+        self._amount = None
+        self._currency = None
+        self._metadata = None
+        self._interval = None
+        self._trialEndAt = None
+        self._activated = None
+        self._active = None
+        self._canceled = None
+        self._cancellationReason = None
+        self._pendingCancellation = None
+        self._cancelAt = None
+        self._returnUrl = None
+        self._cancelUrl = None
+        self._sandbox = None
+        self._createdAt = None
+        self._activatedAt = None
+        self._iterateAt = None
         if prefill != None:
             self.fillWithData(prefill)
 
@@ -694,31 +694,6 @@ class Subscription(object):
         
         return returnValues[0];
 
-    def update(self, prorate, options = None):
-        """Update the subscription.
-        Keyword argument:
-        prorate -- Define if proration should be done when updating the plan
-        options -- Options for the request"""
-        request = Request(self._client)
-        path    = "/subscriptions/" + quote_plus(self.id) + ""
-        data    = {
-            'trial_end_at': self.trialEndAt, 
-            'prorate': prorate
-        }
-
-        response = Response(request.put(path, data, options))
-        returnValues = []
-        
-        body = response.body
-        body = body["subscription"]
-                
-                
-        returnValues.append(self.fillWithData(body))
-                
-
-        
-        return returnValues[0];
-
     def updatePlan(self, planId, prorate, options = None):
         """Update the subscription's plan.
         Keyword argument:
@@ -754,6 +729,34 @@ class Subscription(object):
         path    = "/subscriptions/" + quote_plus(self.id) + ""
         data    = {
             'source': source
+        }
+
+        response = Response(request.put(path, data, options))
+        returnValues = []
+        
+        body = response.body
+        body = body["subscription"]
+                
+                
+        returnValues.append(self.fillWithData(body))
+                
+
+        
+        return returnValues[0];
+
+    def save(self, options = None):
+        """Save the updated subscription attributes.
+        Keyword argument:
+        
+        options -- Options for the request"""
+        request = Request(self._client)
+        path    = "/subscriptions/" + quote_plus(self.id) + ""
+        data    = {
+            'name': self.name, 
+            'amount': self.amount, 
+            'interval': self.interval, 
+            'trial_end_at': self.trialEndAt, 
+            'metadata': self.metadata
         }
 
         response = Response(request.put(path, data, options))
