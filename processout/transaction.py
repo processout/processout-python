@@ -323,11 +323,13 @@ class Transaction(object):
         
         return self
 
-    def fetchRefunds(self, options = None):
+    def fetchRefunds(self, options = {}):
         """Get the transaction's refunds.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/transactions/" + quote_plus(self.id) + "/refunds"
         data    = {
@@ -348,13 +350,15 @@ class Transaction(object):
             
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def findRefund(self, refundId, options = None):
+    def findRefund(self, refundId, options = {}):
         """Find a transaction's refund by its ID.
         Keyword argument:
         refundId -- ID of the refund
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/transactions/" + quote_plus(self.id) + "/refunds/" + quote_plus(refundId) + ""
         data    = {
@@ -370,13 +374,15 @@ class Transaction(object):
         returnValues.append(refund.fillWithData(body))
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def all(self, options = None):
+    def all(self, options = {}):
         """Get all the transactions.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/transactions"
         data    = {
@@ -397,13 +403,15 @@ class Transaction(object):
             
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def find(self, transactionId, options = None):
+    def find(self, transactionId, options = {}):
         """Find a transaction by its ID.
         Keyword argument:
         transactionId -- ID of the transaction
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/transactions/" + quote_plus(transactionId) + ""
         data    = {
@@ -422,6 +430,6 @@ class Transaction(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
     

@@ -233,11 +233,13 @@ class AuthorizationRequest(object):
         
         return self
 
-    def fetchCustomer(self, options = None):
+    def fetchCustomer(self, options = {}):
         """Get the customer linked to the authorization request.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/authorization-requests/" + quote_plus(self.id) + "/customers"
         data    = {
@@ -253,13 +255,15 @@ class AuthorizationRequest(object):
         returnValues.append(customer.fillWithData(body))
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def create(self, customerId, options = None):
+    def create(self, customerId, options = {}):
         """Create a new authorization request for the given customer ID.
         Keyword argument:
         customerId -- ID of the customer
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/authorization-requests"
         data    = {
@@ -281,13 +285,15 @@ class AuthorizationRequest(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def find(self, authorizationRequestId, options = None):
+    def find(self, authorizationRequestId, options = {}):
         """Find an authorization request by its ID.
         Keyword argument:
         authorizationRequestId -- ID of the authorization request
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/authorization-requests/" + quote_plus(authorizationRequestId) + ""
         data    = {
@@ -306,6 +312,6 @@ class AuthorizationRequest(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
     

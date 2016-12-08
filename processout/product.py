@@ -239,11 +239,13 @@ class Product(object):
         
         return self
 
-    def createInvoice(self, options = None):
+    def createInvoice(self, options = {}):
         """Create a new invoice from the product.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/products/" + quote_plus(self.id) + "/invoices"
         data    = {
@@ -259,13 +261,15 @@ class Product(object):
         returnValues.append(invoice.fillWithData(body))
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def all(self, options = None):
+    def all(self, options = {}):
         """Get all the products.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/products"
         data    = {
@@ -286,13 +290,15 @@ class Product(object):
             
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def create(self, options = None):
+    def create(self, options = {}):
         """Create a new product.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/products"
         data    = {
@@ -317,13 +323,15 @@ class Product(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def find(self, productId, options = None):
+    def find(self, productId, options = {}):
         """Find a product by its ID.
         Keyword argument:
         productId -- ID of the product
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/products/" + quote_plus(productId) + ""
         data    = {
@@ -342,13 +350,15 @@ class Product(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def save(self, options = None):
+    def save(self, options = {}):
         """Save the updated product attributes.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/products/" + quote_plus(self.id) + ""
         data    = {
@@ -373,13 +383,15 @@ class Product(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def delete(self, options = None):
+    def delete(self, options = {}):
         """Delete the product.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/products/" + quote_plus(self.id) + ""
         data    = {
@@ -392,6 +404,6 @@ class Product(object):
         returnValues.append(response.success)
 
         
-        return returnValues[0];
+        return returnValues[0]
 
     

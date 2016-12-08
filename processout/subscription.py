@@ -430,11 +430,13 @@ class Subscription(object):
         
         return self
 
-    def fetchCustomer(self, options = None):
+    def fetchCustomer(self, options = {}):
         """Get the customer owning the subscription.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(self.id) + "/customers"
         data    = {
@@ -450,13 +452,15 @@ class Subscription(object):
         returnValues.append(customer.fillWithData(body))
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def fetchDiscounts(self, options = None):
+    def fetchDiscounts(self, options = {}):
         """Get the discounts applied to the subscription.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(self.id) + "/discounts"
         data    = {
@@ -477,13 +481,15 @@ class Subscription(object):
             
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def applyCoupon(self, couponId, options = None):
+    def applyCoupon(self, couponId, options = {}):
         """Apply a coupon on the subscription.
         Keyword argument:
         couponId -- ID of the coupon
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(self.id) + "/discounts"
         data    = {
@@ -499,13 +505,15 @@ class Subscription(object):
         returnValues.append(discount.fillWithData(body))
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def findDiscount(self, discountId, options = None):
+    def findDiscount(self, discountId, options = {}):
         """Find a subscription's discount by its ID.
         Keyword argument:
         discountId -- ID of the discount
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(self.id) + "/discounts/" + quote_plus(discountId) + ""
         data    = {
@@ -521,13 +529,15 @@ class Subscription(object):
         returnValues.append(discount.fillWithData(body))
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def removeDiscount(self, discountId, options = None):
+    def removeDiscount(self, discountId, options = {}):
         """Remove a discount applied to a subscription.
         Keyword argument:
         discountId -- ID of the discount or coupon to be removed from the subscription
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(self.id) + "/discounts/" + quote_plus(discountId) + ""
         data    = {
@@ -545,13 +555,15 @@ class Subscription(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def fetchTransactions(self, options = None):
+    def fetchTransactions(self, options = {}):
         """Get the subscriptions past transactions.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(self.id) + "/transactions"
         data    = {
@@ -572,13 +584,15 @@ class Subscription(object):
             
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def all(self, options = None):
+    def all(self, options = {}):
         """Get all the subscriptions.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/subscriptions"
         data    = {
@@ -599,13 +613,15 @@ class Subscription(object):
             
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def create(self, customerId, options = None):
+    def create(self, customerId, options = {}):
         """Create a new subscription for the given customer.
         Keyword argument:
         customerId -- ID of the customer
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/subscriptions"
         data    = {
@@ -632,14 +648,16 @@ class Subscription(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def createFromPlan(self, customerId, planId, options = None):
+    def createFromPlan(self, customerId, planId, options = {}):
         """Create a new subscription for the customer from the given plan ID.
         Keyword argument:
         customerId -- ID of the customer
         planId -- ID of the plan
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/subscriptions"
         data    = {
@@ -667,13 +685,15 @@ class Subscription(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def find(self, subscriptionId, options = None):
+    def find(self, subscriptionId, options = {}):
         """Find a subscription by its ID.
         Keyword argument:
         subscriptionId -- ID of the subscription
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(subscriptionId) + ""
         data    = {
@@ -692,14 +712,16 @@ class Subscription(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def updatePlan(self, planId, prorate, options = None):
+    def updatePlan(self, planId, prorate, options = {}):
         """Update the subscription's plan.
         Keyword argument:
         planId -- ID of the new plan to be applied on the subscription
         prorate -- Define if proration should be done when updating the plan
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(self.id) + ""
         data    = {
@@ -718,13 +740,15 @@ class Subscription(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def applySource(self, source, options = None):
+    def applySource(self, source, options = {}):
         """Apply a source to the subscription to activate or update the subscription's source.
         Keyword argument:
         source -- Source to be applied on the subscription and used to pay future invoices. Can be a card, a token or a gateway request
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(self.id) + ""
         data    = {
@@ -742,13 +766,15 @@ class Subscription(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def save(self, options = None):
+    def save(self, options = {}):
         """Save the updated subscription attributes.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(self.id) + ""
         data    = {
@@ -756,7 +782,8 @@ class Subscription(object):
             'amount': self.amount, 
             'interval': self.interval, 
             'trial_end_at': self.trialEndAt, 
-            'metadata': self.metadata
+            'metadata': self.metadata, 
+            'coupon_id': options.get("coupon_id")
         }
 
         response = Response(request.put(path, data, options))
@@ -770,13 +797,15 @@ class Subscription(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def cancel(self, cancellationReason, options = None):
+    def cancel(self, cancellationReason, options = {}):
         """Cancel a subscription. The reason may be provided as well.
         Keyword argument:
         cancellationReason -- Cancellation reason
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(self.id) + ""
         data    = {
@@ -794,14 +823,16 @@ class Subscription(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def cancelAtDate(self, cancelAt, cancellationReason, options = None):
+    def cancelAtDate(self, cancelAt, cancellationReason, options = {}):
         """Schedule the cancellation of the subscription. The reason may be provided as well.
         Keyword argument:
         cancelAt -- Cancellation date, in the form of a string
         cancellationReason -- Cancellation reason
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(self.id) + ""
         data    = {
@@ -820,6 +851,6 @@ class Subscription(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
     

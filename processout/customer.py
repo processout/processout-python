@@ -24,7 +24,7 @@ class Customer(object):
         self._city = None
         self._state = None
         self._zip = None
-        self._countryCode = None
+        self._country = None
         self._balance = None
         self._currency = None
         self._metadata = None
@@ -170,16 +170,16 @@ class Customer(object):
         return self
     
     @property
-    def countryCode(self):
-        """Get countryCode"""
-        return self._countryCode
+    def country(self):
+        """Get country"""
+        return self._country
 
-    @countryCode.setter
-    def countryCode(self, val):
-        """Set countryCode
+    @country.setter
+    def country(self, val):
+        """Set country
         Keyword argument:
-        val -- New countryCode value"""
-        self._countryCode = val
+        val -- New country value"""
+        self._country = val
         return self
     
     @property
@@ -272,8 +272,8 @@ class Customer(object):
             self.state = data["state"]
         if "zip" in data.keys():
             self.zip = data["zip"]
-        if "country_code" in data.keys():
-            self.countryCode = data["country_code"]
+        if "country" in data.keys():
+            self.country = data["country"]
         if "balance" in data.keys():
             self.balance = data["balance"]
         if "currency" in data.keys():
@@ -287,11 +287,13 @@ class Customer(object):
         
         return self
 
-    def fetchSubscriptions(self, options = None):
+    def fetchSubscriptions(self, options = {}):
         """Get the subscriptions belonging to the customer.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/customers/" + quote_plus(self.id) + "/subscriptions"
         data    = {
@@ -312,13 +314,15 @@ class Customer(object):
             
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def fetchTokens(self, options = None):
+    def fetchTokens(self, options = {}):
         """Get the customer's tokens.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/customers/" + quote_plus(self.id) + "/tokens"
         data    = {
@@ -339,13 +343,15 @@ class Customer(object):
             
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def findToken(self, tokenId, options = None):
+    def findToken(self, tokenId, options = {}):
         """Find a customer's token by its ID.
         Keyword argument:
         tokenId -- ID of the token
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/customers/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + ""
         data    = {
@@ -361,13 +367,15 @@ class Customer(object):
         returnValues.append(token.fillWithData(body))
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def deleteToken(self, tokenId, options = None):
+    def deleteToken(self, tokenId, options = {}):
         """Delete a customer's token by its ID.
         Keyword argument:
         tokenId -- ID of the token
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "customers/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + ""
         data    = {
@@ -380,13 +388,15 @@ class Customer(object):
         returnValues.append(response.success)
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def fetchTransactions(self, options = None):
+    def fetchTransactions(self, options = {}):
         """Get the transactions belonging to the customer.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/customers/" + quote_plus(self.id) + "/transactions"
         data    = {
@@ -407,13 +417,15 @@ class Customer(object):
             
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def all(self, options = None):
+    def all(self, options = {}):
         """Get all the customers.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/customers"
         data    = {
@@ -434,13 +446,15 @@ class Customer(object):
             
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def create(self, options = None):
+    def create(self, options = {}):
         """Create a new customer.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/customers"
         data    = {
@@ -454,7 +468,7 @@ class Customer(object):
             'city': self.city, 
             'state': self.state, 
             'zip': self.zip, 
-            'country_code': self.countryCode, 
+            'country': self.country, 
             'metadata': self.metadata
         }
 
@@ -469,13 +483,15 @@ class Customer(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def find(self, customerId, options = None):
+    def find(self, customerId, options = {}):
         """Find a customer by its ID.
         Keyword argument:
         customerId -- ID of the customer
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/customers/" + quote_plus(customerId) + ""
         data    = {
@@ -494,13 +510,15 @@ class Customer(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def save(self, options = None):
+    def save(self, options = {}):
         """Save the updated customer attributes.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/customers/" + quote_plus(self.id) + ""
         data    = {
@@ -513,7 +531,7 @@ class Customer(object):
             'city': self.city, 
             'state': self.state, 
             'zip': self.zip, 
-            'country_code': self.countryCode, 
+            'country': self.country, 
             'metadata': self.metadata
         }
 
@@ -528,13 +546,15 @@ class Customer(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def delete(self, options = None):
+    def delete(self, options = {}):
         """Delete the customer.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/customers/" + quote_plus(self.id) + ""
         data    = {
@@ -547,6 +567,6 @@ class Customer(object):
         returnValues.append(response.success)
 
         
-        return returnValues[0];
+        return returnValues[0]
 
     

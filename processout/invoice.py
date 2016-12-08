@@ -21,6 +21,11 @@ class Invoice(object):
         self._subscription = None
         self._url = None
         self._name = None
+        self._statementDescriptor = None
+        self._statementDescriptorPhone = None
+        self._statementDescriptorCity = None
+        self._statementDescriptorCompany = None
+        self._statementDescriptorUrl = None
         self._amount = None
         self._currency = None
         self._metadata = None
@@ -143,6 +148,71 @@ class Invoice(object):
         Keyword argument:
         val -- New name value"""
         self._name = val
+        return self
+    
+    @property
+    def statementDescriptor(self):
+        """Get statementDescriptor"""
+        return self._statementDescriptor
+
+    @statementDescriptor.setter
+    def statementDescriptor(self, val):
+        """Set statementDescriptor
+        Keyword argument:
+        val -- New statementDescriptor value"""
+        self._statementDescriptor = val
+        return self
+    
+    @property
+    def statementDescriptorPhone(self):
+        """Get statementDescriptorPhone"""
+        return self._statementDescriptorPhone
+
+    @statementDescriptorPhone.setter
+    def statementDescriptorPhone(self, val):
+        """Set statementDescriptorPhone
+        Keyword argument:
+        val -- New statementDescriptorPhone value"""
+        self._statementDescriptorPhone = val
+        return self
+    
+    @property
+    def statementDescriptorCity(self):
+        """Get statementDescriptorCity"""
+        return self._statementDescriptorCity
+
+    @statementDescriptorCity.setter
+    def statementDescriptorCity(self, val):
+        """Set statementDescriptorCity
+        Keyword argument:
+        val -- New statementDescriptorCity value"""
+        self._statementDescriptorCity = val
+        return self
+    
+    @property
+    def statementDescriptorCompany(self):
+        """Get statementDescriptorCompany"""
+        return self._statementDescriptorCompany
+
+    @statementDescriptorCompany.setter
+    def statementDescriptorCompany(self, val):
+        """Set statementDescriptorCompany
+        Keyword argument:
+        val -- New statementDescriptorCompany value"""
+        self._statementDescriptorCompany = val
+        return self
+    
+    @property
+    def statementDescriptorUrl(self):
+        """Get statementDescriptorUrl"""
+        return self._statementDescriptorUrl
+
+    @statementDescriptorUrl.setter
+    def statementDescriptorUrl(self, val):
+        """Set statementDescriptorUrl
+        Keyword argument:
+        val -- New statementDescriptorUrl value"""
+        self._statementDescriptorUrl = val
         return self
     
     @property
@@ -281,6 +351,16 @@ class Invoice(object):
             self.url = data["url"]
         if "name" in data.keys():
             self.name = data["name"]
+        if "statement_descriptor" in data.keys():
+            self.statementDescriptor = data["statement_descriptor"]
+        if "statement_descriptor_phone" in data.keys():
+            self.statementDescriptorPhone = data["statement_descriptor_phone"]
+        if "statement_descriptor_city" in data.keys():
+            self.statementDescriptorCity = data["statement_descriptor_city"]
+        if "statement_descriptor_company" in data.keys():
+            self.statementDescriptorCompany = data["statement_descriptor_company"]
+        if "statement_descriptor_url" in data.keys():
+            self.statementDescriptorUrl = data["statement_descriptor_url"]
         if "amount" in data.keys():
             self.amount = data["amount"]
         if "currency" in data.keys():
@@ -302,11 +382,13 @@ class Invoice(object):
         
         return self
 
-    def authorize(self, source, options = None):
+    def authorize(self, source, options = {}):
         """Authorize the invoice using the given source (customer or token)
         Keyword argument:
         source -- Source used to authorization the payment. Can be a card, a token or a gateway request
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/invoices/" + quote_plus(self.id) + "/authorize"
         data    = {
@@ -322,13 +404,15 @@ class Invoice(object):
         returnValues.append(transaction.fillWithData(body))
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def capture(self, source, options = None):
+    def capture(self, source, options = {}):
         """Capture the invoice using the given source (customer or token)
         Keyword argument:
         source -- Source used to authorization the payment. Can be a card, a token or a gateway request
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/invoices/" + quote_plus(self.id) + "/capture"
         data    = {
@@ -344,13 +428,15 @@ class Invoice(object):
         returnValues.append(transaction.fillWithData(body))
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def fetchCustomer(self, options = None):
+    def fetchCustomer(self, options = {}):
         """Get the customer linked to the invoice.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/invoices/" + quote_plus(self.id) + "/customers"
         data    = {
@@ -366,13 +452,15 @@ class Invoice(object):
         returnValues.append(customer.fillWithData(body))
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def assignCustomer(self, customerId, options = None):
+    def assignCustomer(self, customerId, options = {}):
         """Assign a customer to the invoice.
         Keyword argument:
         customerId -- ID of the customer to be linked to the invoice
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/invoices/" + quote_plus(self.id) + "/customers"
         data    = {
@@ -388,13 +476,15 @@ class Invoice(object):
         returnValues.append(customer.fillWithData(body))
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def fetchTransaction(self, options = None):
+    def fetchTransaction(self, options = {}):
         """Get the transaction of the invoice.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/invoices/" + quote_plus(self.id) + "/transactions"
         data    = {
@@ -410,13 +500,15 @@ class Invoice(object):
         returnValues.append(transaction.fillWithData(body))
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def void(self, options = None):
+    def void(self, options = {}):
         """Void the invoice
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/invoices/" + quote_plus(self.id) + "/void"
         data    = {
@@ -432,13 +524,15 @@ class Invoice(object):
         returnValues.append(transaction.fillWithData(body))
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def all(self, options = None):
+    def all(self, options = {}):
         """Get all the invoices.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/invoices"
         data    = {
@@ -459,13 +553,15 @@ class Invoice(object):
             
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def create(self, options = None):
+    def create(self, options = {}):
         """Create a new invoice.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/invoices"
         data    = {
@@ -473,6 +569,11 @@ class Invoice(object):
             'amount': self.amount, 
             'currency': self.currency, 
             'metadata': self.metadata, 
+            'statement_descriptor': self.statementDescriptor, 
+            'statement_descriptor_phone': self.statementDescriptorPhone, 
+            'statement_descriptor_city': self.statementDescriptorCity, 
+            'statement_descriptor_company': self.statementDescriptorCompany, 
+            'statement_descriptor_url': self.statementDescriptorUrl, 
             'request_email': self.requestEmail, 
             'request_shipping': self.requestShipping, 
             'return_url': self.returnUrl, 
@@ -490,13 +591,15 @@ class Invoice(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def createForCustomer(self, customerId, options = None):
+    def createForCustomer(self, customerId, options = {}):
         """Create a new invoice for the given customer ID.
         Keyword argument:
         customerId -- ID of the customer
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/invoices"
         data    = {
@@ -504,6 +607,11 @@ class Invoice(object):
             'amount': self.amount, 
             'currency': self.currency, 
             'metadata': self.metadata, 
+            'statement_descriptor': self.statementDescriptor, 
+            'statement_descriptor_phone': self.statementDescriptorPhone, 
+            'statement_descriptor_city': self.statementDescriptorCity, 
+            'statement_descriptor_company': self.statementDescriptorCompany, 
+            'statement_descriptor_url': self.statementDescriptorUrl, 
             'request_email': self.requestEmail, 
             'request_shipping': self.requestShipping, 
             'return_url': self.returnUrl, 
@@ -522,13 +630,15 @@ class Invoice(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def find(self, invoiceId, options = None):
+    def find(self, invoiceId, options = {}):
         """Find an invoice by its ID.
         Keyword argument:
         invoiceId -- ID of the invoice
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/invoices/" + quote_plus(invoiceId) + ""
         data    = {
@@ -547,6 +657,6 @@ class Invoice(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
     

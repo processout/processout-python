@@ -127,11 +127,13 @@ class Event(object):
         
         return self
 
-    def fetchWebhooks(self, options = None):
+    def fetchWebhooks(self, options = {}):
         """Get all the webhooks of the event.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/events/" + quote_plus(self.id) + "/webhooks"
         data    = {
@@ -152,13 +154,15 @@ class Event(object):
             
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def all(self, options = None):
+    def all(self, options = {}):
         """Get all the events.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/events"
         data    = {
@@ -179,13 +183,15 @@ class Event(object):
             
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def find(self, eventId, options = None):
+    def find(self, eventId, options = {}):
         """Find an event by its ID.
         Keyword argument:
         eventId -- ID of the event
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/events/" + quote_plus(eventId) + ""
         data    = {
@@ -204,6 +210,6 @@ class Event(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
     

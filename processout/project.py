@@ -106,11 +106,13 @@ class Project(object):
         
         return self
 
-    def fetchGatewayConfigurations(self, options = None):
+    def fetchGatewayConfigurations(self, options = {}):
         """Get all the gateway configurations of the project
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/projects/" + quote_plus(self.id) + "/gateway-configurations"
         data    = {
@@ -131,6 +133,6 @@ class Project(object):
             
 
         
-        return returnValues[0];
+        return returnValues[0]
 
     

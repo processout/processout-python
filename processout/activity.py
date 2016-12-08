@@ -127,11 +127,13 @@ class Activity(object):
         
         return self
 
-    def all(self, options = None):
+    def all(self, options = {}):
         """Get all the project activities.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/activities"
         data    = {
@@ -152,13 +154,15 @@ class Activity(object):
             
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def find(self, activityId, options = None):
+    def find(self, activityId, options = {}):
         """Find a specific activity and fetch its data.
         Keyword argument:
         activityId -- ID of the activity
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/activities/" + quote_plus(activityId) + ""
         data    = {
@@ -177,6 +181,6 @@ class Activity(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
     

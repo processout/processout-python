@@ -185,11 +185,13 @@ class Discount(object):
         
         return self
 
-    def apply(self, subscriptionId, options = None):
+    def apply(self, subscriptionId, options = {}):
         """Apply a new discount to the given subscription ID.
         Keyword argument:
         subscriptionId -- ID of the subscription
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(subscriptionId) + "/discounts"
         data    = {
@@ -209,14 +211,16 @@ class Discount(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def applyCoupon(self, subscriptionId, couponId, options = None):
+    def applyCoupon(self, subscriptionId, couponId, options = {}):
         """Apply a new discount on the subscription from a coupon ID.
         Keyword argument:
         subscriptionId -- ID of the subscription
         couponId -- ID of the coupon
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(subscriptionId) + "/discounts"
         data    = {
@@ -235,14 +239,16 @@ class Discount(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def find(self, subscriptionId, discountId, options = None):
+    def find(self, subscriptionId, discountId, options = {}):
         """Find a subscription's discount by its ID.
         Keyword argument:
         subscriptionId -- ID of the subscription on which the discount was applied
         discountId -- ID of the discount
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(subscriptionId) + "/discounts/" + quote_plus(discountId) + ""
         data    = {
@@ -261,6 +267,6 @@ class Discount(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
     

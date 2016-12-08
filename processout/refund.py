@@ -159,12 +159,14 @@ class Refund(object):
         
         return self
 
-    def find(self, transactionId, refundId, options = None):
+    def find(self, transactionId, refundId, options = {}):
         """Find a transaction's refund by its ID.
         Keyword argument:
         transactionId -- ID of the transaction on which the refund was applied
         refundId -- ID of the refund
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/transactions/" + quote_plus(transactionId) + "/refunds/" + quote_plus(refundId) + ""
         data    = {
@@ -183,13 +185,15 @@ class Refund(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def apply(self, transactionId, options = None):
+    def apply(self, transactionId, options = {}):
         """Apply a refund to a transaction.
         Keyword argument:
         transactionId -- ID of the transaction
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/transactions/" + quote_plus(transactionId) + "/refunds"
         data    = {
@@ -205,6 +209,6 @@ class Refund(object):
         returnValues.append(response.success)
 
         
-        return returnValues[0];
+        return returnValues[0]
 
     

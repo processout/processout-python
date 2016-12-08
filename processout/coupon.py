@@ -239,11 +239,13 @@ class Coupon(object):
         
         return self
 
-    def all(self, options = None):
+    def all(self, options = {}):
         """Get all the coupons.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/coupons"
         data    = {
@@ -264,13 +266,15 @@ class Coupon(object):
             
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def create(self, options = None):
+    def create(self, options = {}):
         """Create a new coupon.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/coupons"
         data    = {
@@ -295,13 +299,15 @@ class Coupon(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def find(self, couponId, options = None):
+    def find(self, couponId, options = {}):
         """Find a coupon by its ID.
         Keyword argument:
         couponId -- ID of the coupon
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/coupons/" + quote_plus(couponId) + ""
         data    = {
@@ -320,13 +326,15 @@ class Coupon(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def save(self, options = None):
+    def save(self, options = {}):
         """Save the updated coupon attributes.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/coupons/" + quote_plus(self.id) + ""
         data    = {
@@ -344,13 +352,15 @@ class Coupon(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def delete(self, options = None):
+    def delete(self, options = {}):
         """Delete the coupon.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/coupons/" + quote_plus(self.id) + ""
         data    = {
@@ -363,6 +373,6 @@ class Coupon(object):
         returnValues.append(response.success)
 
         
-        return returnValues[0];
+        return returnValues[0]
 
     

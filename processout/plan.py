@@ -223,11 +223,13 @@ class Plan(object):
         
         return self
 
-    def all(self, options = None):
+    def all(self, options = {}):
         """Get all the plans.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/plans"
         data    = {
@@ -248,13 +250,15 @@ class Plan(object):
             
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def create(self, options = None):
+    def create(self, options = {}):
         """Create a new plan.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/plans"
         data    = {
@@ -280,13 +284,15 @@ class Plan(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def find(self, planId, options = None):
+    def find(self, planId, options = {}):
         """Find a plan by its ID.
         Keyword argument:
         planId -- ID of the plan
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/plans/" + quote_plus(planId) + ""
         data    = {
@@ -305,13 +311,15 @@ class Plan(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def save(self, options = None):
+    def save(self, options = {}):
         """Save the updated plan attributes. This action won't affect subscriptions already linked to this plan.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/plans/" + quote_plus(self.id) + ""
         data    = {
@@ -333,13 +341,15 @@ class Plan(object):
                 
 
         
-        return returnValues[0];
+        return returnValues[0]
 
-    def end(self, options = None):
+    def end(self, options = {}):
         """Delete a plan. Subscriptions linked to this plan won't be affected.
         Keyword argument:
         
         options -- Options for the request"""
+        self.fillWithData(options)
+
         request = Request(self._client)
         path    = "/plans/" + quote_plus(self.id) + ""
         data    = {
@@ -352,6 +362,6 @@ class Plan(object):
         returnValues.append(response.success)
 
         
-        return returnValues[0];
+        return returnValues[0]
 
     
