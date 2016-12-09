@@ -204,6 +204,7 @@ class Token(object):
         path    = "/customers/" + quote_plus(customerId) + "/tokens"
         data    = {
             'metadata': self.metadata, 
+            'replace': options.get("replace"), 
             'source': source
         }
 
@@ -233,6 +234,7 @@ class Token(object):
         path    = "/customers/" + quote_plus(customerId) + "/tokens"
         data    = {
             'metadata': self.metadata, 
+            'replace': options.get("replace"), 
             'source': source, 
             'target': target
         }
