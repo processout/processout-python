@@ -16,6 +16,7 @@ class Subscription(object):
 
         self._id = None
         self._project = None
+        self._planId = None
         self._plan = None
         self._customer = None
         self._token = None
@@ -71,6 +72,19 @@ class Subscription(object):
             self._project = obj
         else:
             self._project = val
+        return self
+    
+    @property
+    def planId(self):
+        """Get planId"""
+        return self._planId
+
+    @planId.setter
+    def planId(self, val):
+        """Set planId
+        Keyword argument:
+        val -- New planId value"""
+        self._planId = val
         return self
     
     @property
@@ -383,6 +397,8 @@ class Subscription(object):
             self.id = data["id"]
         if "project" in data.keys():
             self.project = data["project"]
+        if "plan_id" in data.keys():
+            self.planId = data["plan_id"]
         if "plan" in data.keys():
             self.plan = data["plan"]
         if "customer" in data.keys():
@@ -625,6 +641,7 @@ class Subscription(object):
         request = Request(self._client)
         path    = "/subscriptions"
         data    = {
+            'plan_id': self.planId, 
             'cancel_at': self.cancelAt, 
             'name': self.name, 
             'amount': self.amount, 
@@ -634,7 +651,6 @@ class Subscription(object):
             'trial_end_at': self.trialEndAt, 
             'return_url': self.returnUrl, 
             'cancel_url': self.cancelUrl, 
-            'plan_id': options.get("plan_id"), 
             'source': options.get("source"), 
             'prorate': options.get("prorate"), 
             'customer_id': customerId
@@ -718,60 +734,6 @@ class Subscription(object):
         
         return returnValues[0]
 
-    def updatePlan(self, planId, prorate, options = {}):
-        """Update the subscription's plan.
-        Keyword argument:
-        planId -- ID of the new plan to be applied on the subscription
-        prorate -- Define if proration should be done when updating the plan
-        options -- Options for the request"""
-        self.fillWithData(options)
-
-        request = Request(self._client)
-        path    = "/subscriptions/" + quote_plus(self.id) + ""
-        data    = {
-            'plan_id': planId, 
-            'prorate': prorate
-        }
-
-        response = Response(request.put(path, data, options))
-        returnValues = []
-        
-        body = response.body
-        body = body["subscription"]
-                
-                
-        returnValues.append(self.fillWithData(body))
-                
-
-        
-        return returnValues[0]
-
-    def applySource(self, source, options = {}):
-        """Apply a source to the subscription to activate or update the subscription's source.
-        Keyword argument:
-        source -- Source to be applied on the subscription and used to pay future invoices. Can be a card, a token or a gateway request
-        options -- Options for the request"""
-        self.fillWithData(options)
-
-        request = Request(self._client)
-        path    = "/subscriptions/" + quote_plus(self.id) + ""
-        data    = {
-            'source': source
-        }
-
-        response = Response(request.put(path, data, options))
-        returnValues = []
-        
-        body = response.body
-        body = body["subscription"]
-                
-                
-        returnValues.append(self.fillWithData(body))
-                
-
-        
-        return returnValues[0]
-
     def save(self, options = {}):
         """Save the updated subscription attributes.
         Keyword argument:
@@ -782,13 +744,13 @@ class Subscription(object):
         request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(self.id) + ""
         data    = {
+            'plan_id': self.planId, 
             'name': self.name, 
             'amount': self.amount, 
             'interval': self.interval, 
             'trial_end_at': self.trialEndAt, 
             'metadata': self.metadata, 
             'coupon_id': options.get("coupon_id"), 
-            'plan_id': options.get("plan_id"), 
             'source': options.get("source"), 
             'prorate': options.get("prorate"), 
             'proration_date': options.get("proration_date")

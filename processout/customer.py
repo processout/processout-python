@@ -377,7 +377,7 @@ class Customer(object):
         self.fillWithData(options)
 
         request = Request(self._client)
-        path    = "customers/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + ""
+        path    = "/customers/" + quote_plus(self.id) + "/tokens/" + quote_plus(tokenId) + ""
         data    = {
 
         }

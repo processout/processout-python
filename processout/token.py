@@ -263,7 +263,7 @@ class Token(object):
         self.fillWithData(options)
 
         request = Request(self._client)
-        path    = "customers/" + quote_plus(self.customerId) + "/tokens/" + quote_plus(self.id) + ""
+        path    = "/customers/" + quote_plus(self.customerId) + "/tokens/" + quote_plus(self.id) + ""
         data    = {
 
         }
