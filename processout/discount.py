@@ -197,7 +197,8 @@ class Discount(object):
         data    = {
             'amount': self.amount, 
             'expires_at': self.expiresAt, 
-            'metadata': self.metadata
+            'metadata': self.metadata, 
+            'coupon_id': options.get("coupon_id")
         }
 
         response = Response(request.post(path, data, options))

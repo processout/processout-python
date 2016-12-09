@@ -392,6 +392,8 @@ class Invoice(object):
         request = Request(self._client)
         path    = "/invoices/" + quote_plus(self.id) + "/authorize"
         data    = {
+            'authorize_only': options.get("authorize_only"), 
+            'synchronous': options.get("synchronous"), 
             'source': source
         }
 
@@ -416,6 +418,8 @@ class Invoice(object):
         request = Request(self._client)
         path    = "/invoices/" + quote_plus(self.id) + "/capture"
         data    = {
+            'authorize_only': options.get("authorize_only"), 
+            'synchronous': options.get("synchronous"), 
             'source': source
         }
 
@@ -577,7 +581,8 @@ class Invoice(object):
             'request_email': self.requestEmail, 
             'request_shipping': self.requestShipping, 
             'return_url': self.returnUrl, 
-            'cancel_url': self.cancelUrl
+            'cancel_url': self.cancelUrl, 
+            'customer_id': options.get("customer_id")
         }
 
         response = Response(request.post(path, data, options))

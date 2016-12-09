@@ -634,6 +634,9 @@ class Subscription(object):
             'trial_end_at': self.trialEndAt, 
             'return_url': self.returnUrl, 
             'cancel_url': self.cancelUrl, 
+            'plan_id': options.get("plan_id"), 
+            'source': options.get("source"), 
+            'prorate': options.get("prorate"), 
             'customer_id': customerId
         }
 
@@ -670,6 +673,7 @@ class Subscription(object):
             'trial_end_at': self.trialEndAt, 
             'return_url': self.returnUrl, 
             'cancel_url': self.cancelUrl, 
+            'source': options.get("source"), 
             'customer_id': customerId, 
             'plan_id': planId
         }
@@ -783,7 +787,11 @@ class Subscription(object):
             'interval': self.interval, 
             'trial_end_at': self.trialEndAt, 
             'metadata': self.metadata, 
-            'coupon_id': options.get("coupon_id")
+            'coupon_id': options.get("coupon_id"), 
+            'plan_id': options.get("plan_id"), 
+            'source': options.get("source"), 
+            'prorate': options.get("prorate"), 
+            'proration_date': options.get("proration_date")
         }
 
         response = Response(request.put(path, data, options))
@@ -836,6 +844,7 @@ class Subscription(object):
         request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(self.id) + ""
         data    = {
+            'cancel_at_end': options.get("cancel_at_end"), 
             'cancel_at': cancelAt, 
             'cancellation_reason': cancellationReason
         }
