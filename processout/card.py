@@ -18,17 +18,17 @@ class Card(object):
         self._project = None
         self._scheme = None
         self._type = None
-        self._bankName = None
+        self._bank_name = None
         self._brand = None
         self._iin = None
-        self._last4Digits = None
-        self._expMonth = None
-        self._expYear = None
+        self._last_4_digits = None
+        self._exp_month = None
+        self._exp_year = None
         self._metadata = None
         self._sandbox = None
-        self._createdAt = None
+        self._created_at = None
         if prefill != None:
-            self.fillWithData(prefill)
+            self.fill_with_data(prefill)
 
     
     @property
@@ -56,7 +56,7 @@ class Card(object):
         val -- New project value"""
         if isinstance(val, dict):
             obj = processout.Project(self._client)
-            obj.fillWithData(val)
+            obj.fill_with_data(val)
             self._project = obj
         else:
             self._project = val
@@ -89,16 +89,16 @@ class Card(object):
         return self
     
     @property
-    def bankName(self):
-        """Get bankName"""
-        return self._bankName
+    def bank_name(self):
+        """Get bank_name"""
+        return self._bank_name
 
-    @bankName.setter
-    def bankName(self, val):
-        """Set bankName
+    @bank_name.setter
+    def bank_name(self, val):
+        """Set bank_name
         Keyword argument:
-        val -- New bankName value"""
-        self._bankName = val
+        val -- New bank_name value"""
+        self._bank_name = val
         return self
     
     @property
@@ -128,42 +128,42 @@ class Card(object):
         return self
     
     @property
-    def last4Digits(self):
-        """Get last4Digits"""
-        return self._last4Digits
+    def last_4_digits(self):
+        """Get last_4_digits"""
+        return self._last_4_digits
 
-    @last4Digits.setter
-    def last4Digits(self, val):
-        """Set last4Digits
+    @last_4_digits.setter
+    def last_4_digits(self, val):
+        """Set last_4_digits
         Keyword argument:
-        val -- New last4Digits value"""
-        self._last4Digits = val
+        val -- New last_4_digits value"""
+        self._last_4_digits = val
         return self
     
     @property
-    def expMonth(self):
-        """Get expMonth"""
-        return self._expMonth
+    def exp_month(self):
+        """Get exp_month"""
+        return self._exp_month
 
-    @expMonth.setter
-    def expMonth(self, val):
-        """Set expMonth
+    @exp_month.setter
+    def exp_month(self, val):
+        """Set exp_month
         Keyword argument:
-        val -- New expMonth value"""
-        self._expMonth = val
+        val -- New exp_month value"""
+        self._exp_month = val
         return self
     
     @property
-    def expYear(self):
-        """Get expYear"""
-        return self._expYear
+    def exp_year(self):
+        """Get exp_year"""
+        return self._exp_year
 
-    @expYear.setter
-    def expYear(self, val):
-        """Set expYear
+    @exp_year.setter
+    def exp_year(self, val):
+        """Set exp_year
         Keyword argument:
-        val -- New expYear value"""
-        self._expYear = val
+        val -- New exp_year value"""
+        self._exp_year = val
         return self
     
     @property
@@ -193,20 +193,20 @@ class Card(object):
         return self
     
     @property
-    def createdAt(self):
-        """Get createdAt"""
-        return self._createdAt
+    def created_at(self):
+        """Get created_at"""
+        return self._created_at
 
-    @createdAt.setter
-    def createdAt(self, val):
-        """Set createdAt
+    @created_at.setter
+    def created_at(self, val):
+        """Set created_at
         Keyword argument:
-        val -- New createdAt value"""
-        self._createdAt = val
+        val -- New created_at value"""
+        self._created_at = val
         return self
     
 
-    def fillWithData(self, data):
+    def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
@@ -219,23 +219,23 @@ class Card(object):
         if "type" in data.keys():
             self.type = data["type"]
         if "bank_name" in data.keys():
-            self.bankName = data["bank_name"]
+            self.bank_name = data["bank_name"]
         if "brand" in data.keys():
             self.brand = data["brand"]
         if "iin" in data.keys():
             self.iin = data["iin"]
         if "last_4_digits" in data.keys():
-            self.last4Digits = data["last_4_digits"]
+            self.last_4_digits = data["last_4_digits"]
         if "exp_month" in data.keys():
-            self.expMonth = data["exp_month"]
+            self.exp_month = data["exp_month"]
         if "exp_year" in data.keys():
-            self.expYear = data["exp_year"]
+            self.exp_year = data["exp_year"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
         if "sandbox" in data.keys():
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
-            self.createdAt = data["created_at"]
+            self.created_at = data["created_at"]
         
         return self
 

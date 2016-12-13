@@ -5,16 +5,15 @@ from processout.errors.notfounderror       import NotFoundError
 from processout.errors.validationerror     import ValidationError
 
 class Response:
-    def __init__(self, resp, checkStatusCode = True):
+    def __init__(self, resp):
         """Create a new Response instance from the raw requests response
 
         Keyword argument:
-        resp -- requests response
-        checkStatusCode -- whether or not to make sure the request succeeded"""
-        self._raw        = resp
-        self._statusCode = resp.status_code
-        self._headers    = resp.headers
-        self._rawBody    = resp.text
+        resp -- requests response"""
+        self._raw = resp
+        self._status_code = resp.status_code
+        self._headers = resp.headers
+        self._raw_body = resp.text
 
         self._body = resp.json()
 
@@ -26,9 +25,9 @@ class Response:
         return self._raw
 
     @property
-    def statusCode(self):
+    def status_code(self):
         """Get the status code"""
-        return self._statusCode
+        return self._status_code
 
     @property
     def headers(self):
@@ -41,17 +40,26 @@ class Response:
         return self._body
 
     @property
-    def rawBody(self):
+    def raw_body(self):
         """Get the raw body"""
-        return self._rawBody
+        return self._raw_body
 
     @property
     def success(self):
         """Get the response status"""
-        if (self.body["success"] == None or not self.body["success"]):
+        if self.body["success"] is None or not self.body["success"]:
             return False
 
         return True
+
+    @property
+    def code(self):
+        """Get the response code message"""
+        code = ""
+        if self.body["error_type"] != None:
+            code = code + self.body["error_type"]
+
+        return code
 
     @property
     def message(self):
@@ -64,18 +72,14 @@ class Response:
 
     def _check(self):
         """Check if response was successful, or raise an error"""
-        if (not self.success):
-            if self.statusCode == 404:
-                raise NotFoundError(self.message)
-            if self.statusCode == 401:
-                raise AuthenticationError(self.message)
-            if self.statusCode == 400:
-                raise ValidationError(self.message)
-            if self.statusCode >= 500:
-                raise InternalError(
-                    'ProcessOut returned an internal error (' +
-                        str(self.statusCode) + '): ' + self.message)
+        if not self.success:
+            if self.status_code == 404:
+                raise NotFoundError(self.code, self.message)
+            if self.status_code == 401:
+                raise AuthenticationError(self.code, self.message)
+            if self.status_code == 400:
+                raise ValidationError(self.code, self.message)
+            if self.status_code >= 500:
+                raise InternalError(self.code, self.message)
 
-            raise GenericError(
-                'ProcessOut returned an error (' +
-                    str(self.statusCode) + '): ' + self.message)
+            raise GenericError(self.code, self.message)

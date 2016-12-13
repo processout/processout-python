@@ -17,18 +17,18 @@ class Coupon(object):
         self._id = None
         self._project = None
         self._name = None
-        self._amountOff = None
-        self._percentOff = None
+        self._amount_off = None
+        self._percent_off = None
         self._currency = None
-        self._maxRedemptions = None
-        self._expiresAt = None
+        self._max_redemptions = None
+        self._expires_at = None
         self._metadata = None
-        self._iterationCount = None
-        self._redeemedNumber = None
+        self._iteration_count = None
+        self._redeemed_number = None
         self._sandbox = None
-        self._createdAt = None
+        self._created_at = None
         if prefill != None:
-            self.fillWithData(prefill)
+            self.fill_with_data(prefill)
 
     
     @property
@@ -56,7 +56,7 @@ class Coupon(object):
         val -- New project value"""
         if isinstance(val, dict):
             obj = processout.Project(self._client)
-            obj.fillWithData(val)
+            obj.fill_with_data(val)
             self._project = obj
         else:
             self._project = val
@@ -76,29 +76,29 @@ class Coupon(object):
         return self
     
     @property
-    def amountOff(self):
-        """Get amountOff"""
-        return self._amountOff
+    def amount_off(self):
+        """Get amount_off"""
+        return self._amount_off
 
-    @amountOff.setter
-    def amountOff(self, val):
-        """Set amountOff
+    @amount_off.setter
+    def amount_off(self, val):
+        """Set amount_off
         Keyword argument:
-        val -- New amountOff value"""
-        self._amountOff = val
+        val -- New amount_off value"""
+        self._amount_off = val
         return self
     
     @property
-    def percentOff(self):
-        """Get percentOff"""
-        return self._percentOff
+    def percent_off(self):
+        """Get percent_off"""
+        return self._percent_off
 
-    @percentOff.setter
-    def percentOff(self, val):
-        """Set percentOff
+    @percent_off.setter
+    def percent_off(self, val):
+        """Set percent_off
         Keyword argument:
-        val -- New percentOff value"""
-        self._percentOff = val
+        val -- New percent_off value"""
+        self._percent_off = val
         return self
     
     @property
@@ -115,29 +115,29 @@ class Coupon(object):
         return self
     
     @property
-    def maxRedemptions(self):
-        """Get maxRedemptions"""
-        return self._maxRedemptions
+    def max_redemptions(self):
+        """Get max_redemptions"""
+        return self._max_redemptions
 
-    @maxRedemptions.setter
-    def maxRedemptions(self, val):
-        """Set maxRedemptions
+    @max_redemptions.setter
+    def max_redemptions(self, val):
+        """Set max_redemptions
         Keyword argument:
-        val -- New maxRedemptions value"""
-        self._maxRedemptions = val
+        val -- New max_redemptions value"""
+        self._max_redemptions = val
         return self
     
     @property
-    def expiresAt(self):
-        """Get expiresAt"""
-        return self._expiresAt
+    def expires_at(self):
+        """Get expires_at"""
+        return self._expires_at
 
-    @expiresAt.setter
-    def expiresAt(self, val):
-        """Set expiresAt
+    @expires_at.setter
+    def expires_at(self, val):
+        """Set expires_at
         Keyword argument:
-        val -- New expiresAt value"""
-        self._expiresAt = val
+        val -- New expires_at value"""
+        self._expires_at = val
         return self
     
     @property
@@ -154,29 +154,29 @@ class Coupon(object):
         return self
     
     @property
-    def iterationCount(self):
-        """Get iterationCount"""
-        return self._iterationCount
+    def iteration_count(self):
+        """Get iteration_count"""
+        return self._iteration_count
 
-    @iterationCount.setter
-    def iterationCount(self, val):
-        """Set iterationCount
+    @iteration_count.setter
+    def iteration_count(self, val):
+        """Set iteration_count
         Keyword argument:
-        val -- New iterationCount value"""
-        self._iterationCount = val
+        val -- New iteration_count value"""
+        self._iteration_count = val
         return self
     
     @property
-    def redeemedNumber(self):
-        """Get redeemedNumber"""
-        return self._redeemedNumber
+    def redeemed_number(self):
+        """Get redeemed_number"""
+        return self._redeemed_number
 
-    @redeemedNumber.setter
-    def redeemedNumber(self, val):
-        """Set redeemedNumber
+    @redeemed_number.setter
+    def redeemed_number(self, val):
+        """Set redeemed_number
         Keyword argument:
-        val -- New redeemedNumber value"""
-        self._redeemedNumber = val
+        val -- New redeemed_number value"""
+        self._redeemed_number = val
         return self
     
     @property
@@ -193,20 +193,20 @@ class Coupon(object):
         return self
     
     @property
-    def createdAt(self):
-        """Get createdAt"""
-        return self._createdAt
+    def created_at(self):
+        """Get created_at"""
+        return self._created_at
 
-    @createdAt.setter
-    def createdAt(self, val):
-        """Set createdAt
+    @created_at.setter
+    def created_at(self, val):
+        """Set created_at
         Keyword argument:
-        val -- New createdAt value"""
-        self._createdAt = val
+        val -- New created_at value"""
+        self._created_at = val
         return self
     
 
-    def fillWithData(self, data):
+    def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
@@ -217,25 +217,25 @@ class Coupon(object):
         if "name" in data.keys():
             self.name = data["name"]
         if "amount_off" in data.keys():
-            self.amountOff = data["amount_off"]
+            self.amount_off = data["amount_off"]
         if "percent_off" in data.keys():
-            self.percentOff = data["percent_off"]
+            self.percent_off = data["percent_off"]
         if "currency" in data.keys():
             self.currency = data["currency"]
         if "max_redemptions" in data.keys():
-            self.maxRedemptions = data["max_redemptions"]
+            self.max_redemptions = data["max_redemptions"]
         if "expires_at" in data.keys():
-            self.expiresAt = data["expires_at"]
+            self.expires_at = data["expires_at"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
         if "iteration_count" in data.keys():
-            self.iterationCount = data["iteration_count"]
+            self.iteration_count = data["iteration_count"]
         if "redeemed_number" in data.keys():
-            self.redeemedNumber = data["redeemed_number"]
+            self.redeemed_number = data["redeemed_number"]
         if "sandbox" in data.keys():
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
-            self.createdAt = data["created_at"]
+            self.created_at = data["created_at"]
         
         return self
 
@@ -244,7 +244,7 @@ class Coupon(object):
         Keyword argument:
         
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
         path    = "/coupons"
@@ -253,87 +253,87 @@ class Coupon(object):
         }
 
         response = Response(request.get(path, data, options))
-        returnValues = []
+        return_values = []
         
         a    = []
         body = response.body
         for v in body['coupons']:
             tmp = Coupon(self._client)
-            tmp.fillWithData(v)
+            tmp.fill_with_data(v)
             a.append(tmp)
 
-        returnValues.append(a)
+        return_values.append(a)
             
 
         
-        return returnValues[0]
+        return return_values[0]
 
     def create(self, options = {}):
         """Create a new coupon.
         Keyword argument:
         
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
         path    = "/coupons"
         data    = {
             'id': self.id, 
-            'amount_off': self.amountOff, 
-            'percent_off': self.percentOff, 
+            'amount_off': self.amount_off, 
+            'percent_off': self.percent_off, 
             'currency': self.currency, 
-            'iteration_count': self.iterationCount, 
-            'max_redemptions': self.maxRedemptions, 
-            'expires_at': self.expiresAt, 
+            'iteration_count': self.iteration_count, 
+            'max_redemptions': self.max_redemptions, 
+            'expires_at': self.expires_at, 
             'metadata': self.metadata
         }
 
         response = Response(request.post(path, data, options))
-        returnValues = []
+        return_values = []
         
         body = response.body
         body = body["coupon"]
                 
                 
-        returnValues.append(self.fillWithData(body))
+        return_values.append(self.fill_with_data(body))
                 
 
         
-        return returnValues[0]
+        return return_values[0]
 
-    def find(self, couponId, options = {}):
+    def find(self, coupon_id, options = {}):
         """Find a coupon by its ID.
         Keyword argument:
-        couponId -- ID of the coupon
+        coupon_id -- ID of the coupon
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/coupons/" + quote_plus(couponId) + ""
+        path    = "/coupons/" + quote_plus(coupon_id) + ""
         data    = {
 
         }
 
         response = Response(request.get(path, data, options))
-        returnValues = []
+        return_values = []
         
         body = response.body
         body = body["coupon"]
                 
                 
         obj = processout.Coupon(self._client)
-        returnValues.append(obj.fillWithData(body))
+        return_values.append(obj.fill_with_data(body))
                 
 
         
-        return returnValues[0]
+        return return_values[0]
 
     def save(self, options = {}):
         """Save the updated coupon attributes.
         Keyword argument:
         
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
         path    = "/coupons/" + quote_plus(self.id) + ""
@@ -342,24 +342,24 @@ class Coupon(object):
         }
 
         response = Response(request.put(path, data, options))
-        returnValues = []
+        return_values = []
         
         body = response.body
         body = body["coupon"]
                 
                 
-        returnValues.append(self.fillWithData(body))
+        return_values.append(self.fill_with_data(body))
                 
 
         
-        return returnValues[0]
+        return return_values[0]
 
     def delete(self, options = {}):
         """Delete the coupon.
         Keyword argument:
         
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
         path    = "/coupons/" + quote_plus(self.id) + ""
@@ -368,11 +368,11 @@ class Coupon(object):
         }
 
         response = Response(request.delete(path, data, options))
-        returnValues = []
+        return_values = []
         
-        returnValues.append(response.success)
+        return_values.append(response.success)
 
         
-        return returnValues[0]
+        return return_values[0]
 
     

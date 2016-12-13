@@ -21,14 +21,14 @@ class Product(object):
         self._amount = None
         self._currency = None
         self._metadata = None
-        self._requestEmail = None
-        self._requestShipping = None
-        self._returnUrl = None
-        self._cancelUrl = None
+        self._request_email = None
+        self._request_shipping = None
+        self._return_url = None
+        self._cancel_url = None
         self._sandbox = None
-        self._createdAt = None
+        self._created_at = None
         if prefill != None:
-            self.fillWithData(prefill)
+            self.fill_with_data(prefill)
 
     
     @property
@@ -56,7 +56,7 @@ class Product(object):
         val -- New project value"""
         if isinstance(val, dict):
             obj = processout.Project(self._client)
-            obj.fillWithData(val)
+            obj.fill_with_data(val)
             self._project = obj
         else:
             self._project = val
@@ -128,55 +128,55 @@ class Product(object):
         return self
     
     @property
-    def requestEmail(self):
-        """Get requestEmail"""
-        return self._requestEmail
+    def request_email(self):
+        """Get request_email"""
+        return self._request_email
 
-    @requestEmail.setter
-    def requestEmail(self, val):
-        """Set requestEmail
+    @request_email.setter
+    def request_email(self, val):
+        """Set request_email
         Keyword argument:
-        val -- New requestEmail value"""
-        self._requestEmail = val
+        val -- New request_email value"""
+        self._request_email = val
         return self
     
     @property
-    def requestShipping(self):
-        """Get requestShipping"""
-        return self._requestShipping
+    def request_shipping(self):
+        """Get request_shipping"""
+        return self._request_shipping
 
-    @requestShipping.setter
-    def requestShipping(self, val):
-        """Set requestShipping
+    @request_shipping.setter
+    def request_shipping(self, val):
+        """Set request_shipping
         Keyword argument:
-        val -- New requestShipping value"""
-        self._requestShipping = val
+        val -- New request_shipping value"""
+        self._request_shipping = val
         return self
     
     @property
-    def returnUrl(self):
-        """Get returnUrl"""
-        return self._returnUrl
+    def return_url(self):
+        """Get return_url"""
+        return self._return_url
 
-    @returnUrl.setter
-    def returnUrl(self, val):
-        """Set returnUrl
+    @return_url.setter
+    def return_url(self, val):
+        """Set return_url
         Keyword argument:
-        val -- New returnUrl value"""
-        self._returnUrl = val
+        val -- New return_url value"""
+        self._return_url = val
         return self
     
     @property
-    def cancelUrl(self):
-        """Get cancelUrl"""
-        return self._cancelUrl
+    def cancel_url(self):
+        """Get cancel_url"""
+        return self._cancel_url
 
-    @cancelUrl.setter
-    def cancelUrl(self, val):
-        """Set cancelUrl
+    @cancel_url.setter
+    def cancel_url(self, val):
+        """Set cancel_url
         Keyword argument:
-        val -- New cancelUrl value"""
-        self._cancelUrl = val
+        val -- New cancel_url value"""
+        self._cancel_url = val
         return self
     
     @property
@@ -193,20 +193,20 @@ class Product(object):
         return self
     
     @property
-    def createdAt(self):
-        """Get createdAt"""
-        return self._createdAt
+    def created_at(self):
+        """Get created_at"""
+        return self._created_at
 
-    @createdAt.setter
-    def createdAt(self, val):
-        """Set createdAt
+    @created_at.setter
+    def created_at(self, val):
+        """Set created_at
         Keyword argument:
-        val -- New createdAt value"""
-        self._createdAt = val
+        val -- New created_at value"""
+        self._created_at = val
         return self
     
 
-    def fillWithData(self, data):
+    def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
@@ -225,26 +225,26 @@ class Product(object):
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
         if "request_email" in data.keys():
-            self.requestEmail = data["request_email"]
+            self.request_email = data["request_email"]
         if "request_shipping" in data.keys():
-            self.requestShipping = data["request_shipping"]
+            self.request_shipping = data["request_shipping"]
         if "return_url" in data.keys():
-            self.returnUrl = data["return_url"]
+            self.return_url = data["return_url"]
         if "cancel_url" in data.keys():
-            self.cancelUrl = data["cancel_url"]
+            self.cancel_url = data["cancel_url"]
         if "sandbox" in data.keys():
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
-            self.createdAt = data["created_at"]
+            self.created_at = data["created_at"]
         
         return self
 
-    def createInvoice(self, options = {}):
+    def create_invoice(self, options = {}):
         """Create a new invoice from the product.
         Keyword argument:
         
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
         path    = "/products/" + quote_plus(self.id) + "/invoices"
@@ -253,22 +253,22 @@ class Product(object):
         }
 
         response = Response(request.post(path, data, options))
-        returnValues = []
+        return_values = []
         
         body = response.body
         body = body["invoice"]
         invoice = Invoice(self._client)
-        returnValues.append(invoice.fillWithData(body))
+        return_values.append(invoice.fill_with_data(body))
 
         
-        return returnValues[0]
+        return return_values[0]
 
     def all(self, options = {}):
         """Get all the products.
         Keyword argument:
         
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
         path    = "/products"
@@ -277,27 +277,27 @@ class Product(object):
         }
 
         response = Response(request.get(path, data, options))
-        returnValues = []
+        return_values = []
         
         a    = []
         body = response.body
         for v in body['products']:
             tmp = Product(self._client)
-            tmp.fillWithData(v)
+            tmp.fill_with_data(v)
             a.append(tmp)
 
-        returnValues.append(a)
+        return_values.append(a)
             
 
         
-        return returnValues[0]
+        return return_values[0]
 
     def create(self, options = {}):
         """Create a new product.
         Keyword argument:
         
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
         path    = "/products"
@@ -306,58 +306,58 @@ class Product(object):
             'amount': self.amount, 
             'currency': self.currency, 
             'metadata': self.metadata, 
-            'request_email': self.requestEmail, 
-            'request_shipping': self.requestShipping, 
-            'return_url': self.returnUrl, 
-            'cancel_url': self.cancelUrl
+            'request_email': self.request_email, 
+            'request_shipping': self.request_shipping, 
+            'return_url': self.return_url, 
+            'cancel_url': self.cancel_url
         }
 
         response = Response(request.post(path, data, options))
-        returnValues = []
+        return_values = []
         
         body = response.body
         body = body["product"]
                 
                 
-        returnValues.append(self.fillWithData(body))
+        return_values.append(self.fill_with_data(body))
                 
 
         
-        return returnValues[0]
+        return return_values[0]
 
-    def find(self, productId, options = {}):
+    def find(self, product_id, options = {}):
         """Find a product by its ID.
         Keyword argument:
-        productId -- ID of the product
+        product_id -- ID of the product
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/products/" + quote_plus(productId) + ""
+        path    = "/products/" + quote_plus(product_id) + ""
         data    = {
 
         }
 
         response = Response(request.get(path, data, options))
-        returnValues = []
+        return_values = []
         
         body = response.body
         body = body["product"]
                 
                 
         obj = processout.Product(self._client)
-        returnValues.append(obj.fillWithData(body))
+        return_values.append(obj.fill_with_data(body))
                 
 
         
-        return returnValues[0]
+        return return_values[0]
 
     def save(self, options = {}):
         """Save the updated product attributes.
         Keyword argument:
         
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
         path    = "/products/" + quote_plus(self.id) + ""
@@ -366,31 +366,31 @@ class Product(object):
             'amount': self.amount, 
             'currency': self.currency, 
             'metadata': self.metadata, 
-            'request_email': self.requestEmail, 
-            'request_shipping': self.requestShipping, 
-            'return_url': self.returnUrl, 
-            'cancel_url': self.cancelUrl
+            'request_email': self.request_email, 
+            'request_shipping': self.request_shipping, 
+            'return_url': self.return_url, 
+            'cancel_url': self.cancel_url
         }
 
         response = Response(request.put(path, data, options))
-        returnValues = []
+        return_values = []
         
         body = response.body
         body = body["product"]
                 
                 
-        returnValues.append(self.fillWithData(body))
+        return_values.append(self.fill_with_data(body))
                 
 
         
-        return returnValues[0]
+        return return_values[0]
 
     def delete(self, options = {}):
         """Delete the product.
         Keyword argument:
         
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
         path    = "/products/" + quote_plus(self.id) + ""
@@ -399,11 +399,11 @@ class Product(object):
         }
 
         response = Response(request.delete(path, data, options))
-        returnValues = []
+        return_values = []
         
-        returnValues.append(response.success)
+        return_values.append(response.success)
 
         
-        return returnValues[0]
+        return return_values[0]
 
     

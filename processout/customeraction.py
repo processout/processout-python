@@ -17,7 +17,7 @@ class CustomerAction(object):
         self._type = None
         self._value = None
         if prefill != None:
-            self.fillWithData(prefill)
+            self.fill_with_data(prefill)
 
     
     @property
@@ -47,7 +47,7 @@ class CustomerAction(object):
         return self
     
 
-    def fillWithData(self, data):
+    def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""

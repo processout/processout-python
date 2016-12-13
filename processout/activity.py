@@ -19,9 +19,9 @@ class Activity(object):
         self._title = None
         self._content = None
         self._level = None
-        self._createdAt = None
+        self._created_at = None
         if prefill != None:
-            self.fillWithData(prefill)
+            self.fill_with_data(prefill)
 
     
     @property
@@ -49,7 +49,7 @@ class Activity(object):
         val -- New project value"""
         if isinstance(val, dict):
             obj = processout.Project(self._client)
-            obj.fillWithData(val)
+            obj.fill_with_data(val)
             self._project = obj
         else:
             self._project = val
@@ -95,20 +95,20 @@ class Activity(object):
         return self
     
     @property
-    def createdAt(self):
-        """Get createdAt"""
-        return self._createdAt
+    def created_at(self):
+        """Get created_at"""
+        return self._created_at
 
-    @createdAt.setter
-    def createdAt(self, val):
-        """Set createdAt
+    @created_at.setter
+    def created_at(self, val):
+        """Set created_at
         Keyword argument:
-        val -- New createdAt value"""
-        self._createdAt = val
+        val -- New created_at value"""
+        self._created_at = val
         return self
     
 
-    def fillWithData(self, data):
+    def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
@@ -123,7 +123,7 @@ class Activity(object):
         if "level" in data.keys():
             self.level = data["level"]
         if "created_at" in data.keys():
-            self.createdAt = data["created_at"]
+            self.created_at = data["created_at"]
         
         return self
 
@@ -132,7 +132,7 @@ class Activity(object):
         Keyword argument:
         
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
         path    = "/activities"
@@ -141,46 +141,46 @@ class Activity(object):
         }
 
         response = Response(request.get(path, data, options))
-        returnValues = []
+        return_values = []
         
         a    = []
         body = response.body
         for v in body['activities']:
             tmp = Activity(self._client)
-            tmp.fillWithData(v)
+            tmp.fill_with_data(v)
             a.append(tmp)
 
-        returnValues.append(a)
+        return_values.append(a)
             
 
         
-        return returnValues[0]
+        return return_values[0]
 
-    def find(self, activityId, options = {}):
+    def find(self, activity_id, options = {}):
         """Find a specific activity and fetch its data.
         Keyword argument:
-        activityId -- ID of the activity
+        activity_id -- ID of the activity
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/activities/" + quote_plus(activityId) + ""
+        path    = "/activities/" + quote_plus(activity_id) + ""
         data    = {
 
         }
 
         response = Response(request.get(path, data, options))
-        returnValues = []
+        return_values = []
         
         body = response.body
         body = body["activity"]
                 
                 
         obj = processout.Activity(self._client)
-        returnValues.append(obj.fillWithData(body))
+        return_values.append(obj.fill_with_data(body))
                 
 
         
-        return returnValues[0]
+        return return_values[0]
 
     

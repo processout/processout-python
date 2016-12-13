@@ -19,9 +19,9 @@ class Event(object):
         self._name = None
         self._data = None
         self._sandbox = None
-        self._firedAt = None
+        self._fired_at = None
         if prefill != None:
-            self.fillWithData(prefill)
+            self.fill_with_data(prefill)
 
     
     @property
@@ -49,7 +49,7 @@ class Event(object):
         val -- New project value"""
         if isinstance(val, dict):
             obj = processout.Project(self._client)
-            obj.fillWithData(val)
+            obj.fill_with_data(val)
             self._project = obj
         else:
             self._project = val
@@ -95,20 +95,20 @@ class Event(object):
         return self
     
     @property
-    def firedAt(self):
-        """Get firedAt"""
-        return self._firedAt
+    def fired_at(self):
+        """Get fired_at"""
+        return self._fired_at
 
-    @firedAt.setter
-    def firedAt(self, val):
-        """Set firedAt
+    @fired_at.setter
+    def fired_at(self, val):
+        """Set fired_at
         Keyword argument:
-        val -- New firedAt value"""
-        self._firedAt = val
+        val -- New fired_at value"""
+        self._fired_at = val
         return self
     
 
-    def fillWithData(self, data):
+    def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
@@ -123,16 +123,16 @@ class Event(object):
         if "sandbox" in data.keys():
             self.sandbox = data["sandbox"]
         if "fired_at" in data.keys():
-            self.firedAt = data["fired_at"]
+            self.fired_at = data["fired_at"]
         
         return self
 
-    def fetchWebhooks(self, options = {}):
+    def fetch_webhooks(self, options = {}):
         """Get all the webhooks of the event.
         Keyword argument:
         
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
         path    = "/events/" + quote_plus(self.id) + "/webhooks"
@@ -141,27 +141,27 @@ class Event(object):
         }
 
         response = Response(request.get(path, data, options))
-        returnValues = []
+        return_values = []
         
         a    = []
         body = response.body
         for v in body['webhooks']:
             tmp = Webhook(self._client)
-            tmp.fillWithData(v)
+            tmp.fill_with_data(v)
             a.append(tmp)
 
-        returnValues.append(a)
+        return_values.append(a)
             
 
         
-        return returnValues[0]
+        return return_values[0]
 
     def all(self, options = {}):
         """Get all the events.
         Keyword argument:
         
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
         path    = "/events"
@@ -170,46 +170,46 @@ class Event(object):
         }
 
         response = Response(request.get(path, data, options))
-        returnValues = []
+        return_values = []
         
         a    = []
         body = response.body
         for v in body['events']:
             tmp = Event(self._client)
-            tmp.fillWithData(v)
+            tmp.fill_with_data(v)
             a.append(tmp)
 
-        returnValues.append(a)
+        return_values.append(a)
             
 
         
-        return returnValues[0]
+        return return_values[0]
 
-    def find(self, eventId, options = {}):
+    def find(self, event_id, options = {}):
         """Find an event by its ID.
         Keyword argument:
-        eventId -- ID of the event
+        event_id -- ID of the event
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/events/" + quote_plus(eventId) + ""
+        path    = "/events/" + quote_plus(event_id) + ""
         data    = {
 
         }
 
         response = Response(request.get(path, data, options))
-        returnValues = []
+        return_values = []
         
         body = response.body
         body = body["event"]
                 
                 
         obj = processout.Event(self._client)
-        returnValues.append(obj.fillWithData(body))
+        return_values.append(obj.fill_with_data(body))
                 
 
         
-        return returnValues[0]
+        return return_values[0]
 
     

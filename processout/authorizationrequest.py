@@ -22,12 +22,12 @@ class AuthorizationRequest(object):
         self._authorized = None
         self._name = None
         self._currency = None
-        self._returnUrl = None
-        self._cancelUrl = None
+        self._return_url = None
+        self._cancel_url = None
         self._sandbox = None
-        self._createdAt = None
+        self._created_at = None
         if prefill != None:
-            self.fillWithData(prefill)
+            self.fill_with_data(prefill)
 
     
     @property
@@ -55,7 +55,7 @@ class AuthorizationRequest(object):
         val -- New project value"""
         if isinstance(val, dict):
             obj = processout.Project(self._client)
-            obj.fillWithData(val)
+            obj.fill_with_data(val)
             self._project = obj
         else:
             self._project = val
@@ -73,7 +73,7 @@ class AuthorizationRequest(object):
         val -- New customer value"""
         if isinstance(val, dict):
             obj = processout.Customer(self._client)
-            obj.fillWithData(val)
+            obj.fill_with_data(val)
             self._customer = obj
         else:
             self._customer = val
@@ -91,7 +91,7 @@ class AuthorizationRequest(object):
         val -- New token value"""
         if isinstance(val, dict):
             obj = processout.Token(self._client)
-            obj.fillWithData(val)
+            obj.fill_with_data(val)
             self._token = obj
         else:
             self._token = val
@@ -150,29 +150,29 @@ class AuthorizationRequest(object):
         return self
     
     @property
-    def returnUrl(self):
-        """Get returnUrl"""
-        return self._returnUrl
+    def return_url(self):
+        """Get return_url"""
+        return self._return_url
 
-    @returnUrl.setter
-    def returnUrl(self, val):
-        """Set returnUrl
+    @return_url.setter
+    def return_url(self, val):
+        """Set return_url
         Keyword argument:
-        val -- New returnUrl value"""
-        self._returnUrl = val
+        val -- New return_url value"""
+        self._return_url = val
         return self
     
     @property
-    def cancelUrl(self):
-        """Get cancelUrl"""
-        return self._cancelUrl
+    def cancel_url(self):
+        """Get cancel_url"""
+        return self._cancel_url
 
-    @cancelUrl.setter
-    def cancelUrl(self, val):
-        """Set cancelUrl
+    @cancel_url.setter
+    def cancel_url(self, val):
+        """Set cancel_url
         Keyword argument:
-        val -- New cancelUrl value"""
-        self._cancelUrl = val
+        val -- New cancel_url value"""
+        self._cancel_url = val
         return self
     
     @property
@@ -189,20 +189,20 @@ class AuthorizationRequest(object):
         return self
     
     @property
-    def createdAt(self):
-        """Get createdAt"""
-        return self._createdAt
+    def created_at(self):
+        """Get created_at"""
+        return self._created_at
 
-    @createdAt.setter
-    def createdAt(self, val):
-        """Set createdAt
+    @created_at.setter
+    def created_at(self, val):
+        """Set created_at
         Keyword argument:
-        val -- New createdAt value"""
-        self._createdAt = val
+        val -- New created_at value"""
+        self._created_at = val
         return self
     
 
-    def fillWithData(self, data):
+    def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
@@ -223,22 +223,22 @@ class AuthorizationRequest(object):
         if "currency" in data.keys():
             self.currency = data["currency"]
         if "return_url" in data.keys():
-            self.returnUrl = data["return_url"]
+            self.return_url = data["return_url"]
         if "cancel_url" in data.keys():
-            self.cancelUrl = data["cancel_url"]
+            self.cancel_url = data["cancel_url"]
         if "sandbox" in data.keys():
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
-            self.createdAt = data["created_at"]
+            self.created_at = data["created_at"]
         
         return self
 
-    def fetchCustomer(self, options = {}):
+    def fetch_customer(self, options = {}):
         """Get the customer linked to the authorization request.
         Keyword argument:
         
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
         path    = "/authorization-requests/" + quote_plus(self.id) + "/customers"
@@ -247,71 +247,71 @@ class AuthorizationRequest(object):
         }
 
         response = Response(request.get(path, data, options))
-        returnValues = []
+        return_values = []
         
         body = response.body
         body = body["customer"]
         customer = Customer(self._client)
-        returnValues.append(customer.fillWithData(body))
+        return_values.append(customer.fill_with_data(body))
 
         
-        return returnValues[0]
+        return return_values[0]
 
-    def create(self, customerId, options = {}):
+    def create(self, customer_id, options = {}):
         """Create a new authorization request for the given customer ID.
         Keyword argument:
-        customerId -- ID of the customer
+        customer_id -- ID of the customer
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
         path    = "/authorization-requests"
         data    = {
             'name': self.name, 
             'currency': self.currency, 
-            'return_url': self.returnUrl, 
-            'cancel_url': self.cancelUrl, 
-            'customer_id': customerId
+            'return_url': self.return_url, 
+            'cancel_url': self.cancel_url, 
+            'customer_id': customer_id
         }
 
         response = Response(request.post(path, data, options))
-        returnValues = []
+        return_values = []
         
         body = response.body
         body = body["authorization_request"]
                 
                 
-        returnValues.append(self.fillWithData(body))
+        return_values.append(self.fill_with_data(body))
                 
 
         
-        return returnValues[0]
+        return return_values[0]
 
-    def find(self, authorizationRequestId, options = {}):
+    def find(self, authorization_request_id, options = {}):
         """Find an authorization request by its ID.
         Keyword argument:
-        authorizationRequestId -- ID of the authorization request
+        authorization_request_id -- ID of the authorization request
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/authorization-requests/" + quote_plus(authorizationRequestId) + ""
+        path    = "/authorization-requests/" + quote_plus(authorization_request_id) + ""
         data    = {
 
         }
 
         response = Response(request.get(path, data, options))
-        returnValues = []
+        return_values = []
         
         body = response.body
         body = body["authorization_request"]
                 
                 
         obj = processout.AuthorizationRequest(self._client)
-        returnValues.append(obj.fillWithData(body))
+        return_values.append(obj.fill_with_data(body))
                 
 
         
-        return returnValues[0]
+        return return_values[0]
 
     

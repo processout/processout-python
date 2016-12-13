@@ -16,11 +16,11 @@ class Project(object):
 
         self._id = None
         self._name = None
-        self._logoUrl = None
+        self._logo_url = None
         self._email = None
-        self._createdAt = None
+        self._created_at = None
         if prefill != None:
-            self.fillWithData(prefill)
+            self.fill_with_data(prefill)
 
     
     @property
@@ -50,16 +50,16 @@ class Project(object):
         return self
     
     @property
-    def logoUrl(self):
-        """Get logoUrl"""
-        return self._logoUrl
+    def logo_url(self):
+        """Get logo_url"""
+        return self._logo_url
 
-    @logoUrl.setter
-    def logoUrl(self, val):
-        """Set logoUrl
+    @logo_url.setter
+    def logo_url(self, val):
+        """Set logo_url
         Keyword argument:
-        val -- New logoUrl value"""
-        self._logoUrl = val
+        val -- New logo_url value"""
+        self._logo_url = val
         return self
     
     @property
@@ -76,20 +76,20 @@ class Project(object):
         return self
     
     @property
-    def createdAt(self):
-        """Get createdAt"""
-        return self._createdAt
+    def created_at(self):
+        """Get created_at"""
+        return self._created_at
 
-    @createdAt.setter
-    def createdAt(self, val):
-        """Set createdAt
+    @created_at.setter
+    def created_at(self, val):
+        """Set created_at
         Keyword argument:
-        val -- New createdAt value"""
-        self._createdAt = val
+        val -- New created_at value"""
+        self._created_at = val
         return self
     
 
-    def fillWithData(self, data):
+    def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
@@ -98,20 +98,20 @@ class Project(object):
         if "name" in data.keys():
             self.name = data["name"]
         if "logo_url" in data.keys():
-            self.logoUrl = data["logo_url"]
+            self.logo_url = data["logo_url"]
         if "email" in data.keys():
             self.email = data["email"]
         if "created_at" in data.keys():
-            self.createdAt = data["created_at"]
+            self.created_at = data["created_at"]
         
         return self
 
-    def fetchGatewayConfigurations(self, options = {}):
+    def fetch_gateway_configurations(self, options = {}):
         """Get all the gateway configurations of the project
         Keyword argument:
         
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
         path    = "/projects/" + quote_plus(self.id) + "/gateway-configurations"
@@ -120,19 +120,19 @@ class Project(object):
         }
 
         response = Response(request.get(path, data, options))
-        returnValues = []
+        return_values = []
         
         a    = []
         body = response.body
         for v in body['gateway_configurations']:
             tmp = GatewayConfiguration(self._client)
-            tmp.fillWithData(v)
+            tmp.fill_with_data(v)
             a.append(tmp)
 
-        returnValues.append(a)
+        return_values.append(a)
             
 
         
-        return returnValues[0]
+        return return_values[0]
 
     

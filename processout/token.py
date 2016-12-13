@@ -16,14 +16,14 @@ class Token(object):
 
         self._id = None
         self._customer = None
-        self._customerId = None
+        self._customer_id = None
         self._card = None
         self._type = None
         self._metadata = None
-        self._isSubscriptionOnly = None
-        self._createdAt = None
+        self._is_subscription_only = None
+        self._created_at = None
         if prefill != None:
-            self.fillWithData(prefill)
+            self.fill_with_data(prefill)
 
     
     @property
@@ -51,23 +51,23 @@ class Token(object):
         val -- New customer value"""
         if isinstance(val, dict):
             obj = processout.Customer(self._client)
-            obj.fillWithData(val)
+            obj.fill_with_data(val)
             self._customer = obj
         else:
             self._customer = val
         return self
     
     @property
-    def customerId(self):
-        """Get customerId"""
-        return self._customerId
+    def customer_id(self):
+        """Get customer_id"""
+        return self._customer_id
 
-    @customerId.setter
-    def customerId(self, val):
-        """Set customerId
+    @customer_id.setter
+    def customer_id(self, val):
+        """Set customer_id
         Keyword argument:
-        val -- New customerId value"""
-        self._customerId = val
+        val -- New customer_id value"""
+        self._customer_id = val
         return self
     
     @property
@@ -82,7 +82,7 @@ class Token(object):
         val -- New card value"""
         if isinstance(val, dict):
             obj = processout.Card(self._client)
-            obj.fillWithData(val)
+            obj.fill_with_data(val)
             self._card = obj
         else:
             self._card = val
@@ -115,33 +115,33 @@ class Token(object):
         return self
     
     @property
-    def isSubscriptionOnly(self):
-        """Get isSubscriptionOnly"""
-        return self._isSubscriptionOnly
+    def is_subscription_only(self):
+        """Get is_subscription_only"""
+        return self._is_subscription_only
 
-    @isSubscriptionOnly.setter
-    def isSubscriptionOnly(self, val):
-        """Set isSubscriptionOnly
+    @is_subscription_only.setter
+    def is_subscription_only(self, val):
+        """Set is_subscription_only
         Keyword argument:
-        val -- New isSubscriptionOnly value"""
-        self._isSubscriptionOnly = val
+        val -- New is_subscription_only value"""
+        self._is_subscription_only = val
         return self
     
     @property
-    def createdAt(self):
-        """Get createdAt"""
-        return self._createdAt
+    def created_at(self):
+        """Get created_at"""
+        return self._created_at
 
-    @createdAt.setter
-    def createdAt(self, val):
-        """Set createdAt
+    @created_at.setter
+    def created_at(self, val):
+        """Set created_at
         Keyword argument:
-        val -- New createdAt value"""
-        self._createdAt = val
+        val -- New created_at value"""
+        self._created_at = val
         return self
     
 
-    def fillWithData(self, data):
+    def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
@@ -150,7 +150,7 @@ class Token(object):
         if "customer" in data.keys():
             self.customer = data["customer"]
         if "customer_id" in data.keys():
-            self.customerId = data["customer_id"]
+            self.customer_id = data["customer_id"]
         if "card" in data.keys():
             self.card = data["card"]
         if "type" in data.keys():
@@ -158,50 +158,50 @@ class Token(object):
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
         if "is_subscription_only" in data.keys():
-            self.isSubscriptionOnly = data["is_subscription_only"]
+            self.is_subscription_only = data["is_subscription_only"]
         if "created_at" in data.keys():
-            self.createdAt = data["created_at"]
+            self.created_at = data["created_at"]
         
         return self
 
-    def find(self, customerId, tokenId, options = {}):
+    def find(self, customer_id, token_id, options = {}):
         """Find a customer's token by its ID.
         Keyword argument:
-        customerId -- ID of the customer
-        tokenId -- ID of the token
+        customer_id -- ID of the customer
+        token_id -- ID of the token
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/customers/" + quote_plus(customerId) + "/tokens/" + quote_plus(tokenId) + ""
+        path    = "/customers/" + quote_plus(customer_id) + "/tokens/" + quote_plus(token_id) + ""
         data    = {
 
         }
 
         response = Response(request.get(path, data, options))
-        returnValues = []
+        return_values = []
         
         body = response.body
         body = body["token"]
                 
                 
         obj = processout.Token(self._client)
-        returnValues.append(obj.fillWithData(body))
+        return_values.append(obj.fill_with_data(body))
                 
 
         
-        return returnValues[0]
+        return return_values[0]
 
-    def create(self, customerId, source, options = {}):
+    def create(self, customer_id, source, options = {}):
         """Create a new token for the given customer ID.
         Keyword argument:
-        customerId -- ID of the customer
+        customer_id -- ID of the customer
         source -- Source used to create the token (most likely a card token generated by ProcessOut.js)
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/customers/" + quote_plus(customerId) + "/tokens"
+        path    = "/customers/" + quote_plus(customer_id) + "/tokens"
         data    = {
             'metadata': self.metadata, 
             'settings': options.get("settings"), 
@@ -211,29 +211,29 @@ class Token(object):
         }
 
         response = Response(request.post(path, data, options))
-        returnValues = []
+        return_values = []
         
         body = response.body
         body = body["token"]
                 
                 
-        returnValues.append(self.fillWithData(body))
+        return_values.append(self.fill_with_data(body))
                 
 
         
-        return returnValues[0]
+        return return_values[0]
 
-    def createFromRequest(self, customerId, source, target, options = {}):
+    def create_from_request(self, customer_id, source, target, options = {}):
         """Create a new token for the given customer ID from an authorization request
         Keyword argument:
-        customerId -- ID of the customer
+        customer_id -- ID of the customer
         source -- Source used to create the token (most likely a card token generated by ProcessOut.js)
         target -- Authorization request ID
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/customers/" + quote_plus(customerId) + "/tokens"
+        path    = "/customers/" + quote_plus(customer_id) + "/tokens"
         data    = {
             'metadata': self.metadata, 
             'settings': options.get("settings"), 
@@ -243,37 +243,37 @@ class Token(object):
         }
 
         response = Response(request.post(path, data, options))
-        returnValues = []
+        return_values = []
         
         body = response.body
         body = body["token"]
                 
                 
-        returnValues.append(self.fillWithData(body))
+        return_values.append(self.fill_with_data(body))
                 
 
         
-        return returnValues[0]
+        return return_values[0]
 
     def delete(self, options = {}):
         """Delete a customer token
         Keyword argument:
         
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/customers/" + quote_plus(self.customerId) + "/tokens/" + quote_plus(self.id) + ""
+        path    = "/customers/" + quote_plus(self.customer_id) + "/tokens/" + quote_plus(self.id) + ""
         data    = {
 
         }
 
         response = Response(request.delete(path, data, options))
-        returnValues = []
+        return_values = []
         
-        returnValues.append(response.success)
+        return_values.append(response.success)
 
         
-        return returnValues[0]
+        return return_values[0]
 
     

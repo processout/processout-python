@@ -21,9 +21,9 @@ class Refund(object):
         self._amount = None
         self._metadata = None
         self._sandbox = None
-        self._createdAt = None
+        self._created_at = None
         if prefill != None:
-            self.fillWithData(prefill)
+            self.fill_with_data(prefill)
 
     
     @property
@@ -51,7 +51,7 @@ class Refund(object):
         val -- New transaction value"""
         if isinstance(val, dict):
             obj = processout.Transaction(self._client)
-            obj.fillWithData(val)
+            obj.fill_with_data(val)
             self._transaction = obj
         else:
             self._transaction = val
@@ -123,20 +123,20 @@ class Refund(object):
         return self
     
     @property
-    def createdAt(self):
-        """Get createdAt"""
-        return self._createdAt
+    def created_at(self):
+        """Get created_at"""
+        return self._created_at
 
-    @createdAt.setter
-    def createdAt(self, val):
-        """Set createdAt
+    @created_at.setter
+    def created_at(self, val):
+        """Set created_at
         Keyword argument:
-        val -- New createdAt value"""
-        self._createdAt = val
+        val -- New created_at value"""
+        self._created_at = val
         return self
     
 
-    def fillWithData(self, data):
+    def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
@@ -155,47 +155,47 @@ class Refund(object):
         if "sandbox" in data.keys():
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
-            self.createdAt = data["created_at"]
+            self.created_at = data["created_at"]
         
         return self
 
-    def find(self, transactionId, refundId, options = {}):
+    def find(self, transaction_id, refund_id, options = {}):
         """Find a transaction's refund by its ID.
         Keyword argument:
-        transactionId -- ID of the transaction on which the refund was applied
-        refundId -- ID of the refund
+        transaction_id -- ID of the transaction on which the refund was applied
+        refund_id -- ID of the refund
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/transactions/" + quote_plus(transactionId) + "/refunds/" + quote_plus(refundId) + ""
+        path    = "/transactions/" + quote_plus(transaction_id) + "/refunds/" + quote_plus(refund_id) + ""
         data    = {
 
         }
 
         response = Response(request.get(path, data, options))
-        returnValues = []
+        return_values = []
         
         body = response.body
         body = body["refund"]
                 
                 
         obj = processout.Refund(self._client)
-        returnValues.append(obj.fillWithData(body))
+        return_values.append(obj.fill_with_data(body))
                 
 
         
-        return returnValues[0]
+        return return_values[0]
 
-    def apply(self, transactionId, options = {}):
+    def apply(self, transaction_id, options = {}):
         """Apply a refund to a transaction.
         Keyword argument:
-        transactionId -- ID of the transaction
+        transaction_id -- ID of the transaction
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/transactions/" + quote_plus(transactionId) + "/refunds"
+        path    = "/transactions/" + quote_plus(transaction_id) + "/refunds"
         data    = {
             'amount': self.amount, 
             'metadata': self.metadata, 
@@ -204,11 +204,11 @@ class Refund(object):
         }
 
         response = Response(request.post(path, data, options))
-        returnValues = []
+        return_values = []
         
-        returnValues.append(response.success)
+        return_values.append(response.success)
 
         
-        return returnValues[0]
+        return return_values[0]
 
     

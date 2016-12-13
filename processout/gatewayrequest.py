@@ -2,7 +2,7 @@ import json
 import base64
 
 class GatewayRequest:
-    def __init__(self, gatewayConfigurationID, method, url, headers, data):
+    def __init__(self, gateway_configuration_id, method, url, headers, body):
         """Create a new GatewayRequest instance from the current request
         Keyword argument:
         gatewayConfigurationID -- gateway configuration ID
@@ -10,20 +10,20 @@ class GatewayRequest:
         url -- Request URL
         headers -- Request headers (map format)
         body -- Request body (raw string)"""
-        self._gatewayConfigurationID = gatewayConfigurationID
-        self._method                 = method
-        self._url                    = url
-        self._headers                = headers
-        self._data                   = data
+        self._gateway_configuration_id = gateway_configuration_id
+        self._method = method
+        self._url = url
+        self._headers = headers
+        self._body = body
 
-    def toString(self):
+    def to_string(self):
         return "gway_req_" + base64.b64encode(bytes(json.dumps({
-            "gateway_configuration_id": self._gatewayConfigurationID,
-            "method":                   self._method,
-            "url":                      self._url,
-            "headers":                  self._headers,
-            "body":                     self._body
+            "gateway_configuration_id": self._gateway_configuration_id,
+            "method": self._method,
+            "url": self._url,
+            "headers": self._headers,
+            "body": self._body
         }), "utf-8"))
 
     def __str___(self):
-        return self.toString()
+        return self.to_string()

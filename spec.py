@@ -1,42 +1,48 @@
-import sys
 import processout
+from processout.errors.notfounderror import NotFoundError
 
-def main(argv):
-	client = processout.ProcessOut("proj_gAO1Uu0ysZJvDuUpOGPkUBeE3pGalk3x", 
-		"key_fBjPvkgT8gyKc1SUpy0PfjL7UgsRmUug")
+def main():
+    client = processout.ProcessOut("proj_gAO1Uu0ysZJvDuUpOGPkUBeE3pGalk3x",
+                                   "key_fBjPvkgT8gyKc1SUpy0PfjL7UgsRmUug")
 
-	# Create and fetch an invoice
-	invoice = client.newInvoice({
-		"name": "Test invoice",
-		"amount": "9.99",
-		"currency": "USD"
-	}).create()
-	assert invoice.id != "", "The invoice ID should not be empty"
+    # Create and fetch an invoice
+    invoice = client.new_invoice({
+        "name": "Test invoice",
+        "amount": "9.99",
+        "currency": "USD"
+    }).create()
+    assert invoice.id != "", "The invoice ID should not be empty"
 
-	fetched = client.newInvoice().find(invoice.id)
-	assert fetched.id != "", "The fetched invoice ID should not be empty"
-	assert invoice.id == fetched.id, "The invoices ID should be equal"
+    fetched = client.new_invoice().find(invoice.id)
+    assert fetched.id != "", "The fetched invoice ID should not be empty"
+    assert invoice.id == fetched.id, "The invoices ID should be equal"
 
-	# Fetch the customers
-	customers = client.newCustomer().all()
+    # Fetch the customers
+    client.new_customer().all()
 
-	# Create a subscription for a customer
-	customer = client.newCustomer().create()
-	assert customer.id != "", "The created customer ID should not be empty"
+    # Create a subscription for a customer
+    customer = client.new_customer().create()
+    assert customer.id != "", "The created customer ID should not be empty"
 
-	subscription = client.newSubscription({
-		"name": "Test subscription",
-		"amount": "9.99",
-		"currency": "USD",
-		"interval": "1d"
-	}).create(customer.id)
-	assert subscription.id != "", "The created subscription ID should not be empty"
+    subscription = client.new_subscription({
+        "name": "Test subscription",
+        "amount": "9.99",
+        "currency": "USD",
+        "interval": "1d"
+    }).create(customer.id)
+    assert subscription.id != "", "The created subscription ID should not be empty"
 
-	# Expand a customers' project and fetch gateways
-	customer = client.newCustomer().create({"expand": ["project"]});
-	assert customer.project != None, "The customer project should be expanded"
+    # Expand a customers' project and fetch gateways
+    customer = client.new_customer().create({"expand": ["project"]})
+    assert customer.project != None, "The customer project should be expanded"
 
-	confs = customer.project.fetchGatewayConfigurations()
+    customer.project.fetch_gateway_configurations()
+
+    # Check error code
+    try:
+        pass
+    except NotFoundError as err:
+        assert err.code == "resource.customer.not-found", "The error code was invalid"
 
 if __name__ == "__main__":
-	main(sys.argv[1:])
+    main()

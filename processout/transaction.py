@@ -21,18 +21,18 @@ class Transaction(object):
         self._token = None
         self._card = None
         self._name = None
-        self._authorizedAmount = None
-        self._capturedAmount = None
+        self._authorized_amount = None
+        self._captured_amount = None
         self._currency = None
         self._status = None
         self._authorized = None
         self._captured = None
-        self._processoutFee = None
+        self._processout_fee = None
         self._metadata = None
         self._sandbox = None
-        self._createdAt = None
+        self._created_at = None
         if prefill != None:
-            self.fillWithData(prefill)
+            self.fill_with_data(prefill)
 
     
     @property
@@ -60,7 +60,7 @@ class Transaction(object):
         val -- New project value"""
         if isinstance(val, dict):
             obj = processout.Project(self._client)
-            obj.fillWithData(val)
+            obj.fill_with_data(val)
             self._project = obj
         else:
             self._project = val
@@ -78,7 +78,7 @@ class Transaction(object):
         val -- New customer value"""
         if isinstance(val, dict):
             obj = processout.Customer(self._client)
-            obj.fillWithData(val)
+            obj.fill_with_data(val)
             self._customer = obj
         else:
             self._customer = val
@@ -96,7 +96,7 @@ class Transaction(object):
         val -- New subscription value"""
         if isinstance(val, dict):
             obj = processout.Subscription(self._client)
-            obj.fillWithData(val)
+            obj.fill_with_data(val)
             self._subscription = obj
         else:
             self._subscription = val
@@ -114,7 +114,7 @@ class Transaction(object):
         val -- New token value"""
         if isinstance(val, dict):
             obj = processout.Token(self._client)
-            obj.fillWithData(val)
+            obj.fill_with_data(val)
             self._token = obj
         else:
             self._token = val
@@ -132,7 +132,7 @@ class Transaction(object):
         val -- New card value"""
         if isinstance(val, dict):
             obj = processout.Card(self._client)
-            obj.fillWithData(val)
+            obj.fill_with_data(val)
             self._card = obj
         else:
             self._card = val
@@ -152,29 +152,29 @@ class Transaction(object):
         return self
     
     @property
-    def authorizedAmount(self):
-        """Get authorizedAmount"""
-        return self._authorizedAmount
+    def authorized_amount(self):
+        """Get authorized_amount"""
+        return self._authorized_amount
 
-    @authorizedAmount.setter
-    def authorizedAmount(self, val):
-        """Set authorizedAmount
+    @authorized_amount.setter
+    def authorized_amount(self, val):
+        """Set authorized_amount
         Keyword argument:
-        val -- New authorizedAmount value"""
-        self._authorizedAmount = val
+        val -- New authorized_amount value"""
+        self._authorized_amount = val
         return self
     
     @property
-    def capturedAmount(self):
-        """Get capturedAmount"""
-        return self._capturedAmount
+    def captured_amount(self):
+        """Get captured_amount"""
+        return self._captured_amount
 
-    @capturedAmount.setter
-    def capturedAmount(self, val):
-        """Set capturedAmount
+    @captured_amount.setter
+    def captured_amount(self, val):
+        """Set captured_amount
         Keyword argument:
-        val -- New capturedAmount value"""
-        self._capturedAmount = val
+        val -- New captured_amount value"""
+        self._captured_amount = val
         return self
     
     @property
@@ -230,16 +230,16 @@ class Transaction(object):
         return self
     
     @property
-    def processoutFee(self):
-        """Get processoutFee"""
-        return self._processoutFee
+    def processout_fee(self):
+        """Get processout_fee"""
+        return self._processout_fee
 
-    @processoutFee.setter
-    def processoutFee(self, val):
-        """Set processoutFee
+    @processout_fee.setter
+    def processout_fee(self, val):
+        """Set processout_fee
         Keyword argument:
-        val -- New processoutFee value"""
-        self._processoutFee = val
+        val -- New processout_fee value"""
+        self._processout_fee = val
         return self
     
     @property
@@ -269,20 +269,20 @@ class Transaction(object):
         return self
     
     @property
-    def createdAt(self):
-        """Get createdAt"""
-        return self._createdAt
+    def created_at(self):
+        """Get created_at"""
+        return self._created_at
 
-    @createdAt.setter
-    def createdAt(self, val):
-        """Set createdAt
+    @created_at.setter
+    def created_at(self, val):
+        """Set created_at
         Keyword argument:
-        val -- New createdAt value"""
-        self._createdAt = val
+        val -- New created_at value"""
+        self._created_at = val
         return self
     
 
-    def fillWithData(self, data):
+    def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
@@ -301,9 +301,9 @@ class Transaction(object):
         if "name" in data.keys():
             self.name = data["name"]
         if "authorized_amount" in data.keys():
-            self.authorizedAmount = data["authorized_amount"]
+            self.authorized_amount = data["authorized_amount"]
         if "captured_amount" in data.keys():
-            self.capturedAmount = data["captured_amount"]
+            self.captured_amount = data["captured_amount"]
         if "currency" in data.keys():
             self.currency = data["currency"]
         if "status" in data.keys():
@@ -313,22 +313,22 @@ class Transaction(object):
         if "captured" in data.keys():
             self.captured = data["captured"]
         if "processout_fee" in data.keys():
-            self.processoutFee = data["processout_fee"]
+            self.processout_fee = data["processout_fee"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
         if "sandbox" in data.keys():
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
-            self.createdAt = data["created_at"]
+            self.created_at = data["created_at"]
         
         return self
 
-    def fetchRefunds(self, options = {}):
+    def fetch_refunds(self, options = {}):
         """Get the transaction's refunds.
         Keyword argument:
         
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
         path    = "/transactions/" + quote_plus(self.id) + "/refunds"
@@ -337,51 +337,51 @@ class Transaction(object):
         }
 
         response = Response(request.get(path, data, options))
-        returnValues = []
+        return_values = []
         
         a    = []
         body = response.body
         for v in body['refunds']:
             tmp = Refund(self._client)
-            tmp.fillWithData(v)
+            tmp.fill_with_data(v)
             a.append(tmp)
 
-        returnValues.append(a)
+        return_values.append(a)
             
 
         
-        return returnValues[0]
+        return return_values[0]
 
-    def findRefund(self, refundId, options = {}):
+    def find_refund(self, refund_id, options = {}):
         """Find a transaction's refund by its ID.
         Keyword argument:
-        refundId -- ID of the refund
+        refund_id -- ID of the refund
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/transactions/" + quote_plus(self.id) + "/refunds/" + quote_plus(refundId) + ""
+        path    = "/transactions/" + quote_plus(self.id) + "/refunds/" + quote_plus(refund_id) + ""
         data    = {
 
         }
 
         response = Response(request.get(path, data, options))
-        returnValues = []
+        return_values = []
         
         body = response.body
         body = body["refund"]
         refund = Refund(self._client)
-        returnValues.append(refund.fillWithData(body))
+        return_values.append(refund.fill_with_data(body))
 
         
-        return returnValues[0]
+        return return_values[0]
 
     def all(self, options = {}):
         """Get all the transactions.
         Keyword argument:
         
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
         path    = "/transactions"
@@ -390,46 +390,46 @@ class Transaction(object):
         }
 
         response = Response(request.get(path, data, options))
-        returnValues = []
+        return_values = []
         
         a    = []
         body = response.body
         for v in body['transactions']:
             tmp = Transaction(self._client)
-            tmp.fillWithData(v)
+            tmp.fill_with_data(v)
             a.append(tmp)
 
-        returnValues.append(a)
+        return_values.append(a)
             
 
         
-        return returnValues[0]
+        return return_values[0]
 
-    def find(self, transactionId, options = {}):
+    def find(self, transaction_id, options = {}):
         """Find a transaction by its ID.
         Keyword argument:
-        transactionId -- ID of the transaction
+        transaction_id -- ID of the transaction
         options -- Options for the request"""
-        self.fillWithData(options)
+        self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/transactions/" + quote_plus(transactionId) + ""
+        path    = "/transactions/" + quote_plus(transaction_id) + ""
         data    = {
 
         }
 
         response = Response(request.get(path, data, options))
-        returnValues = []
+        return_values = []
         
         body = response.body
         body = body["transaction"]
                 
                 
         obj = processout.Transaction(self._client)
-        returnValues.append(obj.fillWithData(body))
+        return_values.append(obj.fill_with_data(body))
                 
 
         
-        return returnValues[0]
+        return return_values[0]
 
     

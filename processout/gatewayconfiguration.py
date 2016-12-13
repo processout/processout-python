@@ -18,9 +18,9 @@ class GatewayConfiguration(object):
         self._project = None
         self._gateway = None
         self._enabled = None
-        self._publicKeys = None
+        self._public_keys = None
         if prefill != None:
-            self.fillWithData(prefill)
+            self.fill_with_data(prefill)
 
     
     @property
@@ -48,7 +48,7 @@ class GatewayConfiguration(object):
         val -- New project value"""
         if isinstance(val, dict):
             obj = processout.Project(self._client)
-            obj.fillWithData(val)
+            obj.fill_with_data(val)
             self._project = obj
         else:
             self._project = val
@@ -66,7 +66,7 @@ class GatewayConfiguration(object):
         val -- New gateway value"""
         if isinstance(val, dict):
             obj = processout.Gateway(self._client)
-            obj.fillWithData(val)
+            obj.fill_with_data(val)
             self._gateway = obj
         else:
             self._gateway = val
@@ -86,20 +86,20 @@ class GatewayConfiguration(object):
         return self
     
     @property
-    def publicKeys(self):
-        """Get publicKeys"""
-        return self._publicKeys
+    def public_keys(self):
+        """Get public_keys"""
+        return self._public_keys
 
-    @publicKeys.setter
-    def publicKeys(self, val):
-        """Set publicKeys
+    @public_keys.setter
+    def public_keys(self, val):
+        """Set public_keys
         Keyword argument:
-        val -- New publicKeys value"""
-        self._publicKeys = val
+        val -- New public_keys value"""
+        self._public_keys = val
         return self
     
 
-    def fillWithData(self, data):
+    def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
@@ -112,7 +112,7 @@ class GatewayConfiguration(object):
         if "enabled" in data.keys():
             self.enabled = data["enabled"]
         if "public_keys" in data.keys():
-            self.publicKeys = data["public_keys"]
+            self.public_keys = data["public_keys"]
         
         return self
 

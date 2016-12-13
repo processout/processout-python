@@ -16,14 +16,14 @@ class Gateway(object):
 
         self._id = None
         self._name = None
-        self._displayName = None
-        self._logoUrl = None
+        self._display_name = None
+        self._logo_url = None
         self._url = None
         self._flows = None
         self._tags = None
         self._description = None
         if prefill != None:
-            self.fillWithData(prefill)
+            self.fill_with_data(prefill)
 
     
     @property
@@ -53,29 +53,29 @@ class Gateway(object):
         return self
     
     @property
-    def displayName(self):
-        """Get displayName"""
-        return self._displayName
+    def display_name(self):
+        """Get display_name"""
+        return self._display_name
 
-    @displayName.setter
-    def displayName(self, val):
-        """Set displayName
+    @display_name.setter
+    def display_name(self, val):
+        """Set display_name
         Keyword argument:
-        val -- New displayName value"""
-        self._displayName = val
+        val -- New display_name value"""
+        self._display_name = val
         return self
     
     @property
-    def logoUrl(self):
-        """Get logoUrl"""
-        return self._logoUrl
+    def logo_url(self):
+        """Get logo_url"""
+        return self._logo_url
 
-    @logoUrl.setter
-    def logoUrl(self, val):
-        """Set logoUrl
+    @logo_url.setter
+    def logo_url(self, val):
+        """Set logo_url
         Keyword argument:
-        val -- New logoUrl value"""
-        self._logoUrl = val
+        val -- New logo_url value"""
+        self._logo_url = val
         return self
     
     @property
@@ -131,7 +131,7 @@ class Gateway(object):
         return self
     
 
-    def fillWithData(self, data):
+    def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
@@ -140,9 +140,9 @@ class Gateway(object):
         if "name" in data.keys():
             self.name = data["name"]
         if "display_name" in data.keys():
-            self.displayName = data["display_name"]
+            self.display_name = data["display_name"]
         if "logo_url" in data.keys():
-            self.logoUrl = data["logo_url"]
+            self.logo_url = data["logo_url"]
         if "url" in data.keys():
             self.url = data["url"]
         if "flows" in data.keys():

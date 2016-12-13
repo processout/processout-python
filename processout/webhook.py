@@ -17,17 +17,17 @@ class Webhook(object):
         self._id = None
         self._project = None
         self._event = None
-        self._requestUrl = None
-        self._requestMethod = None
-        self._responseBody = None
-        self._responseCode = None
-        self._responseHeaders = None
-        self._responseTimeMs = None
+        self._request_url = None
+        self._request_method = None
+        self._response_body = None
+        self._response_code = None
+        self._response_headers = None
+        self._response_time_ms = None
         self._status = None
-        self._createdAt = None
-        self._releaseAt = None
+        self._created_at = None
+        self._release_at = None
         if prefill != None:
-            self.fillWithData(prefill)
+            self.fill_with_data(prefill)
 
     
     @property
@@ -55,7 +55,7 @@ class Webhook(object):
         val -- New project value"""
         if isinstance(val, dict):
             obj = processout.Project(self._client)
-            obj.fillWithData(val)
+            obj.fill_with_data(val)
             self._project = obj
         else:
             self._project = val
@@ -73,88 +73,88 @@ class Webhook(object):
         val -- New event value"""
         if isinstance(val, dict):
             obj = processout.Event(self._client)
-            obj.fillWithData(val)
+            obj.fill_with_data(val)
             self._event = obj
         else:
             self._event = val
         return self
     
     @property
-    def requestUrl(self):
-        """Get requestUrl"""
-        return self._requestUrl
+    def request_url(self):
+        """Get request_url"""
+        return self._request_url
 
-    @requestUrl.setter
-    def requestUrl(self, val):
-        """Set requestUrl
+    @request_url.setter
+    def request_url(self, val):
+        """Set request_url
         Keyword argument:
-        val -- New requestUrl value"""
-        self._requestUrl = val
+        val -- New request_url value"""
+        self._request_url = val
         return self
     
     @property
-    def requestMethod(self):
-        """Get requestMethod"""
-        return self._requestMethod
+    def request_method(self):
+        """Get request_method"""
+        return self._request_method
 
-    @requestMethod.setter
-    def requestMethod(self, val):
-        """Set requestMethod
+    @request_method.setter
+    def request_method(self, val):
+        """Set request_method
         Keyword argument:
-        val -- New requestMethod value"""
-        self._requestMethod = val
+        val -- New request_method value"""
+        self._request_method = val
         return self
     
     @property
-    def responseBody(self):
-        """Get responseBody"""
-        return self._responseBody
+    def response_body(self):
+        """Get response_body"""
+        return self._response_body
 
-    @responseBody.setter
-    def responseBody(self, val):
-        """Set responseBody
+    @response_body.setter
+    def response_body(self, val):
+        """Set response_body
         Keyword argument:
-        val -- New responseBody value"""
-        self._responseBody = val
+        val -- New response_body value"""
+        self._response_body = val
         return self
     
     @property
-    def responseCode(self):
-        """Get responseCode"""
-        return self._responseCode
+    def response_code(self):
+        """Get response_code"""
+        return self._response_code
 
-    @responseCode.setter
-    def responseCode(self, val):
-        """Set responseCode
+    @response_code.setter
+    def response_code(self, val):
+        """Set response_code
         Keyword argument:
-        val -- New responseCode value"""
-        self._responseCode = val
+        val -- New response_code value"""
+        self._response_code = val
         return self
     
     @property
-    def responseHeaders(self):
-        """Get responseHeaders"""
-        return self._responseHeaders
+    def response_headers(self):
+        """Get response_headers"""
+        return self._response_headers
 
-    @responseHeaders.setter
-    def responseHeaders(self, val):
-        """Set responseHeaders
+    @response_headers.setter
+    def response_headers(self, val):
+        """Set response_headers
         Keyword argument:
-        val -- New responseHeaders value"""
-        self._responseHeaders = val
+        val -- New response_headers value"""
+        self._response_headers = val
         return self
     
     @property
-    def responseTimeMs(self):
-        """Get responseTimeMs"""
-        return self._responseTimeMs
+    def response_time_ms(self):
+        """Get response_time_ms"""
+        return self._response_time_ms
 
-    @responseTimeMs.setter
-    def responseTimeMs(self, val):
-        """Set responseTimeMs
+    @response_time_ms.setter
+    def response_time_ms(self, val):
+        """Set response_time_ms
         Keyword argument:
-        val -- New responseTimeMs value"""
-        self._responseTimeMs = val
+        val -- New response_time_ms value"""
+        self._response_time_ms = val
         return self
     
     @property
@@ -171,33 +171,33 @@ class Webhook(object):
         return self
     
     @property
-    def createdAt(self):
-        """Get createdAt"""
-        return self._createdAt
+    def created_at(self):
+        """Get created_at"""
+        return self._created_at
 
-    @createdAt.setter
-    def createdAt(self, val):
-        """Set createdAt
+    @created_at.setter
+    def created_at(self, val):
+        """Set created_at
         Keyword argument:
-        val -- New createdAt value"""
-        self._createdAt = val
+        val -- New created_at value"""
+        self._created_at = val
         return self
     
     @property
-    def releaseAt(self):
-        """Get releaseAt"""
-        return self._releaseAt
+    def release_at(self):
+        """Get release_at"""
+        return self._release_at
 
-    @releaseAt.setter
-    def releaseAt(self, val):
-        """Set releaseAt
+    @release_at.setter
+    def release_at(self, val):
+        """Set release_at
         Keyword argument:
-        val -- New releaseAt value"""
-        self._releaseAt = val
+        val -- New release_at value"""
+        self._release_at = val
         return self
     
 
-    def fillWithData(self, data):
+    def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
@@ -208,23 +208,23 @@ class Webhook(object):
         if "event" in data.keys():
             self.event = data["event"]
         if "request_url" in data.keys():
-            self.requestUrl = data["request_url"]
+            self.request_url = data["request_url"]
         if "request_method" in data.keys():
-            self.requestMethod = data["request_method"]
+            self.request_method = data["request_method"]
         if "response_body" in data.keys():
-            self.responseBody = data["response_body"]
+            self.response_body = data["response_body"]
         if "response_code" in data.keys():
-            self.responseCode = data["response_code"]
+            self.response_code = data["response_code"]
         if "response_headers" in data.keys():
-            self.responseHeaders = data["response_headers"]
+            self.response_headers = data["response_headers"]
         if "response_time_ms" in data.keys():
-            self.responseTimeMs = data["response_time_ms"]
+            self.response_time_ms = data["response_time_ms"]
         if "status" in data.keys():
             self.status = data["status"]
         if "created_at" in data.keys():
-            self.createdAt = data["created_at"]
+            self.created_at = data["created_at"]
         if "release_at" in data.keys():
-            self.releaseAt = data["release_at"]
+            self.release_at = data["release_at"]
         
         return self
 
