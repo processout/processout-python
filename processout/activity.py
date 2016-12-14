@@ -146,7 +146,7 @@ class Activity(object):
         a    = []
         body = response.body
         for v in body['activities']:
-            tmp = Activity(self._client)
+            tmp = processout.Activity(self._client)
             tmp.fill_with_data(v)
             a.append(tmp)
 

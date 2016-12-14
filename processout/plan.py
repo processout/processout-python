@@ -242,7 +242,7 @@ class Plan(object):
         a    = []
         body = response.body
         for v in body['plans']:
-            tmp = Plan(self._client)
+            tmp = processout.Plan(self._client)
             tmp.fill_with_data(v)
             a.append(tmp)
 

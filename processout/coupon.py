@@ -258,7 +258,7 @@ class Coupon(object):
         a    = []
         body = response.body
         for v in body['coupons']:
-            tmp = Coupon(self._client)
+            tmp = processout.Coupon(self._client)
             tmp.fill_with_data(v)
             a.append(tmp)
 

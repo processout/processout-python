@@ -464,7 +464,7 @@ class Subscription(object):
         
         body = response.body
         body = body["customer"]
-        customer = Customer(self._client)
+        customer = processout.Customer(self._client)
         return_values.append(customer.fill_with_data(body))
 
         
@@ -489,7 +489,7 @@ class Subscription(object):
         a    = []
         body = response.body
         for v in body['discounts']:
-            tmp = Discount(self._client)
+            tmp = processout.Discount(self._client)
             tmp.fill_with_data(v)
             a.append(tmp)
 
@@ -517,7 +517,7 @@ class Subscription(object):
         
         body = response.body
         body = body["discount"]
-        discount = Discount(self._client)
+        discount = processout.Discount(self._client)
         return_values.append(discount.fill_with_data(body))
 
         
@@ -541,7 +541,7 @@ class Subscription(object):
         
         body = response.body
         body = body["discount"]
-        discount = Discount(self._client)
+        discount = processout.Discount(self._client)
         return_values.append(discount.fill_with_data(body))
 
         
@@ -592,7 +592,7 @@ class Subscription(object):
         a    = []
         body = response.body
         for v in body['transactions']:
-            tmp = Transaction(self._client)
+            tmp = processout.Transaction(self._client)
             tmp.fill_with_data(v)
             a.append(tmp)
 
@@ -621,7 +621,7 @@ class Subscription(object):
         a    = []
         body = response.body
         for v in body['subscriptions']:
-            tmp = Subscription(self._client)
+            tmp = processout.Subscription(self._client)
             tmp.fill_with_data(v)
             a.append(tmp)
 

@@ -146,7 +146,7 @@ class Event(object):
         a    = []
         body = response.body
         for v in body['webhooks']:
-            tmp = Webhook(self._client)
+            tmp = processout.Webhook(self._client)
             tmp.fill_with_data(v)
             a.append(tmp)
 
@@ -175,7 +175,7 @@ class Event(object):
         a    = []
         body = response.body
         for v in body['events']:
-            tmp = Event(self._client)
+            tmp = processout.Event(self._client)
             tmp.fill_with_data(v)
             a.append(tmp)
 

@@ -125,7 +125,7 @@ class Project(object):
         a    = []
         body = response.body
         for v in body['gateway_configurations']:
-            tmp = GatewayConfiguration(self._client)
+            tmp = processout.GatewayConfiguration(self._client)
             tmp.fill_with_data(v)
             a.append(tmp)
 

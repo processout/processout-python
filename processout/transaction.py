@@ -342,7 +342,7 @@ class Transaction(object):
         a    = []
         body = response.body
         for v in body['refunds']:
-            tmp = Refund(self._client)
+            tmp = processout.Refund(self._client)
             tmp.fill_with_data(v)
             a.append(tmp)
 
@@ -370,7 +370,7 @@ class Transaction(object):
         
         body = response.body
         body = body["refund"]
-        refund = Refund(self._client)
+        refund = processout.Refund(self._client)
         return_values.append(refund.fill_with_data(body))
 
         
@@ -395,7 +395,7 @@ class Transaction(object):
         a    = []
         body = response.body
         for v in body['transactions']:
-            tmp = Transaction(self._client)
+            tmp = processout.Transaction(self._client)
             tmp.fill_with_data(v)
             a.append(tmp)
 

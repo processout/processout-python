@@ -257,7 +257,7 @@ class Product(object):
         
         body = response.body
         body = body["invoice"]
-        invoice = Invoice(self._client)
+        invoice = processout.Invoice(self._client)
         return_values.append(invoice.fill_with_data(body))
 
         
@@ -282,7 +282,7 @@ class Product(object):
         a    = []
         body = response.body
         for v in body['products']:
-            tmp = Product(self._client)
+            tmp = processout.Product(self._client)
             tmp.fill_with_data(v)
             a.append(tmp)
 

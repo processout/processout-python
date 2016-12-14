@@ -402,7 +402,7 @@ class Invoice(object):
         
         body = response.body
         body = body["transaction"]
-        transaction = Transaction(self._client)
+        transaction = processout.Transaction(self._client)
         return_values.append(transaction.fill_with_data(body))
 
         
@@ -428,7 +428,7 @@ class Invoice(object):
         
         body = response.body
         body = body["transaction"]
-        transaction = Transaction(self._client)
+        transaction = processout.Transaction(self._client)
         return_values.append(transaction.fill_with_data(body))
 
         
@@ -452,7 +452,7 @@ class Invoice(object):
         
         body = response.body
         body = body["customer"]
-        customer = Customer(self._client)
+        customer = processout.Customer(self._client)
         return_values.append(customer.fill_with_data(body))
 
         
@@ -476,7 +476,7 @@ class Invoice(object):
         
         body = response.body
         body = body["customer"]
-        customer = Customer(self._client)
+        customer = processout.Customer(self._client)
         return_values.append(customer.fill_with_data(body))
 
         
@@ -500,7 +500,7 @@ class Invoice(object):
         
         body = response.body
         body = body["transaction"]
-        transaction = Transaction(self._client)
+        transaction = processout.Transaction(self._client)
         return_values.append(transaction.fill_with_data(body))
 
         
@@ -524,7 +524,7 @@ class Invoice(object):
         
         body = response.body
         body = body["transaction"]
-        transaction = Transaction(self._client)
+        transaction = processout.Transaction(self._client)
         return_values.append(transaction.fill_with_data(body))
 
         
@@ -549,7 +549,7 @@ class Invoice(object):
         a    = []
         body = response.body
         for v in body['invoices']:
-            tmp = Invoice(self._client)
+            tmp = processout.Invoice(self._client)
             tmp.fill_with_data(v)
             a.append(tmp)
 

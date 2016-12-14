@@ -251,7 +251,7 @@ class AuthorizationRequest(object):
         
         body = response.body
         body = body["customer"]
-        customer = Customer(self._client)
+        customer = processout.Customer(self._client)
         return_values.append(customer.fill_with_data(body))
 
         

@@ -306,7 +306,7 @@ class Customer(object):
         a    = []
         body = response.body
         for v in body['subscriptions']:
-            tmp = Subscription(self._client)
+            tmp = processout.Subscription(self._client)
             tmp.fill_with_data(v)
             a.append(tmp)
 
@@ -335,7 +335,7 @@ class Customer(object):
         a    = []
         body = response.body
         for v in body['tokens']:
-            tmp = Token(self._client)
+            tmp = processout.Token(self._client)
             tmp.fill_with_data(v)
             a.append(tmp)
 
@@ -363,7 +363,7 @@ class Customer(object):
         
         body = response.body
         body = body["token"]
-        token = Token(self._client)
+        token = processout.Token(self._client)
         return_values.append(token.fill_with_data(body))
 
         
@@ -409,7 +409,7 @@ class Customer(object):
         a    = []
         body = response.body
         for v in body['transactions']:
-            tmp = Transaction(self._client)
+            tmp = processout.Transaction(self._client)
             tmp.fill_with_data(v)
             a.append(tmp)
 
@@ -438,7 +438,7 @@ class Customer(object):
         a    = []
         body = response.body
         for v in body['customers']:
-            tmp = Customer(self._client)
+            tmp = processout.Customer(self._client)
             tmp.fill_with_data(v)
             a.append(tmp)
 
