@@ -139,7 +139,7 @@ class CardInformation(object):
         return_values = []
         
         body = response.body
-        body = body["coupon"]
+        body = body["card_information"]
                 
                 
         obj = processout.CardInformation(self._client)
