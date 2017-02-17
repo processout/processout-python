@@ -19,6 +19,7 @@ class Invoice(object):
         self._transaction = None
         self._customer = None
         self._subscription = None
+        self._details = None
         self._url = None
         self._name = None
         self._statement_descriptor = None
@@ -29,8 +30,6 @@ class Invoice(object):
         self._amount = None
         self._currency = None
         self._metadata = None
-        self._request_email = None
-        self._request_shipping = None
         self._return_url = None
         self._cancel_url = None
         self._sandbox = None
@@ -122,6 +121,27 @@ class Invoice(object):
             self._subscription = obj
         else:
             self._subscription = val
+        return self
+    
+    @property
+    def details(self):
+        """Get details"""
+        return self._details
+
+    @details.setter
+    def details(self, val):
+        """Set details
+        Keyword argument:
+        val -- New details value"""
+        if len(val) > 0 and isinstance(val[0], processout.InvoiceDetail):
+            self._details = val
+        else:
+            l = []
+            for v in val:
+                obj = processout.InvoiceDetail(self._client)
+                obj.fill_with_data(v)
+                l.append(obj)
+            self._details = l
         return self
     
     @property
@@ -255,32 +275,6 @@ class Invoice(object):
         return self
     
     @property
-    def request_email(self):
-        """Get request_email"""
-        return self._request_email
-
-    @request_email.setter
-    def request_email(self, val):
-        """Set request_email
-        Keyword argument:
-        val -- New request_email value"""
-        self._request_email = val
-        return self
-    
-    @property
-    def request_shipping(self):
-        """Get request_shipping"""
-        return self._request_shipping
-
-    @request_shipping.setter
-    def request_shipping(self, val):
-        """Set request_shipping
-        Keyword argument:
-        val -- New request_shipping value"""
-        self._request_shipping = val
-        return self
-    
-    @property
     def return_url(self):
         """Get return_url"""
         return self._return_url
@@ -347,6 +341,8 @@ class Invoice(object):
             self.customer = data["customer"]
         if "subscription" in data.keys():
             self.subscription = data["subscription"]
+        if "details" in data.keys():
+            self.details = data["details"]
         if "url" in data.keys():
             self.url = data["url"]
         if "name" in data.keys():
@@ -367,10 +363,6 @@ class Invoice(object):
             self.currency = data["currency"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
-        if "request_email" in data.keys():
-            self.request_email = data["request_email"]
-        if "request_shipping" in data.keys():
-            self.request_shipping = data["request_shipping"]
         if "return_url" in data.keys():
             self.return_url = data["return_url"]
         if "cancel_url" in data.keys():
@@ -573,13 +565,12 @@ class Invoice(object):
             'amount': self.amount, 
             'currency': self.currency, 
             'metadata': self.metadata, 
+            'details': self.details, 
             'statement_descriptor': self.statement_descriptor, 
             'statement_descriptor_phone': self.statement_descriptor_phone, 
             'statement_descriptor_city': self.statement_descriptor_city, 
             'statement_descriptor_company': self.statement_descriptor_company, 
             'statement_descriptor_url': self.statement_descriptor_url, 
-            'request_email': self.request_email, 
-            'request_shipping': self.request_shipping, 
             'return_url': self.return_url, 
             'cancel_url': self.cancel_url, 
             'customer_id': options.get("customer_id")
@@ -612,13 +603,12 @@ class Invoice(object):
             'amount': self.amount, 
             'currency': self.currency, 
             'metadata': self.metadata, 
+            'details': self.details, 
             'statement_descriptor': self.statement_descriptor, 
             'statement_descriptor_phone': self.statement_descriptor_phone, 
             'statement_descriptor_city': self.statement_descriptor_city, 
             'statement_descriptor_company': self.statement_descriptor_company, 
             'statement_descriptor_url': self.statement_descriptor_url, 
-            'request_email': self.request_email, 
-            'request_shipping': self.request_shipping, 
             'return_url': self.return_url, 
             'cancel_url': self.cancel_url, 
             'customer_id': customer_id

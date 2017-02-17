@@ -16,6 +16,7 @@ class Plan(object):
 
         self._id = None
         self._project = None
+        self._url = None
         self._name = None
         self._amount = None
         self._currency = None
@@ -59,6 +60,19 @@ class Plan(object):
             self._project = obj
         else:
             self._project = val
+        return self
+    
+    @property
+    def url(self):
+        """Get url"""
+        return self._url
+
+    @url.setter
+    def url(self, val):
+        """Set url
+        Keyword argument:
+        val -- New url value"""
+        self._url = val
         return self
     
     @property
@@ -200,6 +214,8 @@ class Plan(object):
             self.id = data["id"]
         if "project" in data.keys():
             self.project = data["project"]
+        if "url" in data.keys():
+            self.url = data["url"]
         if "name" in data.keys():
             self.name = data["name"]
         if "amount" in data.keys():

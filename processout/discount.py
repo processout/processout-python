@@ -19,6 +19,7 @@ class Discount(object):
         self._subscription = None
         self._coupon = None
         self._amount = None
+        self._percent = None
         self._expires_at = None
         self._metadata = None
         self._sandbox = None
@@ -108,6 +109,19 @@ class Discount(object):
         return self
     
     @property
+    def percent(self):
+        """Get percent"""
+        return self._percent
+
+    @percent.setter
+    def percent(self, val):
+        """Set percent
+        Keyword argument:
+        val -- New percent value"""
+        self._percent = val
+        return self
+    
+    @property
     def expires_at(self):
         """Get expires_at"""
         return self._expires_at
@@ -174,6 +188,8 @@ class Discount(object):
             self.coupon = data["coupon"]
         if "amount" in data.keys():
             self.amount = data["amount"]
+        if "percent" in data.keys():
+            self.percent = data["percent"]
         if "expires_at" in data.keys():
             self.expires_at = data["expires_at"]
         if "metadata" in data.keys():

@@ -5,6 +5,7 @@ from processout.client import ProcessOut
 from processout.activity import Activity
 from processout.authorizationrequest import AuthorizationRequest
 from processout.card import Card
+from processout.cardinformation import CardInformation
 from processout.coupon import Coupon
 from processout.customer import Customer
 from processout.token import Token
@@ -13,6 +14,7 @@ from processout.event import Event
 from processout.gateway import Gateway
 from processout.gatewayconfiguration import GatewayConfiguration
 from processout.invoice import Invoice
+from processout.invoicedetail import InvoiceDetail
 from processout.customeraction import CustomerAction
 from processout.plan import Plan
 from processout.product import Product

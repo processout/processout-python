@@ -49,6 +49,12 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.Card(self, prefill)
 
+    def new_card_information(self, prefill = None):
+        """Create a new CardInformation instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.CardInformation(self, prefill)
+
     def new_coupon(self, prefill = None):
         """Create a new Coupon instance
         Keyword argument:
@@ -96,6 +102,12 @@ class ProcessOut:
         Keyword argument:
         prefill -- Data used to prefill the object (optional)"""
         return processout.Invoice(self, prefill)
+
+    def new_invoice_detail(self, prefill = None):
+        """Create a new InvoiceDetail instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.InvoiceDetail(self, prefill)
 
     def new_customer_action(self, prefill = None):
         """Create a new CustomerAction instance

@@ -28,6 +28,8 @@ class Transaction(object):
         self._authorized = None
         self._captured = None
         self._processout_fee = None
+        self._estimated_fee = None
+        self._gateway_fee = None
         self._metadata = None
         self._sandbox = None
         self._created_at = None
@@ -243,6 +245,32 @@ class Transaction(object):
         return self
     
     @property
+    def estimated_fee(self):
+        """Get estimated_fee"""
+        return self._estimated_fee
+
+    @estimated_fee.setter
+    def estimated_fee(self, val):
+        """Set estimated_fee
+        Keyword argument:
+        val -- New estimated_fee value"""
+        self._estimated_fee = val
+        return self
+    
+    @property
+    def gateway_fee(self):
+        """Get gateway_fee"""
+        return self._gateway_fee
+
+    @gateway_fee.setter
+    def gateway_fee(self, val):
+        """Set gateway_fee
+        Keyword argument:
+        val -- New gateway_fee value"""
+        self._gateway_fee = val
+        return self
+    
+    @property
     def metadata(self):
         """Get metadata"""
         return self._metadata
@@ -314,6 +342,10 @@ class Transaction(object):
             self.captured = data["captured"]
         if "processout_fee" in data.keys():
             self.processout_fee = data["processout_fee"]
+        if "estimated_fee" in data.keys():
+            self.estimated_fee = data["estimated_fee"]
+        if "gateway_fee" in data.keys():
+            self.gateway_fee = data["gateway_fee"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
         if "sandbox" in data.keys():

@@ -20,6 +20,7 @@ class Card(object):
         self._type = None
         self._bank_name = None
         self._brand = None
+        self._country = None
         self._iin = None
         self._last_4_digits = None
         self._exp_month = None
@@ -112,6 +113,19 @@ class Card(object):
         Keyword argument:
         val -- New brand value"""
         self._brand = val
+        return self
+    
+    @property
+    def country(self):
+        """Get country"""
+        return self._country
+
+    @country.setter
+    def country(self, val):
+        """Set country
+        Keyword argument:
+        val -- New country value"""
+        self._country = val
         return self
     
     @property
@@ -222,6 +236,8 @@ class Card(object):
             self.bank_name = data["bank_name"]
         if "brand" in data.keys():
             self.brand = data["brand"]
+        if "country" in data.keys():
+            self.country = data["country"]
         if "iin" in data.keys():
             self.iin = data["iin"]
         if "last_4_digits" in data.keys():
@@ -238,5 +254,61 @@ class Card(object):
             self.created_at = data["created_at"]
         
         return self
+
+    def all(self, options = {}):
+        """Get all the cards.
+        Keyword argument:
+        
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path    = "/cards"
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        return_values = []
+        
+        a    = []
+        body = response.body
+        for v in body['cards']:
+            tmp = processout.Card(self._client)
+            tmp.fill_with_data(v)
+            a.append(tmp)
+
+        return_values.append(a)
+            
+
+        
+        return return_values[0]
+
+    def find(self, card_id, options = {}):
+        """Find a card by its ID.
+        Keyword argument:
+        card_id -- ID of the card
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path    = "/cards/" + quote_plus(card_id) + ""
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        return_values = []
+        
+        body = response.body
+        body = body["card_information"]
+                
+                
+        obj = processout.Card(self._client)
+        return_values.append(obj.fill_with_data(body))
+                
+
+        
+        return return_values[0]
 
     

@@ -2,8 +2,8 @@ import processout
 from processout.errors.notfounderror import NotFoundError
 
 def main():
-    client = processout.ProcessOut("proj_gAO1Uu0ysZJvDuUpOGPkUBeE3pGalk3x",
-                                   "key_fBjPvkgT8gyKc1SUpy0PfjL7UgsRmUug")
+    client = processout.ProcessOut("test-proj_gAO1Uu0ysZJvDuUpOGPkUBeE3pGalk3x",
+                                   "key_jqSPvwq3AG5MlYAgqxlwwgOcAC3Zy7d8")
 
     # Create and fetch an invoice
     invoice = client.new_invoice({
