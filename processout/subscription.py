@@ -652,7 +652,7 @@ class Subscription(object):
             'return_url': self.return_url, 
             'cancel_url': self.cancel_url, 
             'source': options.get("source"), 
-            'prorate': options.get("prorate"), 
+            'coupon_id': options.get("coupon_id"), 
             'customer_id': customer_id
         }
 
@@ -690,6 +690,7 @@ class Subscription(object):
             'return_url': self.return_url, 
             'cancel_url': self.cancel_url, 
             'source': options.get("source"), 
+            'coupon_id': options.get("coupon_id"), 
             'customer_id': customer_id, 
             'plan_id': plan_id
         }
