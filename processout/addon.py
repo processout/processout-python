@@ -10,7 +10,7 @@ from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
-class Discount(object):
+class Addon(object):
     def __init__(self, client, prefill = None):
         self._client = client
 
@@ -19,12 +19,12 @@ class Discount(object):
         self._project_id = None
         self._subscription = None
         self._subscription_id = None
-        self._coupon = None
-        self._coupon_id = None
+        self._plan = None
+        self._plan_id = None
+        self._type = None
         self._name = None
         self._amount = None
-        self._percent = None
-        self._expires_at = None
+        self._quantity = None
         self._metadata = None
         self._sandbox = None
         self._created_at = None
@@ -116,38 +116,51 @@ class Discount(object):
         return self
     
     @property
-    def coupon(self):
-        """Get coupon"""
-        return self._coupon
+    def plan(self):
+        """Get plan"""
+        return self._plan
 
-    @coupon.setter
-    def coupon(self, val):
-        """Set coupon
+    @plan.setter
+    def plan(self, val):
+        """Set plan
         Keyword argument:
-        val -- New coupon value"""
+        val -- New plan value"""
         if val is None:
-            self._coupon = val
+            self._plan = val
             return self
 
         if isinstance(val, dict):
-            obj = processout.Coupon(self._client)
+            obj = processout.Plan(self._client)
             obj.fill_with_data(val)
-            self._coupon = obj
+            self._plan = obj
         else:
-            self._coupon = val
+            self._plan = val
         return self
     
     @property
-    def coupon_id(self):
-        """Get coupon_id"""
-        return self._coupon_id
+    def plan_id(self):
+        """Get plan_id"""
+        return self._plan_id
 
-    @coupon_id.setter
-    def coupon_id(self, val):
-        """Set coupon_id
+    @plan_id.setter
+    def plan_id(self, val):
+        """Set plan_id
         Keyword argument:
-        val -- New coupon_id value"""
-        self._coupon_id = val
+        val -- New plan_id value"""
+        self._plan_id = val
+        return self
+    
+    @property
+    def type(self):
+        """Get type"""
+        return self._type
+
+    @type.setter
+    def type(self, val):
+        """Set type
+        Keyword argument:
+        val -- New type value"""
+        self._type = val
         return self
     
     @property
@@ -177,29 +190,16 @@ class Discount(object):
         return self
     
     @property
-    def percent(self):
-        """Get percent"""
-        return self._percent
+    def quantity(self):
+        """Get quantity"""
+        return self._quantity
 
-    @percent.setter
-    def percent(self, val):
-        """Set percent
+    @quantity.setter
+    def quantity(self, val):
+        """Set quantity
         Keyword argument:
-        val -- New percent value"""
-        self._percent = val
-        return self
-    
-    @property
-    def expires_at(self):
-        """Get expires_at"""
-        return self._expires_at
-
-    @expires_at.setter
-    def expires_at(self, val):
-        """Set expires_at
-        Keyword argument:
-        val -- New expires_at value"""
-        self._expires_at = val
+        val -- New quantity value"""
+        self._quantity = val
         return self
     
     @property
@@ -256,18 +256,18 @@ class Discount(object):
             self.subscription = data["subscription"]
         if "subscription_id" in data.keys():
             self.subscription_id = data["subscription_id"]
-        if "coupon" in data.keys():
-            self.coupon = data["coupon"]
-        if "coupon_id" in data.keys():
-            self.coupon_id = data["coupon_id"]
+        if "plan" in data.keys():
+            self.plan = data["plan"]
+        if "plan_id" in data.keys():
+            self.plan_id = data["plan_id"]
+        if "type" in data.keys():
+            self.type = data["type"]
         if "name" in data.keys():
             self.name = data["name"]
         if "amount" in data.keys():
             self.amount = data["amount"]
-        if "percent" in data.keys():
-            self.percent = data["percent"]
-        if "expires_at" in data.keys():
-            self.expires_at = data["expires_at"]
+        if "quantity" in data.keys():
+            self.quantity = data["quantity"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
         if "sandbox" in data.keys():
@@ -278,27 +278,31 @@ class Discount(object):
         return self
 
     def apply(self, subscription_id, options = {}):
-        """Apply a new discount to the given subscription ID.
+        """Apply a new addon to the given subscription ID.
         Keyword argument:
         subscription_id -- ID of the subscription
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/subscriptions/" + quote_plus(subscription_id) + "/discounts"
+        path    = "/subscriptions/" + quote_plus(subscription_id) + "/addons"
         data    = {
-            'coupon_id': self.coupon_id, 
+            'plan_id': self.plan_id, 
+            'type': self.type, 
             'name': self.name, 
             'amount': self.amount, 
-            'expires_at': self.expires_at, 
-            'metadata': self.metadata
+            'quantity': self.quantity, 
+            'metadata': self.metadata, 
+            'prorate': options.get("prorate"), 
+            'proration_date': options.get("proration_date"), 
+            'preview': options.get("preview")
         }
 
         response = Response(request.post(path, data, options))
         return_values = []
         
         body = response.body
-        body = body["discount"]
+        body = body["addon"]
                 
                 
         return_values.append(self.fill_with_data(body))
@@ -307,16 +311,16 @@ class Discount(object):
         
         return return_values[0]
 
-    def find(self, subscription_id, discount_id, options = {}):
-        """Find a subscription's discount by its ID.
+    def find(self, subscription_id, addon_id, options = {}):
+        """Find a subscription's addon by its ID.
         Keyword argument:
-        subscription_id -- ID of the subscription on which the discount was applied
-        discount_id -- ID of the discount
+        subscription_id -- ID of the subscription on which the addon was applied
+        addon_id -- ID of the addon
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/subscriptions/" + quote_plus(subscription_id) + "/discounts/" + quote_plus(discount_id) + ""
+        path    = "/subscriptions/" + quote_plus(subscription_id) + "/addons/" + quote_plus(addon_id) + ""
         data    = {
 
         }
@@ -325,28 +329,65 @@ class Discount(object):
         return_values = []
         
         body = response.body
-        body = body["discount"]
+        body = body["addon"]
                 
                 
-        obj = processout.Discount(self._client)
+        obj = processout.Addon(self._client)
         return_values.append(obj.fill_with_data(body))
                 
 
         
         return return_values[0]
 
-    def remove(self, subscription_id, discount_id, options = {}):
-        """Remove a discount applied to a subscription.
+    def save(self, options = {}):
+        """Save the updated addon attributes.
         Keyword argument:
-        subscription_id -- ID of the subscription on which the discount was applied
-        discount_id -- ID of the discount
+        
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/subscriptions/" + quote_plus(subscription_id) + "/discounts/" + quote_plus(discount_id) + ""
+        path    = "/subscriptions/" + quote_plus(self.subscription_id) + "/addons/" + quote_plus(self.id) + ""
         data    = {
+            'plan_id': self.plan_id, 
+            'type': self.type, 
+            'name': self.name, 
+            'amount': self.amount, 
+            'quantity': self.quantity, 
+            'metadata': self.metadata, 
+            'prorate': options.get("prorate"), 
+            'proration_date': options.get("proration_date"), 
+            'preview': options.get("preview"), 
+            'increment_quantity_by': options.get("increment_quantity_by")
+        }
 
+        response = Response(request.put(path, data, options))
+        return_values = []
+        
+        body = response.body
+        body = body["addon"]
+                
+                
+        return_values.append(self.fill_with_data(body))
+                
+
+        
+        return return_values[0]
+
+    def remove(self, subscription_id, addon_id, options = {}):
+        """Remove an addon applied to a subscription.
+        Keyword argument:
+        subscription_id -- ID of the subscription on which the addon was applied
+        addon_id -- ID of the addon
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path    = "/subscriptions/" + quote_plus(subscription_id) + "/addons/" + quote_plus(addon_id) + ""
+        data    = {
+            'prorate': options.get("prorate"), 
+            'proration_date': options.get("proration_date"), 
+            'preview': options.get("preview")
         }
 
         response = Response(request.delete(path, data, options))

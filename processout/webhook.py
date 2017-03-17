@@ -16,7 +16,9 @@ class Webhook(object):
 
         self._id = None
         self._project = None
+        self._project_id = None
         self._event = None
+        self._event_id = None
         self._request_url = None
         self._request_method = None
         self._response_body = None
@@ -53,12 +55,29 @@ class Webhook(object):
         """Set project
         Keyword argument:
         val -- New project value"""
+        if val is None:
+            self._project = val
+            return self
+
         if isinstance(val, dict):
             obj = processout.Project(self._client)
             obj.fill_with_data(val)
             self._project = obj
         else:
             self._project = val
+        return self
+    
+    @property
+    def project_id(self):
+        """Get project_id"""
+        return self._project_id
+
+    @project_id.setter
+    def project_id(self, val):
+        """Set project_id
+        Keyword argument:
+        val -- New project_id value"""
+        self._project_id = val
         return self
     
     @property
@@ -71,12 +90,29 @@ class Webhook(object):
         """Set event
         Keyword argument:
         val -- New event value"""
+        if val is None:
+            self._event = val
+            return self
+
         if isinstance(val, dict):
             obj = processout.Event(self._client)
             obj.fill_with_data(val)
             self._event = obj
         else:
             self._event = val
+        return self
+    
+    @property
+    def event_id(self):
+        """Get event_id"""
+        return self._event_id
+
+    @event_id.setter
+    def event_id(self, val):
+        """Set event_id
+        Keyword argument:
+        val -- New event_id value"""
+        self._event_id = val
         return self
     
     @property
@@ -205,8 +241,12 @@ class Webhook(object):
             self.id = data["id"]
         if "project" in data.keys():
             self.project = data["project"]
+        if "project_id" in data.keys():
+            self.project_id = data["project_id"]
         if "event" in data.keys():
             self.event = data["event"]
+        if "event_id" in data.keys():
+            self.event_id = data["event_id"]
         if "request_url" in data.keys():
             self.request_url = data["request_url"]
         if "request_method" in data.keys():

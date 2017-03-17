@@ -15,9 +15,15 @@ class Project(object):
         self._client = client
 
         self._id = None
+        self._supervisor_project = None
+        self._supervisor_project_id = None
+        self._api_version = None
         self._name = None
         self._logo_url = None
         self._email = None
+        self._default_currency = None
+        self._private_key = None
+        self._dunning_configuration = None
         self._created_at = None
         if prefill != None:
             self.fill_with_data(prefill)
@@ -34,6 +40,63 @@ class Project(object):
         Keyword argument:
         val -- New id value"""
         self._id = val
+        return self
+    
+    @property
+    def supervisor_project(self):
+        """Get supervisor_project"""
+        return self._supervisor_project
+
+    @supervisor_project.setter
+    def supervisor_project(self, val):
+        """Set supervisor_project
+        Keyword argument:
+        val -- New supervisor_project value"""
+        if val is None:
+            self._supervisor_project = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.Project(self._client)
+            obj.fill_with_data(val)
+            self._supervisor_project = obj
+        else:
+            self._supervisor_project = val
+        return self
+    
+    @property
+    def supervisor_project_id(self):
+        """Get supervisor_project_id"""
+        return self._supervisor_project_id
+
+    @supervisor_project_id.setter
+    def supervisor_project_id(self, val):
+        """Set supervisor_project_id
+        Keyword argument:
+        val -- New supervisor_project_id value"""
+        self._supervisor_project_id = val
+        return self
+    
+    @property
+    def api_version(self):
+        """Get api_version"""
+        return self._api_version
+
+    @api_version.setter
+    def api_version(self, val):
+        """Set api_version
+        Keyword argument:
+        val -- New api_version value"""
+        if val is None:
+            self._api_version = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.APIVersion(self._client)
+            obj.fill_with_data(val)
+            self._api_version = obj
+        else:
+            self._api_version = val
         return self
     
     @property
@@ -76,6 +139,57 @@ class Project(object):
         return self
     
     @property
+    def default_currency(self):
+        """Get default_currency"""
+        return self._default_currency
+
+    @default_currency.setter
+    def default_currency(self, val):
+        """Set default_currency
+        Keyword argument:
+        val -- New default_currency value"""
+        self._default_currency = val
+        return self
+    
+    @property
+    def private_key(self):
+        """Get private_key"""
+        return self._private_key
+
+    @private_key.setter
+    def private_key(self, val):
+        """Set private_key
+        Keyword argument:
+        val -- New private_key value"""
+        self._private_key = val
+        return self
+    
+    @property
+    def dunning_configuration(self):
+        """Get dunning_configuration"""
+        return self._dunning_configuration
+
+    @dunning_configuration.setter
+    def dunning_configuration(self, val):
+        """Set dunning_configuration
+        Keyword argument:
+        val -- New dunning_configuration value"""
+        if val is None:
+            self._dunning_configuration = []
+            return self
+
+        if len(val) > 0 and isinstance(val[0], processout.DunningAction):
+            self._dunning_configuration = val
+        else:
+            l = []
+            for v in val:
+                obj = processout.DunningAction(self._client)
+                obj.fill_with_data(v)
+                l.append(obj)
+            self._dunning_configuration = l
+        return self
+    
+    @property
     def created_at(self):
         """Get created_at"""
         return self._created_at
@@ -95,12 +209,24 @@ class Project(object):
         data -- The data from which to pull the new values"""
         if "id" in data.keys():
             self.id = data["id"]
+        if "supervisor_project" in data.keys():
+            self.supervisor_project = data["supervisor_project"]
+        if "supervisor_project_id" in data.keys():
+            self.supervisor_project_id = data["supervisor_project_id"]
+        if "api_version" in data.keys():
+            self.api_version = data["api_version"]
         if "name" in data.keys():
             self.name = data["name"]
         if "logo_url" in data.keys():
             self.logo_url = data["logo_url"]
         if "email" in data.keys():
             self.email = data["email"]
+        if "default_currency" in data.keys():
+            self.default_currency = data["default_currency"]
+        if "private_key" in data.keys():
+            self.private_key = data["private_key"]
+        if "dunning_configuration" in data.keys():
+            self.dunning_configuration = data["dunning_configuration"]
         if "created_at" in data.keys():
             self.created_at = data["created_at"]
         

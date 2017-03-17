@@ -24,7 +24,7 @@ class Request:
     def _get_headers(self, options):
         """Return the headers sent with the request"""
         headers = {}
-        headers["API-Version"] = "1.3.0.0"
+        headers["API-Version"] = "1.4.0.0"
 
         if options is None:
             return headers
@@ -47,8 +47,6 @@ class Request:
             data["filter"] = options["filter"]
         if "limit" in options:
             data["limit"] = options["limit"]
-        if "page" in options:
-            data["page"] = options["page"]
         if "end_before" in options:
             data["end_before"] = options["end_before"]
         if "start_after" in options:

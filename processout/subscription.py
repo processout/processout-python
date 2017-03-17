@@ -16,25 +16,35 @@ class Subscription(object):
 
         self._id = None
         self._project = None
-        self._plan_id = None
+        self._project_id = None
         self._plan = None
+        self._plan_id = None
+        self._discounts = None
+        self._addons = None
+        self._transactions = None
         self._customer = None
+        self._customer_id = None
         self._token = None
+        self._token_id = None
         self._url = None
         self._name = None
         self._amount = None
+        self._billable_amount = None
+        self._discounted_amount = None
+        self._addons_amount = None
         self._currency = None
         self._metadata = None
         self._interval = None
         self._trial_end_at = None
         self._activated = None
         self._active = None
+        self._cancel_at = None
         self._canceled = None
         self._cancellation_reason = None
         self._pending_cancellation = None
-        self._cancel_at = None
         self._return_url = None
         self._cancel_url = None
+        self._unpaid_state = None
         self._sandbox = None
         self._created_at = None
         self._activated_at = None
@@ -66,12 +76,51 @@ class Subscription(object):
         """Set project
         Keyword argument:
         val -- New project value"""
+        if val is None:
+            self._project = val
+            return self
+
         if isinstance(val, dict):
             obj = processout.Project(self._client)
             obj.fill_with_data(val)
             self._project = obj
         else:
             self._project = val
+        return self
+    
+    @property
+    def project_id(self):
+        """Get project_id"""
+        return self._project_id
+
+    @project_id.setter
+    def project_id(self, val):
+        """Set project_id
+        Keyword argument:
+        val -- New project_id value"""
+        self._project_id = val
+        return self
+    
+    @property
+    def plan(self):
+        """Get plan"""
+        return self._plan
+
+    @plan.setter
+    def plan(self, val):
+        """Set plan
+        Keyword argument:
+        val -- New plan value"""
+        if val is None:
+            self._plan = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.Plan(self._client)
+            obj.fill_with_data(val)
+            self._plan = obj
+        else:
+            self._plan = val
         return self
     
     @property
@@ -88,21 +137,78 @@ class Subscription(object):
         return self
     
     @property
-    def plan(self):
-        """Get plan"""
-        return self._plan
+    def discounts(self):
+        """Get discounts"""
+        return self._discounts
 
-    @plan.setter
-    def plan(self, val):
-        """Set plan
+    @discounts.setter
+    def discounts(self, val):
+        """Set discounts
         Keyword argument:
-        val -- New plan value"""
-        if isinstance(val, dict):
-            obj = processout.Plan(self._client)
-            obj.fill_with_data(val)
-            self._plan = obj
+        val -- New discounts value"""
+        if val is None:
+            self._discounts = []
+            return self
+
+        if len(val) > 0 and isinstance(val[0], processout.Discount):
+            self._discounts = val
         else:
-            self._plan = val
+            l = []
+            for v in val:
+                obj = processout.Discount(self._client)
+                obj.fill_with_data(v)
+                l.append(obj)
+            self._discounts = l
+        return self
+    
+    @property
+    def addons(self):
+        """Get addons"""
+        return self._addons
+
+    @addons.setter
+    def addons(self, val):
+        """Set addons
+        Keyword argument:
+        val -- New addons value"""
+        if val is None:
+            self._addons = []
+            return self
+
+        if len(val) > 0 and isinstance(val[0], processout.Addon):
+            self._addons = val
+        else:
+            l = []
+            for v in val:
+                obj = processout.Addon(self._client)
+                obj.fill_with_data(v)
+                l.append(obj)
+            self._addons = l
+        return self
+    
+    @property
+    def transactions(self):
+        """Get transactions"""
+        return self._transactions
+
+    @transactions.setter
+    def transactions(self, val):
+        """Set transactions
+        Keyword argument:
+        val -- New transactions value"""
+        if val is None:
+            self._transactions = []
+            return self
+
+        if len(val) > 0 and isinstance(val[0], processout.Transaction):
+            self._transactions = val
+        else:
+            l = []
+            for v in val:
+                obj = processout.Transaction(self._client)
+                obj.fill_with_data(v)
+                l.append(obj)
+            self._transactions = l
         return self
     
     @property
@@ -115,12 +221,29 @@ class Subscription(object):
         """Set customer
         Keyword argument:
         val -- New customer value"""
+        if val is None:
+            self._customer = val
+            return self
+
         if isinstance(val, dict):
             obj = processout.Customer(self._client)
             obj.fill_with_data(val)
             self._customer = obj
         else:
             self._customer = val
+        return self
+    
+    @property
+    def customer_id(self):
+        """Get customer_id"""
+        return self._customer_id
+
+    @customer_id.setter
+    def customer_id(self, val):
+        """Set customer_id
+        Keyword argument:
+        val -- New customer_id value"""
+        self._customer_id = val
         return self
     
     @property
@@ -133,12 +256,29 @@ class Subscription(object):
         """Set token
         Keyword argument:
         val -- New token value"""
+        if val is None:
+            self._token = val
+            return self
+
         if isinstance(val, dict):
             obj = processout.Token(self._client)
             obj.fill_with_data(val)
             self._token = obj
         else:
             self._token = val
+        return self
+    
+    @property
+    def token_id(self):
+        """Get token_id"""
+        return self._token_id
+
+    @token_id.setter
+    def token_id(self, val):
+        """Set token_id
+        Keyword argument:
+        val -- New token_id value"""
+        self._token_id = val
         return self
     
     @property
@@ -178,6 +318,45 @@ class Subscription(object):
         Keyword argument:
         val -- New amount value"""
         self._amount = val
+        return self
+    
+    @property
+    def billable_amount(self):
+        """Get billable_amount"""
+        return self._billable_amount
+
+    @billable_amount.setter
+    def billable_amount(self, val):
+        """Set billable_amount
+        Keyword argument:
+        val -- New billable_amount value"""
+        self._billable_amount = val
+        return self
+    
+    @property
+    def discounted_amount(self):
+        """Get discounted_amount"""
+        return self._discounted_amount
+
+    @discounted_amount.setter
+    def discounted_amount(self, val):
+        """Set discounted_amount
+        Keyword argument:
+        val -- New discounted_amount value"""
+        self._discounted_amount = val
+        return self
+    
+    @property
+    def addons_amount(self):
+        """Get addons_amount"""
+        return self._addons_amount
+
+    @addons_amount.setter
+    def addons_amount(self, val):
+        """Set addons_amount
+        Keyword argument:
+        val -- New addons_amount value"""
+        self._addons_amount = val
         return self
     
     @property
@@ -259,6 +438,19 @@ class Subscription(object):
         return self
     
     @property
+    def cancel_at(self):
+        """Get cancel_at"""
+        return self._cancel_at
+
+    @cancel_at.setter
+    def cancel_at(self, val):
+        """Set cancel_at
+        Keyword argument:
+        val -- New cancel_at value"""
+        self._cancel_at = val
+        return self
+    
+    @property
     def canceled(self):
         """Get canceled"""
         return self._canceled
@@ -298,19 +490,6 @@ class Subscription(object):
         return self
     
     @property
-    def cancel_at(self):
-        """Get cancel_at"""
-        return self._cancel_at
-
-    @cancel_at.setter
-    def cancel_at(self, val):
-        """Set cancel_at
-        Keyword argument:
-        val -- New cancel_at value"""
-        self._cancel_at = val
-        return self
-    
-    @property
     def return_url(self):
         """Get return_url"""
         return self._return_url
@@ -334,6 +513,19 @@ class Subscription(object):
         Keyword argument:
         val -- New cancel_url value"""
         self._cancel_url = val
+        return self
+    
+    @property
+    def unpaid_state(self):
+        """Get unpaid_state"""
+        return self._unpaid_state
+
+    @unpaid_state.setter
+    def unpaid_state(self, val):
+        """Set unpaid_state
+        Keyword argument:
+        val -- New unpaid_state value"""
+        self._unpaid_state = val
         return self
     
     @property
@@ -397,20 +589,38 @@ class Subscription(object):
             self.id = data["id"]
         if "project" in data.keys():
             self.project = data["project"]
-        if "plan_id" in data.keys():
-            self.plan_id = data["plan_id"]
+        if "project_id" in data.keys():
+            self.project_id = data["project_id"]
         if "plan" in data.keys():
             self.plan = data["plan"]
+        if "plan_id" in data.keys():
+            self.plan_id = data["plan_id"]
+        if "discounts" in data.keys():
+            self.discounts = data["discounts"]
+        if "addons" in data.keys():
+            self.addons = data["addons"]
+        if "transactions" in data.keys():
+            self.transactions = data["transactions"]
         if "customer" in data.keys():
             self.customer = data["customer"]
+        if "customer_id" in data.keys():
+            self.customer_id = data["customer_id"]
         if "token" in data.keys():
             self.token = data["token"]
+        if "token_id" in data.keys():
+            self.token_id = data["token_id"]
         if "url" in data.keys():
             self.url = data["url"]
         if "name" in data.keys():
             self.name = data["name"]
         if "amount" in data.keys():
             self.amount = data["amount"]
+        if "billable_amount" in data.keys():
+            self.billable_amount = data["billable_amount"]
+        if "discounted_amount" in data.keys():
+            self.discounted_amount = data["discounted_amount"]
+        if "addons_amount" in data.keys():
+            self.addons_amount = data["addons_amount"]
         if "currency" in data.keys():
             self.currency = data["currency"]
         if "metadata" in data.keys():
@@ -423,18 +633,20 @@ class Subscription(object):
             self.activated = data["activated"]
         if "active" in data.keys():
             self.active = data["active"]
+        if "cancel_at" in data.keys():
+            self.cancel_at = data["cancel_at"]
         if "canceled" in data.keys():
             self.canceled = data["canceled"]
         if "cancellation_reason" in data.keys():
             self.cancellation_reason = data["cancellation_reason"]
         if "pending_cancellation" in data.keys():
             self.pending_cancellation = data["pending_cancellation"]
-        if "cancel_at" in data.keys():
-            self.cancel_at = data["cancel_at"]
         if "return_url" in data.keys():
             self.return_url = data["return_url"]
         if "cancel_url" in data.keys():
             self.cancel_url = data["cancel_url"]
+        if "unpaid_state" in data.keys():
+            self.unpaid_state = data["unpaid_state"]
         if "sandbox" in data.keys():
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
@@ -445,6 +657,82 @@ class Subscription(object):
             self.iterate_at = data["iterate_at"]
         
         return self
+
+    def fetch_addons(self, options = {}):
+        """Get the addons applied to the subscription.
+        Keyword argument:
+        
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path    = "/subscriptions/" + quote_plus(self.id) + "/addons"
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        return_values = []
+        
+        a    = []
+        body = response.body
+        for v in body['addons']:
+            tmp = processout.Addon(self._client)
+            tmp.fill_with_data(v)
+            a.append(tmp)
+
+        return_values.append(a)
+            
+
+        
+        return return_values[0]
+
+    def find_addon(self, addon_id, options = {}):
+        """Find a subscription's addon by its ID.
+        Keyword argument:
+        addon_id -- ID of the addon
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path    = "/subscriptions/" + quote_plus(self.id) + "/addons/" + quote_plus(addon_id) + ""
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        return_values = []
+        
+        body = response.body
+        body = body["addon"]
+        addon = processout.Addon(self._client)
+        return_values.append(addon.fill_with_data(body))
+
+        
+        return return_values[0]
+
+    def remove_addon(self, addon_id, options = {}):
+        """Remove an addon applied to a subscription.
+        Keyword argument:
+        addon_id -- ID of the addon or plan to be removed from the subscription
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path    = "/subscriptions/" + quote_plus(self.id) + "/addons/" + quote_plus(addon_id) + ""
+        data    = {
+            'prorate': options.get("prorate"), 
+            'proration_date': options.get("proration_date"), 
+            'preview': options.get("preview")
+        }
+
+        response = Response(request.delete(path, data, options))
+        return_values = []
+        
+        return_values.append(response.success)
+
+        
+        return return_values[0]
 
     def fetch_customer(self, options = {}):
         """Get the customer owning the subscription.
@@ -499,30 +787,6 @@ class Subscription(object):
         
         return return_values[0]
 
-    def apply_coupon(self, coupon_id, options = {}):
-        """Apply a coupon on the subscription.
-        Keyword argument:
-        coupon_id -- ID of the coupon
-        options -- Options for the request"""
-        self.fill_with_data(options)
-
-        request = Request(self._client)
-        path    = "/subscriptions/" + quote_plus(self.id) + "/discounts"
-        data    = {
-            'coupon_id': coupon_id
-        }
-
-        response = Response(request.post(path, data, options))
-        return_values = []
-        
-        body = response.body
-        body = body["discount"]
-        discount = processout.Discount(self._client)
-        return_values.append(discount.fill_with_data(body))
-
-        
-        return return_values[0]
-
     def find_discount(self, discount_id, options = {}):
         """Find a subscription's discount by its ID.
         Keyword argument:
@@ -563,12 +827,7 @@ class Subscription(object):
         response = Response(request.delete(path, data, options))
         return_values = []
         
-        body = response.body
-        body = body["discount"]
-                
-                
-        return_values.append(self.fill_with_data(body))
-                
+        return_values.append(response.success)
 
         
         return return_values[0]
@@ -669,45 +928,6 @@ class Subscription(object):
         
         return return_values[0]
 
-    def create_from_plan(self, customer_id, plan_id, options = {}):
-        """Create a new subscription for the customer from the given plan ID.
-        Keyword argument:
-        customer_id -- ID of the customer
-        plan_id -- ID of the plan
-        options -- Options for the request"""
-        self.fill_with_data(options)
-
-        request = Request(self._client)
-        path    = "/subscriptions"
-        data    = {
-            'cancel_at': self.cancel_at, 
-            'name': self.name, 
-            'amount': self.amount, 
-            'currency': self.currency, 
-            'metadata': self.metadata, 
-            'interval': self.interval, 
-            'trial_end_at': self.trial_end_at, 
-            'return_url': self.return_url, 
-            'cancel_url': self.cancel_url, 
-            'source': options.get("source"), 
-            'coupon_id': options.get("coupon_id"), 
-            'customer_id': customer_id, 
-            'plan_id': plan_id
-        }
-
-        response = Response(request.post(path, data, options))
-        return_values = []
-        
-        body = response.body
-        body = body["subscription"]
-                
-                
-        return_values.append(self.fill_with_data(body))
-                
-
-        
-        return return_values[0]
-
     def find(self, subscription_id, options = {}):
         """Find a subscription by its ID.
         Keyword argument:
@@ -754,7 +974,8 @@ class Subscription(object):
             'coupon_id': options.get("coupon_id"), 
             'source': options.get("source"), 
             'prorate': options.get("prorate"), 
-            'proration_date': options.get("proration_date")
+            'proration_date': options.get("proration_date"), 
+            'preview': options.get("preview")
         }
 
         response = Response(request.put(path, data, options))
@@ -780,35 +1001,8 @@ class Subscription(object):
         request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(self.id) + ""
         data    = {
-            'cancellation_reason': cancellation_reason
-        }
-
-        response = Response(request.delete(path, data, options))
-        return_values = []
-        
-        body = response.body
-        body = body["subscription"]
-                
-                
-        return_values.append(self.fill_with_data(body))
-                
-
-        
-        return return_values[0]
-
-    def cancel_at_date(self, cancel_at, cancellation_reason, options = {}):
-        """Schedule the cancellation of the subscription. The reason may be provided as well.
-        Keyword argument:
-        cancel_at -- Cancellation date, in the form of a string
-        cancellation_reason -- Cancellation reason
-        options -- Options for the request"""
-        self.fill_with_data(options)
-
-        request = Request(self._client)
-        path    = "/subscriptions/" + quote_plus(self.id) + ""
-        data    = {
+            'cancel_at': self.cancel_at, 
             'cancel_at_end': options.get("cancel_at_end"), 
-            'cancel_at': cancel_at, 
             'cancellation_reason': cancellation_reason
         }
 

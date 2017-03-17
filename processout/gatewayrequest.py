@@ -17,13 +17,13 @@ class GatewayRequest:
         self._body = body
 
     def to_string(self):
-        return "gway_req_" + base64.b64encode(bytes(json.dumps({
+        return "gway_req_" + base64.b64encode(json.dumps({
             "gateway_configuration_id": self._gateway_configuration_id,
             "method": self._method,
             "url": self._url,
             "headers": self._headers,
             "body": self._body
-        }), "utf-8"))
+        }).encode("utf-8")).decode("utf-8")
 
     def __str___(self):
         return self.to_string()

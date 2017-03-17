@@ -16,14 +16,14 @@ class Coupon(object):
 
         self._id = None
         self._project = None
-        self._name = None
+        self._project_id = None
         self._amount_off = None
         self._percent_off = None
         self._currency = None
+        self._iteration_count = None
         self._max_redemptions = None
         self._expires_at = None
         self._metadata = None
-        self._iteration_count = None
         self._redeemed_number = None
         self._sandbox = None
         self._created_at = None
@@ -54,6 +54,10 @@ class Coupon(object):
         """Set project
         Keyword argument:
         val -- New project value"""
+        if val is None:
+            self._project = val
+            return self
+
         if isinstance(val, dict):
             obj = processout.Project(self._client)
             obj.fill_with_data(val)
@@ -63,16 +67,16 @@ class Coupon(object):
         return self
     
     @property
-    def name(self):
-        """Get name"""
-        return self._name
+    def project_id(self):
+        """Get project_id"""
+        return self._project_id
 
-    @name.setter
-    def name(self, val):
-        """Set name
+    @project_id.setter
+    def project_id(self, val):
+        """Set project_id
         Keyword argument:
-        val -- New name value"""
-        self._name = val
+        val -- New project_id value"""
+        self._project_id = val
         return self
     
     @property
@@ -115,6 +119,19 @@ class Coupon(object):
         return self
     
     @property
+    def iteration_count(self):
+        """Get iteration_count"""
+        return self._iteration_count
+
+    @iteration_count.setter
+    def iteration_count(self, val):
+        """Set iteration_count
+        Keyword argument:
+        val -- New iteration_count value"""
+        self._iteration_count = val
+        return self
+    
+    @property
     def max_redemptions(self):
         """Get max_redemptions"""
         return self._max_redemptions
@@ -151,19 +168,6 @@ class Coupon(object):
         Keyword argument:
         val -- New metadata value"""
         self._metadata = val
-        return self
-    
-    @property
-    def iteration_count(self):
-        """Get iteration_count"""
-        return self._iteration_count
-
-    @iteration_count.setter
-    def iteration_count(self, val):
-        """Set iteration_count
-        Keyword argument:
-        val -- New iteration_count value"""
-        self._iteration_count = val
         return self
     
     @property
@@ -214,22 +218,22 @@ class Coupon(object):
             self.id = data["id"]
         if "project" in data.keys():
             self.project = data["project"]
-        if "name" in data.keys():
-            self.name = data["name"]
+        if "project_id" in data.keys():
+            self.project_id = data["project_id"]
         if "amount_off" in data.keys():
             self.amount_off = data["amount_off"]
         if "percent_off" in data.keys():
             self.percent_off = data["percent_off"]
         if "currency" in data.keys():
             self.currency = data["currency"]
+        if "iteration_count" in data.keys():
+            self.iteration_count = data["iteration_count"]
         if "max_redemptions" in data.keys():
             self.max_redemptions = data["max_redemptions"]
         if "expires_at" in data.keys():
             self.expires_at = data["expires_at"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
-        if "iteration_count" in data.keys():
-            self.iteration_count = data["iteration_count"]
         if "redeemed_number" in data.keys():
             self.redeemed_number = data["redeemed_number"]
         if "sandbox" in data.keys():

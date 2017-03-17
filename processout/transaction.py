@@ -16,10 +16,19 @@ class Transaction(object):
 
         self._id = None
         self._project = None
+        self._project_id = None
+        self._invoice = None
+        self._invoice_id = None
         self._customer = None
+        self._customer_id = None
         self._subscription = None
+        self._subscription_id = None
         self._token = None
+        self._token_id = None
         self._card = None
+        self._card_id = None
+        self._operations = None
+        self._refunds = None
         self._name = None
         self._authorized_amount = None
         self._captured_amount = None
@@ -60,12 +69,64 @@ class Transaction(object):
         """Set project
         Keyword argument:
         val -- New project value"""
+        if val is None:
+            self._project = val
+            return self
+
         if isinstance(val, dict):
             obj = processout.Project(self._client)
             obj.fill_with_data(val)
             self._project = obj
         else:
             self._project = val
+        return self
+    
+    @property
+    def project_id(self):
+        """Get project_id"""
+        return self._project_id
+
+    @project_id.setter
+    def project_id(self, val):
+        """Set project_id
+        Keyword argument:
+        val -- New project_id value"""
+        self._project_id = val
+        return self
+    
+    @property
+    def invoice(self):
+        """Get invoice"""
+        return self._invoice
+
+    @invoice.setter
+    def invoice(self, val):
+        """Set invoice
+        Keyword argument:
+        val -- New invoice value"""
+        if val is None:
+            self._invoice = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.Customer(self._client)
+            obj.fill_with_data(val)
+            self._invoice = obj
+        else:
+            self._invoice = val
+        return self
+    
+    @property
+    def invoice_id(self):
+        """Get invoice_id"""
+        return self._invoice_id
+
+    @invoice_id.setter
+    def invoice_id(self, val):
+        """Set invoice_id
+        Keyword argument:
+        val -- New invoice_id value"""
+        self._invoice_id = val
         return self
     
     @property
@@ -78,12 +139,29 @@ class Transaction(object):
         """Set customer
         Keyword argument:
         val -- New customer value"""
+        if val is None:
+            self._customer = val
+            return self
+
         if isinstance(val, dict):
             obj = processout.Customer(self._client)
             obj.fill_with_data(val)
             self._customer = obj
         else:
             self._customer = val
+        return self
+    
+    @property
+    def customer_id(self):
+        """Get customer_id"""
+        return self._customer_id
+
+    @customer_id.setter
+    def customer_id(self, val):
+        """Set customer_id
+        Keyword argument:
+        val -- New customer_id value"""
+        self._customer_id = val
         return self
     
     @property
@@ -96,12 +174,29 @@ class Transaction(object):
         """Set subscription
         Keyword argument:
         val -- New subscription value"""
+        if val is None:
+            self._subscription = val
+            return self
+
         if isinstance(val, dict):
             obj = processout.Subscription(self._client)
             obj.fill_with_data(val)
             self._subscription = obj
         else:
             self._subscription = val
+        return self
+    
+    @property
+    def subscription_id(self):
+        """Get subscription_id"""
+        return self._subscription_id
+
+    @subscription_id.setter
+    def subscription_id(self, val):
+        """Set subscription_id
+        Keyword argument:
+        val -- New subscription_id value"""
+        self._subscription_id = val
         return self
     
     @property
@@ -114,12 +209,29 @@ class Transaction(object):
         """Set token
         Keyword argument:
         val -- New token value"""
+        if val is None:
+            self._token = val
+            return self
+
         if isinstance(val, dict):
             obj = processout.Token(self._client)
             obj.fill_with_data(val)
             self._token = obj
         else:
             self._token = val
+        return self
+    
+    @property
+    def token_id(self):
+        """Get token_id"""
+        return self._token_id
+
+    @token_id.setter
+    def token_id(self, val):
+        """Set token_id
+        Keyword argument:
+        val -- New token_id value"""
+        self._token_id = val
         return self
     
     @property
@@ -132,12 +244,79 @@ class Transaction(object):
         """Set card
         Keyword argument:
         val -- New card value"""
+        if val is None:
+            self._card = val
+            return self
+
         if isinstance(val, dict):
             obj = processout.Card(self._client)
             obj.fill_with_data(val)
             self._card = obj
         else:
             self._card = val
+        return self
+    
+    @property
+    def card_id(self):
+        """Get card_id"""
+        return self._card_id
+
+    @card_id.setter
+    def card_id(self, val):
+        """Set card_id
+        Keyword argument:
+        val -- New card_id value"""
+        self._card_id = val
+        return self
+    
+    @property
+    def operations(self):
+        """Get operations"""
+        return self._operations
+
+    @operations.setter
+    def operations(self, val):
+        """Set operations
+        Keyword argument:
+        val -- New operations value"""
+        if val is None:
+            self._operations = []
+            return self
+
+        if len(val) > 0 and isinstance(val[0], processout.TransactionOperation):
+            self._operations = val
+        else:
+            l = []
+            for v in val:
+                obj = processout.TransactionOperation(self._client)
+                obj.fill_with_data(v)
+                l.append(obj)
+            self._operations = l
+        return self
+    
+    @property
+    def refunds(self):
+        """Get refunds"""
+        return self._refunds
+
+    @refunds.setter
+    def refunds(self, val):
+        """Set refunds
+        Keyword argument:
+        val -- New refunds value"""
+        if val is None:
+            self._refunds = []
+            return self
+
+        if len(val) > 0 and isinstance(val[0], processout.Refund):
+            self._refunds = val
+        else:
+            l = []
+            for v in val:
+                obj = processout.Refund(self._client)
+                obj.fill_with_data(v)
+                l.append(obj)
+            self._refunds = l
         return self
     
     @property
@@ -318,14 +497,32 @@ class Transaction(object):
             self.id = data["id"]
         if "project" in data.keys():
             self.project = data["project"]
+        if "project_id" in data.keys():
+            self.project_id = data["project_id"]
+        if "invoice" in data.keys():
+            self.invoice = data["invoice"]
+        if "invoice_id" in data.keys():
+            self.invoice_id = data["invoice_id"]
         if "customer" in data.keys():
             self.customer = data["customer"]
+        if "customer_id" in data.keys():
+            self.customer_id = data["customer_id"]
         if "subscription" in data.keys():
             self.subscription = data["subscription"]
+        if "subscription_id" in data.keys():
+            self.subscription_id = data["subscription_id"]
         if "token" in data.keys():
             self.token = data["token"]
+        if "token_id" in data.keys():
+            self.token_id = data["token_id"]
         if "card" in data.keys():
             self.card = data["card"]
+        if "card_id" in data.keys():
+            self.card_id = data["card_id"]
+        if "operations" in data.keys():
+            self.operations = data["operations"]
+        if "refunds" in data.keys():
+            self.refunds = data["refunds"]
         if "name" in data.keys():
             self.name = data["name"]
         if "authorized_amount" in data.keys():

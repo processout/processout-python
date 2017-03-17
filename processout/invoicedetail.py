@@ -14,12 +14,27 @@ class InvoiceDetail(object):
     def __init__(self, client, prefill = None):
         self._client = client
 
+        self._name = None
         self._type = None
         self._amount = None
+        self._quantity = None
         self._metadata = None
         if prefill != None:
             self.fill_with_data(prefill)
 
+    
+    @property
+    def name(self):
+        """Get name"""
+        return self._name
+
+    @name.setter
+    def name(self, val):
+        """Set name
+        Keyword argument:
+        val -- New name value"""
+        self._name = val
+        return self
     
     @property
     def type(self):
@@ -48,6 +63,19 @@ class InvoiceDetail(object):
         return self
     
     @property
+    def quantity(self):
+        """Get quantity"""
+        return self._quantity
+
+    @quantity.setter
+    def quantity(self, val):
+        """Set quantity
+        Keyword argument:
+        val -- New quantity value"""
+        self._quantity = val
+        return self
+    
+    @property
     def metadata(self):
         """Get metadata"""
         return self._metadata
@@ -65,10 +93,14 @@ class InvoiceDetail(object):
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
+        if "name" in data.keys():
+            self.name = data["name"]
         if "type" in data.keys():
             self.type = data["type"]
         if "amount" in data.keys():
             self.amount = data["amount"]
+        if "quantity" in data.keys():
+            self.quantity = data["quantity"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
         

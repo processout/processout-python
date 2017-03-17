@@ -16,16 +16,27 @@ class Card(object):
 
         self._id = None
         self._project = None
+        self._project_id = None
+        self._token = None
         self._scheme = None
         self._type = None
         self._bank_name = None
         self._brand = None
-        self._country = None
         self._iin = None
         self._last_4_digits = None
         self._exp_month = None
         self._exp_year = None
+        self._cvc_check = None
+        self._avs_check = None
+        self._name = None
+        self._address1 = None
+        self._address2 = None
+        self._city = None
+        self._state = None
+        self._country = None
+        self._zip = None
         self._metadata = None
+        self._expires_soon = None
         self._sandbox = None
         self._created_at = None
         if prefill != None:
@@ -55,12 +66,51 @@ class Card(object):
         """Set project
         Keyword argument:
         val -- New project value"""
+        if val is None:
+            self._project = val
+            return self
+
         if isinstance(val, dict):
             obj = processout.Project(self._client)
             obj.fill_with_data(val)
             self._project = obj
         else:
             self._project = val
+        return self
+    
+    @property
+    def project_id(self):
+        """Get project_id"""
+        return self._project_id
+
+    @project_id.setter
+    def project_id(self, val):
+        """Set project_id
+        Keyword argument:
+        val -- New project_id value"""
+        self._project_id = val
+        return self
+    
+    @property
+    def token(self):
+        """Get token"""
+        return self._token
+
+    @token.setter
+    def token(self, val):
+        """Set token
+        Keyword argument:
+        val -- New token value"""
+        if val is None:
+            self._token = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.Token(self._client)
+            obj.fill_with_data(val)
+            self._token = obj
+        else:
+            self._token = val
         return self
     
     @property
@@ -116,19 +166,6 @@ class Card(object):
         return self
     
     @property
-    def country(self):
-        """Get country"""
-        return self._country
-
-    @country.setter
-    def country(self, val):
-        """Set country
-        Keyword argument:
-        val -- New country value"""
-        self._country = val
-        return self
-    
-    @property
     def iin(self):
         """Get iin"""
         return self._iin
@@ -181,6 +218,123 @@ class Card(object):
         return self
     
     @property
+    def cvc_check(self):
+        """Get cvc_check"""
+        return self._cvc_check
+
+    @cvc_check.setter
+    def cvc_check(self, val):
+        """Set cvc_check
+        Keyword argument:
+        val -- New cvc_check value"""
+        self._cvc_check = val
+        return self
+    
+    @property
+    def avs_check(self):
+        """Get avs_check"""
+        return self._avs_check
+
+    @avs_check.setter
+    def avs_check(self, val):
+        """Set avs_check
+        Keyword argument:
+        val -- New avs_check value"""
+        self._avs_check = val
+        return self
+    
+    @property
+    def name(self):
+        """Get name"""
+        return self._name
+
+    @name.setter
+    def name(self, val):
+        """Set name
+        Keyword argument:
+        val -- New name value"""
+        self._name = val
+        return self
+    
+    @property
+    def address1(self):
+        """Get address1"""
+        return self._address1
+
+    @address1.setter
+    def address1(self, val):
+        """Set address1
+        Keyword argument:
+        val -- New address1 value"""
+        self._address1 = val
+        return self
+    
+    @property
+    def address2(self):
+        """Get address2"""
+        return self._address2
+
+    @address2.setter
+    def address2(self, val):
+        """Set address2
+        Keyword argument:
+        val -- New address2 value"""
+        self._address2 = val
+        return self
+    
+    @property
+    def city(self):
+        """Get city"""
+        return self._city
+
+    @city.setter
+    def city(self, val):
+        """Set city
+        Keyword argument:
+        val -- New city value"""
+        self._city = val
+        return self
+    
+    @property
+    def state(self):
+        """Get state"""
+        return self._state
+
+    @state.setter
+    def state(self, val):
+        """Set state
+        Keyword argument:
+        val -- New state value"""
+        self._state = val
+        return self
+    
+    @property
+    def country(self):
+        """Get country"""
+        return self._country
+
+    @country.setter
+    def country(self, val):
+        """Set country
+        Keyword argument:
+        val -- New country value"""
+        self._country = val
+        return self
+    
+    @property
+    def zip(self):
+        """Get zip"""
+        return self._zip
+
+    @zip.setter
+    def zip(self, val):
+        """Set zip
+        Keyword argument:
+        val -- New zip value"""
+        self._zip = val
+        return self
+    
+    @property
     def metadata(self):
         """Get metadata"""
         return self._metadata
@@ -191,6 +345,19 @@ class Card(object):
         Keyword argument:
         val -- New metadata value"""
         self._metadata = val
+        return self
+    
+    @property
+    def expires_soon(self):
+        """Get expires_soon"""
+        return self._expires_soon
+
+    @expires_soon.setter
+    def expires_soon(self, val):
+        """Set expires_soon
+        Keyword argument:
+        val -- New expires_soon value"""
+        self._expires_soon = val
         return self
     
     @property
@@ -228,6 +395,10 @@ class Card(object):
             self.id = data["id"]
         if "project" in data.keys():
             self.project = data["project"]
+        if "project_id" in data.keys():
+            self.project_id = data["project_id"]
+        if "token" in data.keys():
+            self.token = data["token"]
         if "scheme" in data.keys():
             self.scheme = data["scheme"]
         if "type" in data.keys():
@@ -236,8 +407,6 @@ class Card(object):
             self.bank_name = data["bank_name"]
         if "brand" in data.keys():
             self.brand = data["brand"]
-        if "country" in data.keys():
-            self.country = data["country"]
         if "iin" in data.keys():
             self.iin = data["iin"]
         if "last_4_digits" in data.keys():
@@ -246,8 +415,28 @@ class Card(object):
             self.exp_month = data["exp_month"]
         if "exp_year" in data.keys():
             self.exp_year = data["exp_year"]
+        if "cvc_check" in data.keys():
+            self.cvc_check = data["cvc_check"]
+        if "avs_check" in data.keys():
+            self.avs_check = data["avs_check"]
+        if "name" in data.keys():
+            self.name = data["name"]
+        if "address1" in data.keys():
+            self.address1 = data["address1"]
+        if "address2" in data.keys():
+            self.address2 = data["address2"]
+        if "city" in data.keys():
+            self.city = data["city"]
+        if "state" in data.keys():
+            self.state = data["state"]
+        if "country" in data.keys():
+            self.country = data["country"]
+        if "zip" in data.keys():
+            self.zip = data["zip"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
+        if "expires_soon" in data.keys():
+            self.expires_soon = data["expires_soon"]
         if "sandbox" in data.keys():
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():

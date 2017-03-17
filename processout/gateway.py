@@ -21,6 +21,9 @@ class Gateway(object):
         self._url = None
         self._flows = None
         self._tags = None
+        self._can_pull_transactions = None
+        self._can_refund = None
+        self._is_oauth_authentication = None
         self._description = None
         if prefill != None:
             self.fill_with_data(prefill)
@@ -118,6 +121,45 @@ class Gateway(object):
         return self
     
     @property
+    def can_pull_transactions(self):
+        """Get can_pull_transactions"""
+        return self._can_pull_transactions
+
+    @can_pull_transactions.setter
+    def can_pull_transactions(self, val):
+        """Set can_pull_transactions
+        Keyword argument:
+        val -- New can_pull_transactions value"""
+        self._can_pull_transactions = val
+        return self
+    
+    @property
+    def can_refund(self):
+        """Get can_refund"""
+        return self._can_refund
+
+    @can_refund.setter
+    def can_refund(self, val):
+        """Set can_refund
+        Keyword argument:
+        val -- New can_refund value"""
+        self._can_refund = val
+        return self
+    
+    @property
+    def is_oauth_authentication(self):
+        """Get is_oauth_authentication"""
+        return self._is_oauth_authentication
+
+    @is_oauth_authentication.setter
+    def is_oauth_authentication(self, val):
+        """Set is_oauth_authentication
+        Keyword argument:
+        val -- New is_oauth_authentication value"""
+        self._is_oauth_authentication = val
+        return self
+    
+    @property
     def description(self):
         """Get description"""
         return self._description
@@ -149,6 +191,12 @@ class Gateway(object):
             self.flows = data["flows"]
         if "tags" in data.keys():
             self.tags = data["tags"]
+        if "can_pull_transactions" in data.keys():
+            self.can_pull_transactions = data["can_pull_transactions"]
+        if "can_refund" in data.keys():
+            self.can_refund = data["can_refund"]
+        if "is_oauth_authentication" in data.keys():
+            self.is_oauth_authentication = data["is_oauth_authentication"]
         if "description" in data.keys():
             self.description = data["description"]
         

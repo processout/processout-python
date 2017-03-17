@@ -3,6 +3,9 @@ from processout.client import ProcessOut
 
 # Import resources
 from processout.activity import Activity
+from processout.addon import Addon
+from processout.apirequest import APIRequest
+from processout.apiversion import APIVersion
 from processout.authorizationrequest import AuthorizationRequest
 from processout.card import Card
 from processout.cardinformation import CardInformation
@@ -16,13 +19,16 @@ from processout.gatewayconfiguration import GatewayConfiguration
 from processout.invoice import Invoice
 from processout.invoicedetail import InvoiceDetail
 from processout.customeraction import CustomerAction
+from processout.dunningaction import DunningAction
 from processout.plan import Plan
 from processout.product import Product
 from processout.project import Project
 from processout.refund import Refund
 from processout.subscription import Subscription
 from processout.transaction import Transaction
+from processout.transactionoperation import TransactionOperation
 from processout.webhook import Webhook
+from processout.webhookendpoint import WebhookEndpoint
 
 from processout.gatewayrequest import GatewayRequest
 

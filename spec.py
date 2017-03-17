@@ -1,5 +1,6 @@
 import processout
 from processout.errors.notfounderror import NotFoundError
+from processout.gatewayrequest import GatewayRequest
 
 def main():
     client = processout.ProcessOut("test-proj_gAO1Uu0ysZJvDuUpOGPkUBeE3pGalk3x",
@@ -16,6 +17,13 @@ def main():
     fetched = client.new_invoice().find(invoice.id)
     assert fetched.id != "", "The fetched invoice ID should not be empty"
     assert invoice.id == fetched.id, "The invoices ID should be equal"
+
+    # Capture an invoice
+    gr = GatewayRequest("sandbox", "POST", "https://processout.com", {
+        "Content-Type": "application/json"
+    }, "{\"token\": \"test-valid\"}")
+    transaction = invoice.capture(gr.to_string())
+    assert transaction.status == "completed", "The transaction status was not completed"
 
     # Fetch the customers
     client.new_customer().all()

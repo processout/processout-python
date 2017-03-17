@@ -16,19 +16,25 @@ class Invoice(object):
 
         self._id = None
         self._project = None
+        self._project_id = None
         self._transaction = None
+        self._transaction_id = None
         self._customer = None
+        self._customer_id = None
         self._subscription = None
+        self._subscription_id = None
+        self._token = None
+        self._token_id = None
         self._details = None
         self._url = None
         self._name = None
+        self._amount = None
+        self._currency = None
         self._statement_descriptor = None
         self._statement_descriptor_phone = None
         self._statement_descriptor_city = None
         self._statement_descriptor_company = None
         self._statement_descriptor_url = None
-        self._amount = None
-        self._currency = None
         self._metadata = None
         self._return_url = None
         self._cancel_url = None
@@ -61,12 +67,29 @@ class Invoice(object):
         """Set project
         Keyword argument:
         val -- New project value"""
+        if val is None:
+            self._project = val
+            return self
+
         if isinstance(val, dict):
             obj = processout.Project(self._client)
             obj.fill_with_data(val)
             self._project = obj
         else:
             self._project = val
+        return self
+    
+    @property
+    def project_id(self):
+        """Get project_id"""
+        return self._project_id
+
+    @project_id.setter
+    def project_id(self, val):
+        """Set project_id
+        Keyword argument:
+        val -- New project_id value"""
+        self._project_id = val
         return self
     
     @property
@@ -79,12 +102,29 @@ class Invoice(object):
         """Set transaction
         Keyword argument:
         val -- New transaction value"""
+        if val is None:
+            self._transaction = val
+            return self
+
         if isinstance(val, dict):
             obj = processout.Transaction(self._client)
             obj.fill_with_data(val)
             self._transaction = obj
         else:
             self._transaction = val
+        return self
+    
+    @property
+    def transaction_id(self):
+        """Get transaction_id"""
+        return self._transaction_id
+
+    @transaction_id.setter
+    def transaction_id(self, val):
+        """Set transaction_id
+        Keyword argument:
+        val -- New transaction_id value"""
+        self._transaction_id = val
         return self
     
     @property
@@ -97,12 +137,29 @@ class Invoice(object):
         """Set customer
         Keyword argument:
         val -- New customer value"""
+        if val is None:
+            self._customer = val
+            return self
+
         if isinstance(val, dict):
             obj = processout.Customer(self._client)
             obj.fill_with_data(val)
             self._customer = obj
         else:
             self._customer = val
+        return self
+    
+    @property
+    def customer_id(self):
+        """Get customer_id"""
+        return self._customer_id
+
+    @customer_id.setter
+    def customer_id(self, val):
+        """Set customer_id
+        Keyword argument:
+        val -- New customer_id value"""
+        self._customer_id = val
         return self
     
     @property
@@ -115,12 +172,64 @@ class Invoice(object):
         """Set subscription
         Keyword argument:
         val -- New subscription value"""
+        if val is None:
+            self._subscription = val
+            return self
+
         if isinstance(val, dict):
             obj = processout.Subscription(self._client)
             obj.fill_with_data(val)
             self._subscription = obj
         else:
             self._subscription = val
+        return self
+    
+    @property
+    def subscription_id(self):
+        """Get subscription_id"""
+        return self._subscription_id
+
+    @subscription_id.setter
+    def subscription_id(self, val):
+        """Set subscription_id
+        Keyword argument:
+        val -- New subscription_id value"""
+        self._subscription_id = val
+        return self
+    
+    @property
+    def token(self):
+        """Get token"""
+        return self._token
+
+    @token.setter
+    def token(self, val):
+        """Set token
+        Keyword argument:
+        val -- New token value"""
+        if val is None:
+            self._token = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.Token(self._client)
+            obj.fill_with_data(val)
+            self._token = obj
+        else:
+            self._token = val
+        return self
+    
+    @property
+    def token_id(self):
+        """Get token_id"""
+        return self._token_id
+
+    @token_id.setter
+    def token_id(self, val):
+        """Set token_id
+        Keyword argument:
+        val -- New token_id value"""
+        self._token_id = val
         return self
     
     @property
@@ -133,6 +242,10 @@ class Invoice(object):
         """Set details
         Keyword argument:
         val -- New details value"""
+        if val is None:
+            self._details = []
+            return self
+
         if len(val) > 0 and isinstance(val[0], processout.InvoiceDetail):
             self._details = val
         else:
@@ -168,6 +281,32 @@ class Invoice(object):
         Keyword argument:
         val -- New name value"""
         self._name = val
+        return self
+    
+    @property
+    def amount(self):
+        """Get amount"""
+        return self._amount
+
+    @amount.setter
+    def amount(self, val):
+        """Set amount
+        Keyword argument:
+        val -- New amount value"""
+        self._amount = val
+        return self
+    
+    @property
+    def currency(self):
+        """Get currency"""
+        return self._currency
+
+    @currency.setter
+    def currency(self, val):
+        """Set currency
+        Keyword argument:
+        val -- New currency value"""
+        self._currency = val
         return self
     
     @property
@@ -233,32 +372,6 @@ class Invoice(object):
         Keyword argument:
         val -- New statement_descriptor_url value"""
         self._statement_descriptor_url = val
-        return self
-    
-    @property
-    def amount(self):
-        """Get amount"""
-        return self._amount
-
-    @amount.setter
-    def amount(self, val):
-        """Set amount
-        Keyword argument:
-        val -- New amount value"""
-        self._amount = val
-        return self
-    
-    @property
-    def currency(self):
-        """Get currency"""
-        return self._currency
-
-    @currency.setter
-    def currency(self, val):
-        """Set currency
-        Keyword argument:
-        val -- New currency value"""
-        self._currency = val
         return self
     
     @property
@@ -335,18 +448,34 @@ class Invoice(object):
             self.id = data["id"]
         if "project" in data.keys():
             self.project = data["project"]
+        if "project_id" in data.keys():
+            self.project_id = data["project_id"]
         if "transaction" in data.keys():
             self.transaction = data["transaction"]
+        if "transaction_id" in data.keys():
+            self.transaction_id = data["transaction_id"]
         if "customer" in data.keys():
             self.customer = data["customer"]
+        if "customer_id" in data.keys():
+            self.customer_id = data["customer_id"]
         if "subscription" in data.keys():
             self.subscription = data["subscription"]
+        if "subscription_id" in data.keys():
+            self.subscription_id = data["subscription_id"]
+        if "token" in data.keys():
+            self.token = data["token"]
+        if "token_id" in data.keys():
+            self.token_id = data["token_id"]
         if "details" in data.keys():
             self.details = data["details"]
         if "url" in data.keys():
             self.url = data["url"]
         if "name" in data.keys():
             self.name = data["name"]
+        if "amount" in data.keys():
+            self.amount = data["amount"]
+        if "currency" in data.keys():
+            self.currency = data["currency"]
         if "statement_descriptor" in data.keys():
             self.statement_descriptor = data["statement_descriptor"]
         if "statement_descriptor_phone" in data.keys():
@@ -357,10 +486,6 @@ class Invoice(object):
             self.statement_descriptor_company = data["statement_descriptor_company"]
         if "statement_descriptor_url" in data.keys():
             self.statement_descriptor_url = data["statement_descriptor_url"]
-        if "amount" in data.keys():
-            self.amount = data["amount"]
-        if "currency" in data.keys():
-            self.currency = data["currency"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
         if "return_url" in data.keys():
@@ -384,7 +509,6 @@ class Invoice(object):
         request = Request(self._client)
         path    = "/invoices/" + quote_plus(self.id) + "/authorize"
         data    = {
-            'authorize_only': options.get("authorize_only"), 
             'synchronous': options.get("synchronous"), 
             'source': source
         }
@@ -561,6 +685,7 @@ class Invoice(object):
         request = Request(self._client)
         path    = "/invoices"
         data    = {
+            'customer_id': self.customer_id, 
             'name': self.name, 
             'amount': self.amount, 
             'currency': self.currency, 
@@ -572,46 +697,7 @@ class Invoice(object):
             'statement_descriptor_company': self.statement_descriptor_company, 
             'statement_descriptor_url': self.statement_descriptor_url, 
             'return_url': self.return_url, 
-            'cancel_url': self.cancel_url, 
-            'customer_id': options.get("customer_id")
-        }
-
-        response = Response(request.post(path, data, options))
-        return_values = []
-        
-        body = response.body
-        body = body["invoice"]
-                
-                
-        return_values.append(self.fill_with_data(body))
-                
-
-        
-        return return_values[0]
-
-    def create_for_customer(self, customer_id, options = {}):
-        """Create a new invoice for the given customer ID.
-        Keyword argument:
-        customer_id -- ID of the customer
-        options -- Options for the request"""
-        self.fill_with_data(options)
-
-        request = Request(self._client)
-        path    = "/invoices"
-        data    = {
-            'name': self.name, 
-            'amount': self.amount, 
-            'currency': self.currency, 
-            'metadata': self.metadata, 
-            'details': self.details, 
-            'statement_descriptor': self.statement_descriptor, 
-            'statement_descriptor_phone': self.statement_descriptor_phone, 
-            'statement_descriptor_city': self.statement_descriptor_city, 
-            'statement_descriptor_company': self.statement_descriptor_company, 
-            'statement_descriptor_url': self.statement_descriptor_url, 
-            'return_url': self.return_url, 
-            'cancel_url': self.cancel_url, 
-            'customer_id': customer_id
+            'cancel_url': self.cancel_url
         }
 
         response = Response(request.post(path, data, options))

@@ -10,16 +10,16 @@ from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
-class Activity(object):
+class WebhookEndpoint(object):
     def __init__(self, client, prefill = None):
         self._client = client
 
         self._id = None
         self._project = None
         self._project_id = None
-        self._title = None
-        self._content = None
-        self._level = None
+        self._url = None
+        self._events_whitelist = None
+        self._sandbox = None
         self._created_at = None
         if prefill != None:
             self.fill_with_data(prefill)
@@ -74,42 +74,42 @@ class Activity(object):
         return self
     
     @property
-    def title(self):
-        """Get title"""
-        return self._title
+    def url(self):
+        """Get url"""
+        return self._url
 
-    @title.setter
-    def title(self, val):
-        """Set title
+    @url.setter
+    def url(self, val):
+        """Set url
         Keyword argument:
-        val -- New title value"""
-        self._title = val
+        val -- New url value"""
+        self._url = val
         return self
     
     @property
-    def content(self):
-        """Get content"""
-        return self._content
+    def events_whitelist(self):
+        """Get events_whitelist"""
+        return self._events_whitelist
 
-    @content.setter
-    def content(self, val):
-        """Set content
+    @events_whitelist.setter
+    def events_whitelist(self, val):
+        """Set events_whitelist
         Keyword argument:
-        val -- New content value"""
-        self._content = val
+        val -- New events_whitelist value"""
+        self._events_whitelist = val
         return self
     
     @property
-    def level(self):
-        """Get level"""
-        return self._level
+    def sandbox(self):
+        """Get sandbox"""
+        return self._sandbox
 
-    @level.setter
-    def level(self, val):
-        """Set level
+    @sandbox.setter
+    def sandbox(self, val):
+        """Set sandbox
         Keyword argument:
-        val -- New level value"""
-        self._level = val
+        val -- New sandbox value"""
+        self._sandbox = val
         return self
     
     @property
@@ -136,71 +136,15 @@ class Activity(object):
             self.project = data["project"]
         if "project_id" in data.keys():
             self.project_id = data["project_id"]
-        if "title" in data.keys():
-            self.title = data["title"]
-        if "content" in data.keys():
-            self.content = data["content"]
-        if "level" in data.keys():
-            self.level = data["level"]
+        if "url" in data.keys():
+            self.url = data["url"]
+        if "events_whitelist" in data.keys():
+            self.events_whitelist = data["events_whitelist"]
+        if "sandbox" in data.keys():
+            self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
             self.created_at = data["created_at"]
         
         return self
-
-    def all(self, options = {}):
-        """Get all the project activities.
-        Keyword argument:
-        
-        options -- Options for the request"""
-        self.fill_with_data(options)
-
-        request = Request(self._client)
-        path    = "/activities"
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        return_values = []
-        
-        a    = []
-        body = response.body
-        for v in body['activities']:
-            tmp = processout.Activity(self._client)
-            tmp.fill_with_data(v)
-            a.append(tmp)
-
-        return_values.append(a)
-            
-
-        
-        return return_values[0]
-
-    def find(self, activity_id, options = {}):
-        """Find a specific activity and fetch its data.
-        Keyword argument:
-        activity_id -- ID of the activity
-        options -- Options for the request"""
-        self.fill_with_data(options)
-
-        request = Request(self._client)
-        path    = "/activities/" + quote_plus(activity_id) + ""
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        return_values = []
-        
-        body = response.body
-        body = body["activity"]
-                
-                
-        obj = processout.Activity(self._client)
-        return_values.append(obj.fill_with_data(body))
-                
-
-        
-        return return_values[0]
 
     

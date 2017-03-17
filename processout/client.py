@@ -37,6 +37,24 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.Activity(self, prefill)
 
+    def new_addon(self, prefill = None):
+        """Create a new Addon instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.Addon(self, prefill)
+
+    def new_api_request(self, prefill = None):
+        """Create a new APIRequest instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.APIRequest(self, prefill)
+
+    def new_api_version(self, prefill = None):
+        """Create a new APIVersion instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.APIVersion(self, prefill)
+
     def new_authorization_request(self, prefill = None):
         """Create a new AuthorizationRequest instance
         Keyword argument:
@@ -115,6 +133,12 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.CustomerAction(self, prefill)
 
+    def new_dunning_action(self, prefill = None):
+        """Create a new DunningAction instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.DunningAction(self, prefill)
+
     def new_plan(self, prefill = None):
         """Create a new Plan instance
         Keyword argument:
@@ -151,10 +175,22 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.Transaction(self, prefill)
 
+    def new_transaction_operation(self, prefill = None):
+        """Create a new TransactionOperation instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.TransactionOperation(self, prefill)
+
     def new_webhook(self, prefill = None):
         """Create a new Webhook instance
         Keyword argument:
         prefill -- Data used to prefill the object (optional)"""
         return processout.Webhook(self, prefill)
+
+    def new_webhook_endpoint(self, prefill = None):
+        """Create a new WebhookEndpoint instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.WebhookEndpoint(self, prefill)
 
     

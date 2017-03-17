@@ -16,15 +16,18 @@ class AuthorizationRequest(object):
 
         self._id = None
         self._project = None
+        self._project_id = None
         self._customer = None
+        self._customer_id = None
         self._token = None
-        self._url = None
-        self._authorized = None
+        self._token_id = None
         self._name = None
         self._currency = None
         self._return_url = None
         self._cancel_url = None
+        self._authorized = None
         self._sandbox = None
+        self._url = None
         self._created_at = None
         if prefill != None:
             self.fill_with_data(prefill)
@@ -53,12 +56,29 @@ class AuthorizationRequest(object):
         """Set project
         Keyword argument:
         val -- New project value"""
+        if val is None:
+            self._project = val
+            return self
+
         if isinstance(val, dict):
             obj = processout.Project(self._client)
             obj.fill_with_data(val)
             self._project = obj
         else:
             self._project = val
+        return self
+    
+    @property
+    def project_id(self):
+        """Get project_id"""
+        return self._project_id
+
+    @project_id.setter
+    def project_id(self, val):
+        """Set project_id
+        Keyword argument:
+        val -- New project_id value"""
+        self._project_id = val
         return self
     
     @property
@@ -71,12 +91,29 @@ class AuthorizationRequest(object):
         """Set customer
         Keyword argument:
         val -- New customer value"""
+        if val is None:
+            self._customer = val
+            return self
+
         if isinstance(val, dict):
             obj = processout.Customer(self._client)
             obj.fill_with_data(val)
             self._customer = obj
         else:
             self._customer = val
+        return self
+    
+    @property
+    def customer_id(self):
+        """Get customer_id"""
+        return self._customer_id
+
+    @customer_id.setter
+    def customer_id(self, val):
+        """Set customer_id
+        Keyword argument:
+        val -- New customer_id value"""
+        self._customer_id = val
         return self
     
     @property
@@ -89,6 +126,10 @@ class AuthorizationRequest(object):
         """Set token
         Keyword argument:
         val -- New token value"""
+        if val is None:
+            self._token = val
+            return self
+
         if isinstance(val, dict):
             obj = processout.Token(self._client)
             obj.fill_with_data(val)
@@ -98,29 +139,16 @@ class AuthorizationRequest(object):
         return self
     
     @property
-    def url(self):
-        """Get url"""
-        return self._url
+    def token_id(self):
+        """Get token_id"""
+        return self._token_id
 
-    @url.setter
-    def url(self, val):
-        """Set url
+    @token_id.setter
+    def token_id(self, val):
+        """Set token_id
         Keyword argument:
-        val -- New url value"""
-        self._url = val
-        return self
-    
-    @property
-    def authorized(self):
-        """Get authorized"""
-        return self._authorized
-
-    @authorized.setter
-    def authorized(self, val):
-        """Set authorized
-        Keyword argument:
-        val -- New authorized value"""
-        self._authorized = val
+        val -- New token_id value"""
+        self._token_id = val
         return self
     
     @property
@@ -176,6 +204,19 @@ class AuthorizationRequest(object):
         return self
     
     @property
+    def authorized(self):
+        """Get authorized"""
+        return self._authorized
+
+    @authorized.setter
+    def authorized(self, val):
+        """Set authorized
+        Keyword argument:
+        val -- New authorized value"""
+        self._authorized = val
+        return self
+    
+    @property
     def sandbox(self):
         """Get sandbox"""
         return self._sandbox
@@ -186,6 +227,19 @@ class AuthorizationRequest(object):
         Keyword argument:
         val -- New sandbox value"""
         self._sandbox = val
+        return self
+    
+    @property
+    def url(self):
+        """Get url"""
+        return self._url
+
+    @url.setter
+    def url(self, val):
+        """Set url
+        Keyword argument:
+        val -- New url value"""
+        self._url = val
         return self
     
     @property
@@ -210,14 +264,16 @@ class AuthorizationRequest(object):
             self.id = data["id"]
         if "project" in data.keys():
             self.project = data["project"]
+        if "project_id" in data.keys():
+            self.project_id = data["project_id"]
         if "customer" in data.keys():
             self.customer = data["customer"]
+        if "customer_id" in data.keys():
+            self.customer_id = data["customer_id"]
         if "token" in data.keys():
             self.token = data["token"]
-        if "url" in data.keys():
-            self.url = data["url"]
-        if "authorized" in data.keys():
-            self.authorized = data["authorized"]
+        if "token_id" in data.keys():
+            self.token_id = data["token_id"]
         if "name" in data.keys():
             self.name = data["name"]
         if "currency" in data.keys():
@@ -226,8 +282,12 @@ class AuthorizationRequest(object):
             self.return_url = data["return_url"]
         if "cancel_url" in data.keys():
             self.cancel_url = data["cancel_url"]
+        if "authorized" in data.keys():
+            self.authorized = data["authorized"]
         if "sandbox" in data.keys():
             self.sandbox = data["sandbox"]
+        if "url" in data.keys():
+            self.url = data["url"]
         if "created_at" in data.keys():
             self.created_at = data["created_at"]
         

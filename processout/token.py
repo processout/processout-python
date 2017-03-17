@@ -17,10 +17,14 @@ class Token(object):
         self._id = None
         self._customer = None
         self._customer_id = None
+        self._gateway_configuration = None
+        self._gateway_configuration_id = None
         self._card = None
+        self._card_id = None
         self._type = None
         self._metadata = None
         self._is_subscription_only = None
+        self._is_default = None
         self._created_at = None
         if prefill != None:
             self.fill_with_data(prefill)
@@ -49,6 +53,10 @@ class Token(object):
         """Set customer
         Keyword argument:
         val -- New customer value"""
+        if val is None:
+            self._customer = val
+            return self
+
         if isinstance(val, dict):
             obj = processout.Customer(self._client)
             obj.fill_with_data(val)
@@ -71,6 +79,41 @@ class Token(object):
         return self
     
     @property
+    def gateway_configuration(self):
+        """Get gateway_configuration"""
+        return self._gateway_configuration
+
+    @gateway_configuration.setter
+    def gateway_configuration(self, val):
+        """Set gateway_configuration
+        Keyword argument:
+        val -- New gateway_configuration value"""
+        if val is None:
+            self._gateway_configuration = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.GatewayConfiguration(self._client)
+            obj.fill_with_data(val)
+            self._gateway_configuration = obj
+        else:
+            self._gateway_configuration = val
+        return self
+    
+    @property
+    def gateway_configuration_id(self):
+        """Get gateway_configuration_id"""
+        return self._gateway_configuration_id
+
+    @gateway_configuration_id.setter
+    def gateway_configuration_id(self, val):
+        """Set gateway_configuration_id
+        Keyword argument:
+        val -- New gateway_configuration_id value"""
+        self._gateway_configuration_id = val
+        return self
+    
+    @property
     def card(self):
         """Get card"""
         return self._card
@@ -80,12 +123,29 @@ class Token(object):
         """Set card
         Keyword argument:
         val -- New card value"""
+        if val is None:
+            self._card = val
+            return self
+
         if isinstance(val, dict):
             obj = processout.Card(self._client)
             obj.fill_with_data(val)
             self._card = obj
         else:
             self._card = val
+        return self
+    
+    @property
+    def card_id(self):
+        """Get card_id"""
+        return self._card_id
+
+    @card_id.setter
+    def card_id(self, val):
+        """Set card_id
+        Keyword argument:
+        val -- New card_id value"""
+        self._card_id = val
         return self
     
     @property
@@ -128,6 +188,19 @@ class Token(object):
         return self
     
     @property
+    def is_default(self):
+        """Get is_default"""
+        return self._is_default
+
+    @is_default.setter
+    def is_default(self, val):
+        """Set is_default
+        Keyword argument:
+        val -- New is_default value"""
+        self._is_default = val
+        return self
+    
+    @property
     def created_at(self):
         """Get created_at"""
         return self._created_at
@@ -151,14 +224,22 @@ class Token(object):
             self.customer = data["customer"]
         if "customer_id" in data.keys():
             self.customer_id = data["customer_id"]
+        if "gateway_configuration" in data.keys():
+            self.gateway_configuration = data["gateway_configuration"]
+        if "gateway_configuration_id" in data.keys():
+            self.gateway_configuration_id = data["gateway_configuration_id"]
         if "card" in data.keys():
             self.card = data["card"]
+        if "card_id" in data.keys():
+            self.card_id = data["card_id"]
         if "type" in data.keys():
             self.type = data["type"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
         if "is_subscription_only" in data.keys():
             self.is_subscription_only = data["is_subscription_only"]
+        if "is_default" in data.keys():
+            self.is_default = data["is_default"]
         if "created_at" in data.keys():
             self.created_at = data["created_at"]
         
@@ -206,7 +287,6 @@ class Token(object):
             'metadata': self.metadata, 
             'settings': options.get("settings"), 
             'target': options.get("target"), 
-            'replace': options.get("replace"), 
             'source': source
         }
 
@@ -237,7 +317,6 @@ class Token(object):
         data    = {
             'metadata': self.metadata, 
             'settings': options.get("settings"), 
-            'replace': options.get("replace"), 
             'source': source, 
             'target': target
         }

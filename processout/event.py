@@ -16,6 +16,7 @@ class Event(object):
 
         self._id = None
         self._project = None
+        self._project_id = None
         self._name = None
         self._data = None
         self._sandbox = None
@@ -47,12 +48,29 @@ class Event(object):
         """Set project
         Keyword argument:
         val -- New project value"""
+        if val is None:
+            self._project = val
+            return self
+
         if isinstance(val, dict):
             obj = processout.Project(self._client)
             obj.fill_with_data(val)
             self._project = obj
         else:
             self._project = val
+        return self
+    
+    @property
+    def project_id(self):
+        """Get project_id"""
+        return self._project_id
+
+    @project_id.setter
+    def project_id(self, val):
+        """Set project_id
+        Keyword argument:
+        val -- New project_id value"""
+        self._project_id = val
         return self
     
     @property
@@ -116,6 +134,8 @@ class Event(object):
             self.id = data["id"]
         if "project" in data.keys():
             self.project = data["project"]
+        if "project_id" in data.keys():
+            self.project_id = data["project_id"]
         if "name" in data.keys():
             self.name = data["name"]
         if "data" in data.keys():

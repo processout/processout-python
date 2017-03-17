@@ -16,6 +16,7 @@ class Plan(object):
 
         self._id = None
         self._project = None
+        self._project_id = None
         self._url = None
         self._name = None
         self._amount = None
@@ -54,12 +55,29 @@ class Plan(object):
         """Set project
         Keyword argument:
         val -- New project value"""
+        if val is None:
+            self._project = val
+            return self
+
         if isinstance(val, dict):
             obj = processout.Project(self._client)
             obj.fill_with_data(val)
             self._project = obj
         else:
             self._project = val
+        return self
+    
+    @property
+    def project_id(self):
+        """Get project_id"""
+        return self._project_id
+
+    @project_id.setter
+    def project_id(self, val):
+        """Set project_id
+        Keyword argument:
+        val -- New project_id value"""
+        self._project_id = val
         return self
     
     @property
@@ -214,6 +232,8 @@ class Plan(object):
             self.id = data["id"]
         if "project" in data.keys():
             self.project = data["project"]
+        if "project_id" in data.keys():
+            self.project_id = data["project_id"]
         if "url" in data.keys():
             self.url = data["url"]
         if "name" in data.keys():

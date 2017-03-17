@@ -16,6 +16,14 @@ class Customer(object):
 
         self._id = None
         self._project = None
+        self._project_id = None
+        self._default_token = None
+        self._default_token_id = None
+        self._tokens = None
+        self._subscriptions = None
+        self._transactions = None
+        self._balance = None
+        self._currency = None
         self._email = None
         self._first_name = None
         self._last_name = None
@@ -25,8 +33,10 @@ class Customer(object):
         self._state = None
         self._zip = None
         self._country = None
-        self._balance = None
-        self._currency = None
+        self._transactions_count = None
+        self._subscriptions_count = None
+        self._mrr_local = None
+        self._total_revenue_local = None
         self._metadata = None
         self._sandbox = None
         self._created_at = None
@@ -57,12 +67,165 @@ class Customer(object):
         """Set project
         Keyword argument:
         val -- New project value"""
+        if val is None:
+            self._project = val
+            return self
+
         if isinstance(val, dict):
             obj = processout.Project(self._client)
             obj.fill_with_data(val)
             self._project = obj
         else:
             self._project = val
+        return self
+    
+    @property
+    def project_id(self):
+        """Get project_id"""
+        return self._project_id
+
+    @project_id.setter
+    def project_id(self, val):
+        """Set project_id
+        Keyword argument:
+        val -- New project_id value"""
+        self._project_id = val
+        return self
+    
+    @property
+    def default_token(self):
+        """Get default_token"""
+        return self._default_token
+
+    @default_token.setter
+    def default_token(self, val):
+        """Set default_token
+        Keyword argument:
+        val -- New default_token value"""
+        if val is None:
+            self._default_token = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.Token(self._client)
+            obj.fill_with_data(val)
+            self._default_token = obj
+        else:
+            self._default_token = val
+        return self
+    
+    @property
+    def default_token_id(self):
+        """Get default_token_id"""
+        return self._default_token_id
+
+    @default_token_id.setter
+    def default_token_id(self, val):
+        """Set default_token_id
+        Keyword argument:
+        val -- New default_token_id value"""
+        self._default_token_id = val
+        return self
+    
+    @property
+    def tokens(self):
+        """Get tokens"""
+        return self._tokens
+
+    @tokens.setter
+    def tokens(self, val):
+        """Set tokens
+        Keyword argument:
+        val -- New tokens value"""
+        if val is None:
+            self._tokens = []
+            return self
+
+        if len(val) > 0 and isinstance(val[0], processout.Token):
+            self._tokens = val
+        else:
+            l = []
+            for v in val:
+                obj = processout.Token(self._client)
+                obj.fill_with_data(v)
+                l.append(obj)
+            self._tokens = l
+        return self
+    
+    @property
+    def subscriptions(self):
+        """Get subscriptions"""
+        return self._subscriptions
+
+    @subscriptions.setter
+    def subscriptions(self, val):
+        """Set subscriptions
+        Keyword argument:
+        val -- New subscriptions value"""
+        if val is None:
+            self._subscriptions = []
+            return self
+
+        if len(val) > 0 and isinstance(val[0], processout.Subscription):
+            self._subscriptions = val
+        else:
+            l = []
+            for v in val:
+                obj = processout.Subscription(self._client)
+                obj.fill_with_data(v)
+                l.append(obj)
+            self._subscriptions = l
+        return self
+    
+    @property
+    def transactions(self):
+        """Get transactions"""
+        return self._transactions
+
+    @transactions.setter
+    def transactions(self, val):
+        """Set transactions
+        Keyword argument:
+        val -- New transactions value"""
+        if val is None:
+            self._transactions = []
+            return self
+
+        if len(val) > 0 and isinstance(val[0], processout.Transaction):
+            self._transactions = val
+        else:
+            l = []
+            for v in val:
+                obj = processout.Transaction(self._client)
+                obj.fill_with_data(v)
+                l.append(obj)
+            self._transactions = l
+        return self
+    
+    @property
+    def balance(self):
+        """Get balance"""
+        return self._balance
+
+    @balance.setter
+    def balance(self, val):
+        """Set balance
+        Keyword argument:
+        val -- New balance value"""
+        self._balance = val
+        return self
+    
+    @property
+    def currency(self):
+        """Get currency"""
+        return self._currency
+
+    @currency.setter
+    def currency(self, val):
+        """Set currency
+        Keyword argument:
+        val -- New currency value"""
+        self._currency = val
         return self
     
     @property
@@ -183,29 +346,55 @@ class Customer(object):
         return self
     
     @property
-    def balance(self):
-        """Get balance"""
-        return self._balance
+    def transactions_count(self):
+        """Get transactions_count"""
+        return self._transactions_count
 
-    @balance.setter
-    def balance(self, val):
-        """Set balance
+    @transactions_count.setter
+    def transactions_count(self, val):
+        """Set transactions_count
         Keyword argument:
-        val -- New balance value"""
-        self._balance = val
+        val -- New transactions_count value"""
+        self._transactions_count = val
         return self
     
     @property
-    def currency(self):
-        """Get currency"""
-        return self._currency
+    def subscriptions_count(self):
+        """Get subscriptions_count"""
+        return self._subscriptions_count
 
-    @currency.setter
-    def currency(self, val):
-        """Set currency
+    @subscriptions_count.setter
+    def subscriptions_count(self, val):
+        """Set subscriptions_count
         Keyword argument:
-        val -- New currency value"""
-        self._currency = val
+        val -- New subscriptions_count value"""
+        self._subscriptions_count = val
+        return self
+    
+    @property
+    def mrr_local(self):
+        """Get mrr_local"""
+        return self._mrr_local
+
+    @mrr_local.setter
+    def mrr_local(self, val):
+        """Set mrr_local
+        Keyword argument:
+        val -- New mrr_local value"""
+        self._mrr_local = val
+        return self
+    
+    @property
+    def total_revenue_local(self):
+        """Get total_revenue_local"""
+        return self._total_revenue_local
+
+    @total_revenue_local.setter
+    def total_revenue_local(self, val):
+        """Set total_revenue_local
+        Keyword argument:
+        val -- New total_revenue_local value"""
+        self._total_revenue_local = val
         return self
     
     @property
@@ -256,6 +445,22 @@ class Customer(object):
             self.id = data["id"]
         if "project" in data.keys():
             self.project = data["project"]
+        if "project_id" in data.keys():
+            self.project_id = data["project_id"]
+        if "default_token" in data.keys():
+            self.default_token = data["default_token"]
+        if "default_token_id" in data.keys():
+            self.default_token_id = data["default_token_id"]
+        if "tokens" in data.keys():
+            self.tokens = data["tokens"]
+        if "subscriptions" in data.keys():
+            self.subscriptions = data["subscriptions"]
+        if "transactions" in data.keys():
+            self.transactions = data["transactions"]
+        if "balance" in data.keys():
+            self.balance = data["balance"]
+        if "currency" in data.keys():
+            self.currency = data["currency"]
         if "email" in data.keys():
             self.email = data["email"]
         if "first_name" in data.keys():
@@ -274,10 +479,14 @@ class Customer(object):
             self.zip = data["zip"]
         if "country" in data.keys():
             self.country = data["country"]
-        if "balance" in data.keys():
-            self.balance = data["balance"]
-        if "currency" in data.keys():
-            self.currency = data["currency"]
+        if "transactions_count" in data.keys():
+            self.transactions_count = data["transactions_count"]
+        if "subscriptions_count" in data.keys():
+            self.subscriptions_count = data["subscriptions_count"]
+        if "mrr_local" in data.keys():
+            self.mrr_local = data["mrr_local"]
+        if "total_revenue_local" in data.keys():
+            self.total_revenue_local = data["total_revenue_local"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
         if "sandbox" in data.keys():
@@ -523,6 +732,7 @@ class Customer(object):
         path    = "/customers/" + quote_plus(self.id) + ""
         data    = {
             'balance': self.balance, 
+            'default_token_id': self.default_token_id, 
             'email': self.email, 
             'first_name': self.first_name, 
             'last_name': self.last_name, 

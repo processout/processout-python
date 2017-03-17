@@ -16,9 +16,11 @@ class Refund(object):
 
         self._id = None
         self._transaction = None
+        self._transaction_id = None
+        self._amount = None
         self._reason = None
         self._information = None
-        self._amount = None
+        self._has_failed = None
         self._metadata = None
         self._sandbox = None
         self._created_at = None
@@ -49,12 +51,42 @@ class Refund(object):
         """Set transaction
         Keyword argument:
         val -- New transaction value"""
+        if val is None:
+            self._transaction = val
+            return self
+
         if isinstance(val, dict):
             obj = processout.Transaction(self._client)
             obj.fill_with_data(val)
             self._transaction = obj
         else:
             self._transaction = val
+        return self
+    
+    @property
+    def transaction_id(self):
+        """Get transaction_id"""
+        return self._transaction_id
+
+    @transaction_id.setter
+    def transaction_id(self, val):
+        """Set transaction_id
+        Keyword argument:
+        val -- New transaction_id value"""
+        self._transaction_id = val
+        return self
+    
+    @property
+    def amount(self):
+        """Get amount"""
+        return self._amount
+
+    @amount.setter
+    def amount(self, val):
+        """Set amount
+        Keyword argument:
+        val -- New amount value"""
+        self._amount = val
         return self
     
     @property
@@ -84,16 +116,16 @@ class Refund(object):
         return self
     
     @property
-    def amount(self):
-        """Get amount"""
-        return self._amount
+    def has_failed(self):
+        """Get has_failed"""
+        return self._has_failed
 
-    @amount.setter
-    def amount(self, val):
-        """Set amount
+    @has_failed.setter
+    def has_failed(self, val):
+        """Set has_failed
         Keyword argument:
-        val -- New amount value"""
-        self._amount = val
+        val -- New has_failed value"""
+        self._has_failed = val
         return self
     
     @property
@@ -144,12 +176,16 @@ class Refund(object):
             self.id = data["id"]
         if "transaction" in data.keys():
             self.transaction = data["transaction"]
+        if "transaction_id" in data.keys():
+            self.transaction_id = data["transaction_id"]
+        if "amount" in data.keys():
+            self.amount = data["amount"]
         if "reason" in data.keys():
             self.reason = data["reason"]
         if "information" in data.keys():
             self.information = data["information"]
-        if "amount" in data.keys():
-            self.amount = data["amount"]
+        if "has_failed" in data.keys():
+            self.has_failed = data["has_failed"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
         if "sandbox" in data.keys():
