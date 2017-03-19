@@ -277,8 +277,8 @@ class Discount(object):
         
         return self
 
-    def apply(self, subscription_id, options = {}):
-        """Apply a new discount to the given subscription ID.
+    def fetch_subscription_discounts(self, subscription_id, options = {}):
+        """Get the discounts applied to the subscription.
         Keyword argument:
         subscription_id -- ID of the subscription
         options -- Options for the request"""
@@ -286,6 +286,35 @@ class Discount(object):
 
         request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(subscription_id) + "/discounts"
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        return_values = []
+        
+        a    = []
+        body = response.body
+        for v in body['discounts']:
+            tmp = processout.Discount(self._client)
+            tmp.fill_with_data(v)
+            a.append(tmp)
+
+        return_values.append(a)
+            
+
+        
+        return return_values[0]
+
+    def create(self, options = {}):
+        """Create a new discount for the given subscription ID.
+        Keyword argument:
+        
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path    = "/subscriptions/" + quote_plus(self.subscription_id) + "/discounts"
         data    = {
             'coupon_id': self.coupon_id, 
             'name': self.name, 
@@ -335,16 +364,15 @@ class Discount(object):
         
         return return_values[0]
 
-    def remove(self, subscription_id, discount_id, options = {}):
-        """Remove a discount applied to a subscription.
+    def delete(self, options = {}):
+        """Delete a discount applied to a subscription.
         Keyword argument:
-        subscription_id -- ID of the subscription on which the discount was applied
-        discount_id -- ID of the discount
+        
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/subscriptions/" + quote_plus(subscription_id) + "/discounts/" + quote_plus(discount_id) + ""
+        path    = "/subscriptions/" + quote_plus(self.subscription_id) + "/discounts/" + quote_plus(self.id) + ""
         data    = {
 
         }

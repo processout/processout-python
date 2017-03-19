@@ -711,8 +711,8 @@ class Subscription(object):
         
         return return_values[0]
 
-    def remove_addon(self, addon_id, options = {}):
-        """Remove an addon applied to a subscription.
+    def delete_addon(self, addon_id, options = {}):
+        """Delete an addon applied to a subscription.
         Keyword argument:
         addon_id -- ID of the addon or plan to be removed from the subscription
         options -- Options for the request"""
@@ -811,8 +811,8 @@ class Subscription(object):
         
         return return_values[0]
 
-    def remove_discount(self, discount_id, options = {}):
-        """Remove a discount applied to a subscription.
+    def delete_discount(self, discount_id, options = {}):
+        """Delete a discount applied to a subscription.
         Keyword argument:
         discount_id -- ID of the discount or coupon to be removed from the subscription
         options -- Options for the request"""
@@ -890,10 +890,10 @@ class Subscription(object):
         
         return return_values[0]
 
-    def create(self, customer_id, options = {}):
+    def create(self, options = {}):
         """Create a new subscription for the given customer.
         Keyword argument:
-        customer_id -- ID of the customer
+        
         options -- Options for the request"""
         self.fill_with_data(options)
 
@@ -908,11 +908,11 @@ class Subscription(object):
             'metadata': self.metadata, 
             'interval': self.interval, 
             'trial_end_at': self.trial_end_at, 
+            'customer_id': self.customer_id, 
             'return_url': self.return_url, 
             'cancel_url': self.cancel_url, 
             'source': options.get("source"), 
-            'coupon_id': options.get("coupon_id"), 
-            'customer_id': customer_id
+            'coupon_id': options.get("coupon_id")
         }
 
         response = Response(request.post(path, data, options))
@@ -991,10 +991,10 @@ class Subscription(object):
         
         return return_values[0]
 
-    def cancel(self, cancellation_reason, options = {}):
+    def cancel(self, options = {}):
         """Cancel a subscription. The reason may be provided as well.
         Keyword argument:
-        cancellation_reason -- Cancellation reason
+        
         options -- Options for the request"""
         self.fill_with_data(options)
 
@@ -1002,8 +1002,8 @@ class Subscription(object):
         path    = "/subscriptions/" + quote_plus(self.id) + ""
         data    = {
             'cancel_at': self.cancel_at, 
-            'cancel_at_end': options.get("cancel_at_end"), 
-            'cancellation_reason': cancellation_reason
+            'cancellation_reason': self.cancellation_reason, 
+            'cancel_at_end': options.get("cancel_at_end")
         }
 
         response = Response(request.delete(path, data, options))

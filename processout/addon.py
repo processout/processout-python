@@ -277,8 +277,8 @@ class Addon(object):
         
         return self
 
-    def apply(self, subscription_id, options = {}):
-        """Apply a new addon to the given subscription ID.
+    def fetch_subscription_addons(self, subscription_id, options = {}):
+        """Get the addons applied to the subscription.
         Keyword argument:
         subscription_id -- ID of the subscription
         options -- Options for the request"""
@@ -286,6 +286,35 @@ class Addon(object):
 
         request = Request(self._client)
         path    = "/subscriptions/" + quote_plus(subscription_id) + "/addons"
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        return_values = []
+        
+        a    = []
+        body = response.body
+        for v in body['addons']:
+            tmp = processout.Addon(self._client)
+            tmp.fill_with_data(v)
+            a.append(tmp)
+
+        return_values.append(a)
+            
+
+        
+        return return_values[0]
+
+    def create(self, options = {}):
+        """Create a new addon to the given subscription ID.
+        Keyword argument:
+        
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path    = "/subscriptions/" + quote_plus(self.subscription_id) + "/addons"
         data    = {
             'plan_id': self.plan_id, 
             'type': self.type, 
@@ -374,16 +403,15 @@ class Addon(object):
         
         return return_values[0]
 
-    def remove(self, subscription_id, addon_id, options = {}):
-        """Remove an addon applied to a subscription.
+    def delete(self, options = {}):
+        """Delete an addon applied to a subscription.
         Keyword argument:
-        subscription_id -- ID of the subscription on which the addon was applied
-        addon_id -- ID of the addon
+        
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/subscriptions/" + quote_plus(subscription_id) + "/addons/" + quote_plus(addon_id) + ""
+        path    = "/subscriptions/" + quote_plus(self.subscription_id) + "/addons/" + quote_plus(self.id) + ""
         data    = {
             'prorate': options.get("prorate"), 
             'proration_date': options.get("proration_date"), 

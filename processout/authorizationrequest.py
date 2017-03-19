@@ -317,21 +317,21 @@ class AuthorizationRequest(object):
         
         return return_values[0]
 
-    def create(self, customer_id, options = {}):
+    def create(self, options = {}):
         """Create a new authorization request for the given customer ID.
         Keyword argument:
-        customer_id -- ID of the customer
+        
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
         path    = "/authorization-requests"
         data    = {
+            'customer_id': self.customer_id, 
             'name': self.name, 
             'currency': self.currency, 
             'return_url': self.return_url, 
-            'cancel_url': self.cancel_url, 
-            'customer_id': customer_id
+            'cancel_url': self.cancel_url
         }
 
         response = Response(request.post(path, data, options))

@@ -195,6 +195,35 @@ class Refund(object):
         
         return self
 
+    def fetch_transaction_refunds(self, transaction_id, options = {}):
+        """Get the transaction's refunds.
+        Keyword argument:
+        transaction_id -- ID of the transaction
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path    = "/transactions/" + quote_plus(transaction_id) + "/refunds"
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        return_values = []
+        
+        a    = []
+        body = response.body
+        for v in body['refunds']:
+            tmp = processout.Refund(self._client)
+            tmp.fill_with_data(v)
+            a.append(tmp)
+
+        return_values.append(a)
+            
+
+        
+        return return_values[0]
+
     def find(self, transaction_id, refund_id, options = {}):
         """Find a transaction's refund by its ID.
         Keyword argument:
@@ -223,15 +252,15 @@ class Refund(object):
         
         return return_values[0]
 
-    def apply(self, transaction_id, options = {}):
-        """Apply a refund to a transaction.
+    def create(self, options = {}):
+        """Create a refund for a transaction.
         Keyword argument:
-        transaction_id -- ID of the transaction
+        
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/transactions/" + quote_plus(transaction_id) + "/refunds"
+        path    = "/transactions/" + quote_plus(self.transaction_id) + "/refunds"
         data    = {
             'amount': self.amount, 
             'metadata': self.metadata, 
