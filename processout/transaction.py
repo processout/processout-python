@@ -30,9 +30,11 @@ class Transaction(object):
         self._operations = None
         self._refunds = None
         self._name = None
+        self._amount = None
         self._authorized_amount = None
         self._captured_amount = None
         self._currency = None
+        self._error_code = None
         self._status = None
         self._authorized = None
         self._captured = None
@@ -333,6 +335,19 @@ class Transaction(object):
         return self
     
     @property
+    def amount(self):
+        """Get amount"""
+        return self._amount
+
+    @amount.setter
+    def amount(self, val):
+        """Set amount
+        Keyword argument:
+        val -- New amount value"""
+        self._amount = val
+        return self
+    
+    @property
     def authorized_amount(self):
         """Get authorized_amount"""
         return self._authorized_amount
@@ -369,6 +384,19 @@ class Transaction(object):
         Keyword argument:
         val -- New currency value"""
         self._currency = val
+        return self
+    
+    @property
+    def error_code(self):
+        """Get error_code"""
+        return self._error_code
+
+    @error_code.setter
+    def error_code(self, val):
+        """Set error_code
+        Keyword argument:
+        val -- New error_code value"""
+        self._error_code = val
         return self
     
     @property
@@ -525,12 +553,16 @@ class Transaction(object):
             self.refunds = data["refunds"]
         if "name" in data.keys():
             self.name = data["name"]
+        if "amount" in data.keys():
+            self.amount = data["amount"]
         if "authorized_amount" in data.keys():
             self.authorized_amount = data["authorized_amount"]
         if "captured_amount" in data.keys():
             self.captured_amount = data["captured_amount"]
         if "currency" in data.keys():
             self.currency = data["currency"]
+        if "error_code" in data.keys():
+            self.error_code = data["error_code"]
         if "status" in data.keys():
             self.status = data["status"]
         if "authorized" in data.keys():

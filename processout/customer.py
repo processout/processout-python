@@ -32,7 +32,7 @@ class Customer(object):
         self._city = None
         self._state = None
         self._zip = None
-        self._country = None
+        self._country_code = None
         self._transactions_count = None
         self._subscriptions_count = None
         self._mrr_local = None
@@ -333,16 +333,16 @@ class Customer(object):
         return self
     
     @property
-    def country(self):
-        """Get country"""
-        return self._country
+    def country_code(self):
+        """Get country_code"""
+        return self._country_code
 
-    @country.setter
-    def country(self, val):
-        """Set country
+    @country_code.setter
+    def country_code(self, val):
+        """Set country_code
         Keyword argument:
-        val -- New country value"""
-        self._country = val
+        val -- New country_code value"""
+        self._country_code = val
         return self
     
     @property
@@ -477,8 +477,8 @@ class Customer(object):
             self.state = data["state"]
         if "zip" in data.keys():
             self.zip = data["zip"]
-        if "country" in data.keys():
-            self.country = data["country"]
+        if "country_code" in data.keys():
+            self.country_code = data["country_code"]
         if "transactions_count" in data.keys():
             self.transactions_count = data["transactions_count"]
         if "subscriptions_count" in data.keys():
@@ -677,7 +677,7 @@ class Customer(object):
             'city': self.city, 
             'state': self.state, 
             'zip': self.zip, 
-            'country': self.country, 
+            'country_code': self.country_code, 
             'metadata': self.metadata
         }
 
@@ -741,7 +741,7 @@ class Customer(object):
             'city': self.city, 
             'state': self.state, 
             'zip': self.zip, 
-            'country': self.country, 
+            'country_code': self.country_code, 
             'metadata': self.metadata
         }
 

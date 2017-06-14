@@ -22,8 +22,6 @@ class Product(object):
         self._amount = None
         self._currency = None
         self._metadata = None
-        self._request_email = None
-        self._request_shipping = None
         self._return_url = None
         self._cancel_url = None
         self._sandbox = None
@@ -146,32 +144,6 @@ class Product(object):
         return self
     
     @property
-    def request_email(self):
-        """Get request_email"""
-        return self._request_email
-
-    @request_email.setter
-    def request_email(self, val):
-        """Set request_email
-        Keyword argument:
-        val -- New request_email value"""
-        self._request_email = val
-        return self
-    
-    @property
-    def request_shipping(self):
-        """Get request_shipping"""
-        return self._request_shipping
-
-    @request_shipping.setter
-    def request_shipping(self, val):
-        """Set request_shipping
-        Keyword argument:
-        val -- New request_shipping value"""
-        self._request_shipping = val
-        return self
-    
-    @property
     def return_url(self):
         """Get return_url"""
         return self._return_url
@@ -244,10 +216,6 @@ class Product(object):
             self.currency = data["currency"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
-        if "request_email" in data.keys():
-            self.request_email = data["request_email"]
-        if "request_shipping" in data.keys():
-            self.request_shipping = data["request_shipping"]
         if "return_url" in data.keys():
             self.return_url = data["return_url"]
         if "cancel_url" in data.keys():
@@ -326,8 +294,6 @@ class Product(object):
             'amount': self.amount, 
             'currency': self.currency, 
             'metadata': self.metadata, 
-            'request_email': self.request_email, 
-            'request_shipping': self.request_shipping, 
             'return_url': self.return_url, 
             'cancel_url': self.cancel_url
         }
@@ -386,8 +352,6 @@ class Product(object):
             'amount': self.amount, 
             'currency': self.currency, 
             'metadata': self.metadata, 
-            'request_email': self.request_email, 
-            'request_shipping': self.request_shipping, 
             'return_url': self.return_url, 
             'cancel_url': self.cancel_url
         }
