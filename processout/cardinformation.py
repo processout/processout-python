@@ -19,6 +19,7 @@ class CardInformation(object):
         self._type = None
         self._bank_name = None
         self._brand = None
+        self._category = None
         self._country = None
         if prefill != None:
             self.fill_with_data(prefill)
@@ -90,6 +91,19 @@ class CardInformation(object):
         return self
     
     @property
+    def category(self):
+        """Get category"""
+        return self._category
+
+    @category.setter
+    def category(self, val):
+        """Set category
+        Keyword argument:
+        val -- New category value"""
+        self._category = val
+        return self
+    
+    @property
     def country(self):
         """Get country"""
         return self._country
@@ -117,6 +131,8 @@ class CardInformation(object):
             self.bank_name = data["bank_name"]
         if "brand" in data.keys():
             self.brand = data["brand"]
+        if "category" in data.keys():
+            self.category = data["category"]
         if "country" in data.keys():
             self.country = data["country"]
         
