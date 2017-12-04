@@ -598,6 +598,30 @@ class Invoice(object):
         
         return return_values[0]
 
+    def initiate_three_d_s(self, source, options = {}):
+        """Initiate a 3-D Secure authentication
+        Keyword argument:
+        source -- Source used to initiate the 3-D Secure authentication. Can be a card, or a token representing a card
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path    = "/invoices/" + quote_plus(self.id) + "/three-d-s"
+        data    = {
+            'source': source
+        }
+
+        response = Response(request.post(path, data, options))
+        return_values = []
+        
+        body = response.body
+        body = body["customer_action"]
+        customerAction = processout.CustomerAction(self._client)
+        return_values.append(customerAction.fill_with_data(body))
+
+        
+        return return_values[0]
+
     def fetch_transaction(self, options = {}):
         """Get the transaction of the invoice.
         Keyword argument:
