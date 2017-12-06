@@ -35,6 +35,7 @@ class Transaction(object):
         self._captured_amount = None
         self._currency = None
         self._error_code = None
+        self._three_d_s_status = None
         self._status = None
         self._authorized = None
         self._captured = None
@@ -400,6 +401,19 @@ class Transaction(object):
         return self
     
     @property
+    def three_d_s_status(self):
+        """Get three_d_s_status"""
+        return self._three_d_s_status
+
+    @three_d_s_status.setter
+    def three_d_s_status(self, val):
+        """Set three_d_s_status
+        Keyword argument:
+        val -- New three_d_s_status value"""
+        self._three_d_s_status = val
+        return self
+    
+    @property
     def status(self):
         """Get status"""
         return self._status
@@ -563,6 +577,8 @@ class Transaction(object):
             self.currency = data["currency"]
         if "error_code" in data.keys():
             self.error_code = data["error_code"]
+        if "three_d_s_status" in data.keys():
+            self.three_d_s_status = data["three_d_s_status"]
         if "status" in data.keys():
             self.status = data["status"]
         if "authorized" in data.keys():
