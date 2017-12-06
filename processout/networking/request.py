@@ -63,7 +63,7 @@ class Request:
         options -- Options sent with the request
         """
         return requests.get(self._client.host + path + '?' +
-            urlencode(self._get_data(data, options)),
+            urlencode(self._get_data(data, options), True),
             auth = self._authenticate(),
             verify = True,
             headers = self._get_headers(options))
@@ -105,7 +105,7 @@ class Request:
         options -- Options sent with the request
         """
         return requests.delete(self._client.host + path + '?' +
-                urlencode(self._get_data(data, options)),
+                urlencode(self._get_data(data, options), True),
             auth = self._authenticate(),
             verify = True,
             headers = self._get_headers(options))
