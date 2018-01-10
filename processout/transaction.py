@@ -27,6 +27,8 @@ class Transaction(object):
         self._token_id = None
         self._card = None
         self._card_id = None
+        self._gateway_configuration = None
+        self._gateway_configuration_id = None
         self._operations = None
         self._refunds = None
         self._name = None
@@ -270,6 +272,41 @@ class Transaction(object):
         Keyword argument:
         val -- New card_id value"""
         self._card_id = val
+        return self
+    
+    @property
+    def gateway_configuration(self):
+        """Get gateway_configuration"""
+        return self._gateway_configuration
+
+    @gateway_configuration.setter
+    def gateway_configuration(self, val):
+        """Set gateway_configuration
+        Keyword argument:
+        val -- New gateway_configuration value"""
+        if val is None:
+            self._gateway_configuration = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.GatewayConfiguration(self._client)
+            obj.fill_with_data(val)
+            self._gateway_configuration = obj
+        else:
+            self._gateway_configuration = val
+        return self
+    
+    @property
+    def gateway_configuration_id(self):
+        """Get gateway_configuration_id"""
+        return self._gateway_configuration_id
+
+    @gateway_configuration_id.setter
+    def gateway_configuration_id(self, val):
+        """Set gateway_configuration_id
+        Keyword argument:
+        val -- New gateway_configuration_id value"""
+        self._gateway_configuration_id = val
         return self
     
     @property
@@ -561,6 +598,10 @@ class Transaction(object):
             self.card = data["card"]
         if "card_id" in data.keys():
             self.card_id = data["card_id"]
+        if "gateway_configuration" in data.keys():
+            self.gateway_configuration = data["gateway_configuration"]
+        if "gateway_configuration_id" in data.keys():
+            self.gateway_configuration_id = data["gateway_configuration_id"]
         if "operations" in data.keys():
             self.operations = data["operations"]
         if "refunds" in data.keys():

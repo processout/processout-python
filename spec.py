@@ -25,6 +25,12 @@ def main():
     transaction = invoice.capture(gr.to_string())
     assert transaction.status == "completed", "The transaction status was not completed"
 
+    # Expand the gateway configuration used on the transaction
+    transaction = transaction.find(transaction.id, {
+        "expand": ["gateway_configuration"]
+    })
+    assert transaction.gateway_configuration.id != "", "The transaction gateway configuration ID is empty"
+
     # Fetch the customers
     client.new_customer().all()
 
@@ -44,8 +50,6 @@ def main():
     # Expand a customers' project and fetch gateways
     customer = client.new_customer().create({"expand": ["project"]})
     assert customer.project != None, "The customer project should be expanded"
-
-    customer.project.fetch_gateway_configurations()
 
     # Check error code
     try:

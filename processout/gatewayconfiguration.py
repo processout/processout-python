@@ -252,4 +252,145 @@ class GatewayConfiguration(object):
         
         return self
 
+    def all(self, options = {}):
+        """Get all the gateway configurations.
+        Keyword argument:
+        
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path    = "/gateway-configurations"
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        return_values = []
+        
+        a    = []
+        body = response.body
+        for v in body['gateway_configurations']:
+            tmp = processout.GatewayConfiguration(self._client)
+            tmp.fill_with_data(v)
+            a.append(tmp)
+
+        return_values.append(a)
+            
+
+        
+        return return_values[0]
+
+    def find(self, configuration_id, options = {}):
+        """Find a gateway configuration by its ID.
+        Keyword argument:
+        configuration_id -- ID of the gateway configuration
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path    = "/gateway-configurations/" + quote_plus(configuration_id) + ""
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        return_values = []
+        
+        body = response.body
+        body = body["gateway_configuration"]
+                
+                
+        obj = processout.GatewayConfiguration(self._client)
+        return_values.append(obj.fill_with_data(body))
+                
+
+        
+        return return_values[0]
+
+    def save(self, options = {}):
+        """Save the updated gateway configuration attributes and settings.
+        Keyword argument:
+        
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path    = "/gateway-configurations/" + quote_plus(self.id) + ""
+        data    = {
+            'id': self.id, 
+            'name': self.name, 
+            'enabled': self.enabled, 
+            'fee_fixed': self.fee_fixed, 
+            'fee_percentage': self.fee_percentage, 
+            'default_currency': self.default_currency, 
+            'settings': options.get("settings")
+        }
+
+        response = Response(request.put(path, data, options))
+        return_values = []
+        
+        body = response.body
+        body = body["gateway_configuration"]
+                
+                
+        return_values.append(self.fill_with_data(body))
+                
+
+        
+        return return_values[0]
+
+    def delete(self, options = {}):
+        """Delete the gateway configuration.
+        Keyword argument:
+        
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path    = "/gateway-configurations/" + quote_plus(self.id) + ""
+        data    = {
+
+        }
+
+        response = Response(request.delete(path, data, options))
+        return_values = []
+        
+        return_values.append(response.success)
+
+        
+        return return_values[0]
+
+    def create(self, gateway_name, options = {}):
+        """Create a new gateway configuration.
+        Keyword argument:
+        gateway_name -- Name of the gateway
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path    = "/gateways/" + quote_plus(gateway_name) + "/gateway-configurations"
+        data    = {
+            'id': self.id, 
+            'name': self.name, 
+            'enabled': self.enabled, 
+            'fee_fixed': self.fee_fixed, 
+            'fee_percentage': self.fee_percentage, 
+            'default_currency': self.default_currency, 
+            'settings': options.get("settings")
+        }
+
+        response = Response(request.post(path, data, options))
+        return_values = []
+        
+        body = response.body
+        body = body["gateway_configuration"]
+                
+                
+        return_values.append(self.fill_with_data(body))
+                
+
+        
+        return return_values[0]
+
     

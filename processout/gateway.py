@@ -202,4 +202,33 @@ class Gateway(object):
         
         return self
 
+    def fetch_gateway_configurations(self, options = {}):
+        """Get all the gateway configurations of the gateway
+        Keyword argument:
+        
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path    = "/gateways/" + quote_plus(self.name) + "/gateway-configurations"
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        return_values = []
+        
+        a    = []
+        body = response.body
+        for v in body['gateway_configurations']:
+            tmp = processout.GatewayConfiguration(self._client)
+            tmp.fill_with_data(v)
+            a.append(tmp)
+
+        return_values.append(a)
+            
+
+        
+        return return_values[0]
+
     

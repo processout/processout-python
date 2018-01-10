@@ -232,15 +232,42 @@ class Project(object):
         
         return self
 
-    def fetch_gateway_configurations(self, options = {}):
-        """Get all the gateway configurations of the project
+    def regenerate_private_key(self, options = {}):
+        """Regenerate the project private key. Make sure to store the new private key and use it in any future request.
         Keyword argument:
         
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/projects/" + quote_plus(self.id) + "/gateway-configurations"
+        path    = "/projects/{project_id}/private-key"
+        data    = {
+
+        }
+
+        response = Response(request.post(path, data, options))
+        return_values = []
+        
+        body = response.body
+        body = body["project"]
+                
+                
+        obj = processout.Project(self._client)
+        return_values.append(obj.fill_with_data(body))
+                
+
+        
+        return return_values[0]
+
+    def all_supervised(self, options = {}):
+        """Get all the supervised projects.
+        Keyword argument:
+        
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path    = "/supervised-projects"
         data    = {
 
         }
@@ -250,13 +277,43 @@ class Project(object):
         
         a    = []
         body = response.body
-        for v in body['gateway_configurations']:
-            tmp = processout.GatewayConfiguration(self._client)
+        for v in body['projects']:
+            tmp = processout.Project(self._client)
             tmp.fill_with_data(v)
             a.append(tmp)
 
         return_values.append(a)
             
+
+        
+        return return_values[0]
+
+    def create_supervised(self, options = {}):
+        """Create a new supervised project.
+        Keyword argument:
+        
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path    = "/supervised-projects"
+        data    = {
+            'id': self.id, 
+            'name': self.name, 
+            'default_currency': self.default_currency, 
+            'dunning_configuration': self.dunning_configuration, 
+            'applepay_settings': options.get("applepay_settings")
+        }
+
+        response = Response(request.post(path, data, options))
+        return_values = []
+        
+        body = response.body
+        body = body["project"]
+                
+                
+        return_values.append(self.fill_with_data(body))
+                
 
         
         return return_values[0]
