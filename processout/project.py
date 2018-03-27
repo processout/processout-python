@@ -232,6 +232,79 @@ class Project(object):
         
         return self
 
+    def fetch(self, options = {}):
+        """Fetch the current project information.
+        Keyword argument:
+        
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path    = "/projects/" + quote_plus(self.id) + ""
+        data    = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        return_values = []
+        
+        body = response.body
+        body = body["project"]
+                
+                
+        return_values.append(self.fill_with_data(body))
+                
+
+        
+        return return_values[0]
+
+    def save(self, options = {}):
+        """Save the updated project's attributes.
+        Keyword argument:
+        
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path    = "/projects/" + quote_plus(self.id) + ""
+        data    = {
+
+        }
+
+        response = Response(request.put(path, data, options))
+        return_values = []
+        
+        body = response.body
+        body = body["project"]
+                
+                
+        return_values.append(self.fill_with_data(body))
+                
+
+        
+        return return_values[0]
+
+    def delete(self, options = {}):
+        """Delete the project. Be careful! Executing this request will prevent any further interaction with the API that uses this project.
+        Keyword argument:
+        
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path    = "/projects/{project_id}"
+        data    = {
+
+        }
+
+        response = Response(request.delete(path, data, options))
+        return_values = []
+        
+        return_values.append(response.success)
+
+        
+        return return_values[0]
+
     def regenerate_private_key(self, options = {}):
         """Regenerate the project private key. Make sure to store the new private key and use it in any future request.
         Keyword argument:
@@ -259,7 +332,7 @@ class Project(object):
         
         return return_values[0]
 
-    def all_supervised(self, options = {}):
+    def fetch_supervised(self, options = {}):
         """Get all the supervised projects.
         Keyword argument:
         

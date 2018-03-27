@@ -20,6 +20,8 @@ from processout.invoice import Invoice
 from processout.invoicedetail import InvoiceDetail
 from processout.customeraction import CustomerAction
 from processout.dunningaction import DunningAction
+from processout.payout import Payout
+from processout.payoutitem import PayoutItem
 from processout.plan import Plan
 from processout.product import Product
 from processout.project import Project

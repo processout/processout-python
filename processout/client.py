@@ -139,6 +139,18 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.DunningAction(self, prefill)
 
+    def new_payout(self, prefill = None):
+        """Create a new Payout instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.Payout(self, prefill)
+
+    def new_payout_item(self, prefill = None):
+        """Create a new PayoutItem instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.PayoutItem(self, prefill)
+
     def new_plan(self, prefill = None):
         """Create a new Plan instance
         Keyword argument:

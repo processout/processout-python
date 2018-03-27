@@ -26,6 +26,7 @@ class TransactionOperation(object):
         self._has_failed = None
         self._is_accountable = None
         self._type = None
+        self._gateway_operation_id = None
         self._error_code = None
         self._metadata = None
         self._gateway_fee = None
@@ -218,6 +219,19 @@ class TransactionOperation(object):
         return self
     
     @property
+    def gateway_operation_id(self):
+        """Get gateway_operation_id"""
+        return self._gateway_operation_id
+
+    @gateway_operation_id.setter
+    def gateway_operation_id(self, val):
+        """Set gateway_operation_id
+        Keyword argument:
+        val -- New gateway_operation_id value"""
+        self._gateway_operation_id = val
+        return self
+    
+    @property
     def error_code(self):
         """Get error_code"""
         return self._error_code
@@ -298,6 +312,8 @@ class TransactionOperation(object):
             self.is_accountable = data["is_accountable"]
         if "type" in data.keys():
             self.type = data["type"]
+        if "gateway_operation_id" in data.keys():
+            self.gateway_operation_id = data["gateway_operation_id"]
         if "error_code" in data.keys():
             self.error_code = data["error_code"]
         if "metadata" in data.keys():
