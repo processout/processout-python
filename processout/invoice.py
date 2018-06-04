@@ -537,7 +537,6 @@ class Invoice(object):
         data    = {
             'authorize_only': options.get("authorize_only"), 
             'synchronous': options.get("synchronous"), 
-            'prioritized_gateway_configuration_id': options.get("prioritized_gateway_configuration_id"), 
             'source': source
         }
 

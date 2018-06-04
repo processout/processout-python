@@ -28,6 +28,9 @@ class TransactionOperation(object):
         self._type = None
         self._gateway_operation_id = None
         self._error_code = None
+        self._payment_data_three_d_s_request = None
+        self._payment_data_three_d_s_authentication = None
+        self._payment_data_network_authentication = None
         self._metadata = None
         self._gateway_fee = None
         self._created_at = None
@@ -245,6 +248,72 @@ class TransactionOperation(object):
         return self
     
     @property
+    def payment_data_three_d_s_request(self):
+        """Get payment_data_three_d_s_request"""
+        return self._payment_data_three_d_s_request
+
+    @payment_data_three_d_s_request.setter
+    def payment_data_three_d_s_request(self, val):
+        """Set payment_data_three_d_s_request
+        Keyword argument:
+        val -- New payment_data_three_d_s_request value"""
+        if val is None:
+            self._payment_data_three_d_s_request = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.PaymentDataThreeDSRequest(self._client)
+            obj.fill_with_data(val)
+            self._payment_data_three_d_s_request = obj
+        else:
+            self._payment_data_three_d_s_request = val
+        return self
+    
+    @property
+    def payment_data_three_d_s_authentication(self):
+        """Get payment_data_three_d_s_authentication"""
+        return self._payment_data_three_d_s_authentication
+
+    @payment_data_three_d_s_authentication.setter
+    def payment_data_three_d_s_authentication(self, val):
+        """Set payment_data_three_d_s_authentication
+        Keyword argument:
+        val -- New payment_data_three_d_s_authentication value"""
+        if val is None:
+            self._payment_data_three_d_s_authentication = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.PaymentDataThreeDSAuthentication(self._client)
+            obj.fill_with_data(val)
+            self._payment_data_three_d_s_authentication = obj
+        else:
+            self._payment_data_three_d_s_authentication = val
+        return self
+    
+    @property
+    def payment_data_network_authentication(self):
+        """Get payment_data_network_authentication"""
+        return self._payment_data_network_authentication
+
+    @payment_data_network_authentication.setter
+    def payment_data_network_authentication(self, val):
+        """Set payment_data_network_authentication
+        Keyword argument:
+        val -- New payment_data_network_authentication value"""
+        if val is None:
+            self._payment_data_network_authentication = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.PaymentDataNetworkAuthentication(self._client)
+            obj.fill_with_data(val)
+            self._payment_data_network_authentication = obj
+        else:
+            self._payment_data_network_authentication = val
+        return self
+    
+    @property
     def metadata(self):
         """Get metadata"""
         return self._metadata
@@ -316,6 +385,12 @@ class TransactionOperation(object):
             self.gateway_operation_id = data["gateway_operation_id"]
         if "error_code" in data.keys():
             self.error_code = data["error_code"]
+        if "payment_data_three_d_s_request" in data.keys():
+            self.payment_data_three_d_s_request = data["payment_data_three_d_s_request"]
+        if "payment_data_three_d_s_authentication" in data.keys():
+            self.payment_data_three_d_s_authentication = data["payment_data_three_d_s_authentication"]
+        if "payment_data_network_authentication" in data.keys():
+            self.payment_data_network_authentication = data["payment_data_network_authentication"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
         if "gateway_fee" in data.keys():

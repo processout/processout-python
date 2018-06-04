@@ -35,6 +35,8 @@ class Transaction(object):
         self._amount = None
         self._authorized_amount = None
         self._captured_amount = None
+        self._refunded_amount = None
+        self._available_amount = None
         self._currency = None
         self._error_code = None
         self._three_d_s_status = None
@@ -412,6 +414,32 @@ class Transaction(object):
         return self
     
     @property
+    def refunded_amount(self):
+        """Get refunded_amount"""
+        return self._refunded_amount
+
+    @refunded_amount.setter
+    def refunded_amount(self, val):
+        """Set refunded_amount
+        Keyword argument:
+        val -- New refunded_amount value"""
+        self._refunded_amount = val
+        return self
+    
+    @property
+    def available_amount(self):
+        """Get available_amount"""
+        return self._available_amount
+
+    @available_amount.setter
+    def available_amount(self, val):
+        """Set available_amount
+        Keyword argument:
+        val -- New available_amount value"""
+        self._available_amount = val
+        return self
+    
+    @property
     def currency(self):
         """Get currency"""
         return self._currency
@@ -614,6 +642,10 @@ class Transaction(object):
             self.authorized_amount = data["authorized_amount"]
         if "captured_amount" in data.keys():
             self.captured_amount = data["captured_amount"]
+        if "refunded_amount" in data.keys():
+            self.refunded_amount = data["refunded_amount"]
+        if "available_amount" in data.keys():
+            self.available_amount = data["available_amount"]
         if "currency" in data.keys():
             self.currency = data["currency"]
         if "error_code" in data.keys():

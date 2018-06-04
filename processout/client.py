@@ -187,6 +187,24 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.Transaction(self, prefill)
 
+    def new_payment_data_three_ds_request(self, prefill = None):
+        """Create a new PaymentDataThreeDSRequest instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.PaymentDataThreeDSRequest(self, prefill)
+
+    def new_payment_data_network_authentication(self, prefill = None):
+        """Create a new PaymentDataNetworkAuthentication instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.PaymentDataNetworkAuthentication(self, prefill)
+
+    def new_payment_data_three_ds_authentication(self, prefill = None):
+        """Create a new PaymentDataThreeDSAuthentication instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.PaymentDataThreeDSAuthentication(self, prefill)
+
     def new_transaction_operation(self, prefill = None):
         """Create a new TransactionOperation instance
         Keyword argument:

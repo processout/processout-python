@@ -33,6 +33,7 @@ class Customer(object):
         self._state = None
         self._zip = None
         self._country_code = None
+        self._ip_address = None
         self._transactions_count = None
         self._subscriptions_count = None
         self._mrr_local = None
@@ -346,6 +347,19 @@ class Customer(object):
         return self
     
     @property
+    def ip_address(self):
+        """Get ip_address"""
+        return self._ip_address
+
+    @ip_address.setter
+    def ip_address(self, val):
+        """Set ip_address
+        Keyword argument:
+        val -- New ip_address value"""
+        self._ip_address = val
+        return self
+    
+    @property
     def transactions_count(self):
         """Get transactions_count"""
         return self._transactions_count
@@ -479,6 +493,8 @@ class Customer(object):
             self.zip = data["zip"]
         if "country_code" in data.keys():
             self.country_code = data["country_code"]
+        if "ip_address" in data.keys():
+            self.ip_address = data["ip_address"]
         if "transactions_count" in data.keys():
             self.transactions_count = data["transactions_count"]
         if "subscriptions_count" in data.keys():
@@ -678,6 +694,7 @@ class Customer(object):
             'state': self.state, 
             'zip': self.zip, 
             'country_code': self.country_code, 
+            'ip_address': self.ip_address, 
             'metadata': self.metadata
         }
 
@@ -742,6 +759,7 @@ class Customer(object):
             'state': self.state, 
             'zip': self.zip, 
             'country_code': self.country_code, 
+            'ip_address': self.ip_address, 
             'metadata': self.metadata
         }
 

@@ -28,6 +28,9 @@ from processout.project import Project
 from processout.refund import Refund
 from processout.subscription import Subscription
 from processout.transaction import Transaction
+from processout.paymentdatathreedsrequest import PaymentDataThreeDSRequest
+from processout.paymentdatanetworkauthentication import PaymentDataNetworkAuthentication
+from processout.paymentdatathreedsauthentication import PaymentDataThreeDSAuthentication
 from processout.transactionoperation import TransactionOperation
 from processout.webhook import Webhook
 from processout.webhookendpoint import WebhookEndpoint

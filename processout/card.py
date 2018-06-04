@@ -33,8 +33,9 @@ class Card(object):
         self._address2 = None
         self._city = None
         self._state = None
-        self._country_code = None
         self._zip = None
+        self._country_code = None
+        self._ip_address = None
         self._metadata = None
         self._expires_soon = None
         self._sandbox = None
@@ -309,6 +310,19 @@ class Card(object):
         return self
     
     @property
+    def zip(self):
+        """Get zip"""
+        return self._zip
+
+    @zip.setter
+    def zip(self, val):
+        """Set zip
+        Keyword argument:
+        val -- New zip value"""
+        self._zip = val
+        return self
+    
+    @property
     def country_code(self):
         """Get country_code"""
         return self._country_code
@@ -322,16 +336,16 @@ class Card(object):
         return self
     
     @property
-    def zip(self):
-        """Get zip"""
-        return self._zip
+    def ip_address(self):
+        """Get ip_address"""
+        return self._ip_address
 
-    @zip.setter
-    def zip(self, val):
-        """Set zip
+    @ip_address.setter
+    def ip_address(self, val):
+        """Set ip_address
         Keyword argument:
-        val -- New zip value"""
-        self._zip = val
+        val -- New ip_address value"""
+        self._ip_address = val
         return self
     
     @property
@@ -429,10 +443,12 @@ class Card(object):
             self.city = data["city"]
         if "state" in data.keys():
             self.state = data["state"]
-        if "country_code" in data.keys():
-            self.country_code = data["country_code"]
         if "zip" in data.keys():
             self.zip = data["zip"]
+        if "country_code" in data.keys():
+            self.country_code = data["country_code"]
+        if "ip_address" in data.keys():
+            self.ip_address = data["ip_address"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
         if "expires_soon" in data.keys():
