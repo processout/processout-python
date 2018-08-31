@@ -19,9 +19,9 @@ def main():
     assert invoice.id == fetched.id, "The invoices ID should be equal"
 
     # Capture an invoice
-    gr = GatewayRequest("sandbox", "POST", "https://processout.com", {
+    gr = GatewayRequest("sandbox", "POST", "https://processout.com?token=test-valid", {
         "Content-Type": "application/json"
-    }, "{\"token\": \"test-valid\"}")
+    }, "")
     transaction = invoice.capture(gr.to_string())
     assert transaction.status == "completed", "The transaction status was not completed"
 

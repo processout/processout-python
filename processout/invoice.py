@@ -510,7 +510,7 @@ class Invoice(object):
         path    = "/invoices/" + quote_plus(self.id) + "/authorize"
         data    = {
             'synchronous': options.get("synchronous"), 
-            'prioritized_gateway_configuration_id': options.get("prioritized_gateway_configuration_id"), 
+            'retry_drop_liability_shift': options.get("retry_drop_liability_shift"), 
             'source': source
         }
 
@@ -537,6 +537,7 @@ class Invoice(object):
         data    = {
             'authorize_only': options.get("authorize_only"), 
             'synchronous': options.get("synchronous"), 
+            'retry_drop_liability_shift': options.get("retry_drop_liability_shift"), 
             'source': source
         }
 
