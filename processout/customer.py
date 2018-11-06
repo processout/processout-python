@@ -34,6 +34,8 @@ class Customer(object):
         self._zip = None
         self._country_code = None
         self._ip_address = None
+        self._phone_number = None
+        self._legal_document = None
         self._transactions_count = None
         self._subscriptions_count = None
         self._mrr_local = None
@@ -360,6 +362,32 @@ class Customer(object):
         return self
     
     @property
+    def phone_number(self):
+        """Get phone_number"""
+        return self._phone_number
+
+    @phone_number.setter
+    def phone_number(self, val):
+        """Set phone_number
+        Keyword argument:
+        val -- New phone_number value"""
+        self._phone_number = val
+        return self
+    
+    @property
+    def legal_document(self):
+        """Get legal_document"""
+        return self._legal_document
+
+    @legal_document.setter
+    def legal_document(self, val):
+        """Set legal_document
+        Keyword argument:
+        val -- New legal_document value"""
+        self._legal_document = val
+        return self
+    
+    @property
     def transactions_count(self):
         """Get transactions_count"""
         return self._transactions_count
@@ -495,6 +523,10 @@ class Customer(object):
             self.country_code = data["country_code"]
         if "ip_address" in data.keys():
             self.ip_address = data["ip_address"]
+        if "phone_number" in data.keys():
+            self.phone_number = data["phone_number"]
+        if "legal_document" in data.keys():
+            self.legal_document = data["legal_document"]
         if "transactions_count" in data.keys():
             self.transactions_count = data["transactions_count"]
         if "subscriptions_count" in data.keys():
@@ -695,6 +727,8 @@ class Customer(object):
             'zip': self.zip, 
             'country_code': self.country_code, 
             'ip_address': self.ip_address, 
+            'phone_number': self.phone_number, 
+            'legal_document': self.legal_document, 
             'metadata': self.metadata
         }
 
@@ -760,6 +794,8 @@ class Customer(object):
             'zip': self.zip, 
             'country_code': self.country_code, 
             'ip_address': self.ip_address, 
+            'phone_number': self.phone_number, 
+            'legal_document': self.legal_document, 
             'metadata': self.metadata
         }
 
