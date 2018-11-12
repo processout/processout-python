@@ -511,6 +511,7 @@ class Invoice(object):
         data    = {
             'synchronous': options.get("synchronous"), 
             'retry_drop_liability_shift': options.get("retry_drop_liability_shift"), 
+            'capture_amount': options.get("capture_amount"), 
             'source': source
         }
 
@@ -538,6 +539,7 @@ class Invoice(object):
             'authorize_only': options.get("authorize_only"), 
             'synchronous': options.get("synchronous"), 
             'retry_drop_liability_shift': options.get("retry_drop_liability_shift"), 
+            'capture_amount': options.get("capture_amount"), 
             'source': source
         }
 
