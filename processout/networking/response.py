@@ -65,7 +65,7 @@ class Response:
     def message(self):
         """Get the response error message"""
         message = ""
-        if self.body["message"] != None:
+        if self.body.get("message") != None:
             message = message + self.body["message"]
 
         return message
