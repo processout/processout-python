@@ -56,7 +56,7 @@ class Response:
     def code(self):
         """Get the response code message"""
         code = ""
-        if self.body["error_type"] != None:
+        if self.body.get("error_type") != None:
             code = code + self.body["error_type"]
 
         return code
@@ -65,7 +65,7 @@ class Response:
     def message(self):
         """Get the response error message"""
         message = ""
-        if self.body["message"] != None:
+        if self.body.get("message") != None:
             message = message + self.body["message"]
 
         return message

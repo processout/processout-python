@@ -4,7 +4,7 @@ from processout.gatewayrequest import GatewayRequest
 
 def main():
     client = processout.ProcessOut("test-proj_gAO1Uu0ysZJvDuUpOGPkUBeE3pGalk3x",
-                                   "key_jqSPvwq3AG5MlYAgqxlwwgOcAC3Zy7d8")
+                                   "key_sandbox_mah31RDFqcDxmaS7MvhDbJfDJvjtsFTB")
 
     # Create and fetch an invoice
     invoice = client.new_invoice({
