@@ -22,8 +22,9 @@ class PayoutItem(object):
         self._transaction = None
         self._transaction_id = None
         self._type = None
-        self._gateway_id = None
-        self._fee = None
+        self._gateway_resource_id = None
+        self._amount = None
+        self._fees = None
         self._metadata = None
         self._created_at = None
         if prefill != None:
@@ -162,29 +163,42 @@ class PayoutItem(object):
         return self
     
     @property
-    def gateway_id(self):
-        """Get gateway_id"""
-        return self._gateway_id
+    def gateway_resource_id(self):
+        """Get gateway_resource_id"""
+        return self._gateway_resource_id
 
-    @gateway_id.setter
-    def gateway_id(self, val):
-        """Set gateway_id
+    @gateway_resource_id.setter
+    def gateway_resource_id(self, val):
+        """Set gateway_resource_id
         Keyword argument:
-        val -- New gateway_id value"""
-        self._gateway_id = val
+        val -- New gateway_resource_id value"""
+        self._gateway_resource_id = val
         return self
     
     @property
-    def fee(self):
-        """Get fee"""
-        return self._fee
+    def amount(self):
+        """Get amount"""
+        return self._amount
 
-    @fee.setter
-    def fee(self, val):
-        """Set fee
+    @amount.setter
+    def amount(self, val):
+        """Set amount
         Keyword argument:
-        val -- New fee value"""
-        self._fee = val
+        val -- New amount value"""
+        self._amount = val
+        return self
+    
+    @property
+    def fees(self):
+        """Get fees"""
+        return self._fees
+
+    @fees.setter
+    def fees(self, val):
+        """Set fees
+        Keyword argument:
+        val -- New fees value"""
+        self._fees = val
         return self
     
     @property
@@ -234,10 +248,12 @@ class PayoutItem(object):
             self.transaction_id = data["transaction_id"]
         if "type" in data.keys():
             self.type = data["type"]
-        if "gateway_id" in data.keys():
-            self.gateway_id = data["gateway_id"]
-        if "fee" in data.keys():
-            self.fee = data["fee"]
+        if "gateway_resource_id" in data.keys():
+            self.gateway_resource_id = data["gateway_resource_id"]
+        if "amount" in data.keys():
+            self.amount = data["amount"]
+        if "fees" in data.keys():
+            self.fees = data["fees"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
         if "created_at" in data.keys():

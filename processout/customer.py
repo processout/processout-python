@@ -36,10 +36,6 @@ class Customer(object):
         self._ip_address = None
         self._phone_number = None
         self._legal_document = None
-        self._transactions_count = None
-        self._subscriptions_count = None
-        self._mrr_local = None
-        self._total_revenue_local = None
         self._metadata = None
         self._sandbox = None
         self._created_at = None
@@ -388,58 +384,6 @@ class Customer(object):
         return self
     
     @property
-    def transactions_count(self):
-        """Get transactions_count"""
-        return self._transactions_count
-
-    @transactions_count.setter
-    def transactions_count(self, val):
-        """Set transactions_count
-        Keyword argument:
-        val -- New transactions_count value"""
-        self._transactions_count = val
-        return self
-    
-    @property
-    def subscriptions_count(self):
-        """Get subscriptions_count"""
-        return self._subscriptions_count
-
-    @subscriptions_count.setter
-    def subscriptions_count(self, val):
-        """Set subscriptions_count
-        Keyword argument:
-        val -- New subscriptions_count value"""
-        self._subscriptions_count = val
-        return self
-    
-    @property
-    def mrr_local(self):
-        """Get mrr_local"""
-        return self._mrr_local
-
-    @mrr_local.setter
-    def mrr_local(self, val):
-        """Set mrr_local
-        Keyword argument:
-        val -- New mrr_local value"""
-        self._mrr_local = val
-        return self
-    
-    @property
-    def total_revenue_local(self):
-        """Get total_revenue_local"""
-        return self._total_revenue_local
-
-    @total_revenue_local.setter
-    def total_revenue_local(self, val):
-        """Set total_revenue_local
-        Keyword argument:
-        val -- New total_revenue_local value"""
-        self._total_revenue_local = val
-        return self
-    
-    @property
     def metadata(self):
         """Get metadata"""
         return self._metadata
@@ -527,14 +471,6 @@ class Customer(object):
             self.phone_number = data["phone_number"]
         if "legal_document" in data.keys():
             self.legal_document = data["legal_document"]
-        if "transactions_count" in data.keys():
-            self.transactions_count = data["transactions_count"]
-        if "subscriptions_count" in data.keys():
-            self.subscriptions_count = data["subscriptions_count"]
-        if "mrr_local" in data.keys():
-            self.mrr_local = data["mrr_local"]
-        if "total_revenue_local" in data.keys():
-            self.total_revenue_local = data["total_revenue_local"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
         if "sandbox" in data.keys():
@@ -569,6 +505,27 @@ class Customer(object):
 
         return_values.append(a)
             
+
+        
+        return return_values[0]
+
+    def verify_token(self, token_id, options = {}):
+        """Verify a customer token's card is valid.
+        Keyword argument:
+        token_id -- ID of the token
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path    = "/customers/" + quote_plus(self.id) + "/tokens/" + quote_plus(token_id) + "/verify"
+        data    = {
+
+        }
+
+        response = Response(request.post(path, data, options))
+        return_values = []
+        
+        return_values.append(response.success)
 
         
         return return_values[0]

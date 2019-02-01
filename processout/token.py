@@ -245,6 +245,27 @@ class Token(object):
         
         return self
 
+    def verify(self, options = {}):
+        """Verify a customer token's card is valid.
+        Keyword argument:
+        
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path    = "/customers/" + quote_plus(self.customer_id) + "/tokens/" + quote_plus(self.id) + "/verify"
+        data    = {
+
+        }
+
+        response = Response(request.post(path, data, options))
+        return_values = []
+        
+        return_values.append(response.success)
+
+        
+        return return_values[0]
+
     def fetch_customer_tokens(self, customer_id, options = {}):
         """Get the customer's tokens.
         Keyword argument:
@@ -316,6 +337,8 @@ class Token(object):
             'source': options.get("source"), 
             'settings': options.get("settings"), 
             'target': options.get("target"), 
+            'verify': options.get("verify"), 
+            'verify_metadata': options.get("verify_metadata"), 
             'set_default': options.get("set_default")
         }
 

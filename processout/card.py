@@ -36,6 +36,7 @@ class Card(object):
         self._zip = None
         self._country_code = None
         self._ip_address = None
+        self._fingerprint = None
         self._metadata = None
         self._expires_soon = None
         self._sandbox = None
@@ -349,6 +350,19 @@ class Card(object):
         return self
     
     @property
+    def fingerprint(self):
+        """Get fingerprint"""
+        return self._fingerprint
+
+    @fingerprint.setter
+    def fingerprint(self, val):
+        """Set fingerprint
+        Keyword argument:
+        val -- New fingerprint value"""
+        self._fingerprint = val
+        return self
+    
+    @property
     def metadata(self):
         """Get metadata"""
         return self._metadata
@@ -449,6 +463,8 @@ class Card(object):
             self.country_code = data["country_code"]
         if "ip_address" in data.keys():
             self.ip_address = data["ip_address"]
+        if "fingerprint" in data.keys():
+            self.fingerprint = data["fingerprint"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
         if "expires_soon" in data.keys():
