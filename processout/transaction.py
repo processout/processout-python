@@ -33,10 +33,15 @@ class Transaction(object):
         self._refunds = None
         self._name = None
         self._amount = None
+        self._amount_local = None
         self._authorized_amount = None
+        self._authorized_amount_local = None
         self._captured_amount = None
+        self._captured_amount_local = None
         self._refunded_amount = None
+        self._refunded_amount_local = None
         self._available_amount = None
+        self._available_amount_local = None
         self._currency = None
         self._error_code = None
         self._three_d_s_status = None
@@ -46,6 +51,8 @@ class Transaction(object):
         self._processout_fee = None
         self._estimated_fee = None
         self._gateway_fee = None
+        self._gateway_fee_local = None
+        self._currency_fee = None
         self._metadata = None
         self._sandbox = None
         self._created_at = None
@@ -388,6 +395,19 @@ class Transaction(object):
         return self
     
     @property
+    def amount_local(self):
+        """Get amount_local"""
+        return self._amount_local
+
+    @amount_local.setter
+    def amount_local(self, val):
+        """Set amount_local
+        Keyword argument:
+        val -- New amount_local value"""
+        self._amount_local = val
+        return self
+    
+    @property
     def authorized_amount(self):
         """Get authorized_amount"""
         return self._authorized_amount
@@ -398,6 +418,19 @@ class Transaction(object):
         Keyword argument:
         val -- New authorized_amount value"""
         self._authorized_amount = val
+        return self
+    
+    @property
+    def authorized_amount_local(self):
+        """Get authorized_amount_local"""
+        return self._authorized_amount_local
+
+    @authorized_amount_local.setter
+    def authorized_amount_local(self, val):
+        """Set authorized_amount_local
+        Keyword argument:
+        val -- New authorized_amount_local value"""
+        self._authorized_amount_local = val
         return self
     
     @property
@@ -414,6 +447,19 @@ class Transaction(object):
         return self
     
     @property
+    def captured_amount_local(self):
+        """Get captured_amount_local"""
+        return self._captured_amount_local
+
+    @captured_amount_local.setter
+    def captured_amount_local(self, val):
+        """Set captured_amount_local
+        Keyword argument:
+        val -- New captured_amount_local value"""
+        self._captured_amount_local = val
+        return self
+    
+    @property
     def refunded_amount(self):
         """Get refunded_amount"""
         return self._refunded_amount
@@ -427,6 +473,19 @@ class Transaction(object):
         return self
     
     @property
+    def refunded_amount_local(self):
+        """Get refunded_amount_local"""
+        return self._refunded_amount_local
+
+    @refunded_amount_local.setter
+    def refunded_amount_local(self, val):
+        """Set refunded_amount_local
+        Keyword argument:
+        val -- New refunded_amount_local value"""
+        self._refunded_amount_local = val
+        return self
+    
+    @property
     def available_amount(self):
         """Get available_amount"""
         return self._available_amount
@@ -437,6 +496,19 @@ class Transaction(object):
         Keyword argument:
         val -- New available_amount value"""
         self._available_amount = val
+        return self
+    
+    @property
+    def available_amount_local(self):
+        """Get available_amount_local"""
+        return self._available_amount_local
+
+    @available_amount_local.setter
+    def available_amount_local(self, val):
+        """Set available_amount_local
+        Keyword argument:
+        val -- New available_amount_local value"""
+        self._available_amount_local = val
         return self
     
     @property
@@ -557,6 +629,32 @@ class Transaction(object):
         return self
     
     @property
+    def gateway_fee_local(self):
+        """Get gateway_fee_local"""
+        return self._gateway_fee_local
+
+    @gateway_fee_local.setter
+    def gateway_fee_local(self, val):
+        """Set gateway_fee_local
+        Keyword argument:
+        val -- New gateway_fee_local value"""
+        self._gateway_fee_local = val
+        return self
+    
+    @property
+    def currency_fee(self):
+        """Get currency_fee"""
+        return self._currency_fee
+
+    @currency_fee.setter
+    def currency_fee(self, val):
+        """Set currency_fee
+        Keyword argument:
+        val -- New currency_fee value"""
+        self._currency_fee = val
+        return self
+    
+    @property
     def metadata(self):
         """Get metadata"""
         return self._metadata
@@ -638,14 +736,24 @@ class Transaction(object):
             self.name = data["name"]
         if "amount" in data.keys():
             self.amount = data["amount"]
+        if "amount_local" in data.keys():
+            self.amount_local = data["amount_local"]
         if "authorized_amount" in data.keys():
             self.authorized_amount = data["authorized_amount"]
+        if "authorized_amount_local" in data.keys():
+            self.authorized_amount_local = data["authorized_amount_local"]
         if "captured_amount" in data.keys():
             self.captured_amount = data["captured_amount"]
+        if "captured_amount_local" in data.keys():
+            self.captured_amount_local = data["captured_amount_local"]
         if "refunded_amount" in data.keys():
             self.refunded_amount = data["refunded_amount"]
+        if "refunded_amount_local" in data.keys():
+            self.refunded_amount_local = data["refunded_amount_local"]
         if "available_amount" in data.keys():
             self.available_amount = data["available_amount"]
+        if "available_amount_local" in data.keys():
+            self.available_amount_local = data["available_amount_local"]
         if "currency" in data.keys():
             self.currency = data["currency"]
         if "error_code" in data.keys():
@@ -664,6 +772,10 @@ class Transaction(object):
             self.estimated_fee = data["estimated_fee"]
         if "gateway_fee" in data.keys():
             self.gateway_fee = data["gateway_fee"]
+        if "gateway_fee_local" in data.keys():
+            self.gateway_fee_local = data["gateway_fee_local"]
+        if "currency_fee" in data.keys():
+            self.currency_fee = data["currency_fee"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
         if "sandbox" in data.keys():
