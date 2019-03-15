@@ -686,7 +686,8 @@ class Customer(object):
             'ip_address': self.ip_address, 
             'phone_number': self.phone_number, 
             'legal_document': self.legal_document, 
-            'metadata': self.metadata
+            'metadata': self.metadata, 
+            'id': self.id
         }
 
         response = Response(request.post(path, data, options))

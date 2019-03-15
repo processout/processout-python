@@ -25,7 +25,7 @@ class Request:
         """Return the headers sent with the request"""
         headers = {}
         headers["API-Version"] = "1.4.0.0"
-        headers["User-Agent"] = "ProcessOut Python-Bindings/6.13.0"
+        headers["User-Agent"] = "ProcessOut Python-Bindings/6.14.0"
 
         if options is None:
             return headers

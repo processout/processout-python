@@ -38,6 +38,7 @@ class Invoice(object):
         self._metadata = None
         self._return_url = None
         self._cancel_url = None
+        self._webhook_url = None
         self._sandbox = None
         self._created_at = None
         if prefill != None:
@@ -414,6 +415,19 @@ class Invoice(object):
         return self
     
     @property
+    def webhook_url(self):
+        """Get webhook_url"""
+        return self._webhook_url
+
+    @webhook_url.setter
+    def webhook_url(self, val):
+        """Set webhook_url
+        Keyword argument:
+        val -- New webhook_url value"""
+        self._webhook_url = val
+        return self
+    
+    @property
     def sandbox(self):
         """Get sandbox"""
         return self._sandbox
@@ -492,6 +506,8 @@ class Invoice(object):
             self.return_url = data["return_url"]
         if "cancel_url" in data.keys():
             self.cancel_url = data["cancel_url"]
+        if "webhook_url" in data.keys():
+            self.webhook_url = data["webhook_url"]
         if "sandbox" in data.keys():
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
@@ -725,7 +741,8 @@ class Invoice(object):
             'statement_descriptor_company': self.statement_descriptor_company, 
             'statement_descriptor_url': self.statement_descriptor_url, 
             'return_url': self.return_url, 
-            'cancel_url': self.cancel_url
+            'cancel_url': self.cancel_url, 
+            'webhook_url': self.webhook_url
         }
 
         response = Response(request.post(path, data, options))
