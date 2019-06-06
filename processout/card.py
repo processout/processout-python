@@ -19,6 +19,8 @@ class Card(object):
         self._project_id = None
         self._token = None
         self._scheme = None
+        self._co_scheme = None
+        self._preferred_scheme = None
         self._type = None
         self._bank_name = None
         self._brand = None
@@ -126,6 +128,32 @@ class Card(object):
         Keyword argument:
         val -- New scheme value"""
         self._scheme = val
+        return self
+    
+    @property
+    def co_scheme(self):
+        """Get co_scheme"""
+        return self._co_scheme
+
+    @co_scheme.setter
+    def co_scheme(self, val):
+        """Set co_scheme
+        Keyword argument:
+        val -- New co_scheme value"""
+        self._co_scheme = val
+        return self
+    
+    @property
+    def preferred_scheme(self):
+        """Get preferred_scheme"""
+        return self._preferred_scheme
+
+    @preferred_scheme.setter
+    def preferred_scheme(self, val):
+        """Set preferred_scheme
+        Keyword argument:
+        val -- New preferred_scheme value"""
+        self._preferred_scheme = val
         return self
     
     @property
@@ -429,6 +457,10 @@ class Card(object):
             self.token = data["token"]
         if "scheme" in data.keys():
             self.scheme = data["scheme"]
+        if "co_scheme" in data.keys():
+            self.co_scheme = data["co_scheme"]
+        if "preferred_scheme" in data.keys():
+            self.preferred_scheme = data["preferred_scheme"]
         if "type" in data.keys():
             self.type = data["type"]
         if "bank_name" in data.keys():

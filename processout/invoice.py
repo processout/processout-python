@@ -41,6 +41,9 @@ class Invoice(object):
         self._webhook_url = None
         self._sandbox = None
         self._created_at = None
+        self._risk = None
+        self._shipping = None
+        self._device = None
         if prefill != None:
             self.fill_with_data(prefill)
 
@@ -453,6 +456,72 @@ class Invoice(object):
         self._created_at = val
         return self
     
+    @property
+    def risk(self):
+        """Get risk"""
+        return self._risk
+
+    @risk.setter
+    def risk(self, val):
+        """Set risk
+        Keyword argument:
+        val -- New risk value"""
+        if val is None:
+            self._risk = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.InvoiceRisk(self._client)
+            obj.fill_with_data(val)
+            self._risk = obj
+        else:
+            self._risk = val
+        return self
+    
+    @property
+    def shipping(self):
+        """Get shipping"""
+        return self._shipping
+
+    @shipping.setter
+    def shipping(self, val):
+        """Set shipping
+        Keyword argument:
+        val -- New shipping value"""
+        if val is None:
+            self._shipping = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.InvoiceShipping(self._client)
+            obj.fill_with_data(val)
+            self._shipping = obj
+        else:
+            self._shipping = val
+        return self
+    
+    @property
+    def device(self):
+        """Get device"""
+        return self._device
+
+    @device.setter
+    def device(self, val):
+        """Set device
+        Keyword argument:
+        val -- New device value"""
+        if val is None:
+            self._device = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.InvoiceDevice(self._client)
+            obj.fill_with_data(val)
+            self._device = obj
+        else:
+            self._device = val
+        return self
+    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -512,6 +581,12 @@ class Invoice(object):
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
             self.created_at = data["created_at"]
+        if "risk" in data.keys():
+            self.risk = data["risk"]
+        if "shipping" in data.keys():
+            self.shipping = data["shipping"]
+        if "device" in data.keys():
+            self.device = data["device"]
         
         return self
 
@@ -528,6 +603,8 @@ class Invoice(object):
             'synchronous': options.get("synchronous"), 
             'retry_drop_liability_shift': options.get("retry_drop_liability_shift"), 
             'capture_amount': options.get("capture_amount"), 
+            'enable_three_d_s_2': options.get("enable_three_d_s_2"), 
+            'auto_capture_at': options.get("auto_capture_at"), 
             'source': source
         }
 
@@ -556,6 +633,8 @@ class Invoice(object):
             'synchronous': options.get("synchronous"), 
             'retry_drop_liability_shift': options.get("retry_drop_liability_shift"), 
             'capture_amount': options.get("capture_amount"), 
+            'auto_capture_at': options.get("auto_capture_at"), 
+            'enable_three_d_s_2': options.get("enable_three_d_s_2"), 
             'source': source
         }
 
@@ -628,6 +707,7 @@ class Invoice(object):
         request = Request(self._client)
         path    = "/invoices/" + quote_plus(self.id) + "/three-d-s"
         data    = {
+            'enable_three_d_s_2': options.get("enable_three_d_s_2"), 
             'source': source
         }
 
@@ -742,7 +822,10 @@ class Invoice(object):
             'statement_descriptor_url': self.statement_descriptor_url, 
             'return_url': self.return_url, 
             'cancel_url': self.cancel_url, 
-            'webhook_url': self.webhook_url
+            'webhook_url': self.webhook_url, 
+            'risk': self.risk, 
+            'shipping': self.shipping, 
+            'device': self.device
         }
 
         response = Response(request.post(path, data, options))

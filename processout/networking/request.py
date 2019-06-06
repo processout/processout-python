@@ -25,7 +25,7 @@ class Request:
         """Return the headers sent with the request"""
         headers = {}
         headers["API-Version"] = "1.4.0.0"
-        headers["User-Agent"] = "ProcessOut Python-Bindings/6.14.0"
+        headers["User-Agent"] = "ProcessOut Python-Bindings/6.15.0"
 
         if options is None:
             return headers
@@ -67,6 +67,7 @@ class Request:
             urlencode(self._get_data(data, options), True),
             auth = self._authenticate(),
             verify = True,
+            timeout = 65,
             headers = self._get_headers(options))
 
     def post(self, path, data, options):
@@ -81,6 +82,7 @@ class Request:
             auth = self._authenticate(),
             json = self._get_data(data, options),
             verify = True,
+            timeout = 65,
             headers = self._get_headers(options))
 
     def put(self, path, data, options):
@@ -95,6 +97,7 @@ class Request:
             auth = self._authenticate(),
             json = self._get_data(data, options),
             verify = True,
+            timeout = 65,
             headers = self._get_headers(options))
 
     def delete(self, path, data, options):
@@ -109,4 +112,5 @@ class Request:
                 urlencode(self._get_data(data, options), True),
             auth = self._authenticate(),
             verify = True,
+            timeout = 65,
             headers = self._get_headers(options))

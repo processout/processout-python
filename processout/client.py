@@ -121,6 +121,24 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.Invoice(self, prefill)
 
+    def new_invoice_risk(self, prefill = None):
+        """Create a new InvoiceRisk instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.InvoiceRisk(self, prefill)
+
+    def new_invoice_device(self, prefill = None):
+        """Create a new InvoiceDevice instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.InvoiceDevice(self, prefill)
+
+    def new_invoice_shipping(self, prefill = None):
+        """Create a new InvoiceShipping instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.InvoiceShipping(self, prefill)
+
     def new_invoice_detail(self, prefill = None):
         """Create a new InvoiceDetail instance
         Keyword argument:

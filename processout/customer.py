@@ -36,6 +36,8 @@ class Customer(object):
         self._ip_address = None
         self._phone_number = None
         self._legal_document = None
+        self._sex = None
+        self._is_business = None
         self._metadata = None
         self._sandbox = None
         self._created_at = None
@@ -384,6 +386,32 @@ class Customer(object):
         return self
     
     @property
+    def sex(self):
+        """Get sex"""
+        return self._sex
+
+    @sex.setter
+    def sex(self, val):
+        """Set sex
+        Keyword argument:
+        val -- New sex value"""
+        self._sex = val
+        return self
+    
+    @property
+    def is_business(self):
+        """Get is_business"""
+        return self._is_business
+
+    @is_business.setter
+    def is_business(self, val):
+        """Set is_business
+        Keyword argument:
+        val -- New is_business value"""
+        self._is_business = val
+        return self
+    
+    @property
     def metadata(self):
         """Get metadata"""
         return self._metadata
@@ -471,6 +499,10 @@ class Customer(object):
             self.phone_number = data["phone_number"]
         if "legal_document" in data.keys():
             self.legal_document = data["legal_document"]
+        if "sex" in data.keys():
+            self.sex = data["sex"]
+        if "is_business" in data.keys():
+            self.is_business = data["is_business"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
         if "sandbox" in data.keys():
@@ -686,6 +718,8 @@ class Customer(object):
             'ip_address': self.ip_address, 
             'phone_number': self.phone_number, 
             'legal_document': self.legal_document, 
+            'is_business': self.is_business, 
+            'sex': self.sex, 
             'metadata': self.metadata, 
             'id': self.id
         }
@@ -754,6 +788,8 @@ class Customer(object):
             'ip_address': self.ip_address, 
             'phone_number': self.phone_number, 
             'legal_document': self.legal_document, 
+            'is_business': self.is_business, 
+            'sex': self.sex, 
             'metadata': self.metadata
         }
 

@@ -20,8 +20,6 @@ class GatewayConfiguration(object):
         self._gateway = None
         self._gateway_id = None
         self._name = None
-        self._fee_fixed = None
-        self._fee_percentage = None
         self._default_currency = None
         self._enabled = None
         self._public_keys = None
@@ -128,32 +126,6 @@ class GatewayConfiguration(object):
         return self
     
     @property
-    def fee_fixed(self):
-        """Get fee_fixed"""
-        return self._fee_fixed
-
-    @fee_fixed.setter
-    def fee_fixed(self, val):
-        """Set fee_fixed
-        Keyword argument:
-        val -- New fee_fixed value"""
-        self._fee_fixed = val
-        return self
-    
-    @property
-    def fee_percentage(self):
-        """Get fee_percentage"""
-        return self._fee_percentage
-
-    @fee_percentage.setter
-    def fee_percentage(self, val):
-        """Set fee_percentage
-        Keyword argument:
-        val -- New fee_percentage value"""
-        self._fee_percentage = val
-        return self
-    
-    @property
     def default_currency(self):
         """Get default_currency"""
         return self._default_currency
@@ -235,10 +207,6 @@ class GatewayConfiguration(object):
             self.gateway_id = data["gateway_id"]
         if "name" in data.keys():
             self.name = data["name"]
-        if "fee_fixed" in data.keys():
-            self.fee_fixed = data["fee_fixed"]
-        if "fee_percentage" in data.keys():
-            self.fee_percentage = data["fee_percentage"]
         if "default_currency" in data.keys():
             self.default_currency = data["default_currency"]
         if "enabled" in data.keys():
@@ -321,10 +289,9 @@ class GatewayConfiguration(object):
             'id': self.id, 
             'name': self.name, 
             'enabled': self.enabled, 
-            'fee_fixed': self.fee_fixed, 
-            'fee_percentage': self.fee_percentage, 
             'default_currency': self.default_currency, 
-            'settings': options.get("settings")
+            'settings': options.get("settings"), 
+            'sub_accounts_enabled': options.get("sub_accounts_enabled")
         }
 
         response = Response(request.put(path, data, options))
@@ -374,10 +341,9 @@ class GatewayConfiguration(object):
             'id': self.id, 
             'name': self.name, 
             'enabled': self.enabled, 
-            'fee_fixed': self.fee_fixed, 
-            'fee_percentage': self.fee_percentage, 
             'default_currency': self.default_currency, 
-            'settings': options.get("settings")
+            'settings': options.get("settings"), 
+            'sub_accounts_enabled': options.get("sub_accounts_enabled")
         }
 
         response = Response(request.post(path, data, options))

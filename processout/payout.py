@@ -32,6 +32,7 @@ class Payout(object):
         self._fees = None
         self._adjustments = None
         self._reserve = None
+        self._settled_at = None
         self._created_at = None
         if prefill != None:
             self.fill_with_data(prefill)
@@ -281,6 +282,19 @@ class Payout(object):
         return self
     
     @property
+    def settled_at(self):
+        """Get settled_at"""
+        return self._settled_at
+
+    @settled_at.setter
+    def settled_at(self, val):
+        """Set settled_at
+        Keyword argument:
+        val -- New settled_at value"""
+        self._settled_at = val
+        return self
+    
+    @property
     def created_at(self):
         """Get created_at"""
         return self._created_at
@@ -334,6 +348,8 @@ class Payout(object):
             self.adjustments = data["adjustments"]
         if "reserve" in data.keys():
             self.reserve = data["reserve"]
+        if "settled_at" in data.keys():
+            self.settled_at = data["settled_at"]
         if "created_at" in data.keys():
             self.created_at = data["created_at"]
         

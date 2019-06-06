@@ -17,6 +17,9 @@ from processout.event import Event
 from processout.gateway import Gateway
 from processout.gatewayconfiguration import GatewayConfiguration
 from processout.invoice import Invoice
+from processout.invoicerisk import InvoiceRisk
+from processout.invoicedevice import InvoiceDevice
+from processout.invoiceshipping import InvoiceShipping
 from processout.invoicedetail import InvoiceDetail
 from processout.customeraction import CustomerAction
 from processout.dunningaction import DunningAction

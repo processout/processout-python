@@ -44,10 +44,16 @@ class Transaction(object):
         self._available_amount_local = None
         self._currency = None
         self._error_code = None
+        self._gateway_name = None
         self._three_d_s_status = None
         self._status = None
         self._authorized = None
         self._captured = None
+        self._voided = None
+        self._refunded = None
+        self._chargedback = None
+        self._received_fraud_notification = None
+        self._received_retrieval_request = None
         self._processout_fee = None
         self._estimated_fee = None
         self._gateway_fee = None
@@ -56,6 +62,8 @@ class Transaction(object):
         self._metadata = None
         self._sandbox = None
         self._created_at = None
+        self._chargedback_at = None
+        self._refunded_at = None
         if prefill != None:
             self.fill_with_data(prefill)
 
@@ -123,7 +131,7 @@ class Transaction(object):
             return self
 
         if isinstance(val, dict):
-            obj = processout.Customer(self._client)
+            obj = processout.Invoice(self._client)
             obj.fill_with_data(val)
             self._invoice = obj
         else:
@@ -538,6 +546,19 @@ class Transaction(object):
         return self
     
     @property
+    def gateway_name(self):
+        """Get gateway_name"""
+        return self._gateway_name
+
+    @gateway_name.setter
+    def gateway_name(self, val):
+        """Set gateway_name
+        Keyword argument:
+        val -- New gateway_name value"""
+        self._gateway_name = val
+        return self
+    
+    @property
     def three_d_s_status(self):
         """Get three_d_s_status"""
         return self._three_d_s_status
@@ -587,6 +608,71 @@ class Transaction(object):
         Keyword argument:
         val -- New captured value"""
         self._captured = val
+        return self
+    
+    @property
+    def voided(self):
+        """Get voided"""
+        return self._voided
+
+    @voided.setter
+    def voided(self, val):
+        """Set voided
+        Keyword argument:
+        val -- New voided value"""
+        self._voided = val
+        return self
+    
+    @property
+    def refunded(self):
+        """Get refunded"""
+        return self._refunded
+
+    @refunded.setter
+    def refunded(self, val):
+        """Set refunded
+        Keyword argument:
+        val -- New refunded value"""
+        self._refunded = val
+        return self
+    
+    @property
+    def chargedback(self):
+        """Get chargedback"""
+        return self._chargedback
+
+    @chargedback.setter
+    def chargedback(self, val):
+        """Set chargedback
+        Keyword argument:
+        val -- New chargedback value"""
+        self._chargedback = val
+        return self
+    
+    @property
+    def received_fraud_notification(self):
+        """Get received_fraud_notification"""
+        return self._received_fraud_notification
+
+    @received_fraud_notification.setter
+    def received_fraud_notification(self, val):
+        """Set received_fraud_notification
+        Keyword argument:
+        val -- New received_fraud_notification value"""
+        self._received_fraud_notification = val
+        return self
+    
+    @property
+    def received_retrieval_request(self):
+        """Get received_retrieval_request"""
+        return self._received_retrieval_request
+
+    @received_retrieval_request.setter
+    def received_retrieval_request(self, val):
+        """Set received_retrieval_request
+        Keyword argument:
+        val -- New received_retrieval_request value"""
+        self._received_retrieval_request = val
         return self
     
     @property
@@ -693,6 +779,32 @@ class Transaction(object):
         self._created_at = val
         return self
     
+    @property
+    def chargedback_at(self):
+        """Get chargedback_at"""
+        return self._chargedback_at
+
+    @chargedback_at.setter
+    def chargedback_at(self, val):
+        """Set chargedback_at
+        Keyword argument:
+        val -- New chargedback_at value"""
+        self._chargedback_at = val
+        return self
+    
+    @property
+    def refunded_at(self):
+        """Get refunded_at"""
+        return self._refunded_at
+
+    @refunded_at.setter
+    def refunded_at(self, val):
+        """Set refunded_at
+        Keyword argument:
+        val -- New refunded_at value"""
+        self._refunded_at = val
+        return self
+    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -758,6 +870,8 @@ class Transaction(object):
             self.currency = data["currency"]
         if "error_code" in data.keys():
             self.error_code = data["error_code"]
+        if "gateway_name" in data.keys():
+            self.gateway_name = data["gateway_name"]
         if "three_d_s_status" in data.keys():
             self.three_d_s_status = data["three_d_s_status"]
         if "status" in data.keys():
@@ -766,6 +880,16 @@ class Transaction(object):
             self.authorized = data["authorized"]
         if "captured" in data.keys():
             self.captured = data["captured"]
+        if "voided" in data.keys():
+            self.voided = data["voided"]
+        if "refunded" in data.keys():
+            self.refunded = data["refunded"]
+        if "chargedback" in data.keys():
+            self.chargedback = data["chargedback"]
+        if "received_fraud_notification" in data.keys():
+            self.received_fraud_notification = data["received_fraud_notification"]
+        if "received_retrieval_request" in data.keys():
+            self.received_retrieval_request = data["received_retrieval_request"]
         if "processout_fee" in data.keys():
             self.processout_fee = data["processout_fee"]
         if "estimated_fee" in data.keys():
@@ -782,6 +906,10 @@ class Transaction(object):
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
             self.created_at = data["created_at"]
+        if "chargedback_at" in data.keys():
+            self.chargedback_at = data["chargedback_at"]
+        if "refunded_at" in data.keys():
+            self.refunded_at = data["refunded_at"]
         
         return self
 
