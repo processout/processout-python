@@ -30,6 +30,7 @@ class Invoice(object):
         self._name = None
         self._amount = None
         self._currency = None
+        self._merchant_initiator_type = None
         self._statement_descriptor = None
         self._statement_descriptor_phone = None
         self._statement_descriptor_city = None
@@ -314,6 +315,19 @@ class Invoice(object):
         return self
     
     @property
+    def merchant_initiator_type(self):
+        """Get merchant_initiator_type"""
+        return self._merchant_initiator_type
+
+    @merchant_initiator_type.setter
+    def merchant_initiator_type(self, val):
+        """Set merchant_initiator_type
+        Keyword argument:
+        val -- New merchant_initiator_type value"""
+        self._merchant_initiator_type = val
+        return self
+    
+    @property
     def statement_descriptor(self):
         """Get statement_descriptor"""
         return self._statement_descriptor
@@ -559,6 +573,8 @@ class Invoice(object):
             self.amount = data["amount"]
         if "currency" in data.keys():
             self.currency = data["currency"]
+        if "merchant_initiator_type" in data.keys():
+            self.merchant_initiator_type = data["merchant_initiator_type"]
         if "statement_descriptor" in data.keys():
             self.statement_descriptor = data["statement_descriptor"]
         if "statement_descriptor_phone" in data.keys():
@@ -815,6 +831,7 @@ class Invoice(object):
             'currency': self.currency, 
             'metadata': self.metadata, 
             'details': self.details, 
+            'merchant_initiator_type': self.merchant_initiator_type, 
             'statement_descriptor': self.statement_descriptor, 
             'statement_descriptor_phone': self.statement_descriptor_phone, 
             'statement_descriptor_city': self.statement_descriptor_city, 
