@@ -25,6 +25,7 @@ class Token(object):
         self._metadata = None
         self._is_subscription_only = None
         self._is_default = None
+        self._is_chargeable = None
         self._created_at = None
         if prefill != None:
             self.fill_with_data(prefill)
@@ -201,6 +202,19 @@ class Token(object):
         return self
     
     @property
+    def is_chargeable(self):
+        """Get is_chargeable"""
+        return self._is_chargeable
+
+    @is_chargeable.setter
+    def is_chargeable(self, val):
+        """Set is_chargeable
+        Keyword argument:
+        val -- New is_chargeable value"""
+        self._is_chargeable = val
+        return self
+    
+    @property
     def created_at(self):
         """Get created_at"""
         return self._created_at
@@ -240,6 +254,8 @@ class Token(object):
             self.is_subscription_only = data["is_subscription_only"]
         if "is_default" in data.keys():
             self.is_default = data["is_default"]
+        if "is_chargeable" in data.keys():
+            self.is_chargeable = data["is_chargeable"]
         if "created_at" in data.keys():
             self.created_at = data["created_at"]
         
@@ -351,6 +367,27 @@ class Token(object):
                 
         return_values.append(self.fill_with_data(body))
                 
+
+        
+        return return_values[0]
+
+    def save(self, options = {}):
+        """Save the updated customer attributes.
+        Keyword argument:
+        
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path    = "/customers/" + quote_plus(self.customer_id) + "/tokens/" + quote_plus(self.id) + ""
+        data    = {
+
+        }
+
+        response = Response(request.put(path, data, options))
+        return_values = []
+        
+        return_values.append(response.success)
 
         
         return return_values[0]

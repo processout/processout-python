@@ -6,7 +6,6 @@ from processout.activity import Activity
 from processout.addon import Addon
 from processout.apirequest import APIRequest
 from processout.apiversion import APIVersion
-from processout.authorizationrequest import AuthorizationRequest
 from processout.card import Card
 from processout.cardinformation import CardInformation
 from processout.coupon import Coupon

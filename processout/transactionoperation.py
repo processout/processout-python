@@ -28,6 +28,7 @@ class TransactionOperation(object):
         self._type = None
         self._gateway_operation_id = None
         self._error_code = None
+        self._gateway_data = None
         self._payment_data_three_d_s_request = None
         self._payment_data_three_d_s_authentication = None
         self._payment_data_network_authentication = None
@@ -248,6 +249,19 @@ class TransactionOperation(object):
         return self
     
     @property
+    def gateway_data(self):
+        """Get gateway_data"""
+        return self._gateway_data
+
+    @gateway_data.setter
+    def gateway_data(self, val):
+        """Set gateway_data
+        Keyword argument:
+        val -- New gateway_data value"""
+        self._gateway_data = val
+        return self
+    
+    @property
     def payment_data_three_d_s_request(self):
         """Get payment_data_three_d_s_request"""
         return self._payment_data_three_d_s_request
@@ -385,6 +399,8 @@ class TransactionOperation(object):
             self.gateway_operation_id = data["gateway_operation_id"]
         if "error_code" in data.keys():
             self.error_code = data["error_code"]
+        if "gateway_data" in data.keys():
+            self.gateway_data = data["gateway_data"]
         if "payment_data_three_d_s_request" in data.keys():
             self.payment_data_three_d_s_request = data["payment_data_three_d_s_request"]
         if "payment_data_three_d_s_authentication" in data.keys():

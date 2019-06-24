@@ -55,12 +55,6 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.APIVersion(self, prefill)
 
-    def new_authorization_request(self, prefill = None):
-        """Create a new AuthorizationRequest instance
-        Keyword argument:
-        prefill -- Data used to prefill the object (optional)"""
-        return processout.AuthorizationRequest(self, prefill)
-
     def new_card(self, prefill = None):
         """Create a new Card instance
         Keyword argument:
