@@ -37,9 +37,11 @@ class Invoice(object):
         self._statement_descriptor_company = None
         self._statement_descriptor_url = None
         self._metadata = None
+        self._gateway_data = None
         self._return_url = None
         self._cancel_url = None
         self._webhook_url = None
+        self._require_backend_capture = None
         self._sandbox = None
         self._created_at = None
         self._risk = None
@@ -406,6 +408,19 @@ class Invoice(object):
         return self
     
     @property
+    def gateway_data(self):
+        """Get gateway_data"""
+        return self._gateway_data
+
+    @gateway_data.setter
+    def gateway_data(self, val):
+        """Set gateway_data
+        Keyword argument:
+        val -- New gateway_data value"""
+        self._gateway_data = val
+        return self
+    
+    @property
     def return_url(self):
         """Get return_url"""
         return self._return_url
@@ -442,6 +457,19 @@ class Invoice(object):
         Keyword argument:
         val -- New webhook_url value"""
         self._webhook_url = val
+        return self
+    
+    @property
+    def require_backend_capture(self):
+        """Get require_backend_capture"""
+        return self._require_backend_capture
+
+    @require_backend_capture.setter
+    def require_backend_capture(self, val):
+        """Set require_backend_capture
+        Keyword argument:
+        val -- New require_backend_capture value"""
+        self._require_backend_capture = val
         return self
     
     @property
@@ -587,12 +615,16 @@ class Invoice(object):
             self.statement_descriptor_url = data["statement_descriptor_url"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
+        if "gateway_data" in data.keys():
+            self.gateway_data = data["gateway_data"]
         if "return_url" in data.keys():
             self.return_url = data["return_url"]
         if "cancel_url" in data.keys():
             self.cancel_url = data["cancel_url"]
         if "webhook_url" in data.keys():
             self.webhook_url = data["webhook_url"]
+        if "require_backend_capture" in data.keys():
+            self.require_backend_capture = data["require_backend_capture"]
         if "sandbox" in data.keys():
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
@@ -829,6 +861,7 @@ class Invoice(object):
             'name': self.name, 
             'amount': self.amount, 
             'currency': self.currency, 
+            'gateway_data': self.gateway_data, 
             'metadata': self.metadata, 
             'details': self.details, 
             'merchant_initiator_type': self.merchant_initiator_type, 
@@ -842,7 +875,8 @@ class Invoice(object):
             'webhook_url': self.webhook_url, 
             'risk': self.risk, 
             'shipping': self.shipping, 
-            'device': self.device
+            'device': self.device, 
+            'require_backend_capture': self.require_backend_capture
         }
 
         response = Response(request.post(path, data, options))
