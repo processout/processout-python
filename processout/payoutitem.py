@@ -4,6 +4,7 @@ except ImportError:
     from urllib import quote_plus
 
 import processout
+import json
 
 from processout.networking.request  import Request
 from processout.networking.response import Response
@@ -260,5 +261,22 @@ class PayoutItem(object):
             self.created_at = data["created_at"]
         
         return self
+
+    def to_json(self):
+        return {
+            "id": self.id,
+            "project": self.project,
+            "project_id": self.project_id,
+            "payout": self.payout,
+            "payout_id": self.payout_id,
+            "transaction": self.transaction,
+            "transaction_id": self.transaction_id,
+            "type": self.type,
+            "gateway_resource_id": self.gateway_resource_id,
+            "amount": self.amount,
+            "fees": self.fees,
+            "metadata": self.metadata,
+            "created_at": self.created_at,
+        }
 
     

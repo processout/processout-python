@@ -4,6 +4,7 @@ except ImportError:
     from urllib import quote_plus
 
 import processout
+import json
 
 from processout.networking.request  import Request
 from processout.networking.response import Response
@@ -232,32 +233,20 @@ class Project(object):
         
         return self
 
-    def regenerate_private_key(self, options = {}):
-        """Regenerate the project private key. Make sure to store the new private key and use it in any future request.
-        Keyword argument:
-        
-        options -- Options for the request"""
-        self.fill_with_data(options)
-
-        request = Request(self._client)
-        path    = "/private-keys"
-        data    = {
-
+    def to_json(self):
+        return {
+            "id": self.id,
+            "supervisor_project": self.supervisor_project,
+            "supervisor_project_id": self.supervisor_project_id,
+            "api_version": self.api_version,
+            "name": self.name,
+            "logo_url": self.logo_url,
+            "email": self.email,
+            "default_currency": self.default_currency,
+            "private_key": self.private_key,
+            "dunning_configuration": self.dunning_configuration,
+            "created_at": self.created_at,
         }
-
-        response = Response(request.post(path, data, options))
-        return_values = []
-        
-        body = response.body
-        body = body["project"]
-                
-                
-        obj = processout.Project(self._client)
-        return_values.append(obj.fill_with_data(body))
-                
-
-        
-        return return_values[0]
 
     def fetch(self, options = {}):
         """Fetch the current project information.

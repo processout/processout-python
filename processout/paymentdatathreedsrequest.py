@@ -4,6 +4,7 @@ except ImportError:
     from urllib import quote_plus
 
 import processout
+import json
 
 from processout.networking.request  import Request
 from processout.networking.response import Response
@@ -89,5 +90,13 @@ class PaymentDataThreeDSRequest(object):
             self.term_url = data["term_url"]
         
         return self
+
+    def to_json(self):
+        return {
+            "acs_url": self.acs_url,
+            "pareq": self.pareq,
+            "md": self.md,
+            "term_url": self.term_url,
+        }
 
     

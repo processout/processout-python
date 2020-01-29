@@ -4,6 +4,7 @@ except ImportError:
     from urllib import quote_plus
 
 import processout
+import json
 
 from processout.networking.request  import Request
 from processout.networking.response import Response
@@ -194,6 +195,20 @@ class Refund(object):
             self.created_at = data["created_at"]
         
         return self
+
+    def to_json(self):
+        return {
+            "id": self.id,
+            "transaction": self.transaction,
+            "transaction_id": self.transaction_id,
+            "amount": self.amount,
+            "reason": self.reason,
+            "information": self.information,
+            "has_failed": self.has_failed,
+            "metadata": self.metadata,
+            "sandbox": self.sandbox,
+            "created_at": self.created_at,
+        }
 
     def fetch_transaction_refunds(self, transaction_id, options = {}):
         """Get the transaction's refunds.

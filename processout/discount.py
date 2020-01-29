@@ -4,6 +4,7 @@ except ImportError:
     from urllib import quote_plus
 
 import processout
+import json
 
 from processout.networking.request  import Request
 from processout.networking.response import Response
@@ -276,6 +277,24 @@ class Discount(object):
             self.created_at = data["created_at"]
         
         return self
+
+    def to_json(self):
+        return {
+            "id": self.id,
+            "project": self.project,
+            "project_id": self.project_id,
+            "subscription": self.subscription,
+            "subscription_id": self.subscription_id,
+            "coupon": self.coupon,
+            "coupon_id": self.coupon_id,
+            "name": self.name,
+            "amount": self.amount,
+            "percent": self.percent,
+            "expires_at": self.expires_at,
+            "metadata": self.metadata,
+            "sandbox": self.sandbox,
+            "created_at": self.created_at,
+        }
 
     def fetch_subscription_discounts(self, subscription_id, options = {}):
         """Get the discounts applied to the subscription.

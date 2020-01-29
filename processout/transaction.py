@@ -4,6 +4,7 @@ except ImportError:
     from urllib import quote_plus
 
 import processout
+import json
 
 from processout.networking.request  import Request
 from processout.networking.response import Response
@@ -912,6 +913,60 @@ class Transaction(object):
             self.refunded_at = data["refunded_at"]
         
         return self
+
+    def to_json(self):
+        return {
+            "id": self.id,
+            "project": self.project,
+            "project_id": self.project_id,
+            "invoice": self.invoice,
+            "invoice_id": self.invoice_id,
+            "customer": self.customer,
+            "customer_id": self.customer_id,
+            "subscription": self.subscription,
+            "subscription_id": self.subscription_id,
+            "token": self.token,
+            "token_id": self.token_id,
+            "card": self.card,
+            "card_id": self.card_id,
+            "gateway_configuration": self.gateway_configuration,
+            "gateway_configuration_id": self.gateway_configuration_id,
+            "operations": self.operations,
+            "refunds": self.refunds,
+            "name": self.name,
+            "amount": self.amount,
+            "amount_local": self.amount_local,
+            "authorized_amount": self.authorized_amount,
+            "authorized_amount_local": self.authorized_amount_local,
+            "captured_amount": self.captured_amount,
+            "captured_amount_local": self.captured_amount_local,
+            "refunded_amount": self.refunded_amount,
+            "refunded_amount_local": self.refunded_amount_local,
+            "available_amount": self.available_amount,
+            "available_amount_local": self.available_amount_local,
+            "currency": self.currency,
+            "error_code": self.error_code,
+            "gateway_name": self.gateway_name,
+            "three_d_s_status": self.three_d_s_status,
+            "status": self.status,
+            "authorized": self.authorized,
+            "captured": self.captured,
+            "voided": self.voided,
+            "refunded": self.refunded,
+            "chargedback": self.chargedback,
+            "received_fraud_notification": self.received_fraud_notification,
+            "received_retrieval_request": self.received_retrieval_request,
+            "processout_fee": self.processout_fee,
+            "estimated_fee": self.estimated_fee,
+            "gateway_fee": self.gateway_fee,
+            "gateway_fee_local": self.gateway_fee_local,
+            "currency_fee": self.currency_fee,
+            "metadata": self.metadata,
+            "sandbox": self.sandbox,
+            "created_at": self.created_at,
+            "chargedback_at": self.chargedback_at,
+            "refunded_at": self.refunded_at,
+        }
 
     def fetch_refunds(self, options = {}):
         """Get the transaction's refunds.

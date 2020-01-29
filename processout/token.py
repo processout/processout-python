@@ -4,6 +4,7 @@ except ImportError:
     from urllib import quote_plus
 
 import processout
+import json
 
 from processout.networking.request  import Request
 from processout.networking.response import Response
@@ -25,6 +26,8 @@ class Token(object):
         self._metadata = None
         self._is_subscription_only = None
         self._is_default = None
+        self._return_url = None
+        self._cancel_url = None
         self._is_chargeable = None
         self._created_at = None
         if prefill != None:
@@ -202,6 +205,32 @@ class Token(object):
         return self
     
     @property
+    def return_url(self):
+        """Get return_url"""
+        return self._return_url
+
+    @return_url.setter
+    def return_url(self, val):
+        """Set return_url
+        Keyword argument:
+        val -- New return_url value"""
+        self._return_url = val
+        return self
+    
+    @property
+    def cancel_url(self):
+        """Get cancel_url"""
+        return self._cancel_url
+
+    @cancel_url.setter
+    def cancel_url(self, val):
+        """Set cancel_url
+        Keyword argument:
+        val -- New cancel_url value"""
+        self._cancel_url = val
+        return self
+    
+    @property
     def is_chargeable(self):
         """Get is_chargeable"""
         return self._is_chargeable
@@ -254,6 +283,10 @@ class Token(object):
             self.is_subscription_only = data["is_subscription_only"]
         if "is_default" in data.keys():
             self.is_default = data["is_default"]
+        if "return_url" in data.keys():
+            self.return_url = data["return_url"]
+        if "cancel_url" in data.keys():
+            self.cancel_url = data["cancel_url"]
         if "is_chargeable" in data.keys():
             self.is_chargeable = data["is_chargeable"]
         if "created_at" in data.keys():
@@ -261,26 +294,24 @@ class Token(object):
         
         return self
 
-    def verify(self, options = {}):
-        """Verify a customer token's card is valid.
-        Keyword argument:
-        
-        options -- Options for the request"""
-        self.fill_with_data(options)
-
-        request = Request(self._client)
-        path    = "/customers/" + quote_plus(self.customer_id) + "/tokens/" + quote_plus(self.id) + "/verify"
-        data    = {
-
+    def to_json(self):
+        return {
+            "id": self.id,
+            "customer": self.customer,
+            "customer_id": self.customer_id,
+            "gateway_configuration": self.gateway_configuration,
+            "gateway_configuration_id": self.gateway_configuration_id,
+            "card": self.card,
+            "card_id": self.card_id,
+            "type": self.type,
+            "metadata": self.metadata,
+            "is_subscription_only": self.is_subscription_only,
+            "is_default": self.is_default,
+            "return_url": self.return_url,
+            "cancel_url": self.cancel_url,
+            "is_chargeable": self.is_chargeable,
+            "created_at": self.created_at,
         }
-
-        response = Response(request.post(path, data, options))
-        return_values = []
-        
-        return_values.append(response.success)
-
-        
-        return return_values[0]
 
     def fetch_customer_tokens(self, customer_id, options = {}):
         """Get the customer's tokens.
@@ -350,9 +381,11 @@ class Token(object):
         path    = "/customers/" + quote_plus(self.customer_id) + "/tokens"
         data    = {
             'metadata': self.metadata, 
+            'return_url': self.return_url, 
+            'cancel_url': self.cancel_url, 
             'source': options.get("source"), 
             'settings': options.get("settings"), 
-            'target': options.get("target"), 
+            'device': options.get("device"), 
             'verify': options.get("verify"), 
             'verify_metadata': options.get("verify_metadata"), 
             'set_default': options.get("set_default")
@@ -381,7 +414,12 @@ class Token(object):
         request = Request(self._client)
         path    = "/customers/" + quote_plus(self.customer_id) + "/tokens/" + quote_plus(self.id) + ""
         data    = {
-
+            'source': options.get("source"), 
+            'settings': options.get("settings"), 
+            'device': options.get("device"), 
+            'verify': options.get("verify"), 
+            'verify_metadata': options.get("verify_metadata"), 
+            'set_default': options.get("set_default")
         }
 
         response = Response(request.put(path, data, options))

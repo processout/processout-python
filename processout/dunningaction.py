@@ -4,6 +4,7 @@ except ImportError:
     from urllib import quote_plus
 
 import processout
+import json
 
 from processout.networking.request  import Request
 from processout.networking.response import Response
@@ -57,5 +58,11 @@ class DunningAction(object):
             self.delay_in_days = data["delay_in_days"]
         
         return self
+
+    def to_json(self):
+        return {
+            "action": self.action,
+            "delay_in_days": self.delay_in_days,
+        }
 
     

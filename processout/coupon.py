@@ -4,6 +4,7 @@ except ImportError:
     from urllib import quote_plus
 
 import processout
+import json
 
 from processout.networking.request  import Request
 from processout.networking.response import Response
@@ -242,6 +243,23 @@ class Coupon(object):
             self.created_at = data["created_at"]
         
         return self
+
+    def to_json(self):
+        return {
+            "id": self.id,
+            "project": self.project,
+            "project_id": self.project_id,
+            "amount_off": self.amount_off,
+            "percent_off": self.percent_off,
+            "currency": self.currency,
+            "iteration_count": self.iteration_count,
+            "max_redemptions": self.max_redemptions,
+            "expires_at": self.expires_at,
+            "metadata": self.metadata,
+            "redeemed_number": self.redeemed_number,
+            "sandbox": self.sandbox,
+            "created_at": self.created_at,
+        }
 
     def all(self, options = {}):
         """Get all the coupons.

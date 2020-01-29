@@ -4,6 +4,7 @@ except ImportError:
     from urllib import quote_plus
 
 import processout
+import json
 
 from processout.networking.request  import Request
 from processout.networking.response import Response
@@ -267,5 +268,23 @@ class Webhook(object):
             self.release_at = data["release_at"]
         
         return self
+
+    def to_json(self):
+        return {
+            "id": self.id,
+            "project": self.project,
+            "project_id": self.project_id,
+            "event": self.event,
+            "event_id": self.event_id,
+            "request_url": self.request_url,
+            "request_method": self.request_method,
+            "response_body": self.response_body,
+            "response_code": self.response_code,
+            "response_headers": self.response_headers,
+            "response_time_ms": self.response_time_ms,
+            "status": self.status,
+            "created_at": self.created_at,
+            "release_at": self.release_at,
+        }
 
     

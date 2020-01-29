@@ -4,6 +4,7 @@ except ImportError:
     from urllib import quote_plus
 
 import processout
+import json
 
 from processout.networking.request  import Request
 from processout.networking.response import Response
@@ -146,6 +147,17 @@ class Activity(object):
             self.created_at = data["created_at"]
         
         return self
+
+    def to_json(self):
+        return {
+            "id": self.id,
+            "project": self.project,
+            "project_id": self.project_id,
+            "title": self.title,
+            "content": self.content,
+            "level": self.level,
+            "created_at": self.created_at,
+        }
 
     def all(self, options = {}):
         """Get all the project activities.

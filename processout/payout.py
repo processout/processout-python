@@ -4,6 +4,7 @@ except ImportError:
     from urllib import quote_plus
 
 import processout
+import json
 
 from processout.networking.request  import Request
 from processout.networking.response import Response
@@ -354,6 +355,30 @@ class Payout(object):
             self.created_at = data["created_at"]
         
         return self
+
+    def to_json(self):
+        return {
+            "id": self.id,
+            "project": self.project,
+            "project_id": self.project_id,
+            "status": self.status,
+            "amount": self.amount,
+            "currency": self.currency,
+            "metadata": self.metadata,
+            "bank_name": self.bank_name,
+            "bank_summary": self.bank_summary,
+            "sales_transactions": self.sales_transactions,
+            "sales_volume": self.sales_volume,
+            "refunds_transactions": self.refunds_transactions,
+            "refunds_volume": self.refunds_volume,
+            "chargebacks_transactions": self.chargebacks_transactions,
+            "chargebacks_volume": self.chargebacks_volume,
+            "fees": self.fees,
+            "adjustments": self.adjustments,
+            "reserve": self.reserve,
+            "settled_at": self.settled_at,
+            "created_at": self.created_at,
+        }
 
     def fetch_items(self, options = {}):
         """Get all the items linked to the payout.

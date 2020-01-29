@@ -4,6 +4,7 @@ except ImportError:
     from urllib import quote_plus
 
 import processout
+import json
 
 from processout.networking.request  import Request
 from processout.networking.response import Response
@@ -265,5 +266,24 @@ class InvoiceDetail(object):
             self.category = data["category"]
         
         return self
+
+    def to_json(self):
+        return {
+            "name": self.name,
+            "type": self.type,
+            "amount": self.amount,
+            "quantity": self.quantity,
+            "metadata": self.metadata,
+            "reference": self.reference,
+            "description": self.description,
+            "brand": self.brand,
+            "model": self.model,
+            "discount_amount": self.discount_amount,
+            "condition": self.condition,
+            "marketplace_merchant": self.marketplace_merchant,
+            "marketplace_merchant_is_business": self.marketplace_merchant_is_business,
+            "marketplace_merchant_created_at": self.marketplace_merchant_created_at,
+            "category": self.category,
+        }
 
     

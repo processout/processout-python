@@ -1,10 +1,18 @@
 import requests
+import json
 try:
     from urllib.parse import urlencode
 except ImportError:
     from urllib import urlencode
 
 from processout.client import ProcessOut
+
+class SubObjectEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if hasattr(obj,'to_json'):
+            return obj.to_json()
+        else:
+            return json.JSONEncoder.default(self, obj)
 
 class Request:
     def __init__(self, client):
@@ -25,7 +33,9 @@ class Request:
         """Return the headers sent with the request"""
         headers = {}
         headers["API-Version"] = "1.4.0.0"
-        headers["User-Agent"] = "ProcessOut Python-Bindings/6.17.0"
+        headers["User-Agent"] = "ProcessOut Python-Bindings/6.18.0"
+        headers["Content-Type"] = "application/json"
+        headers["Accept"] = "application/json"
 
         if options is None:
             return headers
@@ -80,7 +90,7 @@ class Request:
         """
         return requests.post(self._client.host + path,
             auth = self._authenticate(),
-            json = self._get_data(data, options),
+            data = json.dumps(self._get_data(data, options), cls=SubObjectEncoder),
             verify = True,
             timeout = 65,
             headers = self._get_headers(options))
@@ -95,7 +105,7 @@ class Request:
         """
         return requests.put(self._client.host + path,
             auth = self._authenticate(),
-            json = self._get_data(data, options),
+            data = json.dumps(self._get_data(data, options), cls=SubObjectEncoder),
             verify = True,
             timeout = 65,
             headers = self._get_headers(options))

@@ -4,6 +4,7 @@ except ImportError:
     from urllib import quote_plus
 
 import processout
+import json
 
 from processout.networking.request  import Request
 from processout.networking.response import Response
@@ -220,6 +221,21 @@ class GatewayConfiguration(object):
         
         return self
 
+    def to_json(self):
+        return {
+            "id": self.id,
+            "project": self.project,
+            "project_id": self.project_id,
+            "gateway": self.gateway,
+            "gateway_id": self.gateway_id,
+            "name": self.name,
+            "default_currency": self.default_currency,
+            "enabled": self.enabled,
+            "public_keys": self.public_keys,
+            "created_at": self.created_at,
+            "enabled_at": self.enabled_at,
+        }
+
     def all(self, options = {}):
         """Get all the gateway configurations.
         Keyword argument:
@@ -230,7 +246,7 @@ class GatewayConfiguration(object):
         request = Request(self._client)
         path    = "/gateway-configurations"
         data    = {
-
+            'expand_merchant_accounts': options.get("expand_merchant_accounts")
         }
 
         response = Response(request.get(path, data, options))

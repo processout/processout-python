@@ -4,6 +4,7 @@ except ImportError:
     from urllib import quote_plus
 
 import processout
+import json
 
 from processout.networking.request  import Request
 from processout.networking.response import Response
@@ -21,12 +22,16 @@ class TransactionOperation(object):
         self._token_id = None
         self._card = None
         self._card_id = None
+        self._gateway_configuration = None
+        self._gateway_configuration_id = None
         self._amount = None
+        self._currency = None
         self._is_attempt = None
         self._has_failed = None
         self._is_accountable = None
         self._type = None
         self._gateway_operation_id = None
+        self._arn = None
         self._error_code = None
         self._gateway_data = None
         self._payment_data_three_d_s_request = None
@@ -158,6 +163,41 @@ class TransactionOperation(object):
         return self
     
     @property
+    def gateway_configuration(self):
+        """Get gateway_configuration"""
+        return self._gateway_configuration
+
+    @gateway_configuration.setter
+    def gateway_configuration(self, val):
+        """Set gateway_configuration
+        Keyword argument:
+        val -- New gateway_configuration value"""
+        if val is None:
+            self._gateway_configuration = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.GatewayConfiguration(self._client)
+            obj.fill_with_data(val)
+            self._gateway_configuration = obj
+        else:
+            self._gateway_configuration = val
+        return self
+    
+    @property
+    def gateway_configuration_id(self):
+        """Get gateway_configuration_id"""
+        return self._gateway_configuration_id
+
+    @gateway_configuration_id.setter
+    def gateway_configuration_id(self, val):
+        """Set gateway_configuration_id
+        Keyword argument:
+        val -- New gateway_configuration_id value"""
+        self._gateway_configuration_id = val
+        return self
+    
+    @property
     def amount(self):
         """Get amount"""
         return self._amount
@@ -168,6 +208,19 @@ class TransactionOperation(object):
         Keyword argument:
         val -- New amount value"""
         self._amount = val
+        return self
+    
+    @property
+    def currency(self):
+        """Get currency"""
+        return self._currency
+
+    @currency.setter
+    def currency(self, val):
+        """Set currency
+        Keyword argument:
+        val -- New currency value"""
+        self._currency = val
         return self
     
     @property
@@ -233,6 +286,19 @@ class TransactionOperation(object):
         Keyword argument:
         val -- New gateway_operation_id value"""
         self._gateway_operation_id = val
+        return self
+    
+    @property
+    def arn(self):
+        """Get arn"""
+        return self._arn
+
+    @arn.setter
+    def arn(self, val):
+        """Set arn
+        Keyword argument:
+        val -- New arn value"""
+        self._arn = val
         return self
     
     @property
@@ -385,8 +451,14 @@ class TransactionOperation(object):
             self.card = data["card"]
         if "card_id" in data.keys():
             self.card_id = data["card_id"]
+        if "gateway_configuration" in data.keys():
+            self.gateway_configuration = data["gateway_configuration"]
+        if "gateway_configuration_id" in data.keys():
+            self.gateway_configuration_id = data["gateway_configuration_id"]
         if "amount" in data.keys():
             self.amount = data["amount"]
+        if "currency" in data.keys():
+            self.currency = data["currency"]
         if "is_attempt" in data.keys():
             self.is_attempt = data["is_attempt"]
         if "has_failed" in data.keys():
@@ -397,6 +469,8 @@ class TransactionOperation(object):
             self.type = data["type"]
         if "gateway_operation_id" in data.keys():
             self.gateway_operation_id = data["gateway_operation_id"]
+        if "arn" in data.keys():
+            self.arn = data["arn"]
         if "error_code" in data.keys():
             self.error_code = data["error_code"]
         if "gateway_data" in data.keys():
@@ -415,5 +489,34 @@ class TransactionOperation(object):
             self.created_at = data["created_at"]
         
         return self
+
+    def to_json(self):
+        return {
+            "id": self.id,
+            "transaction": self.transaction,
+            "transaction_id": self.transaction_id,
+            "token": self.token,
+            "token_id": self.token_id,
+            "card": self.card,
+            "card_id": self.card_id,
+            "gateway_configuration": self.gateway_configuration,
+            "gateway_configuration_id": self.gateway_configuration_id,
+            "amount": self.amount,
+            "currency": self.currency,
+            "is_attempt": self.is_attempt,
+            "has_failed": self.has_failed,
+            "is_accountable": self.is_accountable,
+            "type": self.type,
+            "gateway_operation_id": self.gateway_operation_id,
+            "arn": self.arn,
+            "error_code": self.error_code,
+            "gateway_data": self.gateway_data,
+            "payment_data_three_d_s_request": self.payment_data_three_d_s_request,
+            "payment_data_three_d_s_authentication": self.payment_data_three_d_s_authentication,
+            "payment_data_network_authentication": self.payment_data_network_authentication,
+            "metadata": self.metadata,
+            "gateway_fee": self.gateway_fee,
+            "created_at": self.created_at,
+        }
 
     

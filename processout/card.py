@@ -4,6 +4,7 @@ except ImportError:
     from urllib import quote_plus
 
 import processout
+import json
 
 from processout.networking.request  import Request
 from processout.networking.response import Response
@@ -507,6 +508,39 @@ class Card(object):
             self.created_at = data["created_at"]
         
         return self
+
+    def to_json(self):
+        return {
+            "id": self.id,
+            "project": self.project,
+            "project_id": self.project_id,
+            "token": self.token,
+            "scheme": self.scheme,
+            "co_scheme": self.co_scheme,
+            "preferred_scheme": self.preferred_scheme,
+            "type": self.type,
+            "bank_name": self.bank_name,
+            "brand": self.brand,
+            "iin": self.iin,
+            "last_4_digits": self.last_4_digits,
+            "exp_month": self.exp_month,
+            "exp_year": self.exp_year,
+            "cvc_check": self.cvc_check,
+            "avs_check": self.avs_check,
+            "name": self.name,
+            "address1": self.address1,
+            "address2": self.address2,
+            "city": self.city,
+            "state": self.state,
+            "zip": self.zip,
+            "country_code": self.country_code,
+            "ip_address": self.ip_address,
+            "fingerprint": self.fingerprint,
+            "metadata": self.metadata,
+            "expires_soon": self.expires_soon,
+            "sandbox": self.sandbox,
+            "created_at": self.created_at,
+        }
 
     def all(self, options = {}):
         """Get all the cards.

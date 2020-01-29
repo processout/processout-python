@@ -4,6 +4,7 @@ except ImportError:
     from urllib import quote_plus
 
 import processout
+import json
 
 from processout.networking.request  import Request
 from processout.networking.response import Response
@@ -146,6 +147,17 @@ class Event(object):
             self.fired_at = data["fired_at"]
         
         return self
+
+    def to_json(self):
+        return {
+            "id": self.id,
+            "project": self.project,
+            "project_id": self.project_id,
+            "name": self.name,
+            "data": self.data,
+            "sandbox": self.sandbox,
+            "fired_at": self.fired_at,
+        }
 
     def fetch_webhooks(self, options = {}):
         """Get all the webhooks of the event.

@@ -4,6 +4,7 @@ except ImportError:
     from urllib import quote_plus
 
 import processout
+import json
 
 from processout.networking.request  import Request
 from processout.networking.response import Response
@@ -57,5 +58,11 @@ class InvoiceRisk(object):
             self.is_legit = data["is_legit"]
         
         return self
+
+    def to_json(self):
+        return {
+            "score": self.score,
+            "is_legit": self.is_legit,
+        }
 
     

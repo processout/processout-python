@@ -4,6 +4,7 @@ except ImportError:
     from urllib import quote_plus
 
 import processout
+import json
 
 from processout.networking.request  import Request
 from processout.networking.response import Response
@@ -258,6 +259,24 @@ class Plan(object):
             self.created_at = data["created_at"]
         
         return self
+
+    def to_json(self):
+        return {
+            "id": self.id,
+            "project": self.project,
+            "project_id": self.project_id,
+            "url": self.url,
+            "name": self.name,
+            "amount": self.amount,
+            "currency": self.currency,
+            "metadata": self.metadata,
+            "interval": self.interval,
+            "trial_period": self.trial_period,
+            "return_url": self.return_url,
+            "cancel_url": self.cancel_url,
+            "sandbox": self.sandbox,
+            "created_at": self.created_at,
+        }
 
     def all(self, options = {}):
         """Get all the plans.

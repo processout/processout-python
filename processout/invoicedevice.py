@@ -4,6 +4,7 @@ except ImportError:
     from urllib import quote_plus
 
 import processout
+import json
 
 from processout.networking.request  import Request
 from processout.networking.response import Response
@@ -57,5 +58,11 @@ class InvoiceDevice(object):
             self.ip_address = data["ip_address"]
         
         return self
+
+    def to_json(self):
+        return {
+            "channel": self.channel,
+            "ip_address": self.ip_address,
+        }
 
     

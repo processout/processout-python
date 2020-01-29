@@ -4,6 +4,7 @@ except ImportError:
     from urllib import quote_plus
 
 import processout
+import json
 
 from processout.networking.request  import Request
 from processout.networking.response import Response
@@ -512,6 +513,37 @@ class Customer(object):
         
         return self
 
+    def to_json(self):
+        return {
+            "id": self.id,
+            "project": self.project,
+            "project_id": self.project_id,
+            "default_token": self.default_token,
+            "default_token_id": self.default_token_id,
+            "tokens": self.tokens,
+            "subscriptions": self.subscriptions,
+            "transactions": self.transactions,
+            "balance": self.balance,
+            "currency": self.currency,
+            "email": self.email,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "address1": self.address1,
+            "address2": self.address2,
+            "city": self.city,
+            "state": self.state,
+            "zip": self.zip,
+            "country_code": self.country_code,
+            "ip_address": self.ip_address,
+            "phone_number": self.phone_number,
+            "legal_document": self.legal_document,
+            "sex": self.sex,
+            "is_business": self.is_business,
+            "metadata": self.metadata,
+            "sandbox": self.sandbox,
+            "created_at": self.created_at,
+        }
+
     def fetch_subscriptions(self, options = {}):
         """Get the subscriptions belonging to the customer.
         Keyword argument:
@@ -537,27 +569,6 @@ class Customer(object):
 
         return_values.append(a)
             
-
-        
-        return return_values[0]
-
-    def verify_token(self, token_id, options = {}):
-        """Verify a customer token's card is valid.
-        Keyword argument:
-        token_id -- ID of the token
-        options -- Options for the request"""
-        self.fill_with_data(options)
-
-        request = Request(self._client)
-        path    = "/customers/" + quote_plus(self.id) + "/tokens/" + quote_plus(token_id) + "/verify"
-        data    = {
-
-        }
-
-        response = Response(request.post(path, data, options))
-        return_values = []
-        
-        return_values.append(response.success)
 
         
         return return_values[0]

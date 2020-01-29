@@ -4,6 +4,7 @@ except ImportError:
     from urllib import quote_plus
 
 import processout
+import json
 
 from processout.networking.request  import Request
 from processout.networking.response import Response
@@ -137,6 +138,17 @@ class CardInformation(object):
             self.country = data["country"]
         
         return self
+
+    def to_json(self):
+        return {
+            "iin": self.iin,
+            "scheme": self.scheme,
+            "type": self.type,
+            "bank_name": self.bank_name,
+            "brand": self.brand,
+            "category": self.category,
+            "country": self.country,
+        }
 
     def fetch(self, iin, options = {}):
         """Fetch card information from the IIN.

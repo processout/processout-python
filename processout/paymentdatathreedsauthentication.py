@@ -4,6 +4,7 @@ except ImportError:
     from urllib import quote_plus
 
 import processout
+import json
 
 from processout.networking.request  import Request
 from processout.networking.response import Response
@@ -41,5 +42,10 @@ class PaymentDataThreeDSAuthentication(object):
             self.xid = data["XID"]
         
         return self
+
+    def to_json(self):
+        return {
+            "XID": self.xid,
+        }
 
     

@@ -19,7 +19,7 @@ def main():
     assert invoice.id == fetched.id, "The invoices ID should be equal"
 
     # Capture an invoice
-    gr = GatewayRequest("sandbox", "POST", "https://processout.com?token=test-valid", {
+    gr = GatewayRequest("gway_conf_44ae90db0a62f819a404ef6a8ff994ca", "POST", "https://processout.com?token=test-valid", {
         "Content-Type": "application/json"
     }, "")
     transaction = invoice.capture(gr.to_string())

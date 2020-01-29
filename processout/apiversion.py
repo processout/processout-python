@@ -4,6 +4,7 @@ except ImportError:
     from urllib import quote_plus
 
 import processout
+import json
 
 from processout.networking.request  import Request
 from processout.networking.response import Response
@@ -73,5 +74,12 @@ class APIVersion(object):
             self.created_at = data["created_at"]
         
         return self
+
+    def to_json(self):
+        return {
+            "name": self.name,
+            "description": self.description,
+            "created_at": self.created_at,
+        }
 
     

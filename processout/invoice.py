@@ -4,6 +4,7 @@ except ImportError:
     from urllib import quote_plus
 
 import processout
+import json
 
 from processout.networking.request  import Request
 from processout.networking.response import Response
@@ -638,6 +639,43 @@ class Invoice(object):
         
         return self
 
+    def to_json(self):
+        return {
+            "id": self.id,
+            "project": self.project,
+            "project_id": self.project_id,
+            "transaction": self.transaction,
+            "transaction_id": self.transaction_id,
+            "customer": self.customer,
+            "customer_id": self.customer_id,
+            "subscription": self.subscription,
+            "subscription_id": self.subscription_id,
+            "token": self.token,
+            "token_id": self.token_id,
+            "details": self.details,
+            "url": self.url,
+            "name": self.name,
+            "amount": self.amount,
+            "currency": self.currency,
+            "merchant_initiator_type": self.merchant_initiator_type,
+            "statement_descriptor": self.statement_descriptor,
+            "statement_descriptor_phone": self.statement_descriptor_phone,
+            "statement_descriptor_city": self.statement_descriptor_city,
+            "statement_descriptor_company": self.statement_descriptor_company,
+            "statement_descriptor_url": self.statement_descriptor_url,
+            "metadata": self.metadata,
+            "gateway_data": self.gateway_data,
+            "return_url": self.return_url,
+            "cancel_url": self.cancel_url,
+            "webhook_url": self.webhook_url,
+            "require_backend_capture": self.require_backend_capture,
+            "sandbox": self.sandbox,
+            "created_at": self.created_at,
+            "risk": self.risk,
+            "shipping": self.shipping,
+            "device": self.device,
+        }
+
     def authorize(self, source, options = {}):
         """Authorize the invoice using the given source (customer or token)
         Keyword argument:
@@ -648,6 +686,7 @@ class Invoice(object):
         request = Request(self._client)
         path    = "/invoices/" + quote_plus(self.id) + "/authorize"
         data    = {
+            'device': self.device, 
             'synchronous': options.get("synchronous"), 
             'retry_drop_liability_shift': options.get("retry_drop_liability_shift"), 
             'capture_amount': options.get("capture_amount"), 
@@ -677,6 +716,7 @@ class Invoice(object):
         request = Request(self._client)
         path    = "/invoices/" + quote_plus(self.id) + "/capture"
         data    = {
+            'device': self.device, 
             'authorize_only': options.get("authorize_only"), 
             'synchronous': options.get("synchronous"), 
             'retry_drop_liability_shift': options.get("retry_drop_liability_shift"), 
@@ -861,9 +901,9 @@ class Invoice(object):
             'name': self.name, 
             'amount': self.amount, 
             'currency': self.currency, 
-            'gateway_data': self.gateway_data, 
             'metadata': self.metadata, 
             'details': self.details, 
+            'gateway_data': self.gateway_data, 
             'merchant_initiator_type': self.merchant_initiator_type, 
             'statement_descriptor': self.statement_descriptor, 
             'statement_descriptor_phone': self.statement_descriptor_phone, 

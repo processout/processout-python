@@ -4,6 +4,7 @@ except ImportError:
     from urllib import quote_plus
 
 import processout
+import json
 
 from processout.networking.request  import Request
 from processout.networking.response import Response
@@ -657,6 +658,45 @@ class Subscription(object):
             self.iterate_at = data["iterate_at"]
         
         return self
+
+    def to_json(self):
+        return {
+            "id": self.id,
+            "project": self.project,
+            "project_id": self.project_id,
+            "plan": self.plan,
+            "plan_id": self.plan_id,
+            "discounts": self.discounts,
+            "addons": self.addons,
+            "transactions": self.transactions,
+            "customer": self.customer,
+            "customer_id": self.customer_id,
+            "token": self.token,
+            "token_id": self.token_id,
+            "url": self.url,
+            "name": self.name,
+            "amount": self.amount,
+            "billable_amount": self.billable_amount,
+            "discounted_amount": self.discounted_amount,
+            "addons_amount": self.addons_amount,
+            "currency": self.currency,
+            "metadata": self.metadata,
+            "interval": self.interval,
+            "trial_end_at": self.trial_end_at,
+            "activated": self.activated,
+            "active": self.active,
+            "cancel_at": self.cancel_at,
+            "canceled": self.canceled,
+            "cancellation_reason": self.cancellation_reason,
+            "pending_cancellation": self.pending_cancellation,
+            "return_url": self.return_url,
+            "cancel_url": self.cancel_url,
+            "unpaid_state": self.unpaid_state,
+            "sandbox": self.sandbox,
+            "created_at": self.created_at,
+            "activated_at": self.activated_at,
+            "iterate_at": self.iterate_at,
+        }
 
     def fetch_addons(self, options = {}):
         """Get the addons applied to the subscription.
