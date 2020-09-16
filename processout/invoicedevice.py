@@ -17,6 +17,7 @@ class InvoiceDevice(object):
 
         self._channel = None
         self._ip_address = None
+        self._id = None
         if prefill != None:
             self.fill_with_data(prefill)
 
@@ -47,6 +48,19 @@ class InvoiceDevice(object):
         self._ip_address = val
         return self
     
+    @property
+    def id(self):
+        """Get id"""
+        return self._id
+
+    @id.setter
+    def id(self, val):
+        """Set id
+        Keyword argument:
+        val -- New id value"""
+        self._id = val
+        return self
+    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -56,6 +70,8 @@ class InvoiceDevice(object):
             self.channel = data["channel"]
         if "ip_address" in data.keys():
             self.ip_address = data["ip_address"]
+        if "id" in data.keys():
+            self.id = data["id"]
         
         return self
 
@@ -63,6 +79,7 @@ class InvoiceDevice(object):
         return {
             "channel": self.channel,
             "ip_address": self.ip_address,
+            "id": self.id,
         }
 
     

@@ -48,6 +48,7 @@ class Invoice(object):
         self._risk = None
         self._shipping = None
         self._device = None
+        self._external_fraud_tools = None
         if prefill != None:
             self.fill_with_data(prefill)
 
@@ -565,6 +566,28 @@ class Invoice(object):
             self._device = val
         return self
     
+    @property
+    def external_fraud_tools(self):
+        """Get external_fraud_tools"""
+        return self._external_fraud_tools
+
+    @external_fraud_tools.setter
+    def external_fraud_tools(self, val):
+        """Set external_fraud_tools
+        Keyword argument:
+        val -- New external_fraud_tools value"""
+        if val is None:
+            self._external_fraud_tools = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.InvoiceExternalFraudTools(self._client)
+            obj.fill_with_data(val)
+            self._external_fraud_tools = obj
+        else:
+            self._external_fraud_tools = val
+        return self
+    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -636,6 +659,8 @@ class Invoice(object):
             self.shipping = data["shipping"]
         if "device" in data.keys():
             self.device = data["device"]
+        if "external_fraud_tools" in data.keys():
+            self.external_fraud_tools = data["external_fraud_tools"]
         
         return self
 
@@ -674,6 +699,7 @@ class Invoice(object):
             "risk": self.risk,
             "shipping": self.shipping,
             "device": self.device,
+            "external_fraud_tools": self.external_fraud_tools,
         }
 
     def authorize(self, source, options = {}):
@@ -916,7 +942,8 @@ class Invoice(object):
             'risk': self.risk, 
             'shipping': self.shipping, 
             'device': self.device, 
-            'require_backend_capture': self.require_backend_capture
+            'require_backend_capture': self.require_backend_capture, 
+            'external_fraud_tools': self.external_fraud_tools
         }
 
         response = Response(request.post(path, data, options))

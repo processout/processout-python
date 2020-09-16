@@ -42,6 +42,7 @@ class Customer(object):
         self._metadata = None
         self._sandbox = None
         self._created_at = None
+        self._registered_at = None
         if prefill != None:
             self.fill_with_data(prefill)
 
@@ -451,6 +452,19 @@ class Customer(object):
         self._created_at = val
         return self
     
+    @property
+    def registered_at(self):
+        """Get registered_at"""
+        return self._registered_at
+
+    @registered_at.setter
+    def registered_at(self, val):
+        """Set registered_at
+        Keyword argument:
+        val -- New registered_at value"""
+        self._registered_at = val
+        return self
+    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -510,6 +524,8 @@ class Customer(object):
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
             self.created_at = data["created_at"]
+        if "registered_at" in data.keys():
+            self.registered_at = data["registered_at"]
         
         return self
 
@@ -542,6 +558,7 @@ class Customer(object):
             "metadata": self.metadata,
             "sandbox": self.sandbox,
             "created_at": self.created_at,
+            "registered_at": self.registered_at,
         }
 
     def fetch_subscriptions(self, options = {}):
@@ -732,7 +749,8 @@ class Customer(object):
             'is_business': self.is_business, 
             'sex': self.sex, 
             'metadata': self.metadata, 
-            'id': self.id
+            'id': self.id, 
+            'registered_at': self.registered_at
         }
 
         response = Response(request.post(path, data, options))
@@ -801,7 +819,8 @@ class Customer(object):
             'legal_document': self.legal_document, 
             'is_business': self.is_business, 
             'sex': self.sex, 
-            'metadata': self.metadata
+            'metadata': self.metadata, 
+            'registered_at': self.registered_at
         }
 
         response = Response(request.put(path, data, options))

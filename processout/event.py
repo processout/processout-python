@@ -167,7 +167,7 @@ class Event(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/events/" + quote_plus(self.id) + "/webhooks"
+        path    = "/events/ev_" + quote_plus(self.id) + "/webhooks"
         data    = {
 
         }
@@ -225,7 +225,7 @@ class Event(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/events/" + quote_plus(event_id) + ""
+        path    = "/events/ev_" + quote_plus(event_id) + ""
         data    = {
 
         }

@@ -28,8 +28,12 @@ class Token(object):
         self._is_default = None
         self._return_url = None
         self._cancel_url = None
+        self._summary = None
         self._is_chargeable = None
         self._created_at = None
+        self._description = None
+        self._invoice = None
+        self._invoice_id = None
         if prefill != None:
             self.fill_with_data(prefill)
 
@@ -231,6 +235,19 @@ class Token(object):
         return self
     
     @property
+    def summary(self):
+        """Get summary"""
+        return self._summary
+
+    @summary.setter
+    def summary(self, val):
+        """Set summary
+        Keyword argument:
+        val -- New summary value"""
+        self._summary = val
+        return self
+    
+    @property
     def is_chargeable(self):
         """Get is_chargeable"""
         return self._is_chargeable
@@ -254,6 +271,54 @@ class Token(object):
         Keyword argument:
         val -- New created_at value"""
         self._created_at = val
+        return self
+    
+    @property
+    def description(self):
+        """Get description"""
+        return self._description
+
+    @description.setter
+    def description(self, val):
+        """Set description
+        Keyword argument:
+        val -- New description value"""
+        self._description = val
+        return self
+    
+    @property
+    def invoice(self):
+        """Get invoice"""
+        return self._invoice
+
+    @invoice.setter
+    def invoice(self, val):
+        """Set invoice
+        Keyword argument:
+        val -- New invoice value"""
+        if val is None:
+            self._invoice = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.Invoice(self._client)
+            obj.fill_with_data(val)
+            self._invoice = obj
+        else:
+            self._invoice = val
+        return self
+    
+    @property
+    def invoice_id(self):
+        """Get invoice_id"""
+        return self._invoice_id
+
+    @invoice_id.setter
+    def invoice_id(self, val):
+        """Set invoice_id
+        Keyword argument:
+        val -- New invoice_id value"""
+        self._invoice_id = val
         return self
     
 
@@ -287,10 +352,18 @@ class Token(object):
             self.return_url = data["return_url"]
         if "cancel_url" in data.keys():
             self.cancel_url = data["cancel_url"]
+        if "summary" in data.keys():
+            self.summary = data["summary"]
         if "is_chargeable" in data.keys():
             self.is_chargeable = data["is_chargeable"]
         if "created_at" in data.keys():
             self.created_at = data["created_at"]
+        if "description" in data.keys():
+            self.description = data["description"]
+        if "invoice" in data.keys():
+            self.invoice = data["invoice"]
+        if "invoice_id" in data.keys():
+            self.invoice_id = data["invoice_id"]
         
         return self
 
@@ -309,8 +382,12 @@ class Token(object):
             "is_default": self.is_default,
             "return_url": self.return_url,
             "cancel_url": self.cancel_url,
+            "summary": self.summary,
             "is_chargeable": self.is_chargeable,
             "created_at": self.created_at,
+            "description": self.description,
+            "invoice": self.invoice,
+            "invoice_id": self.invoice_id,
         }
 
     def fetch_customer_tokens(self, customer_id, options = {}):
@@ -383,6 +460,7 @@ class Token(object):
             'metadata': self.metadata, 
             'return_url': self.return_url, 
             'cancel_url': self.cancel_url, 
+            'description': self.description, 
             'source': options.get("source"), 
             'settings': options.get("settings"), 
             'device': options.get("device"), 

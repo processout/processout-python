@@ -598,4 +598,25 @@ class Card(object):
         
         return return_values[0]
 
+    def anonymize(self, options = {}):
+        """Anonymize the card.
+        Keyword argument:
+        
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path    = "/cards/" + quote_plus(self.id) + ""
+        data    = {
+
+        }
+
+        response = Response(request.delete(path, data, options))
+        return_values = []
+        
+        return_values.append(response.success)
+
+        
+        return return_values[0]
+
     
