@@ -167,7 +167,7 @@ class Event(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/events/ev_" + quote_plus(self.id) + "/webhooks"
+        path    = "/events/" + quote_plus(self.id) + "/webhooks"
         data    = {
 
         }
@@ -225,7 +225,7 @@ class Event(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/events/ev_" + quote_plus(event_id) + ""
+        path    = "/events/" + quote_plus(event_id) + ""
         data    = {
 
         }
@@ -240,35 +240,6 @@ class Event(object):
         obj = processout.Event(self._client)
         return_values.append(obj.fill_with_data(body))
                 
-
-        
-        return return_values[0]
-
-    def find_by_resource_id(self, resource_id, options = {}):
-        """Find an event by the Resource ID that generated it.
-        Keyword argument:
-        resource_id -- Resource ID
-        options -- Options for the request"""
-        self.fill_with_data(options)
-
-        request = Request(self._client)
-        path    = "/events/by_resource_id/" + quote_plus(resource_id) + ""
-        data    = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        return_values = []
-        
-        a    = []
-        body = response.body
-        for v in body['events']:
-            tmp = processout.Event(self._client)
-            tmp.fill_with_data(v)
-            a.append(tmp)
-
-        return_values.append(a)
-            
 
         
         return return_values[0]
