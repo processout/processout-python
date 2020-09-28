@@ -40,6 +40,7 @@ class Card(object):
         self._country_code = None
         self._ip_address = None
         self._fingerprint = None
+        self._token_type = None
         self._metadata = None
         self._expires_soon = None
         self._sandbox = None
@@ -392,6 +393,19 @@ class Card(object):
         return self
     
     @property
+    def token_type(self):
+        """Get token_type"""
+        return self._token_type
+
+    @token_type.setter
+    def token_type(self, val):
+        """Set token_type
+        Keyword argument:
+        val -- New token_type value"""
+        self._token_type = val
+        return self
+    
+    @property
     def metadata(self):
         """Get metadata"""
         return self._metadata
@@ -498,6 +512,8 @@ class Card(object):
             self.ip_address = data["ip_address"]
         if "fingerprint" in data.keys():
             self.fingerprint = data["fingerprint"]
+        if "token_type" in data.keys():
+            self.token_type = data["token_type"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
         if "expires_soon" in data.keys():
@@ -536,6 +552,7 @@ class Card(object):
             "country_code": self.country_code,
             "ip_address": self.ip_address,
             "fingerprint": self.fingerprint,
+            "token_type": self.token_type,
             "metadata": self.metadata,
             "expires_soon": self.expires_soon,
             "sandbox": self.sandbox,
