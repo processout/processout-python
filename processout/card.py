@@ -25,6 +25,7 @@ class Card(object):
         self._type = None
         self._bank_name = None
         self._brand = None
+        self._category = None
         self._iin = None
         self._last_4_digits = None
         self._exp_month = None
@@ -195,6 +196,19 @@ class Card(object):
         Keyword argument:
         val -- New brand value"""
         self._brand = val
+        return self
+    
+    @property
+    def category(self):
+        """Get category"""
+        return self._category
+
+    @category.setter
+    def category(self, val):
+        """Set category
+        Keyword argument:
+        val -- New category value"""
+        self._category = val
         return self
     
     @property
@@ -482,6 +496,8 @@ class Card(object):
             self.bank_name = data["bank_name"]
         if "brand" in data.keys():
             self.brand = data["brand"]
+        if "category" in data.keys():
+            self.category = data["category"]
         if "iin" in data.keys():
             self.iin = data["iin"]
         if "last_4_digits" in data.keys():
@@ -537,6 +553,7 @@ class Card(object):
             "type": self.type,
             "bank_name": self.bank_name,
             "brand": self.brand,
+            "category": self.category,
             "iin": self.iin,
             "last_4_digits": self.last_4_digits,
             "exp_month": self.exp_month,

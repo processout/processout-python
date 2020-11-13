@@ -45,6 +45,7 @@ class Transaction(object):
         self._available_amount_local = None
         self._currency = None
         self._error_code = None
+        self._error_message = None
         self._gateway_name = None
         self._three_d_s_status = None
         self._status = None
@@ -65,6 +66,7 @@ class Transaction(object):
         self._created_at = None
         self._chargedback_at = None
         self._refunded_at = None
+        self._three_d_s = None
         if prefill != None:
             self.fill_with_data(prefill)
 
@@ -547,6 +549,19 @@ class Transaction(object):
         return self
     
     @property
+    def error_message(self):
+        """Get error_message"""
+        return self._error_message
+
+    @error_message.setter
+    def error_message(self, val):
+        """Set error_message
+        Keyword argument:
+        val -- New error_message value"""
+        self._error_message = val
+        return self
+    
+    @property
     def gateway_name(self):
         """Get gateway_name"""
         return self._gateway_name
@@ -806,6 +821,28 @@ class Transaction(object):
         self._refunded_at = val
         return self
     
+    @property
+    def three_d_s(self):
+        """Get three_d_s"""
+        return self._three_d_s
+
+    @three_d_s.setter
+    def three_d_s(self, val):
+        """Set three_d_s
+        Keyword argument:
+        val -- New three_d_s value"""
+        if val is None:
+            self._three_d_s = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.ThreeDS(self._client)
+            obj.fill_with_data(val)
+            self._three_d_s = obj
+        else:
+            self._three_d_s = val
+        return self
+    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -871,6 +908,8 @@ class Transaction(object):
             self.currency = data["currency"]
         if "error_code" in data.keys():
             self.error_code = data["error_code"]
+        if "error_message" in data.keys():
+            self.error_message = data["error_message"]
         if "gateway_name" in data.keys():
             self.gateway_name = data["gateway_name"]
         if "three_d_s_status" in data.keys():
@@ -911,6 +950,8 @@ class Transaction(object):
             self.chargedback_at = data["chargedback_at"]
         if "refunded_at" in data.keys():
             self.refunded_at = data["refunded_at"]
+        if "three_d_s" in data.keys():
+            self.three_d_s = data["three_d_s"]
         
         return self
 
@@ -946,6 +987,7 @@ class Transaction(object):
             "available_amount_local": self.available_amount_local,
             "currency": self.currency,
             "error_code": self.error_code,
+            "error_message": self.error_message,
             "gateway_name": self.gateway_name,
             "three_d_s_status": self.three_d_s_status,
             "status": self.status,
@@ -966,6 +1008,7 @@ class Transaction(object):
             "created_at": self.created_at,
             "chargedback_at": self.chargedback_at,
             "refunded_at": self.refunded_at,
+            "three_d_s": self.three_d_s,
         }
 
     def fetch_refunds(self, options = {}):

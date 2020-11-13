@@ -31,6 +31,7 @@ from processout.project import Project
 from processout.refund import Refund
 from processout.subscription import Subscription
 from processout.transaction import Transaction
+from processout.threeds import ThreeDS
 from processout.paymentdatathreedsrequest import PaymentDataThreeDSRequest
 from processout.paymentdatanetworkauthentication import PaymentDataNetworkAuthentication
 from processout.paymentdatathreedsauthentication import PaymentDataThreeDSAuthentication

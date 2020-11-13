@@ -205,6 +205,12 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.Transaction(self, prefill)
 
+    def new_three_ds(self, prefill = None):
+        """Create a new ThreeDS instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.ThreeDS(self, prefill)
+
     def new_payment_data_three_ds_request(self, prefill = None):
         """Create a new PaymentDataThreeDSRequest instance
         Keyword argument:
