@@ -67,6 +67,8 @@ class Transaction(object):
         self._chargedback_at = None
         self._refunded_at = None
         self._three_d_s = None
+        self._cvc_check = None
+        self._avs_check = None
         if prefill != None:
             self.fill_with_data(prefill)
 
@@ -843,6 +845,32 @@ class Transaction(object):
             self._three_d_s = val
         return self
     
+    @property
+    def cvc_check(self):
+        """Get cvc_check"""
+        return self._cvc_check
+
+    @cvc_check.setter
+    def cvc_check(self, val):
+        """Set cvc_check
+        Keyword argument:
+        val -- New cvc_check value"""
+        self._cvc_check = val
+        return self
+    
+    @property
+    def avs_check(self):
+        """Get avs_check"""
+        return self._avs_check
+
+    @avs_check.setter
+    def avs_check(self, val):
+        """Set avs_check
+        Keyword argument:
+        val -- New avs_check value"""
+        self._avs_check = val
+        return self
+    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -952,6 +980,10 @@ class Transaction(object):
             self.refunded_at = data["refunded_at"]
         if "three_d_s" in data.keys():
             self.three_d_s = data["three_d_s"]
+        if "cvc_check" in data.keys():
+            self.cvc_check = data["cvc_check"]
+        if "avs_check" in data.keys():
+            self.avs_check = data["avs_check"]
         
         return self
 
@@ -1009,6 +1041,8 @@ class Transaction(object):
             "chargedback_at": self.chargedback_at,
             "refunded_at": self.refunded_at,
             "three_d_s": self.three_d_s,
+            "cvc_check": self.cvc_check,
+            "avs_check": self.avs_check,
         }
 
     def fetch_refunds(self, options = {}):

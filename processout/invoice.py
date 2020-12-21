@@ -49,6 +49,7 @@ class Invoice(object):
         self._shipping = None
         self._device = None
         self._external_fraud_tools = None
+        self._exemption_reason_3ds2 = None
         if prefill != None:
             self.fill_with_data(prefill)
 
@@ -588,6 +589,19 @@ class Invoice(object):
             self._external_fraud_tools = val
         return self
     
+    @property
+    def exemption_reason_3ds2(self):
+        """Get exemption_reason_3ds2"""
+        return self._exemption_reason_3ds2
+
+    @exemption_reason_3ds2.setter
+    def exemption_reason_3ds2(self, val):
+        """Set exemption_reason_3ds2
+        Keyword argument:
+        val -- New exemption_reason_3ds2 value"""
+        self._exemption_reason_3ds2 = val
+        return self
+    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -661,6 +675,8 @@ class Invoice(object):
             self.device = data["device"]
         if "external_fraud_tools" in data.keys():
             self.external_fraud_tools = data["external_fraud_tools"]
+        if "exemption_reason_3ds2" in data.keys():
+            self.exemption_reason_3ds2 = data["exemption_reason_3ds2"]
         
         return self
 
@@ -700,6 +716,7 @@ class Invoice(object):
             "shipping": self.shipping,
             "device": self.device,
             "external_fraud_tools": self.external_fraud_tools,
+            "exemption_reason_3ds2": self.exemption_reason_3ds2,
         }
 
     def authorize(self, source, options = {}):
@@ -929,6 +946,7 @@ class Invoice(object):
             'currency': self.currency, 
             'metadata': self.metadata, 
             'details': self.details, 
+            'exemption_reason_3ds2': self.exemption_reason_3ds2, 
             'gateway_data': self.gateway_data, 
             'merchant_initiator_type': self.merchant_initiator_type, 
             'statement_descriptor': self.statement_descriptor, 

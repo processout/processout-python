@@ -43,6 +43,7 @@ class Customer(object):
         self._sandbox = None
         self._created_at = None
         self._registered_at = None
+        self._date_of_birth = None
         if prefill != None:
             self.fill_with_data(prefill)
 
@@ -465,6 +466,19 @@ class Customer(object):
         self._registered_at = val
         return self
     
+    @property
+    def date_of_birth(self):
+        """Get date_of_birth"""
+        return self._date_of_birth
+
+    @date_of_birth.setter
+    def date_of_birth(self, val):
+        """Set date_of_birth
+        Keyword argument:
+        val -- New date_of_birth value"""
+        self._date_of_birth = val
+        return self
+    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -526,6 +540,8 @@ class Customer(object):
             self.created_at = data["created_at"]
         if "registered_at" in data.keys():
             self.registered_at = data["registered_at"]
+        if "date_of_birth" in data.keys():
+            self.date_of_birth = data["date_of_birth"]
         
         return self
 
@@ -559,6 +575,7 @@ class Customer(object):
             "sandbox": self.sandbox,
             "created_at": self.created_at,
             "registered_at": self.registered_at,
+            "date_of_birth": self.date_of_birth,
         }
 
     def fetch_subscriptions(self, options = {}):
@@ -746,6 +763,7 @@ class Customer(object):
             'ip_address': self.ip_address, 
             'phone_number': self.phone_number, 
             'legal_document': self.legal_document, 
+            'date_of_birth': self.date_of_birth, 
             'is_business': self.is_business, 
             'sex': self.sex, 
             'metadata': self.metadata, 
@@ -817,6 +835,7 @@ class Customer(object):
             'ip_address': self.ip_address, 
             'phone_number': self.phone_number, 
             'legal_document': self.legal_document, 
+            'date_of_birth': self.date_of_birth, 
             'is_business': self.is_business, 
             'sex': self.sex, 
             'metadata': self.metadata, 
