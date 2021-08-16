@@ -16,6 +16,7 @@ from processout.event import Event
 from processout.gateway import Gateway
 from processout.gatewayconfiguration import GatewayConfiguration
 from processout.invoice import Invoice
+from processout.invoicetax import InvoiceTax
 from processout.invoiceexternalfraudtools import InvoiceExternalFraudTools
 from processout.invoicerisk import InvoiceRisk
 from processout.invoicedevice import InvoiceDevice

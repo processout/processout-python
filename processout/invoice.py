@@ -50,6 +50,10 @@ class Invoice(object):
         self._device = None
         self._external_fraud_tools = None
         self._exemption_reason_3ds2 = None
+        self._sca_exemption_reason = None
+        self._challenge_indicator = None
+        self._incremental = None
+        self._tax = None
         if prefill != None:
             self.fill_with_data(prefill)
 
@@ -602,6 +606,67 @@ class Invoice(object):
         self._exemption_reason_3ds2 = val
         return self
     
+    @property
+    def sca_exemption_reason(self):
+        """Get sca_exemption_reason"""
+        return self._sca_exemption_reason
+
+    @sca_exemption_reason.setter
+    def sca_exemption_reason(self, val):
+        """Set sca_exemption_reason
+        Keyword argument:
+        val -- New sca_exemption_reason value"""
+        self._sca_exemption_reason = val
+        return self
+    
+    @property
+    def challenge_indicator(self):
+        """Get challenge_indicator"""
+        return self._challenge_indicator
+
+    @challenge_indicator.setter
+    def challenge_indicator(self, val):
+        """Set challenge_indicator
+        Keyword argument:
+        val -- New challenge_indicator value"""
+        self._challenge_indicator = val
+        return self
+    
+    @property
+    def incremental(self):
+        """Get incremental"""
+        return self._incremental
+
+    @incremental.setter
+    def incremental(self, val):
+        """Set incremental
+        Keyword argument:
+        val -- New incremental value"""
+        self._incremental = val
+        return self
+    
+    @property
+    def tax(self):
+        """Get tax"""
+        return self._tax
+
+    @tax.setter
+    def tax(self, val):
+        """Set tax
+        Keyword argument:
+        val -- New tax value"""
+        if val is None:
+            self._tax = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.InvoiceTax(self._client)
+            obj.fill_with_data(val)
+            self._tax = obj
+        else:
+            self._tax = val
+        return self
+    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -677,6 +742,14 @@ class Invoice(object):
             self.external_fraud_tools = data["external_fraud_tools"]
         if "exemption_reason_3ds2" in data.keys():
             self.exemption_reason_3ds2 = data["exemption_reason_3ds2"]
+        if "sca_exemption_reason" in data.keys():
+            self.sca_exemption_reason = data["sca_exemption_reason"]
+        if "challenge_indicator" in data.keys():
+            self.challenge_indicator = data["challenge_indicator"]
+        if "incremental" in data.keys():
+            self.incremental = data["incremental"]
+        if "tax" in data.keys():
+            self.tax = data["tax"]
         
         return self
 
@@ -717,7 +790,35 @@ class Invoice(object):
             "device": self.device,
             "external_fraud_tools": self.external_fraud_tools,
             "exemption_reason_3ds2": self.exemption_reason_3ds2,
+            "sca_exemption_reason": self.sca_exemption_reason,
+            "challenge_indicator": self.challenge_indicator,
+            "incremental": self.incremental,
+            "tax": self.tax,
         }
+
+    def increment authorization(self, amount, options = {}):
+        """Create an incremental authorization
+        Keyword argument:
+        amount -- Amount to increment authorization by
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path    = "/invoices/" + quote_plus(self.id) + "/increment_authorization"
+        data    = {
+            'amount': amount
+        }
+
+        response = Response(request.post(path, data, options))
+        return_values = []
+        
+        body = response.body
+        body = body["transaction"]
+        transaction = processout.Transaction(self._client)
+        return_values.append(transaction.fill_with_data(body))
+
+        
+        return return_values[0]
 
     def authorize(self, source, options = {}):
         """Authorize the invoice using the given source (customer or token)
@@ -730,6 +831,7 @@ class Invoice(object):
         path    = "/invoices/" + quote_plus(self.id) + "/authorize"
         data    = {
             'device': self.device, 
+            'incremental': self.incremental, 
             'synchronous': options.get("synchronous"), 
             'retry_drop_liability_shift': options.get("retry_drop_liability_shift"), 
             'capture_amount': options.get("capture_amount"), 
@@ -760,6 +862,7 @@ class Invoice(object):
         path    = "/invoices/" + quote_plus(self.id) + "/capture"
         data    = {
             'device': self.device, 
+            'incremental': self.incremental, 
             'authorize_only': options.get("authorize_only"), 
             'synchronous': options.get("synchronous"), 
             'retry_drop_liability_shift': options.get("retry_drop_liability_shift"), 
@@ -947,6 +1050,8 @@ class Invoice(object):
             'metadata': self.metadata, 
             'details': self.details, 
             'exemption_reason_3ds2': self.exemption_reason_3ds2, 
+            'sca_exemption_reason': self.sca_exemption_reason, 
+            'challenge_indicator': self.challenge_indicator, 
             'gateway_data': self.gateway_data, 
             'merchant_initiator_type': self.merchant_initiator_type, 
             'statement_descriptor': self.statement_descriptor, 
@@ -961,7 +1066,8 @@ class Invoice(object):
             'shipping': self.shipping, 
             'device': self.device, 
             'require_backend_capture': self.require_backend_capture, 
-            'external_fraud_tools': self.external_fraud_tools
+            'external_fraud_tools': self.external_fraud_tools, 
+            'tax': self.tax
         }
 
         response = Response(request.post(path, data, options))

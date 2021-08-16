@@ -115,6 +115,12 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.Invoice(self, prefill)
 
+    def new_invoice_tax(self, prefill = None):
+        """Create a new InvoiceTax instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.InvoiceTax(self, prefill)
+
     def new_invoice_external_fraud_tools(self, prefill = None):
         """Create a new InvoiceExternalFraudTools instance
         Keyword argument:
