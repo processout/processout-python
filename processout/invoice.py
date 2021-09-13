@@ -796,7 +796,7 @@ class Invoice(object):
             "tax": self.tax,
         }
 
-    def increment authorization(self, amount, options = {}):
+    def increment_authorization(self, amount, options = {}):
         """Create an incremental authorization
         Keyword argument:
         amount -- Amount to increment authorization by
