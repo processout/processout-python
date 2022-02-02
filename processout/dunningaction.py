@@ -6,21 +6,21 @@ except ImportError:
 import processout
 import json
 
-from processout.networking.request  import Request
+from processout.networking.request import Request
 from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
+
 class DunningAction(object):
-    def __init__(self, client, prefill = None):
+    def __init__(self, client, prefill=None):
         self._client = client
 
         self._action = None
         self._delay_in_days = None
-        if prefill != None:
+        if prefill is not None:
             self.fill_with_data(prefill)
 
-    
     @property
     def action(self):
         """Get action"""
@@ -33,7 +33,7 @@ class DunningAction(object):
         val -- New action value"""
         self._action = val
         return self
-    
+
     @property
     def delay_in_days(self):
         """Get delay_in_days"""
@@ -46,7 +46,6 @@ class DunningAction(object):
         val -- New delay_in_days value"""
         self._delay_in_days = val
         return self
-    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -56,7 +55,7 @@ class DunningAction(object):
             self.action = data["action"]
         if "delay_in_days" in data.keys():
             self.delay_in_days = data["delay_in_days"]
-        
+
         return self
 
     def to_json(self):
@@ -64,5 +63,3 @@ class DunningAction(object):
             "action": self.action,
             "delay_in_days": self.delay_in_days,
         }
-
-    

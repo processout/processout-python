@@ -6,13 +6,14 @@ except ImportError:
 import processout
 import json
 
-from processout.networking.request  import Request
+from processout.networking.request import Request
 from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
+
 class InvoiceDetail(object):
-    def __init__(self, client, prefill = None):
+    def __init__(self, client, prefill=None):
         self._client = client
 
         self._name = None
@@ -30,10 +31,9 @@ class InvoiceDetail(object):
         self._marketplace_merchant_is_business = None
         self._marketplace_merchant_created_at = None
         self._category = None
-        if prefill != None:
+        if prefill is not None:
             self.fill_with_data(prefill)
 
-    
     @property
     def name(self):
         """Get name"""
@@ -46,7 +46,7 @@ class InvoiceDetail(object):
         val -- New name value"""
         self._name = val
         return self
-    
+
     @property
     def type(self):
         """Get type"""
@@ -59,7 +59,7 @@ class InvoiceDetail(object):
         val -- New type value"""
         self._type = val
         return self
-    
+
     @property
     def amount(self):
         """Get amount"""
@@ -72,7 +72,7 @@ class InvoiceDetail(object):
         val -- New amount value"""
         self._amount = val
         return self
-    
+
     @property
     def quantity(self):
         """Get quantity"""
@@ -85,7 +85,7 @@ class InvoiceDetail(object):
         val -- New quantity value"""
         self._quantity = val
         return self
-    
+
     @property
     def metadata(self):
         """Get metadata"""
@@ -98,7 +98,7 @@ class InvoiceDetail(object):
         val -- New metadata value"""
         self._metadata = val
         return self
-    
+
     @property
     def reference(self):
         """Get reference"""
@@ -111,7 +111,7 @@ class InvoiceDetail(object):
         val -- New reference value"""
         self._reference = val
         return self
-    
+
     @property
     def description(self):
         """Get description"""
@@ -124,7 +124,7 @@ class InvoiceDetail(object):
         val -- New description value"""
         self._description = val
         return self
-    
+
     @property
     def brand(self):
         """Get brand"""
@@ -137,7 +137,7 @@ class InvoiceDetail(object):
         val -- New brand value"""
         self._brand = val
         return self
-    
+
     @property
     def model(self):
         """Get model"""
@@ -150,7 +150,7 @@ class InvoiceDetail(object):
         val -- New model value"""
         self._model = val
         return self
-    
+
     @property
     def discount_amount(self):
         """Get discount_amount"""
@@ -163,7 +163,7 @@ class InvoiceDetail(object):
         val -- New discount_amount value"""
         self._discount_amount = val
         return self
-    
+
     @property
     def condition(self):
         """Get condition"""
@@ -176,7 +176,7 @@ class InvoiceDetail(object):
         val -- New condition value"""
         self._condition = val
         return self
-    
+
     @property
     def marketplace_merchant(self):
         """Get marketplace_merchant"""
@@ -189,7 +189,7 @@ class InvoiceDetail(object):
         val -- New marketplace_merchant value"""
         self._marketplace_merchant = val
         return self
-    
+
     @property
     def marketplace_merchant_is_business(self):
         """Get marketplace_merchant_is_business"""
@@ -202,7 +202,7 @@ class InvoiceDetail(object):
         val -- New marketplace_merchant_is_business value"""
         self._marketplace_merchant_is_business = val
         return self
-    
+
     @property
     def marketplace_merchant_created_at(self):
         """Get marketplace_merchant_created_at"""
@@ -215,7 +215,7 @@ class InvoiceDetail(object):
         val -- New marketplace_merchant_created_at value"""
         self._marketplace_merchant_created_at = val
         return self
-    
+
     @property
     def category(self):
         """Get category"""
@@ -228,7 +228,6 @@ class InvoiceDetail(object):
         val -- New category value"""
         self._category = val
         return self
-    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -264,7 +263,7 @@ class InvoiceDetail(object):
             self.marketplace_merchant_created_at = data["marketplace_merchant_created_at"]
         if "category" in data.keys():
             self.category = data["category"]
-        
+
         return self
 
     def to_json(self):
@@ -285,5 +284,3 @@ class InvoiceDetail(object):
             "marketplace_merchant_created_at": self.marketplace_merchant_created_at,
             "category": self.category,
         }
-
-    

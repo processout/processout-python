@@ -6,13 +6,14 @@ except ImportError:
 import processout
 import json
 
-from processout.networking.request  import Request
+from processout.networking.request import Request
 from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
+
 class GatewayConfiguration(object):
-    def __init__(self, client, prefill = None):
+    def __init__(self, client, prefill=None):
         self._client = client
 
         self._id = None
@@ -26,10 +27,9 @@ class GatewayConfiguration(object):
         self._public_keys = None
         self._created_at = None
         self._enabled_at = None
-        if prefill != None:
+        if prefill is not None:
             self.fill_with_data(prefill)
 
-    
     @property
     def id(self):
         """Get id"""
@@ -42,7 +42,7 @@ class GatewayConfiguration(object):
         val -- New id value"""
         self._id = val
         return self
-    
+
     @property
     def project(self):
         """Get project"""
@@ -64,7 +64,7 @@ class GatewayConfiguration(object):
         else:
             self._project = val
         return self
-    
+
     @property
     def project_id(self):
         """Get project_id"""
@@ -77,7 +77,7 @@ class GatewayConfiguration(object):
         val -- New project_id value"""
         self._project_id = val
         return self
-    
+
     @property
     def gateway(self):
         """Get gateway"""
@@ -99,7 +99,7 @@ class GatewayConfiguration(object):
         else:
             self._gateway = val
         return self
-    
+
     @property
     def gateway_id(self):
         """Get gateway_id"""
@@ -112,7 +112,7 @@ class GatewayConfiguration(object):
         val -- New gateway_id value"""
         self._gateway_id = val
         return self
-    
+
     @property
     def name(self):
         """Get name"""
@@ -125,7 +125,7 @@ class GatewayConfiguration(object):
         val -- New name value"""
         self._name = val
         return self
-    
+
     @property
     def default_currency(self):
         """Get default_currency"""
@@ -138,7 +138,7 @@ class GatewayConfiguration(object):
         val -- New default_currency value"""
         self._default_currency = val
         return self
-    
+
     @property
     def enabled(self):
         """Get enabled"""
@@ -151,7 +151,7 @@ class GatewayConfiguration(object):
         val -- New enabled value"""
         self._enabled = val
         return self
-    
+
     @property
     def public_keys(self):
         """Get public_keys"""
@@ -164,7 +164,7 @@ class GatewayConfiguration(object):
         val -- New public_keys value"""
         self._public_keys = val
         return self
-    
+
     @property
     def created_at(self):
         """Get created_at"""
@@ -177,7 +177,7 @@ class GatewayConfiguration(object):
         val -- New created_at value"""
         self._created_at = val
         return self
-    
+
     @property
     def enabled_at(self):
         """Get enabled_at"""
@@ -190,7 +190,6 @@ class GatewayConfiguration(object):
         val -- New enabled_at value"""
         self._enabled_at = val
         return self
-    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -218,7 +217,7 @@ class GatewayConfiguration(object):
             self.created_at = data["created_at"]
         if "enabled_at" in data.keys():
             self.enabled_at = data["enabled_at"]
-        
+
         return self
 
     def to_json(self):
@@ -236,23 +235,23 @@ class GatewayConfiguration(object):
             "enabled_at": self.enabled_at,
         }
 
-    def all(self, options = {}):
+    def all(self, options={}):
         """Get all the gateway configurations.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/gateway-configurations"
-        data    = {
+        path = "/gateway-configurations"
+        data = {
             'expand_merchant_accounts': options.get("expand_merchant_accounts")
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
-        a    = []
+
+        a = []
         body = response.body
         for v in body['gateway_configurations']:
             tmp = processout.GatewayConfiguration(self._client)
@@ -260,12 +259,10 @@ class GatewayConfiguration(object):
             a.append(tmp)
 
         return_values.append(a)
-            
 
-        
         return return_values[0]
 
-    def find(self, configuration_id, options = {}):
+    def find(self, configuration_id, options={}):
         """Find a gateway configuration by its ID.
         Keyword argument:
         configuration_id -- ID of the gateway configuration
@@ -273,78 +270,71 @@ class GatewayConfiguration(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/gateway-configurations/" + quote_plus(configuration_id) + ""
-        data    = {
+        path = "/gateway-configurations/" + quote_plus(configuration_id) + ""
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["gateway_configuration"]
-                
-                
+
         obj = processout.GatewayConfiguration(self._client)
         return_values.append(obj.fill_with_data(body))
-                
 
-        
         return return_values[0]
 
-    def save(self, options = {}):
+    def save(self, options={}):
         """Save the updated gateway configuration attributes and settings.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/gateway-configurations/" + quote_plus(self.id) + ""
-        data    = {
-            'id': self.id, 
-            'name': self.name, 
-            'enabled': self.enabled, 
-            'default_currency': self.default_currency, 
-            'settings': options.get("settings"), 
+        path = "/gateway-configurations/" + quote_plus(self.id) + ""
+        data = {
+            'id': self.id,
+            'name': self.name,
+            'enabled': self.enabled,
+            'default_currency': self.default_currency,
+            'settings': options.get("settings"),
             'sub_accounts_enabled': options.get("sub_accounts_enabled")
         }
 
         response = Response(request.put(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["gateway_configuration"]
-                
-                
-        return_values.append(self.fill_with_data(body))
-                
 
-        
+        return_values.append(self.fill_with_data(body))
+
         return return_values[0]
 
-    def delete(self, options = {}):
+    def delete(self, options={}):
         """Delete the gateway configuration.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/gateway-configurations/" + quote_plus(self.id) + ""
-        data    = {
+        path = "/gateway-configurations/" + quote_plus(self.id) + ""
+        data = {
 
         }
 
         response = Response(request.delete(path, data, options))
         return_values = []
-        
+
         return_values.append(response.success)
 
-        
         return return_values[0]
 
-    def create(self, gateway_name, options = {}):
+    def create(self, gateway_name, options={}):
         """Create a new gateway configuration.
         Keyword argument:
         gateway_name -- Name of the gateway
@@ -352,27 +342,23 @@ class GatewayConfiguration(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/gateways/" + quote_plus(gateway_name) + "/gateway-configurations"
-        data    = {
-            'id': self.id, 
-            'name': self.name, 
-            'enabled': self.enabled, 
-            'default_currency': self.default_currency, 
-            'settings': options.get("settings"), 
+        path = "/gateways/" + \
+            quote_plus(gateway_name) + "/gateway-configurations"
+        data = {
+            'id': self.id,
+            'name': self.name,
+            'enabled': self.enabled,
+            'default_currency': self.default_currency,
+            'settings': options.get("settings"),
             'sub_accounts_enabled': options.get("sub_accounts_enabled")
         }
 
         response = Response(request.post(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["gateway_configuration"]
-                
-                
+
         return_values.append(self.fill_with_data(body))
-                
 
-        
         return return_values[0]
-
-    

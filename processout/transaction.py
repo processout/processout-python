@@ -6,13 +6,14 @@ except ImportError:
 import processout
 import json
 
-from processout.networking.request  import Request
+from processout.networking.request import Request
 from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
+
 class Transaction(object):
-    def __init__(self, client, prefill = None):
+    def __init__(self, client, prefill=None):
         self._client = client
 
         self._id = None
@@ -69,10 +70,9 @@ class Transaction(object):
         self._three_d_s = None
         self._cvc_check = None
         self._avs_check = None
-        if prefill != None:
+        if prefill is not None:
             self.fill_with_data(prefill)
 
-    
     @property
     def id(self):
         """Get id"""
@@ -85,7 +85,7 @@ class Transaction(object):
         val -- New id value"""
         self._id = val
         return self
-    
+
     @property
     def project(self):
         """Get project"""
@@ -107,7 +107,7 @@ class Transaction(object):
         else:
             self._project = val
         return self
-    
+
     @property
     def project_id(self):
         """Get project_id"""
@@ -120,7 +120,7 @@ class Transaction(object):
         val -- New project_id value"""
         self._project_id = val
         return self
-    
+
     @property
     def invoice(self):
         """Get invoice"""
@@ -142,7 +142,7 @@ class Transaction(object):
         else:
             self._invoice = val
         return self
-    
+
     @property
     def invoice_id(self):
         """Get invoice_id"""
@@ -155,7 +155,7 @@ class Transaction(object):
         val -- New invoice_id value"""
         self._invoice_id = val
         return self
-    
+
     @property
     def customer(self):
         """Get customer"""
@@ -177,7 +177,7 @@ class Transaction(object):
         else:
             self._customer = val
         return self
-    
+
     @property
     def customer_id(self):
         """Get customer_id"""
@@ -190,7 +190,7 @@ class Transaction(object):
         val -- New customer_id value"""
         self._customer_id = val
         return self
-    
+
     @property
     def subscription(self):
         """Get subscription"""
@@ -212,7 +212,7 @@ class Transaction(object):
         else:
             self._subscription = val
         return self
-    
+
     @property
     def subscription_id(self):
         """Get subscription_id"""
@@ -225,7 +225,7 @@ class Transaction(object):
         val -- New subscription_id value"""
         self._subscription_id = val
         return self
-    
+
     @property
     def token(self):
         """Get token"""
@@ -247,7 +247,7 @@ class Transaction(object):
         else:
             self._token = val
         return self
-    
+
     @property
     def token_id(self):
         """Get token_id"""
@@ -260,7 +260,7 @@ class Transaction(object):
         val -- New token_id value"""
         self._token_id = val
         return self
-    
+
     @property
     def card(self):
         """Get card"""
@@ -282,7 +282,7 @@ class Transaction(object):
         else:
             self._card = val
         return self
-    
+
     @property
     def card_id(self):
         """Get card_id"""
@@ -295,7 +295,7 @@ class Transaction(object):
         val -- New card_id value"""
         self._card_id = val
         return self
-    
+
     @property
     def gateway_configuration(self):
         """Get gateway_configuration"""
@@ -317,7 +317,7 @@ class Transaction(object):
         else:
             self._gateway_configuration = val
         return self
-    
+
     @property
     def gateway_configuration_id(self):
         """Get gateway_configuration_id"""
@@ -330,7 +330,7 @@ class Transaction(object):
         val -- New gateway_configuration_id value"""
         self._gateway_configuration_id = val
         return self
-    
+
     @property
     def operations(self):
         """Get operations"""
@@ -345,7 +345,8 @@ class Transaction(object):
             self._operations = []
             return self
 
-        if len(val) > 0 and isinstance(val[0], processout.TransactionOperation):
+        if len(val) > 0 and isinstance(
+                val[0], processout.TransactionOperation):
             self._operations = val
         else:
             l = []
@@ -355,7 +356,7 @@ class Transaction(object):
                 l.append(obj)
             self._operations = l
         return self
-    
+
     @property
     def refunds(self):
         """Get refunds"""
@@ -380,7 +381,7 @@ class Transaction(object):
                 l.append(obj)
             self._refunds = l
         return self
-    
+
     @property
     def name(self):
         """Get name"""
@@ -393,7 +394,7 @@ class Transaction(object):
         val -- New name value"""
         self._name = val
         return self
-    
+
     @property
     def amount(self):
         """Get amount"""
@@ -406,7 +407,7 @@ class Transaction(object):
         val -- New amount value"""
         self._amount = val
         return self
-    
+
     @property
     def amount_local(self):
         """Get amount_local"""
@@ -419,7 +420,7 @@ class Transaction(object):
         val -- New amount_local value"""
         self._amount_local = val
         return self
-    
+
     @property
     def authorized_amount(self):
         """Get authorized_amount"""
@@ -432,7 +433,7 @@ class Transaction(object):
         val -- New authorized_amount value"""
         self._authorized_amount = val
         return self
-    
+
     @property
     def authorized_amount_local(self):
         """Get authorized_amount_local"""
@@ -445,7 +446,7 @@ class Transaction(object):
         val -- New authorized_amount_local value"""
         self._authorized_amount_local = val
         return self
-    
+
     @property
     def captured_amount(self):
         """Get captured_amount"""
@@ -458,7 +459,7 @@ class Transaction(object):
         val -- New captured_amount value"""
         self._captured_amount = val
         return self
-    
+
     @property
     def captured_amount_local(self):
         """Get captured_amount_local"""
@@ -471,7 +472,7 @@ class Transaction(object):
         val -- New captured_amount_local value"""
         self._captured_amount_local = val
         return self
-    
+
     @property
     def refunded_amount(self):
         """Get refunded_amount"""
@@ -484,7 +485,7 @@ class Transaction(object):
         val -- New refunded_amount value"""
         self._refunded_amount = val
         return self
-    
+
     @property
     def refunded_amount_local(self):
         """Get refunded_amount_local"""
@@ -497,7 +498,7 @@ class Transaction(object):
         val -- New refunded_amount_local value"""
         self._refunded_amount_local = val
         return self
-    
+
     @property
     def available_amount(self):
         """Get available_amount"""
@@ -510,7 +511,7 @@ class Transaction(object):
         val -- New available_amount value"""
         self._available_amount = val
         return self
-    
+
     @property
     def available_amount_local(self):
         """Get available_amount_local"""
@@ -523,7 +524,7 @@ class Transaction(object):
         val -- New available_amount_local value"""
         self._available_amount_local = val
         return self
-    
+
     @property
     def currency(self):
         """Get currency"""
@@ -536,7 +537,7 @@ class Transaction(object):
         val -- New currency value"""
         self._currency = val
         return self
-    
+
     @property
     def error_code(self):
         """Get error_code"""
@@ -549,7 +550,7 @@ class Transaction(object):
         val -- New error_code value"""
         self._error_code = val
         return self
-    
+
     @property
     def error_message(self):
         """Get error_message"""
@@ -562,7 +563,7 @@ class Transaction(object):
         val -- New error_message value"""
         self._error_message = val
         return self
-    
+
     @property
     def gateway_name(self):
         """Get gateway_name"""
@@ -575,7 +576,7 @@ class Transaction(object):
         val -- New gateway_name value"""
         self._gateway_name = val
         return self
-    
+
     @property
     def three_d_s_status(self):
         """Get three_d_s_status"""
@@ -588,7 +589,7 @@ class Transaction(object):
         val -- New three_d_s_status value"""
         self._three_d_s_status = val
         return self
-    
+
     @property
     def status(self):
         """Get status"""
@@ -601,7 +602,7 @@ class Transaction(object):
         val -- New status value"""
         self._status = val
         return self
-    
+
     @property
     def authorized(self):
         """Get authorized"""
@@ -614,7 +615,7 @@ class Transaction(object):
         val -- New authorized value"""
         self._authorized = val
         return self
-    
+
     @property
     def captured(self):
         """Get captured"""
@@ -627,7 +628,7 @@ class Transaction(object):
         val -- New captured value"""
         self._captured = val
         return self
-    
+
     @property
     def voided(self):
         """Get voided"""
@@ -640,7 +641,7 @@ class Transaction(object):
         val -- New voided value"""
         self._voided = val
         return self
-    
+
     @property
     def refunded(self):
         """Get refunded"""
@@ -653,7 +654,7 @@ class Transaction(object):
         val -- New refunded value"""
         self._refunded = val
         return self
-    
+
     @property
     def chargedback(self):
         """Get chargedback"""
@@ -666,7 +667,7 @@ class Transaction(object):
         val -- New chargedback value"""
         self._chargedback = val
         return self
-    
+
     @property
     def received_fraud_notification(self):
         """Get received_fraud_notification"""
@@ -679,7 +680,7 @@ class Transaction(object):
         val -- New received_fraud_notification value"""
         self._received_fraud_notification = val
         return self
-    
+
     @property
     def received_retrieval_request(self):
         """Get received_retrieval_request"""
@@ -692,7 +693,7 @@ class Transaction(object):
         val -- New received_retrieval_request value"""
         self._received_retrieval_request = val
         return self
-    
+
     @property
     def processout_fee(self):
         """Get processout_fee"""
@@ -705,7 +706,7 @@ class Transaction(object):
         val -- New processout_fee value"""
         self._processout_fee = val
         return self
-    
+
     @property
     def estimated_fee(self):
         """Get estimated_fee"""
@@ -718,7 +719,7 @@ class Transaction(object):
         val -- New estimated_fee value"""
         self._estimated_fee = val
         return self
-    
+
     @property
     def gateway_fee(self):
         """Get gateway_fee"""
@@ -731,7 +732,7 @@ class Transaction(object):
         val -- New gateway_fee value"""
         self._gateway_fee = val
         return self
-    
+
     @property
     def gateway_fee_local(self):
         """Get gateway_fee_local"""
@@ -744,7 +745,7 @@ class Transaction(object):
         val -- New gateway_fee_local value"""
         self._gateway_fee_local = val
         return self
-    
+
     @property
     def currency_fee(self):
         """Get currency_fee"""
@@ -757,7 +758,7 @@ class Transaction(object):
         val -- New currency_fee value"""
         self._currency_fee = val
         return self
-    
+
     @property
     def metadata(self):
         """Get metadata"""
@@ -770,7 +771,7 @@ class Transaction(object):
         val -- New metadata value"""
         self._metadata = val
         return self
-    
+
     @property
     def sandbox(self):
         """Get sandbox"""
@@ -783,7 +784,7 @@ class Transaction(object):
         val -- New sandbox value"""
         self._sandbox = val
         return self
-    
+
     @property
     def created_at(self):
         """Get created_at"""
@@ -796,7 +797,7 @@ class Transaction(object):
         val -- New created_at value"""
         self._created_at = val
         return self
-    
+
     @property
     def chargedback_at(self):
         """Get chargedback_at"""
@@ -809,7 +810,7 @@ class Transaction(object):
         val -- New chargedback_at value"""
         self._chargedback_at = val
         return self
-    
+
     @property
     def refunded_at(self):
         """Get refunded_at"""
@@ -822,7 +823,7 @@ class Transaction(object):
         val -- New refunded_at value"""
         self._refunded_at = val
         return self
-    
+
     @property
     def three_d_s(self):
         """Get three_d_s"""
@@ -844,7 +845,7 @@ class Transaction(object):
         else:
             self._three_d_s = val
         return self
-    
+
     @property
     def cvc_check(self):
         """Get cvc_check"""
@@ -857,7 +858,7 @@ class Transaction(object):
         val -- New cvc_check value"""
         self._cvc_check = val
         return self
-    
+
     @property
     def avs_check(self):
         """Get avs_check"""
@@ -870,7 +871,6 @@ class Transaction(object):
         val -- New avs_check value"""
         self._avs_check = val
         return self
-    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -984,7 +984,7 @@ class Transaction(object):
             self.cvc_check = data["cvc_check"]
         if "avs_check" in data.keys():
             self.avs_check = data["avs_check"]
-        
+
         return self
 
     def to_json(self):
@@ -1045,23 +1045,23 @@ class Transaction(object):
             "avs_check": self.avs_check,
         }
 
-    def fetch_refunds(self, options = {}):
+    def fetch_refunds(self, options={}):
         """Get the transaction's refunds.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/transactions/" + quote_plus(self.id) + "/refunds"
-        data    = {
+        path = "/transactions/" + quote_plus(self.id) + "/refunds"
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
-        a    = []
+
+        a = []
         body = response.body
         for v in body['refunds']:
             tmp = processout.Refund(self._client)
@@ -1069,12 +1069,10 @@ class Transaction(object):
             a.append(tmp)
 
         return_values.append(a)
-            
 
-        
         return return_values[0]
 
-    def find_refund(self, refund_id, options = {}):
+    def find_refund(self, refund_id, options={}):
         """Find a transaction's refund by its ID.
         Keyword argument:
         refund_id -- ID of the refund
@@ -1082,39 +1080,39 @@ class Transaction(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/transactions/" + quote_plus(self.id) + "/refunds/" + quote_plus(refund_id) + ""
-        data    = {
+        path = "/transactions/" + \
+            quote_plus(self.id) + "/refunds/" + quote_plus(refund_id) + ""
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["refund"]
         refund = processout.Refund(self._client)
         return_values.append(refund.fill_with_data(body))
 
-        
         return return_values[0]
 
-    def all(self, options = {}):
+    def all(self, options={}):
         """Get all the transactions.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/transactions"
-        data    = {
+        path = "/transactions"
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
-        a    = []
+
+        a = []
         body = response.body
         for v in body['transactions']:
             tmp = processout.Transaction(self._client)
@@ -1122,12 +1120,10 @@ class Transaction(object):
             a.append(tmp)
 
         return_values.append(a)
-            
 
-        
         return return_values[0]
 
-    def find(self, transaction_id, options = {}):
+    def find(self, transaction_id, options={}):
         """Find a transaction by its ID.
         Keyword argument:
         transaction_id -- ID of the transaction
@@ -1135,23 +1131,18 @@ class Transaction(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/transactions/" + quote_plus(transaction_id) + ""
-        data    = {
+        path = "/transactions/" + quote_plus(transaction_id) + ""
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["transaction"]
-                
-                
+
         obj = processout.Transaction(self._client)
         return_values.append(obj.fill_with_data(body))
-                
 
-        
         return return_values[0]
-
-    

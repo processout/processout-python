@@ -6,13 +6,14 @@ except ImportError:
 import processout
 import json
 
-from processout.networking.request  import Request
+from processout.networking.request import Request
 from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
+
 class Plan(object):
-    def __init__(self, client, prefill = None):
+    def __init__(self, client, prefill=None):
         self._client = client
 
         self._id = None
@@ -29,10 +30,9 @@ class Plan(object):
         self._cancel_url = None
         self._sandbox = None
         self._created_at = None
-        if prefill != None:
+        if prefill is not None:
             self.fill_with_data(prefill)
 
-    
     @property
     def id(self):
         """Get id"""
@@ -45,7 +45,7 @@ class Plan(object):
         val -- New id value"""
         self._id = val
         return self
-    
+
     @property
     def project(self):
         """Get project"""
@@ -67,7 +67,7 @@ class Plan(object):
         else:
             self._project = val
         return self
-    
+
     @property
     def project_id(self):
         """Get project_id"""
@@ -80,7 +80,7 @@ class Plan(object):
         val -- New project_id value"""
         self._project_id = val
         return self
-    
+
     @property
     def url(self):
         """Get url"""
@@ -93,7 +93,7 @@ class Plan(object):
         val -- New url value"""
         self._url = val
         return self
-    
+
     @property
     def name(self):
         """Get name"""
@@ -106,7 +106,7 @@ class Plan(object):
         val -- New name value"""
         self._name = val
         return self
-    
+
     @property
     def amount(self):
         """Get amount"""
@@ -119,7 +119,7 @@ class Plan(object):
         val -- New amount value"""
         self._amount = val
         return self
-    
+
     @property
     def currency(self):
         """Get currency"""
@@ -132,7 +132,7 @@ class Plan(object):
         val -- New currency value"""
         self._currency = val
         return self
-    
+
     @property
     def metadata(self):
         """Get metadata"""
@@ -145,7 +145,7 @@ class Plan(object):
         val -- New metadata value"""
         self._metadata = val
         return self
-    
+
     @property
     def interval(self):
         """Get interval"""
@@ -158,7 +158,7 @@ class Plan(object):
         val -- New interval value"""
         self._interval = val
         return self
-    
+
     @property
     def trial_period(self):
         """Get trial_period"""
@@ -171,7 +171,7 @@ class Plan(object):
         val -- New trial_period value"""
         self._trial_period = val
         return self
-    
+
     @property
     def return_url(self):
         """Get return_url"""
@@ -184,7 +184,7 @@ class Plan(object):
         val -- New return_url value"""
         self._return_url = val
         return self
-    
+
     @property
     def cancel_url(self):
         """Get cancel_url"""
@@ -197,7 +197,7 @@ class Plan(object):
         val -- New cancel_url value"""
         self._cancel_url = val
         return self
-    
+
     @property
     def sandbox(self):
         """Get sandbox"""
@@ -210,7 +210,7 @@ class Plan(object):
         val -- New sandbox value"""
         self._sandbox = val
         return self
-    
+
     @property
     def created_at(self):
         """Get created_at"""
@@ -223,7 +223,6 @@ class Plan(object):
         val -- New created_at value"""
         self._created_at = val
         return self
-    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -257,7 +256,7 @@ class Plan(object):
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
             self.created_at = data["created_at"]
-        
+
         return self
 
     def to_json(self):
@@ -278,23 +277,23 @@ class Plan(object):
             "created_at": self.created_at,
         }
 
-    def all(self, options = {}):
+    def all(self, options={}):
         """Get all the plans.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/plans"
-        data    = {
+        path = "/plans"
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
-        a    = []
+
+        a = []
         body = response.body
         for v in body['plans']:
             tmp = processout.Plan(self._client)
@@ -302,46 +301,41 @@ class Plan(object):
             a.append(tmp)
 
         return_values.append(a)
-            
 
-        
         return return_values[0]
 
-    def create(self, options = {}):
+    def create(self, options={}):
         """Create a new plan.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/plans"
-        data    = {
-            'id': self.id, 
-            'name': self.name, 
-            'amount': self.amount, 
-            'currency': self.currency, 
-            'interval': self.interval, 
-            'trial_period': self.trial_period, 
-            'metadata': self.metadata, 
-            'return_url': self.return_url, 
+        path = "/plans"
+        data = {
+            'id': self.id,
+            'name': self.name,
+            'amount': self.amount,
+            'currency': self.currency,
+            'interval': self.interval,
+            'trial_period': self.trial_period,
+            'metadata': self.metadata,
+            'return_url': self.return_url,
             'cancel_url': self.cancel_url
         }
 
         response = Response(request.post(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["plan"]
-                
-                
-        return_values.append(self.fill_with_data(body))
-                
 
-        
+        return_values.append(self.fill_with_data(body))
+
         return return_values[0]
 
-    def find(self, plan_id, options = {}):
+    def find(self, plan_id, options={}):
         """Find a plan by its ID.
         Keyword argument:
         plan_id -- ID of the plan
@@ -349,74 +343,65 @@ class Plan(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/plans/" + quote_plus(plan_id) + ""
-        data    = {
+        path = "/plans/" + quote_plus(plan_id) + ""
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["plan"]
-                
-                
+
         obj = processout.Plan(self._client)
         return_values.append(obj.fill_with_data(body))
-                
 
-        
         return return_values[0]
 
-    def save(self, options = {}):
+    def save(self, options={}):
         """Save the updated plan attributes. This action won't affect subscriptions already linked to this plan.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/plans/" + quote_plus(self.id) + ""
-        data    = {
-            'name': self.name, 
-            'trial_period': self.trial_period, 
-            'metadata': self.metadata, 
-            'return_url': self.return_url, 
+        path = "/plans/" + quote_plus(self.id) + ""
+        data = {
+            'name': self.name,
+            'trial_period': self.trial_period,
+            'metadata': self.metadata,
+            'return_url': self.return_url,
             'cancel_url': self.cancel_url
         }
 
         response = Response(request.put(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["plan"]
-                
-                
-        return_values.append(self.fill_with_data(body))
-                
 
-        
+        return_values.append(self.fill_with_data(body))
+
         return return_values[0]
 
-    def end(self, options = {}):
+    def end(self, options={}):
         """Delete a plan. Subscriptions linked to this plan won't be affected.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/plans/" + quote_plus(self.id) + ""
-        data    = {
+        path = "/plans/" + quote_plus(self.id) + ""
+        data = {
 
         }
 
         response = Response(request.delete(path, data, options))
         return_values = []
-        
+
         return_values.append(response.success)
 
-        
         return return_values[0]
-
-    

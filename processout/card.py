@@ -6,13 +6,14 @@ except ImportError:
 import processout
 import json
 
-from processout.networking.request  import Request
+from processout.networking.request import Request
 from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
+
 class Card(object):
-    def __init__(self, client, prefill = None):
+    def __init__(self, client, prefill=None):
         self._client = client
 
         self._id = None
@@ -46,10 +47,9 @@ class Card(object):
         self._expires_soon = None
         self._sandbox = None
         self._created_at = None
-        if prefill != None:
+        if prefill is not None:
             self.fill_with_data(prefill)
 
-    
     @property
     def id(self):
         """Get id"""
@@ -62,7 +62,7 @@ class Card(object):
         val -- New id value"""
         self._id = val
         return self
-    
+
     @property
     def project(self):
         """Get project"""
@@ -84,7 +84,7 @@ class Card(object):
         else:
             self._project = val
         return self
-    
+
     @property
     def project_id(self):
         """Get project_id"""
@@ -97,7 +97,7 @@ class Card(object):
         val -- New project_id value"""
         self._project_id = val
         return self
-    
+
     @property
     def token(self):
         """Get token"""
@@ -119,7 +119,7 @@ class Card(object):
         else:
             self._token = val
         return self
-    
+
     @property
     def scheme(self):
         """Get scheme"""
@@ -132,7 +132,7 @@ class Card(object):
         val -- New scheme value"""
         self._scheme = val
         return self
-    
+
     @property
     def co_scheme(self):
         """Get co_scheme"""
@@ -145,7 +145,7 @@ class Card(object):
         val -- New co_scheme value"""
         self._co_scheme = val
         return self
-    
+
     @property
     def preferred_scheme(self):
         """Get preferred_scheme"""
@@ -158,7 +158,7 @@ class Card(object):
         val -- New preferred_scheme value"""
         self._preferred_scheme = val
         return self
-    
+
     @property
     def type(self):
         """Get type"""
@@ -171,7 +171,7 @@ class Card(object):
         val -- New type value"""
         self._type = val
         return self
-    
+
     @property
     def bank_name(self):
         """Get bank_name"""
@@ -184,7 +184,7 @@ class Card(object):
         val -- New bank_name value"""
         self._bank_name = val
         return self
-    
+
     @property
     def brand(self):
         """Get brand"""
@@ -197,7 +197,7 @@ class Card(object):
         val -- New brand value"""
         self._brand = val
         return self
-    
+
     @property
     def category(self):
         """Get category"""
@@ -210,7 +210,7 @@ class Card(object):
         val -- New category value"""
         self._category = val
         return self
-    
+
     @property
     def iin(self):
         """Get iin"""
@@ -223,7 +223,7 @@ class Card(object):
         val -- New iin value"""
         self._iin = val
         return self
-    
+
     @property
     def last_4_digits(self):
         """Get last_4_digits"""
@@ -236,7 +236,7 @@ class Card(object):
         val -- New last_4_digits value"""
         self._last_4_digits = val
         return self
-    
+
     @property
     def exp_month(self):
         """Get exp_month"""
@@ -249,7 +249,7 @@ class Card(object):
         val -- New exp_month value"""
         self._exp_month = val
         return self
-    
+
     @property
     def exp_year(self):
         """Get exp_year"""
@@ -262,7 +262,7 @@ class Card(object):
         val -- New exp_year value"""
         self._exp_year = val
         return self
-    
+
     @property
     def cvc_check(self):
         """Get cvc_check"""
@@ -275,7 +275,7 @@ class Card(object):
         val -- New cvc_check value"""
         self._cvc_check = val
         return self
-    
+
     @property
     def avs_check(self):
         """Get avs_check"""
@@ -288,7 +288,7 @@ class Card(object):
         val -- New avs_check value"""
         self._avs_check = val
         return self
-    
+
     @property
     def name(self):
         """Get name"""
@@ -301,7 +301,7 @@ class Card(object):
         val -- New name value"""
         self._name = val
         return self
-    
+
     @property
     def address1(self):
         """Get address1"""
@@ -314,7 +314,7 @@ class Card(object):
         val -- New address1 value"""
         self._address1 = val
         return self
-    
+
     @property
     def address2(self):
         """Get address2"""
@@ -327,7 +327,7 @@ class Card(object):
         val -- New address2 value"""
         self._address2 = val
         return self
-    
+
     @property
     def city(self):
         """Get city"""
@@ -340,7 +340,7 @@ class Card(object):
         val -- New city value"""
         self._city = val
         return self
-    
+
     @property
     def state(self):
         """Get state"""
@@ -353,7 +353,7 @@ class Card(object):
         val -- New state value"""
         self._state = val
         return self
-    
+
     @property
     def zip(self):
         """Get zip"""
@@ -366,7 +366,7 @@ class Card(object):
         val -- New zip value"""
         self._zip = val
         return self
-    
+
     @property
     def country_code(self):
         """Get country_code"""
@@ -379,7 +379,7 @@ class Card(object):
         val -- New country_code value"""
         self._country_code = val
         return self
-    
+
     @property
     def ip_address(self):
         """Get ip_address"""
@@ -392,7 +392,7 @@ class Card(object):
         val -- New ip_address value"""
         self._ip_address = val
         return self
-    
+
     @property
     def fingerprint(self):
         """Get fingerprint"""
@@ -405,7 +405,7 @@ class Card(object):
         val -- New fingerprint value"""
         self._fingerprint = val
         return self
-    
+
     @property
     def token_type(self):
         """Get token_type"""
@@ -418,7 +418,7 @@ class Card(object):
         val -- New token_type value"""
         self._token_type = val
         return self
-    
+
     @property
     def metadata(self):
         """Get metadata"""
@@ -431,7 +431,7 @@ class Card(object):
         val -- New metadata value"""
         self._metadata = val
         return self
-    
+
     @property
     def expires_soon(self):
         """Get expires_soon"""
@@ -444,7 +444,7 @@ class Card(object):
         val -- New expires_soon value"""
         self._expires_soon = val
         return self
-    
+
     @property
     def sandbox(self):
         """Get sandbox"""
@@ -457,7 +457,7 @@ class Card(object):
         val -- New sandbox value"""
         self._sandbox = val
         return self
-    
+
     @property
     def created_at(self):
         """Get created_at"""
@@ -470,7 +470,6 @@ class Card(object):
         val -- New created_at value"""
         self._created_at = val
         return self
-    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -538,7 +537,7 @@ class Card(object):
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
             self.created_at = data["created_at"]
-        
+
         return self
 
     def to_json(self):
@@ -576,23 +575,23 @@ class Card(object):
             "created_at": self.created_at,
         }
 
-    def all(self, options = {}):
+    def all(self, options={}):
         """Get all the cards.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/cards"
-        data    = {
+        path = "/cards"
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
-        a    = []
+
+        a = []
         body = response.body
         for v in body['cards']:
             tmp = processout.Card(self._client)
@@ -600,12 +599,10 @@ class Card(object):
             a.append(tmp)
 
         return_values.append(a)
-            
 
-        
         return return_values[0]
 
-    def find(self, card_id, options = {}):
+    def find(self, card_id, options={}):
         """Find a card by its ID.
         Keyword argument:
         card_id -- ID of the card
@@ -613,44 +610,38 @@ class Card(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/cards/" + quote_plus(card_id) + ""
-        data    = {
+        path = "/cards/" + quote_plus(card_id) + ""
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["card"]
-                
-                
+
         obj = processout.Card(self._client)
         return_values.append(obj.fill_with_data(body))
-                
 
-        
         return return_values[0]
 
-    def anonymize(self, options = {}):
+    def anonymize(self, options={}):
         """Anonymize the card.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/cards/" + quote_plus(self.id) + ""
-        data    = {
+        path = "/cards/" + quote_plus(self.id) + ""
+        data = {
 
         }
 
         response = Response(request.delete(path, data, options))
         return_values = []
-        
+
         return_values.append(response.success)
 
-        
         return return_values[0]
-
-    

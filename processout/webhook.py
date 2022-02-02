@@ -6,13 +6,14 @@ except ImportError:
 import processout
 import json
 
-from processout.networking.request  import Request
+from processout.networking.request import Request
 from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
+
 class Webhook(object):
-    def __init__(self, client, prefill = None):
+    def __init__(self, client, prefill=None):
         self._client = client
 
         self._id = None
@@ -29,10 +30,9 @@ class Webhook(object):
         self._status = None
         self._created_at = None
         self._release_at = None
-        if prefill != None:
+        if prefill is not None:
             self.fill_with_data(prefill)
 
-    
     @property
     def id(self):
         """Get id"""
@@ -45,7 +45,7 @@ class Webhook(object):
         val -- New id value"""
         self._id = val
         return self
-    
+
     @property
     def project(self):
         """Get project"""
@@ -67,7 +67,7 @@ class Webhook(object):
         else:
             self._project = val
         return self
-    
+
     @property
     def project_id(self):
         """Get project_id"""
@@ -80,7 +80,7 @@ class Webhook(object):
         val -- New project_id value"""
         self._project_id = val
         return self
-    
+
     @property
     def event(self):
         """Get event"""
@@ -102,7 +102,7 @@ class Webhook(object):
         else:
             self._event = val
         return self
-    
+
     @property
     def event_id(self):
         """Get event_id"""
@@ -115,7 +115,7 @@ class Webhook(object):
         val -- New event_id value"""
         self._event_id = val
         return self
-    
+
     @property
     def request_url(self):
         """Get request_url"""
@@ -128,7 +128,7 @@ class Webhook(object):
         val -- New request_url value"""
         self._request_url = val
         return self
-    
+
     @property
     def request_method(self):
         """Get request_method"""
@@ -141,7 +141,7 @@ class Webhook(object):
         val -- New request_method value"""
         self._request_method = val
         return self
-    
+
     @property
     def response_body(self):
         """Get response_body"""
@@ -154,7 +154,7 @@ class Webhook(object):
         val -- New response_body value"""
         self._response_body = val
         return self
-    
+
     @property
     def response_code(self):
         """Get response_code"""
@@ -167,7 +167,7 @@ class Webhook(object):
         val -- New response_code value"""
         self._response_code = val
         return self
-    
+
     @property
     def response_headers(self):
         """Get response_headers"""
@@ -180,7 +180,7 @@ class Webhook(object):
         val -- New response_headers value"""
         self._response_headers = val
         return self
-    
+
     @property
     def response_time_ms(self):
         """Get response_time_ms"""
@@ -193,7 +193,7 @@ class Webhook(object):
         val -- New response_time_ms value"""
         self._response_time_ms = val
         return self
-    
+
     @property
     def status(self):
         """Get status"""
@@ -206,7 +206,7 @@ class Webhook(object):
         val -- New status value"""
         self._status = val
         return self
-    
+
     @property
     def created_at(self):
         """Get created_at"""
@@ -219,7 +219,7 @@ class Webhook(object):
         val -- New created_at value"""
         self._created_at = val
         return self
-    
+
     @property
     def release_at(self):
         """Get release_at"""
@@ -232,7 +232,6 @@ class Webhook(object):
         val -- New release_at value"""
         self._release_at = val
         return self
-    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -266,7 +265,7 @@ class Webhook(object):
             self.created_at = data["created_at"]
         if "release_at" in data.keys():
             self.release_at = data["release_at"]
-        
+
         return self
 
     def to_json(self):
@@ -286,5 +285,3 @@ class Webhook(object):
             "created_at": self.created_at,
             "release_at": self.release_at,
         }
-
-    

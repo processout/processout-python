@@ -1,8 +1,9 @@
 from processout.errors.authenticationerror import AuthenticationError
-from processout.errors.genericerror        import GenericError
-from processout.errors.internalerror       import InternalError
-from processout.errors.notfounderror       import NotFoundError
-from processout.errors.validationerror     import ValidationError
+from processout.errors.genericerror import GenericError
+from processout.errors.internalerror import InternalError
+from processout.errors.notfounderror import NotFoundError
+from processout.errors.validationerror import ValidationError
+
 
 class Response:
     def __init__(self, resp):
@@ -56,7 +57,7 @@ class Response:
     def code(self):
         """Get the response code message"""
         code = ""
-        if self.body.get("error_type") != None:
+        if self.body.get("error_type") is not None:
             code = code + self.body["error_type"]
 
         return code
@@ -65,7 +66,7 @@ class Response:
     def message(self):
         """Get the response error message"""
         message = ""
-        if self.body.get("message") != None:
+        if self.body.get("message") is not None:
             message = message + self.body["message"]
 
         return message

@@ -6,22 +6,22 @@ except ImportError:
 import processout
 import json
 
-from processout.networking.request  import Request
+from processout.networking.request import Request
 from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
+
 class InvoiceDevice(object):
-    def __init__(self, client, prefill = None):
+    def __init__(self, client, prefill=None):
         self._client = client
 
         self._channel = None
         self._ip_address = None
         self._id = None
-        if prefill != None:
+        if prefill is not None:
             self.fill_with_data(prefill)
 
-    
     @property
     def channel(self):
         """Get channel"""
@@ -34,7 +34,7 @@ class InvoiceDevice(object):
         val -- New channel value"""
         self._channel = val
         return self
-    
+
     @property
     def ip_address(self):
         """Get ip_address"""
@@ -47,7 +47,7 @@ class InvoiceDevice(object):
         val -- New ip_address value"""
         self._ip_address = val
         return self
-    
+
     @property
     def id(self):
         """Get id"""
@@ -60,7 +60,6 @@ class InvoiceDevice(object):
         val -- New id value"""
         self._id = val
         return self
-    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -72,7 +71,7 @@ class InvoiceDevice(object):
             self.ip_address = data["ip_address"]
         if "id" in data.keys():
             self.id = data["id"]
-        
+
         return self
 
     def to_json(self):
@@ -81,5 +80,3 @@ class InvoiceDevice(object):
             "ip_address": self.ip_address,
             "id": self.id,
         }
-
-    

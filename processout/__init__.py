@@ -6,6 +6,8 @@ from processout.activity import Activity
 from processout.addon import Addon
 from processout.apirequest import APIRequest
 from processout.apiversion import APIVersion
+from processout.balances import Balances
+from processout.balance import Balance
 from processout.card import Card
 from processout.cardinformation import CardInformation
 from processout.coupon import Coupon
@@ -44,7 +46,7 @@ from processout.gatewayrequest import GatewayRequest
 
 # Import errors
 from processout.errors.authenticationerror import AuthenticationError
-from processout.errors.genericerror        import GenericError
-from processout.errors.internalerror       import InternalError
-from processout.errors.notfounderror       import NotFoundError
-from processout.errors.validationerror     import ValidationError
+from processout.errors.genericerror import GenericError
+from processout.errors.internalerror import InternalError
+from processout.errors.notfounderror import NotFoundError
+from processout.errors.validationerror import ValidationError

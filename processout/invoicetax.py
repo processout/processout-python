@@ -6,21 +6,21 @@ except ImportError:
 import processout
 import json
 
-from processout.networking.request  import Request
+from processout.networking.request import Request
 from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
+
 class InvoiceTax(object):
-    def __init__(self, client, prefill = None):
+    def __init__(self, client, prefill=None):
         self._client = client
 
         self._amount = None
         self._rate = None
-        if prefill != None:
+        if prefill is not None:
             self.fill_with_data(prefill)
 
-    
     @property
     def amount(self):
         """Get amount"""
@@ -33,7 +33,7 @@ class InvoiceTax(object):
         val -- New amount value"""
         self._amount = val
         return self
-    
+
     @property
     def rate(self):
         """Get rate"""
@@ -46,7 +46,6 @@ class InvoiceTax(object):
         val -- New rate value"""
         self._rate = val
         return self
-    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -56,7 +55,7 @@ class InvoiceTax(object):
             self.amount = data["amount"]
         if "rate" in data.keys():
             self.rate = data["rate"]
-        
+
         return self
 
     def to_json(self):
@@ -64,5 +63,3 @@ class InvoiceTax(object):
             "amount": self.amount,
             "rate": self.rate,
         }
-
-    

@@ -6,13 +6,14 @@ except ImportError:
 import processout
 import json
 
-from processout.networking.request  import Request
+from processout.networking.request import Request
 from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
+
 class Refund(object):
-    def __init__(self, client, prefill = None):
+    def __init__(self, client, prefill=None):
         self._client = client
 
         self._id = None
@@ -25,10 +26,9 @@ class Refund(object):
         self._metadata = None
         self._sandbox = None
         self._created_at = None
-        if prefill != None:
+        if prefill is not None:
             self.fill_with_data(prefill)
 
-    
     @property
     def id(self):
         """Get id"""
@@ -41,7 +41,7 @@ class Refund(object):
         val -- New id value"""
         self._id = val
         return self
-    
+
     @property
     def transaction(self):
         """Get transaction"""
@@ -63,7 +63,7 @@ class Refund(object):
         else:
             self._transaction = val
         return self
-    
+
     @property
     def transaction_id(self):
         """Get transaction_id"""
@@ -76,7 +76,7 @@ class Refund(object):
         val -- New transaction_id value"""
         self._transaction_id = val
         return self
-    
+
     @property
     def amount(self):
         """Get amount"""
@@ -89,7 +89,7 @@ class Refund(object):
         val -- New amount value"""
         self._amount = val
         return self
-    
+
     @property
     def reason(self):
         """Get reason"""
@@ -102,7 +102,7 @@ class Refund(object):
         val -- New reason value"""
         self._reason = val
         return self
-    
+
     @property
     def information(self):
         """Get information"""
@@ -115,7 +115,7 @@ class Refund(object):
         val -- New information value"""
         self._information = val
         return self
-    
+
     @property
     def has_failed(self):
         """Get has_failed"""
@@ -128,7 +128,7 @@ class Refund(object):
         val -- New has_failed value"""
         self._has_failed = val
         return self
-    
+
     @property
     def metadata(self):
         """Get metadata"""
@@ -141,7 +141,7 @@ class Refund(object):
         val -- New metadata value"""
         self._metadata = val
         return self
-    
+
     @property
     def sandbox(self):
         """Get sandbox"""
@@ -154,7 +154,7 @@ class Refund(object):
         val -- New sandbox value"""
         self._sandbox = val
         return self
-    
+
     @property
     def created_at(self):
         """Get created_at"""
@@ -167,7 +167,6 @@ class Refund(object):
         val -- New created_at value"""
         self._created_at = val
         return self
-    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -193,7 +192,7 @@ class Refund(object):
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
             self.created_at = data["created_at"]
-        
+
         return self
 
     def to_json(self):
@@ -210,7 +209,7 @@ class Refund(object):
             "created_at": self.created_at,
         }
 
-    def fetch_transaction_refunds(self, transaction_id, options = {}):
+    def fetch_transaction_refunds(self, transaction_id, options={}):
         """Get the transaction's refunds.
         Keyword argument:
         transaction_id -- ID of the transaction
@@ -218,15 +217,15 @@ class Refund(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/transactions/" + quote_plus(transaction_id) + "/refunds"
-        data    = {
+        path = "/transactions/" + quote_plus(transaction_id) + "/refunds"
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
-        a    = []
+
+        a = []
         body = response.body
         for v in body['refunds']:
             tmp = processout.Refund(self._client)
@@ -234,12 +233,10 @@ class Refund(object):
             a.append(tmp)
 
         return_values.append(a)
-            
 
-        
         return return_values[0]
 
-    def find(self, transaction_id, refund_id, options = {}):
+    def find(self, transaction_id, refund_id, options={}):
         """Find a transaction's refund by its ID.
         Keyword argument:
         transaction_id -- ID of the transaction on which the refund was applied
@@ -248,47 +245,42 @@ class Refund(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/transactions/" + quote_plus(transaction_id) + "/refunds/" + quote_plus(refund_id) + ""
-        data    = {
+        path = "/transactions/" + \
+            quote_plus(transaction_id) + "/refunds/" + quote_plus(refund_id) + ""
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["refund"]
-                
-                
+
         obj = processout.Refund(self._client)
         return_values.append(obj.fill_with_data(body))
-                
 
-        
         return return_values[0]
 
-    def create(self, options = {}):
+    def create(self, options={}):
         """Create a refund for a transaction.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/transactions/" + quote_plus(self.transaction_id) + "/refunds"
-        data    = {
-            'amount': self.amount, 
-            'metadata': self.metadata, 
-            'reason': self.reason, 
+        path = "/transactions/" + quote_plus(self.transaction_id) + "/refunds"
+        data = {
+            'amount': self.amount,
+            'metadata': self.metadata,
+            'reason': self.reason,
             'information': self.information
         }
 
         response = Response(request.post(path, data, options))
         return_values = []
-        
+
         return_values.append(response.success)
 
-        
         return return_values[0]
-
-    

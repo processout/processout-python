@@ -6,13 +6,14 @@ except ImportError:
 import processout
 import json
 
-from processout.networking.request  import Request
+from processout.networking.request import Request
 from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
+
 class Customer(object):
-    def __init__(self, client, prefill = None):
+    def __init__(self, client, prefill=None):
         self._client = client
 
         self._id = None
@@ -44,10 +45,9 @@ class Customer(object):
         self._created_at = None
         self._registered_at = None
         self._date_of_birth = None
-        if prefill != None:
+        if prefill is not None:
             self.fill_with_data(prefill)
 
-    
     @property
     def id(self):
         """Get id"""
@@ -60,7 +60,7 @@ class Customer(object):
         val -- New id value"""
         self._id = val
         return self
-    
+
     @property
     def project(self):
         """Get project"""
@@ -82,7 +82,7 @@ class Customer(object):
         else:
             self._project = val
         return self
-    
+
     @property
     def project_id(self):
         """Get project_id"""
@@ -95,7 +95,7 @@ class Customer(object):
         val -- New project_id value"""
         self._project_id = val
         return self
-    
+
     @property
     def default_token(self):
         """Get default_token"""
@@ -117,7 +117,7 @@ class Customer(object):
         else:
             self._default_token = val
         return self
-    
+
     @property
     def default_token_id(self):
         """Get default_token_id"""
@@ -130,7 +130,7 @@ class Customer(object):
         val -- New default_token_id value"""
         self._default_token_id = val
         return self
-    
+
     @property
     def tokens(self):
         """Get tokens"""
@@ -155,7 +155,7 @@ class Customer(object):
                 l.append(obj)
             self._tokens = l
         return self
-    
+
     @property
     def subscriptions(self):
         """Get subscriptions"""
@@ -180,7 +180,7 @@ class Customer(object):
                 l.append(obj)
             self._subscriptions = l
         return self
-    
+
     @property
     def transactions(self):
         """Get transactions"""
@@ -205,7 +205,7 @@ class Customer(object):
                 l.append(obj)
             self._transactions = l
         return self
-    
+
     @property
     def balance(self):
         """Get balance"""
@@ -218,7 +218,7 @@ class Customer(object):
         val -- New balance value"""
         self._balance = val
         return self
-    
+
     @property
     def currency(self):
         """Get currency"""
@@ -231,7 +231,7 @@ class Customer(object):
         val -- New currency value"""
         self._currency = val
         return self
-    
+
     @property
     def email(self):
         """Get email"""
@@ -244,7 +244,7 @@ class Customer(object):
         val -- New email value"""
         self._email = val
         return self
-    
+
     @property
     def first_name(self):
         """Get first_name"""
@@ -257,7 +257,7 @@ class Customer(object):
         val -- New first_name value"""
         self._first_name = val
         return self
-    
+
     @property
     def last_name(self):
         """Get last_name"""
@@ -270,7 +270,7 @@ class Customer(object):
         val -- New last_name value"""
         self._last_name = val
         return self
-    
+
     @property
     def address1(self):
         """Get address1"""
@@ -283,7 +283,7 @@ class Customer(object):
         val -- New address1 value"""
         self._address1 = val
         return self
-    
+
     @property
     def address2(self):
         """Get address2"""
@@ -296,7 +296,7 @@ class Customer(object):
         val -- New address2 value"""
         self._address2 = val
         return self
-    
+
     @property
     def city(self):
         """Get city"""
@@ -309,7 +309,7 @@ class Customer(object):
         val -- New city value"""
         self._city = val
         return self
-    
+
     @property
     def state(self):
         """Get state"""
@@ -322,7 +322,7 @@ class Customer(object):
         val -- New state value"""
         self._state = val
         return self
-    
+
     @property
     def zip(self):
         """Get zip"""
@@ -335,7 +335,7 @@ class Customer(object):
         val -- New zip value"""
         self._zip = val
         return self
-    
+
     @property
     def country_code(self):
         """Get country_code"""
@@ -348,7 +348,7 @@ class Customer(object):
         val -- New country_code value"""
         self._country_code = val
         return self
-    
+
     @property
     def ip_address(self):
         """Get ip_address"""
@@ -361,7 +361,7 @@ class Customer(object):
         val -- New ip_address value"""
         self._ip_address = val
         return self
-    
+
     @property
     def phone_number(self):
         """Get phone_number"""
@@ -374,7 +374,7 @@ class Customer(object):
         val -- New phone_number value"""
         self._phone_number = val
         return self
-    
+
     @property
     def legal_document(self):
         """Get legal_document"""
@@ -387,7 +387,7 @@ class Customer(object):
         val -- New legal_document value"""
         self._legal_document = val
         return self
-    
+
     @property
     def sex(self):
         """Get sex"""
@@ -400,7 +400,7 @@ class Customer(object):
         val -- New sex value"""
         self._sex = val
         return self
-    
+
     @property
     def is_business(self):
         """Get is_business"""
@@ -413,7 +413,7 @@ class Customer(object):
         val -- New is_business value"""
         self._is_business = val
         return self
-    
+
     @property
     def metadata(self):
         """Get metadata"""
@@ -426,7 +426,7 @@ class Customer(object):
         val -- New metadata value"""
         self._metadata = val
         return self
-    
+
     @property
     def sandbox(self):
         """Get sandbox"""
@@ -439,7 +439,7 @@ class Customer(object):
         val -- New sandbox value"""
         self._sandbox = val
         return self
-    
+
     @property
     def created_at(self):
         """Get created_at"""
@@ -452,7 +452,7 @@ class Customer(object):
         val -- New created_at value"""
         self._created_at = val
         return self
-    
+
     @property
     def registered_at(self):
         """Get registered_at"""
@@ -465,7 +465,7 @@ class Customer(object):
         val -- New registered_at value"""
         self._registered_at = val
         return self
-    
+
     @property
     def date_of_birth(self):
         """Get date_of_birth"""
@@ -478,7 +478,6 @@ class Customer(object):
         val -- New date_of_birth value"""
         self._date_of_birth = val
         return self
-    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -542,7 +541,7 @@ class Customer(object):
             self.registered_at = data["registered_at"]
         if "date_of_birth" in data.keys():
             self.date_of_birth = data["date_of_birth"]
-        
+
         return self
 
     def to_json(self):
@@ -578,23 +577,23 @@ class Customer(object):
             "date_of_birth": self.date_of_birth,
         }
 
-    def fetch_subscriptions(self, options = {}):
+    def fetch_subscriptions(self, options={}):
         """Get the subscriptions belonging to the customer.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/customers/" + quote_plus(self.id) + "/subscriptions"
-        data    = {
+        path = "/customers/" + quote_plus(self.id) + "/subscriptions"
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
-        a    = []
+
+        a = []
         body = response.body
         for v in body['subscriptions']:
             tmp = processout.Subscription(self._client)
@@ -602,28 +601,26 @@ class Customer(object):
             a.append(tmp)
 
         return_values.append(a)
-            
 
-        
         return return_values[0]
 
-    def fetch_tokens(self, options = {}):
+    def fetch_tokens(self, options={}):
         """Get the customer's tokens.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/customers/" + quote_plus(self.id) + "/tokens"
-        data    = {
+        path = "/customers/" + quote_plus(self.id) + "/tokens"
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
-        a    = []
+
+        a = []
         body = response.body
         for v in body['tokens']:
             tmp = processout.Token(self._client)
@@ -631,12 +628,10 @@ class Customer(object):
             a.append(tmp)
 
         return_values.append(a)
-            
 
-        
         return return_values[0]
 
-    def find_token(self, token_id, options = {}):
+    def find_token(self, token_id, options={}):
         """Find a customer's token by its ID.
         Keyword argument:
         token_id -- ID of the token
@@ -644,23 +639,23 @@ class Customer(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/customers/" + quote_plus(self.id) + "/tokens/" + quote_plus(token_id) + ""
-        data    = {
+        path = "/customers/" + \
+            quote_plus(self.id) + "/tokens/" + quote_plus(token_id) + ""
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["token"]
         token = processout.Token(self._client)
         return_values.append(token.fill_with_data(body))
 
-        
         return return_values[0]
 
-    def delete_token(self, token_id, options = {}):
+    def delete_token(self, token_id, options={}):
         """Delete a customer's token by its ID.
         Keyword argument:
         token_id -- ID of the token
@@ -668,36 +663,36 @@ class Customer(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/customers/" + quote_plus(self.id) + "/tokens/" + quote_plus(token_id) + ""
-        data    = {
+        path = "/customers/" + \
+            quote_plus(self.id) + "/tokens/" + quote_plus(token_id) + ""
+        data = {
 
         }
 
         response = Response(request.delete(path, data, options))
         return_values = []
-        
+
         return_values.append(response.success)
 
-        
         return return_values[0]
 
-    def fetch_transactions(self, options = {}):
+    def fetch_transactions(self, options={}):
         """Get the transactions belonging to the customer.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/customers/" + quote_plus(self.id) + "/transactions"
-        data    = {
+        path = "/customers/" + quote_plus(self.id) + "/transactions"
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
-        a    = []
+
+        a = []
         body = response.body
         for v in body['transactions']:
             tmp = processout.Transaction(self._client)
@@ -705,28 +700,26 @@ class Customer(object):
             a.append(tmp)
 
         return_values.append(a)
-            
 
-        
         return return_values[0]
 
-    def all(self, options = {}):
+    def all(self, options={}):
         """Get all the customers.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/customers"
-        data    = {
+        path = "/customers"
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
-        a    = []
+
+        a = []
         body = response.body
         for v in body['customers']:
             tmp = processout.Customer(self._client)
@@ -734,57 +727,52 @@ class Customer(object):
             a.append(tmp)
 
         return_values.append(a)
-            
 
-        
         return return_values[0]
 
-    def create(self, options = {}):
+    def create(self, options={}):
         """Create a new customer.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/customers"
-        data    = {
-            'balance': self.balance, 
-            'currency': self.currency, 
-            'email': self.email, 
-            'first_name': self.first_name, 
-            'last_name': self.last_name, 
-            'address1': self.address1, 
-            'address2': self.address2, 
-            'city': self.city, 
-            'state': self.state, 
-            'zip': self.zip, 
-            'country_code': self.country_code, 
-            'ip_address': self.ip_address, 
-            'phone_number': self.phone_number, 
-            'legal_document': self.legal_document, 
-            'date_of_birth': self.date_of_birth, 
-            'is_business': self.is_business, 
-            'sex': self.sex, 
-            'metadata': self.metadata, 
-            'id': self.id, 
+        path = "/customers"
+        data = {
+            'balance': self.balance,
+            'currency': self.currency,
+            'email': self.email,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'address1': self.address1,
+            'address2': self.address2,
+            'city': self.city,
+            'state': self.state,
+            'zip': self.zip,
+            'country_code': self.country_code,
+            'ip_address': self.ip_address,
+            'phone_number': self.phone_number,
+            'legal_document': self.legal_document,
+            'date_of_birth': self.date_of_birth,
+            'is_business': self.is_business,
+            'sex': self.sex,
+            'metadata': self.metadata,
+            'id': self.id,
             'registered_at': self.registered_at
         }
 
         response = Response(request.post(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["customer"]
-                
-                
-        return_values.append(self.fill_with_data(body))
-                
 
-        
+        return_values.append(self.fill_with_data(body))
+
         return return_values[0]
 
-    def find(self, customer_id, options = {}):
+    def find(self, customer_id, options={}):
         """Find a customer by its ID.
         Keyword argument:
         customer_id -- ID of the customer
@@ -792,88 +780,79 @@ class Customer(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/customers/" + quote_plus(customer_id) + ""
-        data    = {
+        path = "/customers/" + quote_plus(customer_id) + ""
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["customer"]
-                
-                
+
         obj = processout.Customer(self._client)
         return_values.append(obj.fill_with_data(body))
-                
 
-        
         return return_values[0]
 
-    def save(self, options = {}):
+    def save(self, options={}):
         """Save the updated customer attributes.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/customers/" + quote_plus(self.id) + ""
-        data    = {
-            'balance': self.balance, 
-            'default_token_id': self.default_token_id, 
-            'email': self.email, 
-            'first_name': self.first_name, 
-            'last_name': self.last_name, 
-            'address1': self.address1, 
-            'address2': self.address2, 
-            'city': self.city, 
-            'state': self.state, 
-            'zip': self.zip, 
-            'country_code': self.country_code, 
-            'ip_address': self.ip_address, 
-            'phone_number': self.phone_number, 
-            'legal_document': self.legal_document, 
-            'date_of_birth': self.date_of_birth, 
-            'is_business': self.is_business, 
-            'sex': self.sex, 
-            'metadata': self.metadata, 
+        path = "/customers/" + quote_plus(self.id) + ""
+        data = {
+            'balance': self.balance,
+            'default_token_id': self.default_token_id,
+            'email': self.email,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'address1': self.address1,
+            'address2': self.address2,
+            'city': self.city,
+            'state': self.state,
+            'zip': self.zip,
+            'country_code': self.country_code,
+            'ip_address': self.ip_address,
+            'phone_number': self.phone_number,
+            'legal_document': self.legal_document,
+            'date_of_birth': self.date_of_birth,
+            'is_business': self.is_business,
+            'sex': self.sex,
+            'metadata': self.metadata,
             'registered_at': self.registered_at
         }
 
         response = Response(request.put(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["customer"]
-                
-                
-        return_values.append(self.fill_with_data(body))
-                
 
-        
+        return_values.append(self.fill_with_data(body))
+
         return return_values[0]
 
-    def delete(self, options = {}):
+    def delete(self, options={}):
         """Delete the customer.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/customers/" + quote_plus(self.id) + ""
-        data    = {
+        path = "/customers/" + quote_plus(self.id) + ""
+        data = {
 
         }
 
         response = Response(request.delete(path, data, options))
         return_values = []
-        
+
         return_values.append(response.success)
 
-        
         return return_values[0]
-
-    

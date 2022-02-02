@@ -6,13 +6,14 @@ except ImportError:
 import processout
 import json
 
-from processout.networking.request  import Request
+from processout.networking.request import Request
 from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
+
 class Activity(object):
-    def __init__(self, client, prefill = None):
+    def __init__(self, client, prefill=None):
         self._client = client
 
         self._id = None
@@ -22,10 +23,9 @@ class Activity(object):
         self._content = None
         self._level = None
         self._created_at = None
-        if prefill != None:
+        if prefill is not None:
             self.fill_with_data(prefill)
 
-    
     @property
     def id(self):
         """Get id"""
@@ -38,7 +38,7 @@ class Activity(object):
         val -- New id value"""
         self._id = val
         return self
-    
+
     @property
     def project(self):
         """Get project"""
@@ -60,7 +60,7 @@ class Activity(object):
         else:
             self._project = val
         return self
-    
+
     @property
     def project_id(self):
         """Get project_id"""
@@ -73,7 +73,7 @@ class Activity(object):
         val -- New project_id value"""
         self._project_id = val
         return self
-    
+
     @property
     def title(self):
         """Get title"""
@@ -86,7 +86,7 @@ class Activity(object):
         val -- New title value"""
         self._title = val
         return self
-    
+
     @property
     def content(self):
         """Get content"""
@@ -99,7 +99,7 @@ class Activity(object):
         val -- New content value"""
         self._content = val
         return self
-    
+
     @property
     def level(self):
         """Get level"""
@@ -112,7 +112,7 @@ class Activity(object):
         val -- New level value"""
         self._level = val
         return self
-    
+
     @property
     def created_at(self):
         """Get created_at"""
@@ -125,7 +125,6 @@ class Activity(object):
         val -- New created_at value"""
         self._created_at = val
         return self
-    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -145,7 +144,7 @@ class Activity(object):
             self.level = data["level"]
         if "created_at" in data.keys():
             self.created_at = data["created_at"]
-        
+
         return self
 
     def to_json(self):
@@ -159,23 +158,23 @@ class Activity(object):
             "created_at": self.created_at,
         }
 
-    def all(self, options = {}):
+    def all(self, options={}):
         """Get all the project activities.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/activities"
-        data    = {
+        path = "/activities"
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
-        a    = []
+
+        a = []
         body = response.body
         for v in body['activities']:
             tmp = processout.Activity(self._client)
@@ -183,12 +182,10 @@ class Activity(object):
             a.append(tmp)
 
         return_values.append(a)
-            
 
-        
         return return_values[0]
 
-    def find(self, activity_id, options = {}):
+    def find(self, activity_id, options={}):
         """Find a specific activity and fetch its data.
         Keyword argument:
         activity_id -- ID of the activity
@@ -196,23 +193,18 @@ class Activity(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/activities/" + quote_plus(activity_id) + ""
-        data    = {
+        path = "/activities/" + quote_plus(activity_id) + ""
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["activity"]
-                
-                
+
         obj = processout.Activity(self._client)
         return_values.append(obj.fill_with_data(body))
-                
 
-        
         return return_values[0]
-
-    

@@ -6,23 +6,23 @@ except ImportError:
 import processout
 import json
 
-from processout.networking.request  import Request
+from processout.networking.request import Request
 from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
+
 class PaymentDataThreeDSRequest(object):
-    def __init__(self, client, prefill = None):
+    def __init__(self, client, prefill=None):
         self._client = client
 
         self._acs_url = None
         self._pareq = None
         self._md = None
         self._term_url = None
-        if prefill != None:
+        if prefill is not None:
             self.fill_with_data(prefill)
 
-    
     @property
     def acs_url(self):
         """Get acs_url"""
@@ -35,7 +35,7 @@ class PaymentDataThreeDSRequest(object):
         val -- New acs_url value"""
         self._acs_url = val
         return self
-    
+
     @property
     def pareq(self):
         """Get pareq"""
@@ -48,7 +48,7 @@ class PaymentDataThreeDSRequest(object):
         val -- New pareq value"""
         self._pareq = val
         return self
-    
+
     @property
     def md(self):
         """Get md"""
@@ -61,7 +61,7 @@ class PaymentDataThreeDSRequest(object):
         val -- New md value"""
         self._md = val
         return self
-    
+
     @property
     def term_url(self):
         """Get term_url"""
@@ -74,7 +74,6 @@ class PaymentDataThreeDSRequest(object):
         val -- New term_url value"""
         self._term_url = val
         return self
-    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -88,7 +87,7 @@ class PaymentDataThreeDSRequest(object):
             self.md = data["md"]
         if "term_url" in data.keys():
             self.term_url = data["term_url"]
-        
+
         return self
 
     def to_json(self):
@@ -98,5 +97,3 @@ class PaymentDataThreeDSRequest(object):
             "md": self.md,
             "term_url": self.term_url,
         }
-
-    

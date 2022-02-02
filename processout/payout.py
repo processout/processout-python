@@ -6,13 +6,14 @@ except ImportError:
 import processout
 import json
 
-from processout.networking.request  import Request
+from processout.networking.request import Request
 from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
+
 class Payout(object):
-    def __init__(self, client, prefill = None):
+    def __init__(self, client, prefill=None):
         self._client = client
 
         self._id = None
@@ -35,10 +36,9 @@ class Payout(object):
         self._reserve = None
         self._settled_at = None
         self._created_at = None
-        if prefill != None:
+        if prefill is not None:
             self.fill_with_data(prefill)
 
-    
     @property
     def id(self):
         """Get id"""
@@ -51,7 +51,7 @@ class Payout(object):
         val -- New id value"""
         self._id = val
         return self
-    
+
     @property
     def project(self):
         """Get project"""
@@ -73,7 +73,7 @@ class Payout(object):
         else:
             self._project = val
         return self
-    
+
     @property
     def project_id(self):
         """Get project_id"""
@@ -86,7 +86,7 @@ class Payout(object):
         val -- New project_id value"""
         self._project_id = val
         return self
-    
+
     @property
     def status(self):
         """Get status"""
@@ -99,7 +99,7 @@ class Payout(object):
         val -- New status value"""
         self._status = val
         return self
-    
+
     @property
     def amount(self):
         """Get amount"""
@@ -112,7 +112,7 @@ class Payout(object):
         val -- New amount value"""
         self._amount = val
         return self
-    
+
     @property
     def currency(self):
         """Get currency"""
@@ -125,7 +125,7 @@ class Payout(object):
         val -- New currency value"""
         self._currency = val
         return self
-    
+
     @property
     def metadata(self):
         """Get metadata"""
@@ -138,7 +138,7 @@ class Payout(object):
         val -- New metadata value"""
         self._metadata = val
         return self
-    
+
     @property
     def bank_name(self):
         """Get bank_name"""
@@ -151,7 +151,7 @@ class Payout(object):
         val -- New bank_name value"""
         self._bank_name = val
         return self
-    
+
     @property
     def bank_summary(self):
         """Get bank_summary"""
@@ -164,7 +164,7 @@ class Payout(object):
         val -- New bank_summary value"""
         self._bank_summary = val
         return self
-    
+
     @property
     def sales_transactions(self):
         """Get sales_transactions"""
@@ -177,7 +177,7 @@ class Payout(object):
         val -- New sales_transactions value"""
         self._sales_transactions = val
         return self
-    
+
     @property
     def sales_volume(self):
         """Get sales_volume"""
@@ -190,7 +190,7 @@ class Payout(object):
         val -- New sales_volume value"""
         self._sales_volume = val
         return self
-    
+
     @property
     def refunds_transactions(self):
         """Get refunds_transactions"""
@@ -203,7 +203,7 @@ class Payout(object):
         val -- New refunds_transactions value"""
         self._refunds_transactions = val
         return self
-    
+
     @property
     def refunds_volume(self):
         """Get refunds_volume"""
@@ -216,7 +216,7 @@ class Payout(object):
         val -- New refunds_volume value"""
         self._refunds_volume = val
         return self
-    
+
     @property
     def chargebacks_transactions(self):
         """Get chargebacks_transactions"""
@@ -229,7 +229,7 @@ class Payout(object):
         val -- New chargebacks_transactions value"""
         self._chargebacks_transactions = val
         return self
-    
+
     @property
     def chargebacks_volume(self):
         """Get chargebacks_volume"""
@@ -242,7 +242,7 @@ class Payout(object):
         val -- New chargebacks_volume value"""
         self._chargebacks_volume = val
         return self
-    
+
     @property
     def fees(self):
         """Get fees"""
@@ -255,7 +255,7 @@ class Payout(object):
         val -- New fees value"""
         self._fees = val
         return self
-    
+
     @property
     def adjustments(self):
         """Get adjustments"""
@@ -268,7 +268,7 @@ class Payout(object):
         val -- New adjustments value"""
         self._adjustments = val
         return self
-    
+
     @property
     def reserve(self):
         """Get reserve"""
@@ -281,7 +281,7 @@ class Payout(object):
         val -- New reserve value"""
         self._reserve = val
         return self
-    
+
     @property
     def settled_at(self):
         """Get settled_at"""
@@ -294,7 +294,7 @@ class Payout(object):
         val -- New settled_at value"""
         self._settled_at = val
         return self
-    
+
     @property
     def created_at(self):
         """Get created_at"""
@@ -307,7 +307,6 @@ class Payout(object):
         val -- New created_at value"""
         self._created_at = val
         return self
-    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -353,7 +352,7 @@ class Payout(object):
             self.settled_at = data["settled_at"]
         if "created_at" in data.keys():
             self.created_at = data["created_at"]
-        
+
         return self
 
     def to_json(self):
@@ -380,23 +379,23 @@ class Payout(object):
             "created_at": self.created_at,
         }
 
-    def fetch_items(self, options = {}):
+    def fetch_items(self, options={}):
         """Get all the items linked to the payout.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/payouts/" + quote_plus(self.id) + "/items"
-        data    = {
+        path = "/payouts/" + quote_plus(self.id) + "/items"
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
-        a    = []
+
+        a = []
         body = response.body
         for v in body['items']:
             tmp = processout.PayoutItem(self._client)
@@ -404,28 +403,26 @@ class Payout(object):
             a.append(tmp)
 
         return_values.append(a)
-            
 
-        
         return return_values[0]
 
-    def all(self, options = {}):
+    def all(self, options={}):
         """Get all the payouts.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/payouts"
-        data    = {
+        path = "/payouts"
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
-        a    = []
+
+        a = []
         body = response.body
         for v in body['payouts']:
             tmp = processout.Payout(self._client)
@@ -433,12 +430,10 @@ class Payout(object):
             a.append(tmp)
 
         return_values.append(a)
-            
 
-        
         return return_values[0]
 
-    def find(self, payout_id, options = {}):
+    def find(self, payout_id, options={}):
         """Find a payout by its ID.
         Keyword argument:
         payout_id -- ID of the payout
@@ -446,23 +441,18 @@ class Payout(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/payouts/" + quote_plus(payout_id) + ""
-        data    = {
+        path = "/payouts/" + quote_plus(payout_id) + ""
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["payout"]
-                
-                
+
         obj = processout.Payout(self._client)
         return_values.append(obj.fill_with_data(body))
-                
 
-        
         return return_values[0]
-
-    

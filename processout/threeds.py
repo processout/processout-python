@@ -6,13 +6,14 @@ except ImportError:
 import processout
 import json
 
-from processout.networking.request  import Request
+from processout.networking.request import Request
 from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
+
 class ThreeDS(object):
-    def __init__(self, client, prefill = None):
+    def __init__(self, client, prefill=None):
         self._client = client
 
         self._version = None
@@ -24,10 +25,9 @@ class ThreeDS(object):
         self._ds_trans_id = None
         self._fingerprint_completion_indicator = None
         self._server_trans_id = None
-        if prefill != None:
+        if prefill is not None:
             self.fill_with_data(prefill)
 
-    
     @property
     def version(self):
         """Get version"""
@@ -40,7 +40,7 @@ class ThreeDS(object):
         val -- New version value"""
         self._version = val
         return self
-    
+
     @property
     def status(self):
         """Get status"""
@@ -53,7 +53,7 @@ class ThreeDS(object):
         val -- New status value"""
         self._status = val
         return self
-    
+
     @property
     def fingerprinted(self):
         """Get fingerprinted"""
@@ -66,7 +66,7 @@ class ThreeDS(object):
         val -- New fingerprinted value"""
         self._fingerprinted = val
         return self
-    
+
     @property
     def challenged(self):
         """Get challenged"""
@@ -79,7 +79,7 @@ class ThreeDS(object):
         val -- New challenged value"""
         self._challenged = val
         return self
-    
+
     @property
     def ares_trans_status(self):
         """Get ares_trans_status"""
@@ -92,7 +92,7 @@ class ThreeDS(object):
         val -- New ares_trans_status value"""
         self._ares_trans_status = val
         return self
-    
+
     @property
     def cres_trans_status(self):
         """Get cres_trans_status"""
@@ -105,7 +105,7 @@ class ThreeDS(object):
         val -- New cres_trans_status value"""
         self._cres_trans_status = val
         return self
-    
+
     @property
     def ds_trans_id(self):
         """Get ds_trans_id"""
@@ -118,7 +118,7 @@ class ThreeDS(object):
         val -- New ds_trans_id value"""
         self._ds_trans_id = val
         return self
-    
+
     @property
     def fingerprint_completion_indicator(self):
         """Get fingerprint_completion_indicator"""
@@ -131,7 +131,7 @@ class ThreeDS(object):
         val -- New fingerprint_completion_indicator value"""
         self._fingerprint_completion_indicator = val
         return self
-    
+
     @property
     def server_trans_id(self):
         """Get server_trans_id"""
@@ -144,7 +144,6 @@ class ThreeDS(object):
         val -- New server_trans_id value"""
         self._server_trans_id = val
         return self
-    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -168,7 +167,7 @@ class ThreeDS(object):
             self.fingerprint_completion_indicator = data["fingerprint_completion_indicator"]
         if "server_trans_id" in data.keys():
             self.server_trans_id = data["server_trans_id"]
-        
+
         return self
 
     def to_json(self):
@@ -183,5 +182,3 @@ class ThreeDS(object):
             "fingerprint_completion_indicator": self.fingerprint_completion_indicator,
             "server_trans_id": self.server_trans_id,
         }
-
-    

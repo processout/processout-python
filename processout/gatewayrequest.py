@@ -1,6 +1,7 @@
 import json
 import base64
 
+
 class GatewayRequest:
     def __init__(self, gateway_configuration_id, method, url, headers, body):
         """Create a new GatewayRequest instance from the current request

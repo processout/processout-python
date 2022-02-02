@@ -6,13 +6,14 @@ except ImportError:
 import processout
 import json
 
-from processout.networking.request  import Request
+from processout.networking.request import Request
 from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
+
 class Token(object):
-    def __init__(self, client, prefill = None):
+    def __init__(self, client, prefill=None):
         self._client = client
 
         self._id = None
@@ -34,10 +35,10 @@ class Token(object):
         self._description = None
         self._invoice = None
         self._invoice_id = None
-        if prefill != None:
+        self._manual_invoice_cancellation = None
+        if prefill is not None:
             self.fill_with_data(prefill)
 
-    
     @property
     def id(self):
         """Get id"""
@@ -50,7 +51,7 @@ class Token(object):
         val -- New id value"""
         self._id = val
         return self
-    
+
     @property
     def customer(self):
         """Get customer"""
@@ -72,7 +73,7 @@ class Token(object):
         else:
             self._customer = val
         return self
-    
+
     @property
     def customer_id(self):
         """Get customer_id"""
@@ -85,7 +86,7 @@ class Token(object):
         val -- New customer_id value"""
         self._customer_id = val
         return self
-    
+
     @property
     def gateway_configuration(self):
         """Get gateway_configuration"""
@@ -107,7 +108,7 @@ class Token(object):
         else:
             self._gateway_configuration = val
         return self
-    
+
     @property
     def gateway_configuration_id(self):
         """Get gateway_configuration_id"""
@@ -120,7 +121,7 @@ class Token(object):
         val -- New gateway_configuration_id value"""
         self._gateway_configuration_id = val
         return self
-    
+
     @property
     def card(self):
         """Get card"""
@@ -142,7 +143,7 @@ class Token(object):
         else:
             self._card = val
         return self
-    
+
     @property
     def card_id(self):
         """Get card_id"""
@@ -155,7 +156,7 @@ class Token(object):
         val -- New card_id value"""
         self._card_id = val
         return self
-    
+
     @property
     def type(self):
         """Get type"""
@@ -168,7 +169,7 @@ class Token(object):
         val -- New type value"""
         self._type = val
         return self
-    
+
     @property
     def metadata(self):
         """Get metadata"""
@@ -181,7 +182,7 @@ class Token(object):
         val -- New metadata value"""
         self._metadata = val
         return self
-    
+
     @property
     def is_subscription_only(self):
         """Get is_subscription_only"""
@@ -194,7 +195,7 @@ class Token(object):
         val -- New is_subscription_only value"""
         self._is_subscription_only = val
         return self
-    
+
     @property
     def is_default(self):
         """Get is_default"""
@@ -207,7 +208,7 @@ class Token(object):
         val -- New is_default value"""
         self._is_default = val
         return self
-    
+
     @property
     def return_url(self):
         """Get return_url"""
@@ -220,7 +221,7 @@ class Token(object):
         val -- New return_url value"""
         self._return_url = val
         return self
-    
+
     @property
     def cancel_url(self):
         """Get cancel_url"""
@@ -233,7 +234,7 @@ class Token(object):
         val -- New cancel_url value"""
         self._cancel_url = val
         return self
-    
+
     @property
     def summary(self):
         """Get summary"""
@@ -246,7 +247,7 @@ class Token(object):
         val -- New summary value"""
         self._summary = val
         return self
-    
+
     @property
     def is_chargeable(self):
         """Get is_chargeable"""
@@ -259,7 +260,7 @@ class Token(object):
         val -- New is_chargeable value"""
         self._is_chargeable = val
         return self
-    
+
     @property
     def created_at(self):
         """Get created_at"""
@@ -272,7 +273,7 @@ class Token(object):
         val -- New created_at value"""
         self._created_at = val
         return self
-    
+
     @property
     def description(self):
         """Get description"""
@@ -285,7 +286,7 @@ class Token(object):
         val -- New description value"""
         self._description = val
         return self
-    
+
     @property
     def invoice(self):
         """Get invoice"""
@@ -307,7 +308,7 @@ class Token(object):
         else:
             self._invoice = val
         return self
-    
+
     @property
     def invoice_id(self):
         """Get invoice_id"""
@@ -320,7 +321,19 @@ class Token(object):
         val -- New invoice_id value"""
         self._invoice_id = val
         return self
-    
+
+    @property
+    def manual_invoice_cancellation(self):
+        """Get manual_invoice_cancellation"""
+        return self._manual_invoice_cancellation
+
+    @manual_invoice_cancellation.setter
+    def manual_invoice_cancellation(self, val):
+        """Set manual_invoice_cancellation
+        Keyword argument:
+        val -- New manual_invoice_cancellation value"""
+        self._manual_invoice_cancellation = val
+        return self
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -364,7 +377,9 @@ class Token(object):
             self.invoice = data["invoice"]
         if "invoice_id" in data.keys():
             self.invoice_id = data["invoice_id"]
-        
+        if "manual_invoice_cancellation" in data.keys():
+            self.manual_invoice_cancellation = data["manual_invoice_cancellation"]
+
         return self
 
     def to_json(self):
@@ -388,9 +403,10 @@ class Token(object):
             "description": self.description,
             "invoice": self.invoice,
             "invoice_id": self.invoice_id,
+            "manual_invoice_cancellation": self.manual_invoice_cancellation,
         }
 
-    def fetch_customer_tokens(self, customer_id, options = {}):
+    def fetch_customer_tokens(self, customer_id, options={}):
         """Get the customer's tokens.
         Keyword argument:
         customer_id -- ID of the customer
@@ -398,15 +414,15 @@ class Token(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/customers/" + quote_plus(customer_id) + "/tokens"
-        data    = {
+        path = "/customers/" + quote_plus(customer_id) + "/tokens"
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
-        a    = []
+
+        a = []
         body = response.body
         for v in body['tokens']:
             tmp = processout.Token(self._client)
@@ -414,12 +430,10 @@ class Token(object):
             a.append(tmp)
 
         return_values.append(a)
-            
 
-        
         return return_values[0]
 
-    def find(self, customer_id, token_id, options = {}):
+    def find(self, customer_id, token_id, options={}):
         """Find a customer's token by its ID.
         Keyword argument:
         customer_id -- ID of the customer
@@ -428,105 +442,100 @@ class Token(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/customers/" + quote_plus(customer_id) + "/tokens/" + quote_plus(token_id) + ""
-        data    = {
+        path = "/customers/" + \
+            quote_plus(customer_id) + "/tokens/" + quote_plus(token_id) + ""
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["token"]
-                
-                
+
         obj = processout.Token(self._client)
         return_values.append(obj.fill_with_data(body))
-                
 
-        
         return return_values[0]
 
-    def create(self, options = {}):
+    def create(self, options={}):
         """Create a new token for the given customer ID.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/customers/" + quote_plus(self.customer_id) + "/tokens"
-        data    = {
-            'metadata': self.metadata, 
-            'return_url': self.return_url, 
-            'cancel_url': self.cancel_url, 
-            'description': self.description, 
-            'source': options.get("source"), 
-            'settings': options.get("settings"), 
-            'device': options.get("device"), 
-            'verify': options.get("verify"), 
-            'verify_metadata': options.get("verify_metadata"), 
+        path = "/customers/" + quote_plus(self.customer_id) + "/tokens"
+        data = {
+            'metadata': self.metadata,
+            'return_url': self.return_url,
+            'cancel_url': self.cancel_url,
+            'description': self.description,
+            'invoice_id': self.invoice_id,
+            'manual_invoice_cancellation': self.manual_invoice_cancellation,
+            'source': options.get("source"),
+            'settings': options.get("settings"),
+            'device': options.get("device"),
+            'verify': options.get("verify"),
+            'verify_metadata': options.get("verify_metadata"),
             'set_default': options.get("set_default")
         }
 
         response = Response(request.post(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["token"]
-                
-                
-        return_values.append(self.fill_with_data(body))
-                
 
-        
+        return_values.append(self.fill_with_data(body))
+
         return return_values[0]
 
-    def save(self, options = {}):
+    def save(self, options={}):
         """Save the updated customer attributes.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/customers/" + quote_plus(self.customer_id) + "/tokens/" + quote_plus(self.id) + ""
-        data    = {
-            'source': options.get("source"), 
-            'settings': options.get("settings"), 
-            'device': options.get("device"), 
-            'verify': options.get("verify"), 
-            'verify_metadata': options.get("verify_metadata"), 
+        path = "/customers/" + \
+            quote_plus(self.customer_id) + "/tokens/" + quote_plus(self.id) + ""
+        data = {
+            'source': options.get("source"),
+            'settings': options.get("settings"),
+            'device': options.get("device"),
+            'verify': options.get("verify"),
+            'verify_metadata': options.get("verify_metadata"),
             'set_default': options.get("set_default")
         }
 
         response = Response(request.put(path, data, options))
         return_values = []
-        
+
         return_values.append(response.success)
 
-        
         return return_values[0]
 
-    def delete(self, options = {}):
+    def delete(self, options={}):
         """Delete a customer token
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/customers/" + quote_plus(self.customer_id) + "/tokens/" + quote_plus(self.id) + ""
-        data    = {
+        path = "/customers/" + \
+            quote_plus(self.customer_id) + "/tokens/" + quote_plus(self.id) + ""
+        data = {
 
         }
 
         response = Response(request.delete(path, data, options))
         return_values = []
-        
+
         return_values.append(response.success)
 
-        
         return return_values[0]
-
-    

@@ -6,13 +6,14 @@ except ImportError:
 import processout
 import json
 
-from processout.networking.request  import Request
+from processout.networking.request import Request
 from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
+
 class APIRequest(object):
-    def __init__(self, client, prefill = None):
+    def __init__(self, client, prefill=None):
         self._client = client
 
         self._id = None
@@ -29,10 +30,9 @@ class APIRequest(object):
         self._response_ms = None
         self._sandbox = None
         self._created_at = None
-        if prefill != None:
+        if prefill is not None:
             self.fill_with_data(prefill)
 
-    
     @property
     def id(self):
         """Get id"""
@@ -45,7 +45,7 @@ class APIRequest(object):
         val -- New id value"""
         self._id = val
         return self
-    
+
     @property
     def project(self):
         """Get project"""
@@ -67,7 +67,7 @@ class APIRequest(object):
         else:
             self._project = val
         return self
-    
+
     @property
     def api_version(self):
         """Get api_version"""
@@ -89,7 +89,7 @@ class APIRequest(object):
         else:
             self._api_version = val
         return self
-    
+
     @property
     def idempotency_key(self):
         """Get idempotency_key"""
@@ -102,7 +102,7 @@ class APIRequest(object):
         val -- New idempotency_key value"""
         self._idempotency_key = val
         return self
-    
+
     @property
     def url(self):
         """Get url"""
@@ -115,7 +115,7 @@ class APIRequest(object):
         val -- New url value"""
         self._url = val
         return self
-    
+
     @property
     def method(self):
         """Get method"""
@@ -128,7 +128,7 @@ class APIRequest(object):
         val -- New method value"""
         self._method = val
         return self
-    
+
     @property
     def headers(self):
         """Get headers"""
@@ -141,7 +141,7 @@ class APIRequest(object):
         val -- New headers value"""
         self._headers = val
         return self
-    
+
     @property
     def body(self):
         """Get body"""
@@ -154,7 +154,7 @@ class APIRequest(object):
         val -- New body value"""
         self._body = val
         return self
-    
+
     @property
     def response_code(self):
         """Get response_code"""
@@ -167,7 +167,7 @@ class APIRequest(object):
         val -- New response_code value"""
         self._response_code = val
         return self
-    
+
     @property
     def response_headers(self):
         """Get response_headers"""
@@ -180,7 +180,7 @@ class APIRequest(object):
         val -- New response_headers value"""
         self._response_headers = val
         return self
-    
+
     @property
     def response_body(self):
         """Get response_body"""
@@ -193,7 +193,7 @@ class APIRequest(object):
         val -- New response_body value"""
         self._response_body = val
         return self
-    
+
     @property
     def response_ms(self):
         """Get response_ms"""
@@ -206,7 +206,7 @@ class APIRequest(object):
         val -- New response_ms value"""
         self._response_ms = val
         return self
-    
+
     @property
     def sandbox(self):
         """Get sandbox"""
@@ -219,7 +219,7 @@ class APIRequest(object):
         val -- New sandbox value"""
         self._sandbox = val
         return self
-    
+
     @property
     def created_at(self):
         """Get created_at"""
@@ -232,7 +232,6 @@ class APIRequest(object):
         val -- New created_at value"""
         self._created_at = val
         return self
-    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -266,7 +265,7 @@ class APIRequest(object):
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
             self.created_at = data["created_at"]
-        
+
         return self
 
     def to_json(self):
@@ -287,23 +286,23 @@ class APIRequest(object):
             "created_at": self.created_at,
         }
 
-    def all(self, options = {}):
+    def all(self, options={}):
         """Get all the API requests.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/api-requests"
-        data    = {
+        path = "/api-requests"
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
-        a    = []
+
+        a = []
         body = response.body
         for v in body['api_requests']:
             tmp = processout.APIRequest(self._client)
@@ -311,12 +310,10 @@ class APIRequest(object):
             a.append(tmp)
 
         return_values.append(a)
-            
 
-        
         return return_values[0]
 
-    def find(self, api_request_id, options = {}):
+    def find(self, api_request_id, options={}):
         """Find an API request by its ID.
         Keyword argument:
         api_request_id -- ID of the API request
@@ -324,23 +321,18 @@ class APIRequest(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/api-requests/{request_id}"
-        data    = {
+        path = "/api-requests/{request_id}"
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["api_request"]
-                
-                
+
         obj = processout.APIRequest(self._client)
         return_values.append(obj.fill_with_data(body))
-                
 
-        
         return return_values[0]
-
-    

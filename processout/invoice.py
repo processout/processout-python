@@ -6,13 +6,14 @@ except ImportError:
 import processout
 import json
 
-from processout.networking.request  import Request
+from processout.networking.request import Request
 from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
+
 class Invoice(object):
-    def __init__(self, client, prefill = None):
+    def __init__(self, client, prefill=None):
         self._client = client
 
         self._id = None
@@ -54,10 +55,9 @@ class Invoice(object):
         self._challenge_indicator = None
         self._incremental = None
         self._tax = None
-        if prefill != None:
+        if prefill is not None:
             self.fill_with_data(prefill)
 
-    
     @property
     def id(self):
         """Get id"""
@@ -70,7 +70,7 @@ class Invoice(object):
         val -- New id value"""
         self._id = val
         return self
-    
+
     @property
     def project(self):
         """Get project"""
@@ -92,7 +92,7 @@ class Invoice(object):
         else:
             self._project = val
         return self
-    
+
     @property
     def project_id(self):
         """Get project_id"""
@@ -105,7 +105,7 @@ class Invoice(object):
         val -- New project_id value"""
         self._project_id = val
         return self
-    
+
     @property
     def transaction(self):
         """Get transaction"""
@@ -127,7 +127,7 @@ class Invoice(object):
         else:
             self._transaction = val
         return self
-    
+
     @property
     def transaction_id(self):
         """Get transaction_id"""
@@ -140,7 +140,7 @@ class Invoice(object):
         val -- New transaction_id value"""
         self._transaction_id = val
         return self
-    
+
     @property
     def customer(self):
         """Get customer"""
@@ -162,7 +162,7 @@ class Invoice(object):
         else:
             self._customer = val
         return self
-    
+
     @property
     def customer_id(self):
         """Get customer_id"""
@@ -175,7 +175,7 @@ class Invoice(object):
         val -- New customer_id value"""
         self._customer_id = val
         return self
-    
+
     @property
     def subscription(self):
         """Get subscription"""
@@ -197,7 +197,7 @@ class Invoice(object):
         else:
             self._subscription = val
         return self
-    
+
     @property
     def subscription_id(self):
         """Get subscription_id"""
@@ -210,7 +210,7 @@ class Invoice(object):
         val -- New subscription_id value"""
         self._subscription_id = val
         return self
-    
+
     @property
     def token(self):
         """Get token"""
@@ -232,7 +232,7 @@ class Invoice(object):
         else:
             self._token = val
         return self
-    
+
     @property
     def token_id(self):
         """Get token_id"""
@@ -245,7 +245,7 @@ class Invoice(object):
         val -- New token_id value"""
         self._token_id = val
         return self
-    
+
     @property
     def details(self):
         """Get details"""
@@ -270,7 +270,7 @@ class Invoice(object):
                 l.append(obj)
             self._details = l
         return self
-    
+
     @property
     def url(self):
         """Get url"""
@@ -283,7 +283,7 @@ class Invoice(object):
         val -- New url value"""
         self._url = val
         return self
-    
+
     @property
     def name(self):
         """Get name"""
@@ -296,7 +296,7 @@ class Invoice(object):
         val -- New name value"""
         self._name = val
         return self
-    
+
     @property
     def amount(self):
         """Get amount"""
@@ -309,7 +309,7 @@ class Invoice(object):
         val -- New amount value"""
         self._amount = val
         return self
-    
+
     @property
     def currency(self):
         """Get currency"""
@@ -322,7 +322,7 @@ class Invoice(object):
         val -- New currency value"""
         self._currency = val
         return self
-    
+
     @property
     def merchant_initiator_type(self):
         """Get merchant_initiator_type"""
@@ -335,7 +335,7 @@ class Invoice(object):
         val -- New merchant_initiator_type value"""
         self._merchant_initiator_type = val
         return self
-    
+
     @property
     def statement_descriptor(self):
         """Get statement_descriptor"""
@@ -348,7 +348,7 @@ class Invoice(object):
         val -- New statement_descriptor value"""
         self._statement_descriptor = val
         return self
-    
+
     @property
     def statement_descriptor_phone(self):
         """Get statement_descriptor_phone"""
@@ -361,7 +361,7 @@ class Invoice(object):
         val -- New statement_descriptor_phone value"""
         self._statement_descriptor_phone = val
         return self
-    
+
     @property
     def statement_descriptor_city(self):
         """Get statement_descriptor_city"""
@@ -374,7 +374,7 @@ class Invoice(object):
         val -- New statement_descriptor_city value"""
         self._statement_descriptor_city = val
         return self
-    
+
     @property
     def statement_descriptor_company(self):
         """Get statement_descriptor_company"""
@@ -387,7 +387,7 @@ class Invoice(object):
         val -- New statement_descriptor_company value"""
         self._statement_descriptor_company = val
         return self
-    
+
     @property
     def statement_descriptor_url(self):
         """Get statement_descriptor_url"""
@@ -400,7 +400,7 @@ class Invoice(object):
         val -- New statement_descriptor_url value"""
         self._statement_descriptor_url = val
         return self
-    
+
     @property
     def metadata(self):
         """Get metadata"""
@@ -413,7 +413,7 @@ class Invoice(object):
         val -- New metadata value"""
         self._metadata = val
         return self
-    
+
     @property
     def gateway_data(self):
         """Get gateway_data"""
@@ -426,7 +426,7 @@ class Invoice(object):
         val -- New gateway_data value"""
         self._gateway_data = val
         return self
-    
+
     @property
     def return_url(self):
         """Get return_url"""
@@ -439,7 +439,7 @@ class Invoice(object):
         val -- New return_url value"""
         self._return_url = val
         return self
-    
+
     @property
     def cancel_url(self):
         """Get cancel_url"""
@@ -452,7 +452,7 @@ class Invoice(object):
         val -- New cancel_url value"""
         self._cancel_url = val
         return self
-    
+
     @property
     def webhook_url(self):
         """Get webhook_url"""
@@ -465,7 +465,7 @@ class Invoice(object):
         val -- New webhook_url value"""
         self._webhook_url = val
         return self
-    
+
     @property
     def require_backend_capture(self):
         """Get require_backend_capture"""
@@ -478,7 +478,7 @@ class Invoice(object):
         val -- New require_backend_capture value"""
         self._require_backend_capture = val
         return self
-    
+
     @property
     def sandbox(self):
         """Get sandbox"""
@@ -491,7 +491,7 @@ class Invoice(object):
         val -- New sandbox value"""
         self._sandbox = val
         return self
-    
+
     @property
     def created_at(self):
         """Get created_at"""
@@ -504,7 +504,7 @@ class Invoice(object):
         val -- New created_at value"""
         self._created_at = val
         return self
-    
+
     @property
     def risk(self):
         """Get risk"""
@@ -526,7 +526,7 @@ class Invoice(object):
         else:
             self._risk = val
         return self
-    
+
     @property
     def shipping(self):
         """Get shipping"""
@@ -548,7 +548,7 @@ class Invoice(object):
         else:
             self._shipping = val
         return self
-    
+
     @property
     def device(self):
         """Get device"""
@@ -570,7 +570,7 @@ class Invoice(object):
         else:
             self._device = val
         return self
-    
+
     @property
     def external_fraud_tools(self):
         """Get external_fraud_tools"""
@@ -592,7 +592,7 @@ class Invoice(object):
         else:
             self._external_fraud_tools = val
         return self
-    
+
     @property
     def exemption_reason_3ds2(self):
         """Get exemption_reason_3ds2"""
@@ -605,7 +605,7 @@ class Invoice(object):
         val -- New exemption_reason_3ds2 value"""
         self._exemption_reason_3ds2 = val
         return self
-    
+
     @property
     def sca_exemption_reason(self):
         """Get sca_exemption_reason"""
@@ -618,7 +618,7 @@ class Invoice(object):
         val -- New sca_exemption_reason value"""
         self._sca_exemption_reason = val
         return self
-    
+
     @property
     def challenge_indicator(self):
         """Get challenge_indicator"""
@@ -631,7 +631,7 @@ class Invoice(object):
         val -- New challenge_indicator value"""
         self._challenge_indicator = val
         return self
-    
+
     @property
     def incremental(self):
         """Get incremental"""
@@ -644,7 +644,7 @@ class Invoice(object):
         val -- New incremental value"""
         self._incremental = val
         return self
-    
+
     @property
     def tax(self):
         """Get tax"""
@@ -666,7 +666,6 @@ class Invoice(object):
         else:
             self._tax = val
         return self
-    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -750,7 +749,7 @@ class Invoice(object):
             self.incremental = data["incremental"]
         if "tax" in data.keys():
             self.tax = data["tax"]
-        
+
         return self
 
     def to_json(self):
@@ -796,7 +795,7 @@ class Invoice(object):
             "tax": self.tax,
         }
 
-    def increment_authorization(self, amount, options = {}):
+    def increment_authorization(self, amount, options={}):
         """Create an incremental authorization
         Keyword argument:
         amount -- Amount to increment authorization by
@@ -804,23 +803,22 @@ class Invoice(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/invoices/" + quote_plus(self.id) + "/increment_authorization"
-        data    = {
+        path = "/invoices/" + quote_plus(self.id) + "/increment_authorization"
+        data = {
             'amount': amount
         }
 
         response = Response(request.post(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["transaction"]
         transaction = processout.Transaction(self._client)
         return_values.append(transaction.fill_with_data(body))
 
-        
         return return_values[0]
 
-    def authorize(self, source, options = {}):
+    def authorize(self, source, options={}):
         """Authorize the invoice using the given source (customer or token)
         Keyword argument:
         source -- Source used to authorization the payment. Can be a card, a token or a gateway request
@@ -828,30 +826,28 @@ class Invoice(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/invoices/" + quote_plus(self.id) + "/authorize"
-        data    = {
-            'device': self.device, 
-            'incremental': self.incremental, 
-            'synchronous': options.get("synchronous"), 
-            'retry_drop_liability_shift': options.get("retry_drop_liability_shift"), 
-            'capture_amount': options.get("capture_amount"), 
-            'enable_three_d_s_2': options.get("enable_three_d_s_2"), 
-            'auto_capture_at': options.get("auto_capture_at"), 
-            'source': source
-        }
+        path = "/invoices/" + quote_plus(self.id) + "/authorize"
+        data = {
+            'device': self.device,
+            'incremental': self.incremental,
+            'synchronous': options.get("synchronous"),
+            'retry_drop_liability_shift': options.get("retry_drop_liability_shift"),
+            'capture_amount': options.get("capture_amount"),
+            'enable_three_d_s_2': options.get("enable_three_d_s_2"),
+            'auto_capture_at': options.get("auto_capture_at"),
+            'source': source}
 
         response = Response(request.post(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["transaction"]
         transaction = processout.Transaction(self._client)
         return_values.append(transaction.fill_with_data(body))
 
-        
         return return_values[0]
 
-    def capture(self, source, options = {}):
+    def capture(self, source, options={}):
         """Capture the invoice using the given source (customer or token)
         Keyword argument:
         source -- Source used to authorization the payment. Can be a card, a token or a gateway request
@@ -859,55 +855,52 @@ class Invoice(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/invoices/" + quote_plus(self.id) + "/capture"
-        data    = {
-            'device': self.device, 
-            'incremental': self.incremental, 
-            'authorize_only': options.get("authorize_only"), 
-            'synchronous': options.get("synchronous"), 
-            'retry_drop_liability_shift': options.get("retry_drop_liability_shift"), 
-            'capture_amount': options.get("capture_amount"), 
-            'auto_capture_at': options.get("auto_capture_at"), 
-            'enable_three_d_s_2': options.get("enable_three_d_s_2"), 
-            'source': source
-        }
+        path = "/invoices/" + quote_plus(self.id) + "/capture"
+        data = {
+            'device': self.device,
+            'incremental': self.incremental,
+            'authorize_only': options.get("authorize_only"),
+            'synchronous': options.get("synchronous"),
+            'retry_drop_liability_shift': options.get("retry_drop_liability_shift"),
+            'capture_amount': options.get("capture_amount"),
+            'auto_capture_at': options.get("auto_capture_at"),
+            'enable_three_d_s_2': options.get("enable_three_d_s_2"),
+            'source': source}
 
         response = Response(request.post(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["transaction"]
         transaction = processout.Transaction(self._client)
         return_values.append(transaction.fill_with_data(body))
 
-        
         return return_values[0]
 
-    def fetch_customer(self, options = {}):
+    def fetch_customer(self, options={}):
         """Get the customer linked to the invoice.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/invoices/" + quote_plus(self.id) + "/customers"
-        data    = {
+        path = "/invoices/" + quote_plus(self.id) + "/customers"
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["customer"]
         customer = processout.Customer(self._client)
         return_values.append(customer.fill_with_data(body))
 
-        
         return return_values[0]
 
-    def assign_customer(self, customer_id, options = {}):
+    def assign_customer(self, customer_id, options={}):
         """Assign a customer to the invoice.
         Keyword argument:
         customer_id -- ID of the customer to be linked to the invoice
@@ -915,23 +908,22 @@ class Invoice(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/invoices/" + quote_plus(self.id) + "/customers"
-        data    = {
+        path = "/invoices/" + quote_plus(self.id) + "/customers"
+        data = {
             'customer_id': customer_id
         }
 
         response = Response(request.post(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["customer"]
         customer = processout.Customer(self._client)
         return_values.append(customer.fill_with_data(body))
 
-        
         return return_values[0]
 
-    def initiate_three_d_s(self, source, options = {}):
+    def initiate_three_d_s(self, source, options={}):
         """Initiate a 3-D Secure authentication
         Keyword argument:
         source -- Source used to initiate the 3-D Secure authentication. Can be a card, or a token representing a card
@@ -939,88 +931,85 @@ class Invoice(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/invoices/" + quote_plus(self.id) + "/three-d-s"
-        data    = {
-            'enable_three_d_s_2': options.get("enable_three_d_s_2"), 
+        path = "/invoices/" + quote_plus(self.id) + "/three-d-s"
+        data = {
+            'enable_three_d_s_2': options.get("enable_three_d_s_2"),
             'source': source
         }
 
         response = Response(request.post(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["customer_action"]
         customerAction = processout.CustomerAction(self._client)
         return_values.append(customerAction.fill_with_data(body))
 
-        
         return return_values[0]
 
-    def fetch_transaction(self, options = {}):
+    def fetch_transaction(self, options={}):
         """Get the transaction of the invoice.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/invoices/" + quote_plus(self.id) + "/transactions"
-        data    = {
+        path = "/invoices/" + quote_plus(self.id) + "/transactions"
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["transaction"]
         transaction = processout.Transaction(self._client)
         return_values.append(transaction.fill_with_data(body))
 
-        
         return return_values[0]
 
-    def void(self, options = {}):
+    def void(self, options={}):
         """Void the invoice
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/invoices/" + quote_plus(self.id) + "/void"
-        data    = {
+        path = "/invoices/" + quote_plus(self.id) + "/void"
+        data = {
 
         }
 
         response = Response(request.post(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["transaction"]
         transaction = processout.Transaction(self._client)
         return_values.append(transaction.fill_with_data(body))
 
-        
         return return_values[0]
 
-    def all(self, options = {}):
+    def all(self, options={}):
         """Get all the invoices.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/invoices"
-        data    = {
+        path = "/invoices"
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
-        a    = []
+
+        a = []
         body = response.body
         for v in body['invoices']:
             tmp = processout.Invoice(self._client)
@@ -1028,62 +1017,57 @@ class Invoice(object):
             a.append(tmp)
 
         return_values.append(a)
-            
 
-        
         return return_values[0]
 
-    def create(self, options = {}):
+    def create(self, options={}):
         """Create a new invoice.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/invoices"
-        data    = {
-            'customer_id': self.customer_id, 
-            'name': self.name, 
-            'amount': self.amount, 
-            'currency': self.currency, 
-            'metadata': self.metadata, 
-            'details': self.details, 
-            'exemption_reason_3ds2': self.exemption_reason_3ds2, 
-            'sca_exemption_reason': self.sca_exemption_reason, 
-            'challenge_indicator': self.challenge_indicator, 
-            'gateway_data': self.gateway_data, 
-            'merchant_initiator_type': self.merchant_initiator_type, 
-            'statement_descriptor': self.statement_descriptor, 
-            'statement_descriptor_phone': self.statement_descriptor_phone, 
-            'statement_descriptor_city': self.statement_descriptor_city, 
-            'statement_descriptor_company': self.statement_descriptor_company, 
-            'statement_descriptor_url': self.statement_descriptor_url, 
-            'return_url': self.return_url, 
-            'cancel_url': self.cancel_url, 
-            'webhook_url': self.webhook_url, 
-            'risk': self.risk, 
-            'shipping': self.shipping, 
-            'device': self.device, 
-            'require_backend_capture': self.require_backend_capture, 
-            'external_fraud_tools': self.external_fraud_tools, 
+        path = "/invoices"
+        data = {
+            'customer_id': self.customer_id,
+            'name': self.name,
+            'amount': self.amount,
+            'currency': self.currency,
+            'metadata': self.metadata,
+            'details': self.details,
+            'exemption_reason_3ds2': self.exemption_reason_3ds2,
+            'sca_exemption_reason': self.sca_exemption_reason,
+            'challenge_indicator': self.challenge_indicator,
+            'gateway_data': self.gateway_data,
+            'merchant_initiator_type': self.merchant_initiator_type,
+            'statement_descriptor': self.statement_descriptor,
+            'statement_descriptor_phone': self.statement_descriptor_phone,
+            'statement_descriptor_city': self.statement_descriptor_city,
+            'statement_descriptor_company': self.statement_descriptor_company,
+            'statement_descriptor_url': self.statement_descriptor_url,
+            'return_url': self.return_url,
+            'cancel_url': self.cancel_url,
+            'webhook_url': self.webhook_url,
+            'risk': self.risk,
+            'shipping': self.shipping,
+            'device': self.device,
+            'require_backend_capture': self.require_backend_capture,
+            'external_fraud_tools': self.external_fraud_tools,
             'tax': self.tax
         }
 
         response = Response(request.post(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["invoice"]
-                
-                
-        return_values.append(self.fill_with_data(body))
-                
 
-        
+        return_values.append(self.fill_with_data(body))
+
         return return_values[0]
 
-    def find(self, invoice_id, options = {}):
+    def find(self, invoice_id, options={}):
         """Find an invoice by its ID.
         Keyword argument:
         invoice_id -- ID of the invoice
@@ -1091,23 +1075,18 @@ class Invoice(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/invoices/" + quote_plus(invoice_id) + ""
-        data    = {
+        path = "/invoices/" + quote_plus(invoice_id) + ""
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["invoice"]
-                
-                
+
         obj = processout.Invoice(self._client)
         return_values.append(obj.fill_with_data(body))
-                
 
-        
         return return_values[0]
-
-    

@@ -6,13 +6,14 @@ except ImportError:
 import processout
 import json
 
-from processout.networking.request  import Request
+from processout.networking.request import Request
 from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
+
 class Event(object):
-    def __init__(self, client, prefill = None):
+    def __init__(self, client, prefill=None):
         self._client = client
 
         self._id = None
@@ -22,10 +23,9 @@ class Event(object):
         self._data = None
         self._sandbox = None
         self._fired_at = None
-        if prefill != None:
+        if prefill is not None:
             self.fill_with_data(prefill)
 
-    
     @property
     def id(self):
         """Get id"""
@@ -38,7 +38,7 @@ class Event(object):
         val -- New id value"""
         self._id = val
         return self
-    
+
     @property
     def project(self):
         """Get project"""
@@ -60,7 +60,7 @@ class Event(object):
         else:
             self._project = val
         return self
-    
+
     @property
     def project_id(self):
         """Get project_id"""
@@ -73,7 +73,7 @@ class Event(object):
         val -- New project_id value"""
         self._project_id = val
         return self
-    
+
     @property
     def name(self):
         """Get name"""
@@ -86,7 +86,7 @@ class Event(object):
         val -- New name value"""
         self._name = val
         return self
-    
+
     @property
     def data(self):
         """Get data"""
@@ -99,7 +99,7 @@ class Event(object):
         val -- New data value"""
         self._data = val
         return self
-    
+
     @property
     def sandbox(self):
         """Get sandbox"""
@@ -112,7 +112,7 @@ class Event(object):
         val -- New sandbox value"""
         self._sandbox = val
         return self
-    
+
     @property
     def fired_at(self):
         """Get fired_at"""
@@ -125,7 +125,6 @@ class Event(object):
         val -- New fired_at value"""
         self._fired_at = val
         return self
-    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -145,7 +144,7 @@ class Event(object):
             self.sandbox = data["sandbox"]
         if "fired_at" in data.keys():
             self.fired_at = data["fired_at"]
-        
+
         return self
 
     def to_json(self):
@@ -159,23 +158,23 @@ class Event(object):
             "fired_at": self.fired_at,
         }
 
-    def fetch_webhooks(self, options = {}):
+    def fetch_webhooks(self, options={}):
         """Get all the webhooks of the event.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/events/" + quote_plus(self.id) + "/webhooks"
-        data    = {
+        path = "/events/" + quote_plus(self.id) + "/webhooks"
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
-        a    = []
+
+        a = []
         body = response.body
         for v in body['webhooks']:
             tmp = processout.Webhook(self._client)
@@ -183,28 +182,26 @@ class Event(object):
             a.append(tmp)
 
         return_values.append(a)
-            
 
-        
         return return_values[0]
 
-    def all(self, options = {}):
+    def all(self, options={}):
         """Get all the events.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/events"
-        data    = {
+        path = "/events"
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
-        a    = []
+
+        a = []
         body = response.body
         for v in body['events']:
             tmp = processout.Event(self._client)
@@ -212,12 +209,10 @@ class Event(object):
             a.append(tmp)
 
         return_values.append(a)
-            
 
-        
         return return_values[0]
 
-    def find(self, event_id, options = {}):
+    def find(self, event_id, options={}):
         """Find an event by its ID.
         Keyword argument:
         event_id -- ID of the event
@@ -225,23 +220,18 @@ class Event(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/events/" + quote_plus(event_id) + ""
-        data    = {
+        path = "/events/" + quote_plus(event_id) + ""
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["event"]
-                
-                
+
         obj = processout.Event(self._client)
         return_values.append(obj.fill_with_data(body))
-                
 
-        
         return return_values[0]
-
-    

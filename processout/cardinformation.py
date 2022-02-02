@@ -6,13 +6,14 @@ except ImportError:
 import processout
 import json
 
-from processout.networking.request  import Request
+from processout.networking.request import Request
 from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
+
 class CardInformation(object):
-    def __init__(self, client, prefill = None):
+    def __init__(self, client, prefill=None):
         self._client = client
 
         self._iin = None
@@ -22,10 +23,9 @@ class CardInformation(object):
         self._brand = None
         self._category = None
         self._country = None
-        if prefill != None:
+        if prefill is not None:
             self.fill_with_data(prefill)
 
-    
     @property
     def iin(self):
         """Get iin"""
@@ -38,7 +38,7 @@ class CardInformation(object):
         val -- New iin value"""
         self._iin = val
         return self
-    
+
     @property
     def scheme(self):
         """Get scheme"""
@@ -51,7 +51,7 @@ class CardInformation(object):
         val -- New scheme value"""
         self._scheme = val
         return self
-    
+
     @property
     def type(self):
         """Get type"""
@@ -64,7 +64,7 @@ class CardInformation(object):
         val -- New type value"""
         self._type = val
         return self
-    
+
     @property
     def bank_name(self):
         """Get bank_name"""
@@ -77,7 +77,7 @@ class CardInformation(object):
         val -- New bank_name value"""
         self._bank_name = val
         return self
-    
+
     @property
     def brand(self):
         """Get brand"""
@@ -90,7 +90,7 @@ class CardInformation(object):
         val -- New brand value"""
         self._brand = val
         return self
-    
+
     @property
     def category(self):
         """Get category"""
@@ -103,7 +103,7 @@ class CardInformation(object):
         val -- New category value"""
         self._category = val
         return self
-    
+
     @property
     def country(self):
         """Get country"""
@@ -116,7 +116,6 @@ class CardInformation(object):
         val -- New country value"""
         self._country = val
         return self
-    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -136,7 +135,7 @@ class CardInformation(object):
             self.category = data["category"]
         if "country" in data.keys():
             self.country = data["country"]
-        
+
         return self
 
     def to_json(self):
@@ -150,7 +149,7 @@ class CardInformation(object):
             "country": self.country,
         }
 
-    def fetch(self, iin, options = {}):
+    def fetch(self, iin, options={}):
         """Fetch card information from the IIN.
         Keyword argument:
         iin -- IIN of the card (first 6 digits)
@@ -158,23 +157,18 @@ class CardInformation(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/iins/" + quote_plus(iin) + ""
-        data    = {
+        path = "/iins/" + quote_plus(iin) + ""
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["card_information"]
-                
-                
+
         obj = processout.CardInformation(self._client)
         return_values.append(obj.fill_with_data(body))
-                
 
-        
         return return_values[0]
-
-    

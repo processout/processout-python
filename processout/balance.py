@@ -12,54 +12,54 @@ from processout.networking.response import Response
 # The content of this file was automatically generated
 
 
-class CustomerAction(object):
+class Balance(object):
     def __init__(self, client, prefill=None):
         self._client = client
 
-        self._type = None
-        self._value = None
+        self._amount = None
+        self._currency = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
     @property
-    def type(self):
-        """Get type"""
-        return self._type
+    def amount(self):
+        """Get amount"""
+        return self._amount
 
-    @type.setter
-    def type(self, val):
-        """Set type
+    @amount.setter
+    def amount(self, val):
+        """Set amount
         Keyword argument:
-        val -- New type value"""
-        self._type = val
+        val -- New amount value"""
+        self._amount = val
         return self
 
     @property
-    def value(self):
-        """Get value"""
-        return self._value
+    def currency(self):
+        """Get currency"""
+        return self._currency
 
-    @value.setter
-    def value(self, val):
-        """Set value
+    @currency.setter
+    def currency(self, val):
+        """Set currency
         Keyword argument:
-        val -- New value value"""
-        self._value = val
+        val -- New currency value"""
+        self._currency = val
         return self
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
-        if "type" in data.keys():
-            self.type = data["type"]
-        if "value" in data.keys():
-            self.value = data["value"]
+        if "amount" in data.keys():
+            self.amount = data["amount"]
+        if "currency" in data.keys():
+            self.currency = data["currency"]
 
         return self
 
     def to_json(self):
         return {
-            "type": self.type,
-            "value": self.value,
+            "amount": self.amount,
+            "currency": self.currency,
         }

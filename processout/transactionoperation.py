@@ -6,13 +6,14 @@ except ImportError:
 import processout
 import json
 
-from processout.networking.request  import Request
+from processout.networking.request import Request
 from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
+
 class TransactionOperation(object):
-    def __init__(self, client, prefill = None):
+    def __init__(self, client, prefill=None):
         self._client = client
 
         self._id = None
@@ -40,10 +41,9 @@ class TransactionOperation(object):
         self._metadata = None
         self._gateway_fee = None
         self._created_at = None
-        if prefill != None:
+        if prefill is not None:
             self.fill_with_data(prefill)
 
-    
     @property
     def id(self):
         """Get id"""
@@ -56,7 +56,7 @@ class TransactionOperation(object):
         val -- New id value"""
         self._id = val
         return self
-    
+
     @property
     def transaction(self):
         """Get transaction"""
@@ -78,7 +78,7 @@ class TransactionOperation(object):
         else:
             self._transaction = val
         return self
-    
+
     @property
     def transaction_id(self):
         """Get transaction_id"""
@@ -91,7 +91,7 @@ class TransactionOperation(object):
         val -- New transaction_id value"""
         self._transaction_id = val
         return self
-    
+
     @property
     def token(self):
         """Get token"""
@@ -113,7 +113,7 @@ class TransactionOperation(object):
         else:
             self._token = val
         return self
-    
+
     @property
     def token_id(self):
         """Get token_id"""
@@ -126,7 +126,7 @@ class TransactionOperation(object):
         val -- New token_id value"""
         self._token_id = val
         return self
-    
+
     @property
     def card(self):
         """Get card"""
@@ -148,7 +148,7 @@ class TransactionOperation(object):
         else:
             self._card = val
         return self
-    
+
     @property
     def card_id(self):
         """Get card_id"""
@@ -161,7 +161,7 @@ class TransactionOperation(object):
         val -- New card_id value"""
         self._card_id = val
         return self
-    
+
     @property
     def gateway_configuration(self):
         """Get gateway_configuration"""
@@ -183,7 +183,7 @@ class TransactionOperation(object):
         else:
             self._gateway_configuration = val
         return self
-    
+
     @property
     def gateway_configuration_id(self):
         """Get gateway_configuration_id"""
@@ -196,7 +196,7 @@ class TransactionOperation(object):
         val -- New gateway_configuration_id value"""
         self._gateway_configuration_id = val
         return self
-    
+
     @property
     def amount(self):
         """Get amount"""
@@ -209,7 +209,7 @@ class TransactionOperation(object):
         val -- New amount value"""
         self._amount = val
         return self
-    
+
     @property
     def currency(self):
         """Get currency"""
@@ -222,7 +222,7 @@ class TransactionOperation(object):
         val -- New currency value"""
         self._currency = val
         return self
-    
+
     @property
     def is_attempt(self):
         """Get is_attempt"""
@@ -235,7 +235,7 @@ class TransactionOperation(object):
         val -- New is_attempt value"""
         self._is_attempt = val
         return self
-    
+
     @property
     def has_failed(self):
         """Get has_failed"""
@@ -248,7 +248,7 @@ class TransactionOperation(object):
         val -- New has_failed value"""
         self._has_failed = val
         return self
-    
+
     @property
     def is_accountable(self):
         """Get is_accountable"""
@@ -261,7 +261,7 @@ class TransactionOperation(object):
         val -- New is_accountable value"""
         self._is_accountable = val
         return self
-    
+
     @property
     def type(self):
         """Get type"""
@@ -274,7 +274,7 @@ class TransactionOperation(object):
         val -- New type value"""
         self._type = val
         return self
-    
+
     @property
     def gateway_operation_id(self):
         """Get gateway_operation_id"""
@@ -287,7 +287,7 @@ class TransactionOperation(object):
         val -- New gateway_operation_id value"""
         self._gateway_operation_id = val
         return self
-    
+
     @property
     def arn(self):
         """Get arn"""
@@ -300,7 +300,7 @@ class TransactionOperation(object):
         val -- New arn value"""
         self._arn = val
         return self
-    
+
     @property
     def error_code(self):
         """Get error_code"""
@@ -313,7 +313,7 @@ class TransactionOperation(object):
         val -- New error_code value"""
         self._error_code = val
         return self
-    
+
     @property
     def gateway_data(self):
         """Get gateway_data"""
@@ -326,7 +326,7 @@ class TransactionOperation(object):
         val -- New gateway_data value"""
         self._gateway_data = val
         return self
-    
+
     @property
     def payment_data_three_d_s_request(self):
         """Get payment_data_three_d_s_request"""
@@ -348,7 +348,7 @@ class TransactionOperation(object):
         else:
             self._payment_data_three_d_s_request = val
         return self
-    
+
     @property
     def payment_data_three_d_s_authentication(self):
         """Get payment_data_three_d_s_authentication"""
@@ -370,7 +370,7 @@ class TransactionOperation(object):
         else:
             self._payment_data_three_d_s_authentication = val
         return self
-    
+
     @property
     def payment_data_network_authentication(self):
         """Get payment_data_network_authentication"""
@@ -392,7 +392,7 @@ class TransactionOperation(object):
         else:
             self._payment_data_network_authentication = val
         return self
-    
+
     @property
     def metadata(self):
         """Get metadata"""
@@ -405,7 +405,7 @@ class TransactionOperation(object):
         val -- New metadata value"""
         self._metadata = val
         return self
-    
+
     @property
     def gateway_fee(self):
         """Get gateway_fee"""
@@ -418,7 +418,7 @@ class TransactionOperation(object):
         val -- New gateway_fee value"""
         self._gateway_fee = val
         return self
-    
+
     @property
     def created_at(self):
         """Get created_at"""
@@ -431,7 +431,6 @@ class TransactionOperation(object):
         val -- New created_at value"""
         self._created_at = val
         return self
-    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -487,7 +486,7 @@ class TransactionOperation(object):
             self.gateway_fee = data["gateway_fee"]
         if "created_at" in data.keys():
             self.created_at = data["created_at"]
-        
+
         return self
 
     def to_json(self):
@@ -518,5 +517,3 @@ class TransactionOperation(object):
             "gateway_fee": self.gateway_fee,
             "created_at": self.created_at,
         }
-
-    

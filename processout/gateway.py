@@ -6,13 +6,14 @@ except ImportError:
 import processout
 import json
 
-from processout.networking.request  import Request
+from processout.networking.request import Request
 from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
+
 class Gateway(object):
-    def __init__(self, client, prefill = None):
+    def __init__(self, client, prefill=None):
         self._client = client
 
         self._id = None
@@ -26,10 +27,9 @@ class Gateway(object):
         self._can_refund = None
         self._is_oauth_authentication = None
         self._description = None
-        if prefill != None:
+        if prefill is not None:
             self.fill_with_data(prefill)
 
-    
     @property
     def id(self):
         """Get id"""
@@ -42,7 +42,7 @@ class Gateway(object):
         val -- New id value"""
         self._id = val
         return self
-    
+
     @property
     def name(self):
         """Get name"""
@@ -55,7 +55,7 @@ class Gateway(object):
         val -- New name value"""
         self._name = val
         return self
-    
+
     @property
     def display_name(self):
         """Get display_name"""
@@ -68,7 +68,7 @@ class Gateway(object):
         val -- New display_name value"""
         self._display_name = val
         return self
-    
+
     @property
     def logo_url(self):
         """Get logo_url"""
@@ -81,7 +81,7 @@ class Gateway(object):
         val -- New logo_url value"""
         self._logo_url = val
         return self
-    
+
     @property
     def url(self):
         """Get url"""
@@ -94,7 +94,7 @@ class Gateway(object):
         val -- New url value"""
         self._url = val
         return self
-    
+
     @property
     def flows(self):
         """Get flows"""
@@ -107,7 +107,7 @@ class Gateway(object):
         val -- New flows value"""
         self._flows = val
         return self
-    
+
     @property
     def tags(self):
         """Get tags"""
@@ -120,7 +120,7 @@ class Gateway(object):
         val -- New tags value"""
         self._tags = val
         return self
-    
+
     @property
     def can_pull_transactions(self):
         """Get can_pull_transactions"""
@@ -133,7 +133,7 @@ class Gateway(object):
         val -- New can_pull_transactions value"""
         self._can_pull_transactions = val
         return self
-    
+
     @property
     def can_refund(self):
         """Get can_refund"""
@@ -146,7 +146,7 @@ class Gateway(object):
         val -- New can_refund value"""
         self._can_refund = val
         return self
-    
+
     @property
     def is_oauth_authentication(self):
         """Get is_oauth_authentication"""
@@ -159,7 +159,7 @@ class Gateway(object):
         val -- New is_oauth_authentication value"""
         self._is_oauth_authentication = val
         return self
-    
+
     @property
     def description(self):
         """Get description"""
@@ -172,7 +172,6 @@ class Gateway(object):
         val -- New description value"""
         self._description = val
         return self
-    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -200,7 +199,7 @@ class Gateway(object):
             self.is_oauth_authentication = data["is_oauth_authentication"]
         if "description" in data.keys():
             self.description = data["description"]
-        
+
         return self
 
     def to_json(self):
@@ -218,23 +217,23 @@ class Gateway(object):
             "description": self.description,
         }
 
-    def fetch_gateway_configurations(self, options = {}):
+    def fetch_gateway_configurations(self, options={}):
         """Get all the gateway configurations of the gateway
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/gateways/" + quote_plus(self.name) + "/gateway-configurations"
-        data    = {
+        path = "/gateways/" + quote_plus(self.name) + "/gateway-configurations"
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
-        a    = []
+
+        a = []
         body = response.body
         for v in body['gateway_configurations']:
             tmp = processout.GatewayConfiguration(self._client)
@@ -242,9 +241,5 @@ class Gateway(object):
             a.append(tmp)
 
         return_values.append(a)
-            
 
-        
         return return_values[0]
-
-    

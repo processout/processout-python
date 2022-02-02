@@ -6,13 +6,14 @@ except ImportError:
 import processout
 import json
 
-from processout.networking.request  import Request
+from processout.networking.request import Request
 from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
+
 class PayoutItem(object):
-    def __init__(self, client, prefill = None):
+    def __init__(self, client, prefill=None):
         self._client = client
 
         self._id = None
@@ -28,10 +29,9 @@ class PayoutItem(object):
         self._fees = None
         self._metadata = None
         self._created_at = None
-        if prefill != None:
+        if prefill is not None:
             self.fill_with_data(prefill)
 
-    
     @property
     def id(self):
         """Get id"""
@@ -44,7 +44,7 @@ class PayoutItem(object):
         val -- New id value"""
         self._id = val
         return self
-    
+
     @property
     def project(self):
         """Get project"""
@@ -66,7 +66,7 @@ class PayoutItem(object):
         else:
             self._project = val
         return self
-    
+
     @property
     def project_id(self):
         """Get project_id"""
@@ -79,7 +79,7 @@ class PayoutItem(object):
         val -- New project_id value"""
         self._project_id = val
         return self
-    
+
     @property
     def payout(self):
         """Get payout"""
@@ -101,7 +101,7 @@ class PayoutItem(object):
         else:
             self._payout = val
         return self
-    
+
     @property
     def payout_id(self):
         """Get payout_id"""
@@ -114,7 +114,7 @@ class PayoutItem(object):
         val -- New payout_id value"""
         self._payout_id = val
         return self
-    
+
     @property
     def transaction(self):
         """Get transaction"""
@@ -136,7 +136,7 @@ class PayoutItem(object):
         else:
             self._transaction = val
         return self
-    
+
     @property
     def transaction_id(self):
         """Get transaction_id"""
@@ -149,7 +149,7 @@ class PayoutItem(object):
         val -- New transaction_id value"""
         self._transaction_id = val
         return self
-    
+
     @property
     def type(self):
         """Get type"""
@@ -162,7 +162,7 @@ class PayoutItem(object):
         val -- New type value"""
         self._type = val
         return self
-    
+
     @property
     def gateway_resource_id(self):
         """Get gateway_resource_id"""
@@ -175,7 +175,7 @@ class PayoutItem(object):
         val -- New gateway_resource_id value"""
         self._gateway_resource_id = val
         return self
-    
+
     @property
     def amount(self):
         """Get amount"""
@@ -188,7 +188,7 @@ class PayoutItem(object):
         val -- New amount value"""
         self._amount = val
         return self
-    
+
     @property
     def fees(self):
         """Get fees"""
@@ -201,7 +201,7 @@ class PayoutItem(object):
         val -- New fees value"""
         self._fees = val
         return self
-    
+
     @property
     def metadata(self):
         """Get metadata"""
@@ -214,7 +214,7 @@ class PayoutItem(object):
         val -- New metadata value"""
         self._metadata = val
         return self
-    
+
     @property
     def created_at(self):
         """Get created_at"""
@@ -227,7 +227,6 @@ class PayoutItem(object):
         val -- New created_at value"""
         self._created_at = val
         return self
-    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -259,7 +258,7 @@ class PayoutItem(object):
             self.metadata = data["metadata"]
         if "created_at" in data.keys():
             self.created_at = data["created_at"]
-        
+
         return self
 
     def to_json(self):
@@ -278,5 +277,3 @@ class PayoutItem(object):
             "metadata": self.metadata,
             "created_at": self.created_at,
         }
-
-    

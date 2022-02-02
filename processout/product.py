@@ -6,13 +6,14 @@ except ImportError:
 import processout
 import json
 
-from processout.networking.request  import Request
+from processout.networking.request import Request
 from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
+
 class Product(object):
-    def __init__(self, client, prefill = None):
+    def __init__(self, client, prefill=None):
         self._client = client
 
         self._id = None
@@ -27,10 +28,9 @@ class Product(object):
         self._cancel_url = None
         self._sandbox = None
         self._created_at = None
-        if prefill != None:
+        if prefill is not None:
             self.fill_with_data(prefill)
 
-    
     @property
     def id(self):
         """Get id"""
@@ -43,7 +43,7 @@ class Product(object):
         val -- New id value"""
         self._id = val
         return self
-    
+
     @property
     def project(self):
         """Get project"""
@@ -65,7 +65,7 @@ class Product(object):
         else:
             self._project = val
         return self
-    
+
     @property
     def project_id(self):
         """Get project_id"""
@@ -78,7 +78,7 @@ class Product(object):
         val -- New project_id value"""
         self._project_id = val
         return self
-    
+
     @property
     def url(self):
         """Get url"""
@@ -91,7 +91,7 @@ class Product(object):
         val -- New url value"""
         self._url = val
         return self
-    
+
     @property
     def name(self):
         """Get name"""
@@ -104,7 +104,7 @@ class Product(object):
         val -- New name value"""
         self._name = val
         return self
-    
+
     @property
     def amount(self):
         """Get amount"""
@@ -117,7 +117,7 @@ class Product(object):
         val -- New amount value"""
         self._amount = val
         return self
-    
+
     @property
     def currency(self):
         """Get currency"""
@@ -130,7 +130,7 @@ class Product(object):
         val -- New currency value"""
         self._currency = val
         return self
-    
+
     @property
     def metadata(self):
         """Get metadata"""
@@ -143,7 +143,7 @@ class Product(object):
         val -- New metadata value"""
         self._metadata = val
         return self
-    
+
     @property
     def return_url(self):
         """Get return_url"""
@@ -156,7 +156,7 @@ class Product(object):
         val -- New return_url value"""
         self._return_url = val
         return self
-    
+
     @property
     def cancel_url(self):
         """Get cancel_url"""
@@ -169,7 +169,7 @@ class Product(object):
         val -- New cancel_url value"""
         self._cancel_url = val
         return self
-    
+
     @property
     def sandbox(self):
         """Get sandbox"""
@@ -182,7 +182,7 @@ class Product(object):
         val -- New sandbox value"""
         self._sandbox = val
         return self
-    
+
     @property
     def created_at(self):
         """Get created_at"""
@@ -195,7 +195,6 @@ class Product(object):
         val -- New created_at value"""
         self._created_at = val
         return self
-    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -225,7 +224,7 @@ class Product(object):
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
             self.created_at = data["created_at"]
-        
+
         return self
 
     def to_json(self):
@@ -244,47 +243,46 @@ class Product(object):
             "created_at": self.created_at,
         }
 
-    def create_invoice(self, options = {}):
+    def create_invoice(self, options={}):
         """Create a new invoice from the product.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/products/" + quote_plus(self.id) + "/invoices"
-        data    = {
+        path = "/products/" + quote_plus(self.id) + "/invoices"
+        data = {
 
         }
 
         response = Response(request.post(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["invoice"]
         invoice = processout.Invoice(self._client)
         return_values.append(invoice.fill_with_data(body))
 
-        
         return return_values[0]
 
-    def all(self, options = {}):
+    def all(self, options={}):
         """Get all the products.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/products"
-        data    = {
+        path = "/products"
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
-        a    = []
+
+        a = []
         body = response.body
         for v in body['products']:
             tmp = processout.Product(self._client)
@@ -292,43 +290,38 @@ class Product(object):
             a.append(tmp)
 
         return_values.append(a)
-            
 
-        
         return return_values[0]
 
-    def create(self, options = {}):
+    def create(self, options={}):
         """Create a new product.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/products"
-        data    = {
-            'name': self.name, 
-            'amount': self.amount, 
-            'currency': self.currency, 
-            'metadata': self.metadata, 
-            'return_url': self.return_url, 
+        path = "/products"
+        data = {
+            'name': self.name,
+            'amount': self.amount,
+            'currency': self.currency,
+            'metadata': self.metadata,
+            'return_url': self.return_url,
             'cancel_url': self.cancel_url
         }
 
         response = Response(request.post(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["product"]
-                
-                
-        return_values.append(self.fill_with_data(body))
-                
 
-        
+        return_values.append(self.fill_with_data(body))
+
         return return_values[0]
 
-    def find(self, product_id, options = {}):
+    def find(self, product_id, options={}):
         """Find a product by its ID.
         Keyword argument:
         product_id -- ID of the product
@@ -336,75 +329,66 @@ class Product(object):
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/products/" + quote_plus(product_id) + ""
-        data    = {
+        path = "/products/" + quote_plus(product_id) + ""
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["product"]
-                
-                
+
         obj = processout.Product(self._client)
         return_values.append(obj.fill_with_data(body))
-                
 
-        
         return return_values[0]
 
-    def save(self, options = {}):
+    def save(self, options={}):
         """Save the updated product attributes.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/products/" + quote_plus(self.id) + ""
-        data    = {
-            'name': self.name, 
-            'amount': self.amount, 
-            'currency': self.currency, 
-            'metadata': self.metadata, 
-            'return_url': self.return_url, 
+        path = "/products/" + quote_plus(self.id) + ""
+        data = {
+            'name': self.name,
+            'amount': self.amount,
+            'currency': self.currency,
+            'metadata': self.metadata,
+            'return_url': self.return_url,
             'cancel_url': self.cancel_url
         }
 
         response = Response(request.put(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["product"]
-                
-                
-        return_values.append(self.fill_with_data(body))
-                
 
-        
+        return_values.append(self.fill_with_data(body))
+
         return return_values[0]
 
-    def delete(self, options = {}):
+    def delete(self, options={}):
         """Delete the product.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/products/" + quote_plus(self.id) + ""
-        data    = {
+        path = "/products/" + quote_plus(self.id) + ""
+        data = {
 
         }
 
         response = Response(request.delete(path, data, options))
         return_values = []
-        
+
         return_values.append(response.success)
 
-        
         return return_values[0]
-
-    

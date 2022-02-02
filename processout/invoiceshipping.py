@@ -6,13 +6,14 @@ except ImportError:
 import processout
 import json
 
-from processout.networking.request  import Request
+from processout.networking.request import Request
 from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
+
 class InvoiceShipping(object):
-    def __init__(self, client, prefill = None):
+    def __init__(self, client, prefill=None):
         self._client = client
 
         self._amount = None
@@ -27,10 +28,9 @@ class InvoiceShipping(object):
         self._zip = None
         self._phone_number = None
         self._expects_shipping_at = None
-        if prefill != None:
+        if prefill is not None:
             self.fill_with_data(prefill)
 
-    
     @property
     def amount(self):
         """Get amount"""
@@ -43,7 +43,7 @@ class InvoiceShipping(object):
         val -- New amount value"""
         self._amount = val
         return self
-    
+
     @property
     def method(self):
         """Get method"""
@@ -56,7 +56,7 @@ class InvoiceShipping(object):
         val -- New method value"""
         self._method = val
         return self
-    
+
     @property
     def provider(self):
         """Get provider"""
@@ -69,7 +69,7 @@ class InvoiceShipping(object):
         val -- New provider value"""
         self._provider = val
         return self
-    
+
     @property
     def delay(self):
         """Get delay"""
@@ -82,7 +82,7 @@ class InvoiceShipping(object):
         val -- New delay value"""
         self._delay = val
         return self
-    
+
     @property
     def address1(self):
         """Get address1"""
@@ -95,7 +95,7 @@ class InvoiceShipping(object):
         val -- New address1 value"""
         self._address1 = val
         return self
-    
+
     @property
     def address2(self):
         """Get address2"""
@@ -108,7 +108,7 @@ class InvoiceShipping(object):
         val -- New address2 value"""
         self._address2 = val
         return self
-    
+
     @property
     def city(self):
         """Get city"""
@@ -121,7 +121,7 @@ class InvoiceShipping(object):
         val -- New city value"""
         self._city = val
         return self
-    
+
     @property
     def state(self):
         """Get state"""
@@ -134,7 +134,7 @@ class InvoiceShipping(object):
         val -- New state value"""
         self._state = val
         return self
-    
+
     @property
     def country_code(self):
         """Get country_code"""
@@ -147,7 +147,7 @@ class InvoiceShipping(object):
         val -- New country_code value"""
         self._country_code = val
         return self
-    
+
     @property
     def zip(self):
         """Get zip"""
@@ -160,7 +160,7 @@ class InvoiceShipping(object):
         val -- New zip value"""
         self._zip = val
         return self
-    
+
     @property
     def phone_number(self):
         """Get phone_number"""
@@ -173,7 +173,7 @@ class InvoiceShipping(object):
         val -- New phone_number value"""
         self._phone_number = val
         return self
-    
+
     @property
     def expects_shipping_at(self):
         """Get expects_shipping_at"""
@@ -186,7 +186,6 @@ class InvoiceShipping(object):
         val -- New expects_shipping_at value"""
         self._expects_shipping_at = val
         return self
-    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -216,7 +215,7 @@ class InvoiceShipping(object):
             self.phone_number = data["phone_number"]
         if "expects_shipping_at" in data.keys():
             self.expects_shipping_at = data["expects_shipping_at"]
-        
+
         return self
 
     def to_json(self):
@@ -234,5 +233,3 @@ class InvoiceShipping(object):
             "phone_number": self.phone_number,
             "expects_shipping_at": self.expects_shipping_at,
         }
-
-    

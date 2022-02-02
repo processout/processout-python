@@ -6,13 +6,14 @@ except ImportError:
 import processout
 import json
 
-from processout.networking.request  import Request
+from processout.networking.request import Request
 from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
+
 class Project(object):
-    def __init__(self, client, prefill = None):
+    def __init__(self, client, prefill=None):
         self._client = client
 
         self._id = None
@@ -26,10 +27,9 @@ class Project(object):
         self._private_key = None
         self._dunning_configuration = None
         self._created_at = None
-        if prefill != None:
+        if prefill is not None:
             self.fill_with_data(prefill)
 
-    
     @property
     def id(self):
         """Get id"""
@@ -42,7 +42,7 @@ class Project(object):
         val -- New id value"""
         self._id = val
         return self
-    
+
     @property
     def supervisor_project(self):
         """Get supervisor_project"""
@@ -64,7 +64,7 @@ class Project(object):
         else:
             self._supervisor_project = val
         return self
-    
+
     @property
     def supervisor_project_id(self):
         """Get supervisor_project_id"""
@@ -77,7 +77,7 @@ class Project(object):
         val -- New supervisor_project_id value"""
         self._supervisor_project_id = val
         return self
-    
+
     @property
     def api_version(self):
         """Get api_version"""
@@ -99,7 +99,7 @@ class Project(object):
         else:
             self._api_version = val
         return self
-    
+
     @property
     def name(self):
         """Get name"""
@@ -112,7 +112,7 @@ class Project(object):
         val -- New name value"""
         self._name = val
         return self
-    
+
     @property
     def logo_url(self):
         """Get logo_url"""
@@ -125,7 +125,7 @@ class Project(object):
         val -- New logo_url value"""
         self._logo_url = val
         return self
-    
+
     @property
     def email(self):
         """Get email"""
@@ -138,7 +138,7 @@ class Project(object):
         val -- New email value"""
         self._email = val
         return self
-    
+
     @property
     def default_currency(self):
         """Get default_currency"""
@@ -151,7 +151,7 @@ class Project(object):
         val -- New default_currency value"""
         self._default_currency = val
         return self
-    
+
     @property
     def private_key(self):
         """Get private_key"""
@@ -164,7 +164,7 @@ class Project(object):
         val -- New private_key value"""
         self._private_key = val
         return self
-    
+
     @property
     def dunning_configuration(self):
         """Get dunning_configuration"""
@@ -189,7 +189,7 @@ class Project(object):
                 l.append(obj)
             self._dunning_configuration = l
         return self
-    
+
     @property
     def created_at(self):
         """Get created_at"""
@@ -202,7 +202,6 @@ class Project(object):
         val -- New created_at value"""
         self._created_at = val
         return self
-    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -230,7 +229,7 @@ class Project(object):
             self.dunning_configuration = data["dunning_configuration"]
         if "created_at" in data.keys():
             self.created_at = data["created_at"]
-        
+
         return self
 
     def to_json(self):
@@ -248,96 +247,89 @@ class Project(object):
             "created_at": self.created_at,
         }
 
-    def fetch(self, options = {}):
+    def fetch(self, options={}):
         """Fetch the current project information.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/projects/" + quote_plus(self.id) + ""
-        data    = {
+        path = "/projects/" + quote_plus(self.id) + ""
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["project"]
-                
-                
-        return_values.append(self.fill_with_data(body))
-                
 
-        
+        return_values.append(self.fill_with_data(body))
+
         return return_values[0]
 
-    def save(self, options = {}):
+    def save(self, options={}):
         """Save the updated project's attributes.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/projects/" + quote_plus(self.id) + ""
-        data    = {
+        path = "/projects/" + quote_plus(self.id) + ""
+        data = {
 
         }
 
         response = Response(request.put(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["project"]
-                
-                
-        return_values.append(self.fill_with_data(body))
-                
 
-        
+        return_values.append(self.fill_with_data(body))
+
         return return_values[0]
 
-    def delete(self, options = {}):
+    def delete(self, options={}):
         """Delete the project. Be careful! Executing this request will prevent any further interaction with the API that uses this project.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/projects/{project_id}"
-        data    = {
+        path = "/projects/{project_id}"
+        data = {
 
         }
 
         response = Response(request.delete(path, data, options))
         return_values = []
-        
+
         return_values.append(response.success)
 
-        
         return return_values[0]
 
-    def fetch_supervised(self, options = {}):
+    def fetch_supervised(self, options={}):
         """Get all the supervised projects.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/supervised-projects"
-        data    = {
+        path = "/supervised-projects"
+        data = {
 
         }
 
         response = Response(request.get(path, data, options))
         return_values = []
-        
-        a    = []
+
+        a = []
         body = response.body
         for v in body['projects']:
             tmp = processout.Project(self._client)
@@ -345,39 +337,32 @@ class Project(object):
             a.append(tmp)
 
         return_values.append(a)
-            
 
-        
         return return_values[0]
 
-    def create_supervised(self, options = {}):
+    def create_supervised(self, options={}):
         """Create a new supervised project.
         Keyword argument:
-        
+
         options -- Options for the request"""
         self.fill_with_data(options)
 
         request = Request(self._client)
-        path    = "/supervised-projects"
-        data    = {
-            'id': self.id, 
-            'name': self.name, 
-            'default_currency': self.default_currency, 
-            'dunning_configuration': self.dunning_configuration, 
+        path = "/supervised-projects"
+        data = {
+            'id': self.id,
+            'name': self.name,
+            'default_currency': self.default_currency,
+            'dunning_configuration': self.dunning_configuration,
             'applepay_settings': options.get("applepay_settings")
         }
 
         response = Response(request.post(path, data, options))
         return_values = []
-        
+
         body = response.body
         body = body["project"]
-                
-                
+
         return_values.append(self.fill_with_data(body))
-                
 
-        
         return return_values[0]
-
-    

@@ -6,22 +6,22 @@ except ImportError:
 import processout
 import json
 
-from processout.networking.request  import Request
+from processout.networking.request import Request
 from processout.networking.response import Response
 
 # The content of this file was automatically generated
 
+
 class APIVersion(object):
-    def __init__(self, client, prefill = None):
+    def __init__(self, client, prefill=None):
         self._client = client
 
         self._name = None
         self._description = None
         self._created_at = None
-        if prefill != None:
+        if prefill is not None:
             self.fill_with_data(prefill)
 
-    
     @property
     def name(self):
         """Get name"""
@@ -34,7 +34,7 @@ class APIVersion(object):
         val -- New name value"""
         self._name = val
         return self
-    
+
     @property
     def description(self):
         """Get description"""
@@ -47,7 +47,7 @@ class APIVersion(object):
         val -- New description value"""
         self._description = val
         return self
-    
+
     @property
     def created_at(self):
         """Get created_at"""
@@ -60,7 +60,6 @@ class APIVersion(object):
         val -- New created_at value"""
         self._created_at = val
         return self
-    
 
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
@@ -72,7 +71,7 @@ class APIVersion(object):
             self.description = data["description"]
         if "created_at" in data.keys():
             self.created_at = data["created_at"]
-        
+
         return self
 
     def to_json(self):
@@ -81,5 +80,3 @@ class APIVersion(object):
             "description": self.description,
             "created_at": self.created_at,
         }
-
-    

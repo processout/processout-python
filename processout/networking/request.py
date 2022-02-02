@@ -7,12 +7,14 @@ except ImportError:
 
 from processout.client import ProcessOut
 
+
 class SubObjectEncoder(json.JSONEncoder):
     def default(self, obj):
-        if hasattr(obj,'to_json'):
+        if hasattr(obj, 'to_json'):
             return obj.to_json()
         else:
             return json.JSONEncoder.default(self, obj)
+
 
 class Request:
     def __init__(self, client):
@@ -74,11 +76,11 @@ class Request:
         options -- Options sent with the request
         """
         return requests.get(self._client.host + path + '?' +
-            urlencode(self._get_data(data, options), True),
-            auth = self._authenticate(),
-            verify = True,
-            timeout = 65,
-            headers = self._get_headers(options))
+                            urlencode(self._get_data(data, options), True),
+                            auth=self._authenticate(),
+                            verify=True,
+                            timeout=65,
+                            headers=self._get_headers(options))
 
     def post(self, path, data, options):
         """Perform a POST request
@@ -88,12 +90,17 @@ class Request:
         data -- Data to be passed along with the request
         options -- Options sent with the request
         """
-        return requests.post(self._client.host + path,
-            auth = self._authenticate(),
-            data = json.dumps(self._get_data(data, options), cls=SubObjectEncoder),
-            verify = True,
-            timeout = 65,
-            headers = self._get_headers(options))
+        return requests.post(
+            self._client.host + path,
+            auth=self._authenticate(),
+            data=json.dumps(
+                self._get_data(
+                    data,
+                    options),
+                cls=SubObjectEncoder),
+            verify=True,
+            timeout=65,
+            headers=self._get_headers(options))
 
     def put(self, path, data, options):
         """Perform a PUT request
@@ -103,12 +110,17 @@ class Request:
         data -- Data to be passed along with the request
         options -- Options sent with the request
         """
-        return requests.put(self._client.host + path,
-            auth = self._authenticate(),
-            data = json.dumps(self._get_data(data, options), cls=SubObjectEncoder),
-            verify = True,
-            timeout = 65,
-            headers = self._get_headers(options))
+        return requests.put(
+            self._client.host + path,
+            auth=self._authenticate(),
+            data=json.dumps(
+                self._get_data(
+                    data,
+                    options),
+                cls=SubObjectEncoder),
+            verify=True,
+            timeout=65,
+            headers=self._get_headers(options))
 
     def delete(self, path, data, options):
         """Perform a DELETE request
@@ -119,8 +131,8 @@ class Request:
         options -- Options sent with the request
         """
         return requests.delete(self._client.host + path + '?' +
-                urlencode(self._get_data(data, options), True),
-            auth = self._authenticate(),
-            verify = True,
-            timeout = 65,
-            headers = self._get_headers(options))
+                               urlencode(self._get_data(data, options), True),
+                               auth=self._authenticate(),
+                               verify=True,
+                               timeout=65,
+                               headers=self._get_headers(options))
