@@ -36,6 +36,7 @@ class Token(object):
         self._invoice = None
         self._invoice_id = None
         self._manual_invoice_cancellation = None
+        self._can_get_balance = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -335,6 +336,19 @@ class Token(object):
         self._manual_invoice_cancellation = val
         return self
 
+    @property
+    def can_get_balance(self):
+        """Get can_get_balance"""
+        return self._can_get_balance
+
+    @can_get_balance.setter
+    def can_get_balance(self, val):
+        """Set can_get_balance
+        Keyword argument:
+        val -- New can_get_balance value"""
+        self._can_get_balance = val
+        return self
+
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
@@ -379,6 +393,8 @@ class Token(object):
             self.invoice_id = data["invoice_id"]
         if "manual_invoice_cancellation" in data.keys():
             self.manual_invoice_cancellation = data["manual_invoice_cancellation"]
+        if "can_get_balance" in data.keys():
+            self.can_get_balance = data["can_get_balance"]
 
         return self
 
@@ -404,6 +420,7 @@ class Token(object):
             "invoice": self.invoice,
             "invoice_id": self.invoice_id,
             "manual_invoice_cancellation": self.manual_invoice_cancellation,
+            "can_get_balance": self.can_get_balance,
         }
 
     def fetch_customer_tokens(self, customer_id, options={}):
