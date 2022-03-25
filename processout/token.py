@@ -36,6 +36,7 @@ class Token(object):
         self._invoice = None
         self._invoice_id = None
         self._manual_invoice_cancellation = None
+        self._verification_status = None
         self._can_get_balance = None
         if prefill is not None:
             self.fill_with_data(prefill)
@@ -337,6 +338,19 @@ class Token(object):
         return self
 
     @property
+    def verification_status(self):
+        """Get verification_status"""
+        return self._verification_status
+
+    @verification_status.setter
+    def verification_status(self, val):
+        """Set verification_status
+        Keyword argument:
+        val -- New verification_status value"""
+        self._verification_status = val
+        return self
+
+    @property
     def can_get_balance(self):
         """Get can_get_balance"""
         return self._can_get_balance
@@ -393,6 +407,8 @@ class Token(object):
             self.invoice_id = data["invoice_id"]
         if "manual_invoice_cancellation" in data.keys():
             self.manual_invoice_cancellation = data["manual_invoice_cancellation"]
+        if "verification_status" in data.keys():
+            self.verification_status = data["verification_status"]
         if "can_get_balance" in data.keys():
             self.can_get_balance = data["can_get_balance"]
 
@@ -420,6 +436,7 @@ class Token(object):
             "invoice": self.invoice,
             "invoice_id": self.invoice_id,
             "manual_invoice_cancellation": self.manual_invoice_cancellation,
+            "verification_status": self.verification_status,
             "can_get_balance": self.can_get_balance,
         }
 
