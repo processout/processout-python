@@ -47,6 +47,7 @@ class Transaction(object):
         self._currency = None
         self._error_code = None
         self._error_message = None
+        self._acquirer_name = None
         self._gateway_name = None
         self._three_d_s_status = None
         self._status = None
@@ -565,6 +566,19 @@ class Transaction(object):
         return self
 
     @property
+    def acquirer_name(self):
+        """Get acquirer_name"""
+        return self._acquirer_name
+
+    @acquirer_name.setter
+    def acquirer_name(self, val):
+        """Set acquirer_name
+        Keyword argument:
+        val -- New acquirer_name value"""
+        self._acquirer_name = val
+        return self
+
+    @property
     def gateway_name(self):
         """Get gateway_name"""
         return self._gateway_name
@@ -938,6 +952,8 @@ class Transaction(object):
             self.error_code = data["error_code"]
         if "error_message" in data.keys():
             self.error_message = data["error_message"]
+        if "acquirer_name" in data.keys():
+            self.acquirer_name = data["acquirer_name"]
         if "gateway_name" in data.keys():
             self.gateway_name = data["gateway_name"]
         if "three_d_s_status" in data.keys():
@@ -1020,6 +1036,7 @@ class Transaction(object):
             "currency": self.currency,
             "error_code": self.error_code,
             "error_message": self.error_message,
+            "acquirer_name": self.acquirer_name,
             "gateway_name": self.gateway_name,
             "three_d_s_status": self.three_d_s_status,
             "status": self.status,

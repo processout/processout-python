@@ -16,6 +16,7 @@ class InvoiceDetail(object):
     def __init__(self, client, prefill=None):
         self._client = client
 
+        self._id = None
         self._name = None
         self._type = None
         self._amount = None
@@ -33,6 +34,19 @@ class InvoiceDetail(object):
         self._category = None
         if prefill is not None:
             self.fill_with_data(prefill)
+
+    @property
+    def id(self):
+        """Get id"""
+        return self._id
+
+    @id.setter
+    def id(self, val):
+        """Set id
+        Keyword argument:
+        val -- New id value"""
+        self._id = val
+        return self
 
     @property
     def name(self):
@@ -233,6 +247,8 @@ class InvoiceDetail(object):
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
+        if "id" in data.keys():
+            self.id = data["id"]
         if "name" in data.keys():
             self.name = data["name"]
         if "type" in data.keys():
@@ -268,6 +284,7 @@ class InvoiceDetail(object):
 
     def to_json(self):
         return {
+            "id": self.id,
             "name": self.name,
             "type": self.type,
             "amount": self.amount,

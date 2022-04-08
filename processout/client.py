@@ -56,6 +56,19 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.APIVersion(self, prefill)
 
+    def new_apple_pay_alternative_merchant_certificates(self, prefill=None):
+        """Create a new ApplePayAlternativeMerchantCertificates instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.ApplePayAlternativeMerchantCertificates(
+            self, prefill)
+
+    def new_alternative_merchant_certificate(self, prefill=None):
+        """Create a new AlternativeMerchantCertificate instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.AlternativeMerchantCertificate(self, prefill)
+
     def new_balances(self, prefill=None):
         """Create a new Balances instance
         Keyword argument:

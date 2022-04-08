@@ -26,6 +26,7 @@ class Refund(object):
         self._metadata = None
         self._sandbox = None
         self._created_at = None
+        self._invoice_detail_ids = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -168,6 +169,19 @@ class Refund(object):
         self._created_at = val
         return self
 
+    @property
+    def invoice_detail_ids(self):
+        """Get invoice_detail_ids"""
+        return self._invoice_detail_ids
+
+    @invoice_detail_ids.setter
+    def invoice_detail_ids(self, val):
+        """Set invoice_detail_ids
+        Keyword argument:
+        val -- New invoice_detail_ids value"""
+        self._invoice_detail_ids = val
+        return self
+
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
@@ -192,6 +206,8 @@ class Refund(object):
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
             self.created_at = data["created_at"]
+        if "invoice_detail_ids" in data.keys():
+            self.invoice_detail_ids = data["invoice_detail_ids"]
 
         return self
 
@@ -207,6 +223,7 @@ class Refund(object):
             "metadata": self.metadata,
             "sandbox": self.sandbox,
             "created_at": self.created_at,
+            "invoice_detail_ids": self.invoice_detail_ids,
         }
 
     def fetch_transaction_refunds(self, transaction_id, options={}):
@@ -275,7 +292,8 @@ class Refund(object):
             'amount': self.amount,
             'metadata': self.metadata,
             'reason': self.reason,
-            'information': self.information
+            'information': self.information,
+            'invoice_detail_ids': self.invoice_detail_ids
         }
 
         response = Response(request.post(path, data, options))
