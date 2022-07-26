@@ -71,3 +71,24 @@ class AlternativeMerchantCertificate(object):
             alternativeMerchantCertificate.fill_with_data(body))
 
         return return_values[0]
+
+    def delete(self, options={}):
+        """Delete a given alternative merchant certificate
+        Keyword argument:
+
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path = "/projects/applepay/alternative-merchant-certificates/" + \
+            quote_plus(self.id) + ""
+        data = {
+
+        }
+
+        response = Response(request.delete(path, data, options))
+        return_values = []
+
+        return_values.append(response.success)
+
+        return return_values[0]

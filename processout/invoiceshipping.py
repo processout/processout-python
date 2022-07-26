@@ -28,6 +28,7 @@ class InvoiceShipping(object):
         self._zip = None
         self._phone_number = None
         self._expects_shipping_at = None
+        self._relay_store_name = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -187,6 +188,19 @@ class InvoiceShipping(object):
         self._expects_shipping_at = val
         return self
 
+    @property
+    def relay_store_name(self):
+        """Get relay_store_name"""
+        return self._relay_store_name
+
+    @relay_store_name.setter
+    def relay_store_name(self, val):
+        """Set relay_store_name
+        Keyword argument:
+        val -- New relay_store_name value"""
+        self._relay_store_name = val
+        return self
+
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
@@ -215,6 +229,8 @@ class InvoiceShipping(object):
             self.phone_number = data["phone_number"]
         if "expects_shipping_at" in data.keys():
             self.expects_shipping_at = data["expects_shipping_at"]
+        if "relay_store_name" in data.keys():
+            self.relay_store_name = data["relay_store_name"]
 
         return self
 
@@ -232,4 +248,5 @@ class InvoiceShipping(object):
             "zip": self.zip,
             "phone_number": self.phone_number,
             "expects_shipping_at": self.expects_shipping_at,
+            "relay_store_name": self.relay_store_name,
         }

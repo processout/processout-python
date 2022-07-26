@@ -18,6 +18,7 @@ class Balance(object):
 
         self._amount = None
         self._currency = None
+        self._expiry = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -47,6 +48,19 @@ class Balance(object):
         self._currency = val
         return self
 
+    @property
+    def expiry(self):
+        """Get expiry"""
+        return self._expiry
+
+    @expiry.setter
+    def expiry(self, val):
+        """Set expiry
+        Keyword argument:
+        val -- New expiry value"""
+        self._expiry = val
+        return self
+
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
@@ -55,6 +69,8 @@ class Balance(object):
             self.amount = data["amount"]
         if "currency" in data.keys():
             self.currency = data["currency"]
+        if "expiry" in data.keys():
+            self.expiry = data["expiry"]
 
         return self
 
@@ -62,4 +78,5 @@ class Balance(object):
         return {
             "amount": self.amount,
             "currency": self.currency,
+            "expiry": self.expiry,
         }

@@ -16,9 +16,23 @@ class ApplePayAlternativeMerchantCertificates(object):
     def __init__(self, client, prefill=None):
         self._client = client
 
+        self._count = None
         self._alternative_merchant_certificates = None
         if prefill is not None:
             self.fill_with_data(prefill)
+
+    @property
+    def count(self):
+        """Get count"""
+        return self._count
+
+    @count.setter
+    def count(self, val):
+        """Set count
+        Keyword argument:
+        val -- New count value"""
+        self._count = val
+        return self
 
     @property
     def alternative_merchant_certificates(self):
@@ -50,6 +64,8 @@ class ApplePayAlternativeMerchantCertificates(object):
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
+        if "count" in data.keys():
+            self.count = data["count"]
         if "alternative_merchant_certificates" in data.keys():
             self.alternative_merchant_certificates = data["alternative_merchant_certificates"]
 
@@ -57,6 +73,7 @@ class ApplePayAlternativeMerchantCertificates(object):
 
     def to_json(self):
         return {
+            "count": self.count,
             "alternative_merchant_certificates": self.alternative_merchant_certificates,
         }
 

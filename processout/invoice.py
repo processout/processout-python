@@ -55,6 +55,7 @@ class Invoice(object):
         self._challenge_indicator = None
         self._incremental = None
         self._tax = None
+        self._payment_type = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -667,6 +668,19 @@ class Invoice(object):
             self._tax = val
         return self
 
+    @property
+    def payment_type(self):
+        """Get payment_type"""
+        return self._payment_type
+
+    @payment_type.setter
+    def payment_type(self, val):
+        """Set payment_type
+        Keyword argument:
+        val -- New payment_type value"""
+        self._payment_type = val
+        return self
+
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
@@ -749,6 +763,8 @@ class Invoice(object):
             self.incremental = data["incremental"]
         if "tax" in data.keys():
             self.tax = data["tax"]
+        if "payment_type" in data.keys():
+            self.payment_type = data["payment_type"]
 
         return self
 
@@ -793,6 +809,7 @@ class Invoice(object):
             "challenge_indicator": self.challenge_indicator,
             "incremental": self.incremental,
             "tax": self.tax,
+            "payment_type": self.payment_type,
         }
 
     def increment_authorization(self, amount, options={}):
@@ -805,6 +822,7 @@ class Invoice(object):
         request = Request(self._client)
         path = "/invoices/" + quote_plus(self.id) + "/increment_authorization"
         data = {
+            'metadata': options.get("metadata"),
             'amount': amount
         }
 
@@ -835,6 +853,7 @@ class Invoice(object):
             'capture_amount': options.get("capture_amount"),
             'enable_three_d_s_2': options.get("enable_three_d_s_2"),
             'auto_capture_at': options.get("auto_capture_at"),
+            'metadata': options.get("metadata"),
             'source': source}
 
         response = Response(request.post(path, data, options))
@@ -865,6 +884,7 @@ class Invoice(object):
             'capture_amount': options.get("capture_amount"),
             'auto_capture_at': options.get("auto_capture_at"),
             'enable_three_d_s_2': options.get("enable_three_d_s_2"),
+            'metadata': options.get("metadata"),
             'source': source}
 
         response = Response(request.post(path, data, options))
@@ -980,7 +1000,7 @@ class Invoice(object):
         request = Request(self._client)
         path = "/invoices/" + quote_plus(self.id) + "/void"
         data = {
-
+            'metadata': options.get("metadata")
         }
 
         response = Response(request.post(path, data, options))
@@ -1054,7 +1074,8 @@ class Invoice(object):
             'device': self.device,
             'require_backend_capture': self.require_backend_capture,
             'external_fraud_tools': self.external_fraud_tools,
-            'tax': self.tax
+            'tax': self.tax,
+            'payment_type': self.payment_type
         }
 
         response = Response(request.post(path, data, options))

@@ -290,10 +290,10 @@ class Refund(object):
         path = "/transactions/" + quote_plus(self.transaction_id) + "/refunds"
         data = {
             'amount': self.amount,
-            'metadata': self.metadata,
             'reason': self.reason,
             'information': self.information,
-            'invoice_detail_ids': self.invoice_detail_ids
+            'invoice_detail_ids': self.invoice_detail_ids,
+            'metadata': options.get("metadata")
         }
 
         response = Response(request.post(path, data, options))
