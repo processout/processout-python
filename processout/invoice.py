@@ -56,6 +56,8 @@ class Invoice(object):
         self._incremental = None
         self._tax = None
         self._payment_type = None
+        self._initiation_type = None
+        self._payment_intent = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -681,6 +683,32 @@ class Invoice(object):
         self._payment_type = val
         return self
 
+    @property
+    def initiation_type(self):
+        """Get initiation_type"""
+        return self._initiation_type
+
+    @initiation_type.setter
+    def initiation_type(self, val):
+        """Set initiation_type
+        Keyword argument:
+        val -- New initiation_type value"""
+        self._initiation_type = val
+        return self
+
+    @property
+    def payment_intent(self):
+        """Get payment_intent"""
+        return self._payment_intent
+
+    @payment_intent.setter
+    def payment_intent(self, val):
+        """Set payment_intent
+        Keyword argument:
+        val -- New payment_intent value"""
+        self._payment_intent = val
+        return self
+
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
@@ -765,6 +793,10 @@ class Invoice(object):
             self.tax = data["tax"]
         if "payment_type" in data.keys():
             self.payment_type = data["payment_type"]
+        if "initiation_type" in data.keys():
+            self.initiation_type = data["initiation_type"]
+        if "payment_intent" in data.keys():
+            self.payment_intent = data["payment_intent"]
 
         return self
 
@@ -810,6 +842,8 @@ class Invoice(object):
             "incremental": self.incremental,
             "tax": self.tax,
             "payment_type": self.payment_type,
+            "initiation_type": self.initiation_type,
+            "payment_intent": self.payment_intent,
         }
 
     def increment_authorization(self, amount, options={}):
@@ -1061,6 +1095,8 @@ class Invoice(object):
             'challenge_indicator': self.challenge_indicator,
             'gateway_data': self.gateway_data,
             'merchant_initiator_type': self.merchant_initiator_type,
+            'initiation_type': self.initiation_type,
+            'payment_intent': self.payment_intent,
             'statement_descriptor': self.statement_descriptor,
             'statement_descriptor_phone': self.statement_descriptor_phone,
             'statement_descriptor_city': self.statement_descriptor_city,
