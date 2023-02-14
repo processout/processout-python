@@ -886,6 +886,7 @@ class Invoice(object):
             'retry_drop_liability_shift': options.get("retry_drop_liability_shift"),
             'capture_amount': options.get("capture_amount"),
             'enable_three_d_s_2': options.get("enable_three_d_s_2"),
+            'allow_fallback_to_sale': options.get("allow_fallback_to_sale"),
             'auto_capture_at': options.get("auto_capture_at"),
             'metadata': options.get("metadata"),
             'source': source}
