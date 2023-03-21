@@ -920,6 +920,7 @@ class Invoice(object):
             'auto_capture_at': options.get("auto_capture_at"),
             'enable_three_d_s_2': options.get("enable_three_d_s_2"),
             'metadata': options.get("metadata"),
+            'capture_statement_descriptor': options.get("capture_statement_descriptor"),
             'source': source}
 
         response = Response(request.post(path, data, options))
