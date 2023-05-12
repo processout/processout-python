@@ -58,6 +58,7 @@ class Invoice(object):
         self._payment_type = None
         self._initiation_type = None
         self._payment_intent = None
+        self._billing = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -709,6 +710,28 @@ class Invoice(object):
         self._payment_intent = val
         return self
 
+    @property
+    def billing(self):
+        """Get billing"""
+        return self._billing
+
+    @billing.setter
+    def billing(self, val):
+        """Set billing
+        Keyword argument:
+        val -- New billing value"""
+        if val is None:
+            self._billing = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.InvoiceBilling(self._client)
+            obj.fill_with_data(val)
+            self._billing = obj
+        else:
+            self._billing = val
+        return self
+
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
@@ -797,6 +820,8 @@ class Invoice(object):
             self.initiation_type = data["initiation_type"]
         if "payment_intent" in data.keys():
             self.payment_intent = data["payment_intent"]
+        if "billing" in data.keys():
+            self.billing = data["billing"]
 
         return self
 
@@ -844,6 +869,7 @@ class Invoice(object):
             "payment_type": self.payment_type,
             "initiation_type": self.initiation_type,
             "payment_intent": self.payment_intent,
+            "billing": self.billing,
         }
 
     def increment_authorization(self, amount, options={}):
@@ -889,6 +915,7 @@ class Invoice(object):
             'allow_fallback_to_sale': options.get("allow_fallback_to_sale"),
             'auto_capture_at': options.get("auto_capture_at"),
             'metadata': options.get("metadata"),
+            'override_mac_blocking': options.get("override_mac_blocking"),
             'source': source}
 
         response = Response(request.post(path, data, options))
@@ -921,6 +948,7 @@ class Invoice(object):
             'enable_three_d_s_2': options.get("enable_three_d_s_2"),
             'metadata': options.get("metadata"),
             'capture_statement_descriptor': options.get("capture_statement_descriptor"),
+            'override_mac_blocking': options.get("override_mac_blocking"),
             'source': source}
 
         response = Response(request.post(path, data, options))
@@ -1113,7 +1141,8 @@ class Invoice(object):
             'require_backend_capture': self.require_backend_capture,
             'external_fraud_tools': self.external_fraud_tools,
             'tax': self.tax,
-            'payment_type': self.payment_type
+            'payment_type': self.payment_type,
+            'billing': self.billing
         }
 
         response = Response(request.post(path, data, options))

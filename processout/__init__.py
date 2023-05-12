@@ -25,6 +25,7 @@ from processout.invoiceexternalfraudtools import InvoiceExternalFraudTools
 from processout.invoicerisk import InvoiceRisk
 from processout.invoicedevice import InvoiceDevice
 from processout.invoiceshipping import InvoiceShipping
+from processout.invoicebilling import InvoiceBilling
 from processout.invoicedetail import InvoiceDetail
 from processout.customeraction import CustomerAction
 from processout.dunningaction import DunningAction

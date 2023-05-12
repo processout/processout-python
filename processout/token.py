@@ -514,8 +514,9 @@ class Token(object):
             'device': options.get("device"),
             'verify': options.get("verify"),
             'verify_metadata': options.get("verify_metadata"),
-            'set_default': options.get("set_default")
-        }
+            'set_default': options.get("set_default"),
+            'verify_statement_descriptor': options.get("verify_statement_descriptor"),
+            'invoice_return_url': options.get("invoice_return_url")}
 
         response = Response(request.post(path, data, options))
         return_values = []
@@ -543,8 +544,9 @@ class Token(object):
             'device': options.get("device"),
             'verify': options.get("verify"),
             'verify_metadata': options.get("verify_metadata"),
-            'set_default': options.get("set_default")
-        }
+            'set_default': options.get("set_default"),
+            'verify_statement_descriptor': options.get("verify_statement_descriptor"),
+            'invoice_return_url': options.get("invoice_return_url")}
 
         response = Response(request.put(path, data, options))
         return_values = []

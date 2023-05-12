@@ -18,6 +18,7 @@ class CustomerAction(object):
 
         self._type = None
         self._value = None
+        self._metadata = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -47,6 +48,19 @@ class CustomerAction(object):
         self._value = val
         return self
 
+    @property
+    def metadata(self):
+        """Get metadata"""
+        return self._metadata
+
+    @metadata.setter
+    def metadata(self, val):
+        """Set metadata
+        Keyword argument:
+        val -- New metadata value"""
+        self._metadata = val
+        return self
+
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
@@ -55,6 +69,8 @@ class CustomerAction(object):
             self.type = data["type"]
         if "value" in data.keys():
             self.value = data["value"]
+        if "metadata" in data.keys():
+            self.metadata = data["metadata"]
 
         return self
 
@@ -62,4 +78,5 @@ class CustomerAction(object):
         return {
             "type": self.type,
             "value": self.value,
+            "metadata": self.metadata,
         }

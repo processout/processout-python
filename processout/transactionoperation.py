@@ -38,6 +38,9 @@ class TransactionOperation(object):
         self._payment_data_three_d_s_request = None
         self._payment_data_three_d_s_authentication = None
         self._payment_data_network_authentication = None
+        self._initial_scheme_transaction_id = None
+        self._scheme_id = None
+        self._payment_type = None
         self._metadata = None
         self._gateway_fee = None
         self._created_at = None
@@ -394,6 +397,45 @@ class TransactionOperation(object):
         return self
 
     @property
+    def initial_scheme_transaction_id(self):
+        """Get initial_scheme_transaction_id"""
+        return self._initial_scheme_transaction_id
+
+    @initial_scheme_transaction_id.setter
+    def initial_scheme_transaction_id(self, val):
+        """Set initial_scheme_transaction_id
+        Keyword argument:
+        val -- New initial_scheme_transaction_id value"""
+        self._initial_scheme_transaction_id = val
+        return self
+
+    @property
+    def scheme_id(self):
+        """Get scheme_id"""
+        return self._scheme_id
+
+    @scheme_id.setter
+    def scheme_id(self, val):
+        """Set scheme_id
+        Keyword argument:
+        val -- New scheme_id value"""
+        self._scheme_id = val
+        return self
+
+    @property
+    def payment_type(self):
+        """Get payment_type"""
+        return self._payment_type
+
+    @payment_type.setter
+    def payment_type(self, val):
+        """Set payment_type
+        Keyword argument:
+        val -- New payment_type value"""
+        self._payment_type = val
+        return self
+
+    @property
     def metadata(self):
         """Get metadata"""
         return self._metadata
@@ -480,6 +522,12 @@ class TransactionOperation(object):
             self.payment_data_three_d_s_authentication = data["payment_data_three_d_s_authentication"]
         if "payment_data_network_authentication" in data.keys():
             self.payment_data_network_authentication = data["payment_data_network_authentication"]
+        if "initial_scheme_transaction_id" in data.keys():
+            self.initial_scheme_transaction_id = data["initial_scheme_transaction_id"]
+        if "scheme_id" in data.keys():
+            self.scheme_id = data["scheme_id"]
+        if "payment_type" in data.keys():
+            self.payment_type = data["payment_type"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
         if "gateway_fee" in data.keys():
@@ -513,6 +561,9 @@ class TransactionOperation(object):
             "payment_data_three_d_s_request": self.payment_data_three_d_s_request,
             "payment_data_three_d_s_authentication": self.payment_data_three_d_s_authentication,
             "payment_data_network_authentication": self.payment_data_network_authentication,
+            "initial_scheme_transaction_id": self.initial_scheme_transaction_id,
+            "scheme_id": self.scheme_id,
+            "payment_type": self.payment_type,
             "metadata": self.metadata,
             "gateway_fee": self.gateway_fee,
             "created_at": self.created_at,

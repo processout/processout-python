@@ -27,6 +27,7 @@ class GatewayConfiguration(object):
         self._public_keys = None
         self._created_at = None
         self._enabled_at = None
+        self._processing_region = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -191,6 +192,19 @@ class GatewayConfiguration(object):
         self._enabled_at = val
         return self
 
+    @property
+    def processing_region(self):
+        """Get processing_region"""
+        return self._processing_region
+
+    @processing_region.setter
+    def processing_region(self, val):
+        """Set processing_region
+        Keyword argument:
+        val -- New processing_region value"""
+        self._processing_region = val
+        return self
+
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
@@ -217,6 +231,8 @@ class GatewayConfiguration(object):
             self.created_at = data["created_at"]
         if "enabled_at" in data.keys():
             self.enabled_at = data["enabled_at"]
+        if "processing_region" in data.keys():
+            self.processing_region = data["processing_region"]
 
         return self
 
@@ -233,6 +249,7 @@ class GatewayConfiguration(object):
             "public_keys": self.public_keys,
             "created_at": self.created_at,
             "enabled_at": self.enabled_at,
+            "processing_region": self.processing_region,
         }
 
     def all(self, options={}):
@@ -300,6 +317,7 @@ class GatewayConfiguration(object):
             'name': self.name,
             'enabled': self.enabled,
             'default_currency': self.default_currency,
+            'processing_region': self.processing_region,
             'settings': options.get("settings"),
             'sub_accounts_enabled': options.get("sub_accounts_enabled")
         }
@@ -349,6 +367,7 @@ class GatewayConfiguration(object):
             'name': self.name,
             'enabled': self.enabled,
             'default_currency': self.default_currency,
+            'processing_region': self.processing_region,
             'settings': options.get("settings"),
             'sub_accounts_enabled': options.get("sub_accounts_enabled")
         }

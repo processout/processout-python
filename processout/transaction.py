@@ -30,6 +30,7 @@ class Transaction(object):
         self._card = None
         self._card_id = None
         self._gateway_configuration = None
+        self._external_three_d_s_gateway_configuration = None
         self._gateway_configuration_id = None
         self._operations = None
         self._refunds = None
@@ -71,6 +72,9 @@ class Transaction(object):
         self._three_d_s = None
         self._cvc_check = None
         self._avs_check = None
+        self._initial_scheme_transaction_id = None
+        self._scheme_id = None
+        self._payment_type = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -317,6 +321,28 @@ class Transaction(object):
             self._gateway_configuration = obj
         else:
             self._gateway_configuration = val
+        return self
+
+    @property
+    def external_three_d_s_gateway_configuration(self):
+        """Get external_three_d_s_gateway_configuration"""
+        return self._external_three_d_s_gateway_configuration
+
+    @external_three_d_s_gateway_configuration.setter
+    def external_three_d_s_gateway_configuration(self, val):
+        """Set external_three_d_s_gateway_configuration
+        Keyword argument:
+        val -- New external_three_d_s_gateway_configuration value"""
+        if val is None:
+            self._external_three_d_s_gateway_configuration = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.GatewayConfiguration(self._client)
+            obj.fill_with_data(val)
+            self._external_three_d_s_gateway_configuration = obj
+        else:
+            self._external_three_d_s_gateway_configuration = val
         return self
 
     @property
@@ -886,6 +912,45 @@ class Transaction(object):
         self._avs_check = val
         return self
 
+    @property
+    def initial_scheme_transaction_id(self):
+        """Get initial_scheme_transaction_id"""
+        return self._initial_scheme_transaction_id
+
+    @initial_scheme_transaction_id.setter
+    def initial_scheme_transaction_id(self, val):
+        """Set initial_scheme_transaction_id
+        Keyword argument:
+        val -- New initial_scheme_transaction_id value"""
+        self._initial_scheme_transaction_id = val
+        return self
+
+    @property
+    def scheme_id(self):
+        """Get scheme_id"""
+        return self._scheme_id
+
+    @scheme_id.setter
+    def scheme_id(self, val):
+        """Set scheme_id
+        Keyword argument:
+        val -- New scheme_id value"""
+        self._scheme_id = val
+        return self
+
+    @property
+    def payment_type(self):
+        """Get payment_type"""
+        return self._payment_type
+
+    @payment_type.setter
+    def payment_type(self, val):
+        """Set payment_type
+        Keyword argument:
+        val -- New payment_type value"""
+        self._payment_type = val
+        return self
+
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
@@ -918,6 +983,9 @@ class Transaction(object):
             self.card_id = data["card_id"]
         if "gateway_configuration" in data.keys():
             self.gateway_configuration = data["gateway_configuration"]
+        if "external_three_d_s_gateway_configuration" in data.keys():
+            self.external_three_d_s_gateway_configuration = data[
+                "external_three_d_s_gateway_configuration"]
         if "gateway_configuration_id" in data.keys():
             self.gateway_configuration_id = data["gateway_configuration_id"]
         if "operations" in data.keys():
@@ -1000,6 +1068,12 @@ class Transaction(object):
             self.cvc_check = data["cvc_check"]
         if "avs_check" in data.keys():
             self.avs_check = data["avs_check"]
+        if "initial_scheme_transaction_id" in data.keys():
+            self.initial_scheme_transaction_id = data["initial_scheme_transaction_id"]
+        if "scheme_id" in data.keys():
+            self.scheme_id = data["scheme_id"]
+        if "payment_type" in data.keys():
+            self.payment_type = data["payment_type"]
 
         return self
 
@@ -1019,6 +1093,7 @@ class Transaction(object):
             "card": self.card,
             "card_id": self.card_id,
             "gateway_configuration": self.gateway_configuration,
+            "external_three_d_s_gateway_configuration": self.external_three_d_s_gateway_configuration,
             "gateway_configuration_id": self.gateway_configuration_id,
             "operations": self.operations,
             "refunds": self.refunds,
@@ -1060,6 +1135,9 @@ class Transaction(object):
             "three_d_s": self.three_d_s,
             "cvc_check": self.cvc_check,
             "avs_check": self.avs_check,
+            "initial_scheme_transaction_id": self.initial_scheme_transaction_id,
+            "scheme_id": self.scheme_id,
+            "payment_type": self.payment_type,
         }
 
     def fetch_refunds(self, options={}):
