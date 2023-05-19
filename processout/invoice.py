@@ -1064,7 +1064,8 @@ class Invoice(object):
         request = Request(self._client)
         path = "/invoices/" + quote_plus(self.id) + "/void"
         data = {
-            'metadata': options.get("metadata")
+            'metadata': options.get("metadata"),
+            'amount': options.get("amount")
         }
 
         response = Response(request.post(path, data, options))

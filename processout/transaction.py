@@ -45,6 +45,8 @@ class Transaction(object):
         self._refunded_amount_local = None
         self._available_amount = None
         self._available_amount_local = None
+        self._voided_amount = None
+        self._voided_amount_local = None
         self._currency = None
         self._error_code = None
         self._error_message = None
@@ -553,6 +555,32 @@ class Transaction(object):
         return self
 
     @property
+    def voided_amount(self):
+        """Get voided_amount"""
+        return self._voided_amount
+
+    @voided_amount.setter
+    def voided_amount(self, val):
+        """Set voided_amount
+        Keyword argument:
+        val -- New voided_amount value"""
+        self._voided_amount = val
+        return self
+
+    @property
+    def voided_amount_local(self):
+        """Get voided_amount_local"""
+        return self._voided_amount_local
+
+    @voided_amount_local.setter
+    def voided_amount_local(self, val):
+        """Set voided_amount_local
+        Keyword argument:
+        val -- New voided_amount_local value"""
+        self._voided_amount_local = val
+        return self
+
+    @property
     def currency(self):
         """Get currency"""
         return self._currency
@@ -1014,6 +1042,10 @@ class Transaction(object):
             self.available_amount = data["available_amount"]
         if "available_amount_local" in data.keys():
             self.available_amount_local = data["available_amount_local"]
+        if "voided_amount" in data.keys():
+            self.voided_amount = data["voided_amount"]
+        if "voided_amount_local" in data.keys():
+            self.voided_amount_local = data["voided_amount_local"]
         if "currency" in data.keys():
             self.currency = data["currency"]
         if "error_code" in data.keys():
@@ -1108,6 +1140,8 @@ class Transaction(object):
             "refunded_amount_local": self.refunded_amount_local,
             "available_amount": self.available_amount,
             "available_amount_local": self.available_amount_local,
+            "voided_amount": self.voided_amount,
+            "voided_amount_local": self.voided_amount_local,
             "currency": self.currency,
             "error_code": self.error_code,
             "error_message": self.error_message,
