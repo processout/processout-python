@@ -16,7 +16,10 @@ class Response:
         self._headers = resp.headers
         self._raw_body = resp.text
 
-        self._body = resp.json()
+        try:
+            self._body = resp.json()
+        except BaseException:
+            self._body = {}
 
         self._check()
 
@@ -48,7 +51,7 @@ class Response:
     @property
     def success(self):
         """Get the response status"""
-        if self.body["success"] is None or not self.body["success"]:
+        if self.body.get("success") is None or not self.body["success"]:
             return False
 
         return True

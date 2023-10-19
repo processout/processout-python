@@ -15,7 +15,7 @@ Installation
 The package's installation is done using pypi:
 
 ``` sh
-pip install processOut
+pip install processout
 ```
 
 If you don't want to use pip to install this package, you may simply do a git clone
