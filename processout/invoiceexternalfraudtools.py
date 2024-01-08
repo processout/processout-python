@@ -17,6 +17,7 @@ class InvoiceExternalFraudTools(object):
         self._client = client
 
         self._forter = None
+        self._ravelin = None
         self._signifyd = None
         if prefill is not None:
             self.fill_with_data(prefill)
@@ -32,6 +33,19 @@ class InvoiceExternalFraudTools(object):
         Keyword argument:
         val -- New forter value"""
         self._forter = val
+        return self
+
+    @property
+    def ravelin(self):
+        """Get ravelin"""
+        return self._ravelin
+
+    @ravelin.setter
+    def ravelin(self, val):
+        """Set ravelin
+        Keyword argument:
+        val -- New ravelin value"""
+        self._ravelin = val
         return self
 
     @property
@@ -53,6 +67,8 @@ class InvoiceExternalFraudTools(object):
         data -- The data from which to pull the new values"""
         if "forter" in data.keys():
             self.forter = data["forter"]
+        if "ravelin" in data.keys():
+            self.ravelin = data["ravelin"]
         if "signifyd" in data.keys():
             self.signifyd = data["signifyd"]
 
@@ -61,5 +77,6 @@ class InvoiceExternalFraudTools(object):
     def to_json(self):
         return {
             "forter": self.forter,
+            "ravelin": self.ravelin,
             "signifyd": self.signifyd,
         }

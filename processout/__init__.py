@@ -14,18 +14,23 @@ from processout.card import Card
 from processout.cardinformation import CardInformation
 from processout.coupon import Coupon
 from processout.customer import Customer
+from processout.customerphone import CustomerPhone
 from processout.token import Token
 from processout.discount import Discount
 from processout.event import Event
 from processout.gateway import Gateway
 from processout.gatewayconfiguration import GatewayConfiguration
 from processout.invoice import Invoice
+from processout.nativeapmrequest import NativeAPMRequest
+from processout.nativeapmparametervalue import NativeAPMParameterValue
 from processout.invoicetax import InvoiceTax
 from processout.invoiceexternalfraudtools import InvoiceExternalFraudTools
 from processout.invoicerisk import InvoiceRisk
 from processout.invoicedevice import InvoiceDevice
 from processout.invoiceshipping import InvoiceShipping
+from processout.invoiceshippingphone import InvoiceShippingPhone
 from processout.invoicebilling import InvoiceBilling
+from processout.unsupportedfeaturebypass import UnsupportedFeatureBypass
 from processout.invoicedetail import InvoiceDetail
 from processout.customeraction import CustomerAction
 from processout.dunningaction import DunningAction
@@ -34,9 +39,13 @@ from processout.payoutitem import PayoutItem
 from processout.plan import Plan
 from processout.product import Product
 from processout.project import Project
+from processout.projectsftpsettings import ProjectSFTPSettings
 from processout.refund import Refund
 from processout.subscription import Subscription
 from processout.transaction import Transaction
+from processout.nativeapmresponse import NativeAPMResponse
+from processout.nativeapmparameterdefinition import NativeAPMParameterDefinition
+from processout.nativeapmparametervaluedefinition import NativeAPMParameterValueDefinition
 from processout.threeds import ThreeDS
 from processout.paymentdatathreedsrequest import PaymentDataThreeDSRequest
 from processout.paymentdatanetworkauthentication import PaymentDataNetworkAuthentication
@@ -44,6 +53,12 @@ from processout.paymentdatathreedsauthentication import PaymentDataThreeDSAuthen
 from processout.transactionoperation import TransactionOperation
 from processout.webhook import Webhook
 from processout.webhookendpoint import WebhookEndpoint
+from processout.errorcodes import ErrorCodes
+from processout.categoryerrorcodes import CategoryErrorCodes
+from processout.nativeapmtransactiondetailsgateway import NativeAPMTransactionDetailsGateway
+from processout.nativeapmtransactiondetailsinvoice import NativeAPMTransactionDetailsInvoice
+from processout.nativeapmtransactiondetails import NativeAPMTransactionDetails
+from processout.invoicesprocessnativepaymentresponse import InvoicesProcessNativePaymentResponse
 
 from processout.gatewayrequest import GatewayRequest
 

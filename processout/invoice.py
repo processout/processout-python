@@ -56,9 +56,11 @@ class Invoice(object):
         self._incremental = None
         self._tax = None
         self._payment_type = None
+        self._native_apm = None
         self._initiation_type = None
         self._payment_intent = None
         self._billing = None
+        self._unsupported_feature_bypass = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -685,6 +687,28 @@ class Invoice(object):
         return self
 
     @property
+    def native_apm(self):
+        """Get native_apm"""
+        return self._native_apm
+
+    @native_apm.setter
+    def native_apm(self, val):
+        """Set native_apm
+        Keyword argument:
+        val -- New native_apm value"""
+        if val is None:
+            self._native_apm = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.NativeAPMRequest(self._client)
+            obj.fill_with_data(val)
+            self._native_apm = obj
+        else:
+            self._native_apm = val
+        return self
+
+    @property
     def initiation_type(self):
         """Get initiation_type"""
         return self._initiation_type
@@ -730,6 +754,28 @@ class Invoice(object):
             self._billing = obj
         else:
             self._billing = val
+        return self
+
+    @property
+    def unsupported_feature_bypass(self):
+        """Get unsupported_feature_bypass"""
+        return self._unsupported_feature_bypass
+
+    @unsupported_feature_bypass.setter
+    def unsupported_feature_bypass(self, val):
+        """Set unsupported_feature_bypass
+        Keyword argument:
+        val -- New unsupported_feature_bypass value"""
+        if val is None:
+            self._unsupported_feature_bypass = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.UnsupportedFeatureBypass(self._client)
+            obj.fill_with_data(val)
+            self._unsupported_feature_bypass = obj
+        else:
+            self._unsupported_feature_bypass = val
         return self
 
     def fill_with_data(self, data):
@@ -816,12 +862,16 @@ class Invoice(object):
             self.tax = data["tax"]
         if "payment_type" in data.keys():
             self.payment_type = data["payment_type"]
+        if "native_apm" in data.keys():
+            self.native_apm = data["native_apm"]
         if "initiation_type" in data.keys():
             self.initiation_type = data["initiation_type"]
         if "payment_intent" in data.keys():
             self.payment_intent = data["payment_intent"]
         if "billing" in data.keys():
             self.billing = data["billing"]
+        if "unsupported_feature_bypass" in data.keys():
+            self.unsupported_feature_bypass = data["unsupported_feature_bypass"]
 
         return self
 
@@ -867,9 +917,11 @@ class Invoice(object):
             "incremental": self.incremental,
             "tax": self.tax,
             "payment_type": self.payment_type,
+            "native_apm": self.native_apm,
             "initiation_type": self.initiation_type,
             "payment_intent": self.payment_intent,
             "billing": self.billing,
+            "unsupported_feature_bypass": self.unsupported_feature_bypass,
         }
 
     def increment_authorization(self, amount, options={}):
@@ -1004,6 +1056,86 @@ class Invoice(object):
         body = body["customer"]
         customer = processout.Customer(self._client)
         return_values.append(customer.fill_with_data(body))
+
+        return return_values[0]
+
+    def payout(self, gateway_configuration_id, source, options={}):
+        """Process the payout invoice using the given source (customer or token)
+        Keyword argument:
+        gateway_configuration_id -- ID of the configuration, that processes payout
+        source -- Source used to process the payout. Can be a card, a token or a gateway request
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path = "/invoices/" + quote_plus(self.id) + "/payout"
+        data = {
+            'force_gateway_configuration_id': options.get("force_gateway_configuration_id"),
+            'gateway_configuration_id': gateway_configuration_id,
+            'source': source}
+
+        response = Response(request.post(path, data, options))
+        return_values = []
+
+        body = response.body
+        body = body["transaction"]
+        transaction = processout.Transaction(self._client)
+        return_values.append(transaction.fill_with_data(body))
+
+        return return_values[0]
+
+    def show_native_payment_transaction(
+            self,
+            invoice_id,
+            gateway_configuration_id,
+            options={}):
+        """Fetches the Native APM payment
+        Keyword argument:
+        invoice_id -- ID of the invoice
+        gateway_configuration_id -- ID of the native APM configuration
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path = "/invoices/" + \
+            quote_plus(invoice_id) + "/native-payment/" + quote_plus(gateway_configuration_id) + ""
+        data = {
+
+        }
+
+        response = Response(request.get(path, data, options))
+        return_values = []
+
+        body = response.body
+        body = body["native_apm"]
+        nativeAPMTransactionDetails = processout.NativeAPMTransactionDetails(
+            self._client)
+        return_values.append(nativeAPMTransactionDetails.fill_with_data(body))
+
+        return return_values[0]
+
+    def process_native_payment(self, invoice_id, options={}):
+        """Process the Native APM payment flow
+        Keyword argument:
+        invoice_id -- ID of the invoice
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path = "/invoices/" + quote_plus(invoice_id) + "/native-payment"
+        data = {
+            'gateway_configuration_id': options.get("gateway_configuration_id"),
+            'native_apm': options.get("native_apm")
+        }
+
+        response = Response(request.post(path, data, options))
+        return_values = []
+
+        body = response.body
+        invoicesProcessNativePaymentResponse = processout.InvoicesProcessNativePaymentResponse(
+            self._client)
+        return_values.append(
+            invoicesProcessNativePaymentResponse.fill_with_data(body))
 
         return return_values[0]
 
@@ -1143,7 +1275,8 @@ class Invoice(object):
             'external_fraud_tools': self.external_fraud_tools,
             'tax': self.tax,
             'payment_type': self.payment_type,
-            'billing': self.billing
+            'billing': self.billing,
+            'unsupported_feature_bypass': self.unsupported_feature_bypass
         }
 
         response = Response(request.post(path, data, options))

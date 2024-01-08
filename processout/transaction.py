@@ -77,6 +77,8 @@ class Transaction(object):
         self._initial_scheme_transaction_id = None
         self._scheme_id = None
         self._payment_type = None
+        self._native_apm = None
+        self._external_details = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -979,6 +981,41 @@ class Transaction(object):
         self._payment_type = val
         return self
 
+    @property
+    def native_apm(self):
+        """Get native_apm"""
+        return self._native_apm
+
+    @native_apm.setter
+    def native_apm(self, val):
+        """Set native_apm
+        Keyword argument:
+        val -- New native_apm value"""
+        if val is None:
+            self._native_apm = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.NativeAPMResponse(self._client)
+            obj.fill_with_data(val)
+            self._native_apm = obj
+        else:
+            self._native_apm = val
+        return self
+
+    @property
+    def external_details(self):
+        """Get external_details"""
+        return self._external_details
+
+    @external_details.setter
+    def external_details(self, val):
+        """Set external_details
+        Keyword argument:
+        val -- New external_details value"""
+        self._external_details = val
+        return self
+
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
@@ -1106,6 +1143,10 @@ class Transaction(object):
             self.scheme_id = data["scheme_id"]
         if "payment_type" in data.keys():
             self.payment_type = data["payment_type"]
+        if "native_apm" in data.keys():
+            self.native_apm = data["native_apm"]
+        if "external_details" in data.keys():
+            self.external_details = data["external_details"]
 
         return self
 
@@ -1172,6 +1213,8 @@ class Transaction(object):
             "initial_scheme_transaction_id": self.initial_scheme_transaction_id,
             "scheme_id": self.scheme_id,
             "payment_type": self.payment_type,
+            "native_apm": self.native_apm,
+            "external_details": self.external_details,
         }
 
     def fetch_refunds(self, options={}):

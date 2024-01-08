@@ -37,6 +37,7 @@ class Customer(object):
         self._country_code = None
         self._ip_address = None
         self._phone_number = None
+        self._phone = None
         self._legal_document = None
         self._sex = None
         self._is_business = None
@@ -376,6 +377,28 @@ class Customer(object):
         return self
 
     @property
+    def phone(self):
+        """Get phone"""
+        return self._phone
+
+    @phone.setter
+    def phone(self, val):
+        """Set phone
+        Keyword argument:
+        val -- New phone value"""
+        if val is None:
+            self._phone = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.CustomerPhone(self._client)
+            obj.fill_with_data(val)
+            self._phone = obj
+        else:
+            self._phone = val
+        return self
+
+    @property
     def legal_document(self):
         """Get legal_document"""
         return self._legal_document
@@ -525,6 +548,8 @@ class Customer(object):
             self.ip_address = data["ip_address"]
         if "phone_number" in data.keys():
             self.phone_number = data["phone_number"]
+        if "phone" in data.keys():
+            self.phone = data["phone"]
         if "legal_document" in data.keys():
             self.legal_document = data["legal_document"]
         if "sex" in data.keys():
@@ -567,6 +592,7 @@ class Customer(object):
             "country_code": self.country_code,
             "ip_address": self.ip_address,
             "phone_number": self.phone_number,
+            "phone": self.phone,
             "legal_document": self.legal_document,
             "sex": self.sex,
             "is_business": self.is_business,
@@ -752,14 +778,15 @@ class Customer(object):
             'zip': self.zip,
             'country_code': self.country_code,
             'ip_address': self.ip_address,
-            'phone_number': self.phone_number,
+            'phone': self.phone,
             'legal_document': self.legal_document,
             'date_of_birth': self.date_of_birth,
             'is_business': self.is_business,
             'sex': self.sex,
             'metadata': self.metadata,
             'id': self.id,
-            'registered_at': self.registered_at
+            'registered_at': self.registered_at,
+            'phone_number': self.phone_number
         }
 
         response = Response(request.post(path, data, options))
@@ -818,13 +845,14 @@ class Customer(object):
             'zip': self.zip,
             'country_code': self.country_code,
             'ip_address': self.ip_address,
-            'phone_number': self.phone_number,
+            'phone': self.phone,
             'legal_document': self.legal_document,
             'date_of_birth': self.date_of_birth,
             'is_business': self.is_business,
             'sex': self.sex,
             'metadata': self.metadata,
-            'registered_at': self.registered_at
+            'registered_at': self.registered_at,
+            'phone_number': self.phone_number
         }
 
         response = Response(request.put(path, data, options))

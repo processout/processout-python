@@ -105,6 +105,12 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.Customer(self, prefill)
 
+    def new_customer_phone(self, prefill=None):
+        """Create a new CustomerPhone instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.CustomerPhone(self, prefill)
+
     def new_token(self, prefill=None):
         """Create a new Token instance
         Keyword argument:
@@ -141,6 +147,18 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.Invoice(self, prefill)
 
+    def new_native_apm_request(self, prefill=None):
+        """Create a new NativeAPMRequest instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.NativeAPMRequest(self, prefill)
+
+    def new_native_apm_parameter_value(self, prefill=None):
+        """Create a new NativeAPMParameterValue instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.NativeAPMParameterValue(self, prefill)
+
     def new_invoice_tax(self, prefill=None):
         """Create a new InvoiceTax instance
         Keyword argument:
@@ -171,11 +189,23 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.InvoiceShipping(self, prefill)
 
+    def new_invoice_shipping_phone(self, prefill=None):
+        """Create a new InvoiceShippingPhone instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.InvoiceShippingPhone(self, prefill)
+
     def new_invoice_billing(self, prefill=None):
         """Create a new InvoiceBilling instance
         Keyword argument:
         prefill -- Data used to prefill the object (optional)"""
         return processout.InvoiceBilling(self, prefill)
+
+    def new_unsupported_feature_bypass(self, prefill=None):
+        """Create a new UnsupportedFeatureBypass instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.UnsupportedFeatureBypass(self, prefill)
 
     def new_invoice_detail(self, prefill=None):
         """Create a new InvoiceDetail instance
@@ -225,6 +255,12 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.Project(self, prefill)
 
+    def new_project_sftp_settings(self, prefill=None):
+        """Create a new ProjectSFTPSettings instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.ProjectSFTPSettings(self, prefill)
+
     def new_refund(self, prefill=None):
         """Create a new Refund instance
         Keyword argument:
@@ -242,6 +278,24 @@ class ProcessOut:
         Keyword argument:
         prefill -- Data used to prefill the object (optional)"""
         return processout.Transaction(self, prefill)
+
+    def new_native_apm_response(self, prefill=None):
+        """Create a new NativeAPMResponse instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.NativeAPMResponse(self, prefill)
+
+    def new_native_apm_parameter_definition(self, prefill=None):
+        """Create a new NativeAPMParameterDefinition instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.NativeAPMParameterDefinition(self, prefill)
+
+    def new_native_apm_parameter_value_definition(self, prefill=None):
+        """Create a new NativeAPMParameterValueDefinition instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.NativeAPMParameterValueDefinition(self, prefill)
 
     def new_three_ds(self, prefill=None):
         """Create a new ThreeDS instance
@@ -284,3 +338,39 @@ class ProcessOut:
         Keyword argument:
         prefill -- Data used to prefill the object (optional)"""
         return processout.WebhookEndpoint(self, prefill)
+
+    def new_error_codes(self, prefill=None):
+        """Create a new ErrorCodes instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.ErrorCodes(self, prefill)
+
+    def new_category_error_codes(self, prefill=None):
+        """Create a new CategoryErrorCodes instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.CategoryErrorCodes(self, prefill)
+
+    def new_native_apm_transaction_details_gateway(self, prefill=None):
+        """Create a new NativeAPMTransactionDetailsGateway instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.NativeAPMTransactionDetailsGateway(self, prefill)
+
+    def new_native_apm_transaction_details_invoice(self, prefill=None):
+        """Create a new NativeAPMTransactionDetailsInvoice instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.NativeAPMTransactionDetailsInvoice(self, prefill)
+
+    def new_native_apm_transaction_details(self, prefill=None):
+        """Create a new NativeAPMTransactionDetails instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.NativeAPMTransactionDetails(self, prefill)
+
+    def new_invoices_process_native_payment_response(self, prefill=None):
+        """Create a new InvoicesProcessNativePaymentResponse instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.InvoicesProcessNativePaymentResponse(self, prefill)

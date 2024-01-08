@@ -43,6 +43,8 @@ class Card(object):
         self._ip_address = None
         self._fingerprint = None
         self._token_type = None
+        self._used = None
+        self._has_been_authorized = None
         self._metadata = None
         self._expires_soon = None
         self._sandbox = None
@@ -420,6 +422,32 @@ class Card(object):
         return self
 
     @property
+    def used(self):
+        """Get used"""
+        return self._used
+
+    @used.setter
+    def used(self, val):
+        """Set used
+        Keyword argument:
+        val -- New used value"""
+        self._used = val
+        return self
+
+    @property
+    def has_been_authorized(self):
+        """Get has_been_authorized"""
+        return self._has_been_authorized
+
+    @has_been_authorized.setter
+    def has_been_authorized(self, val):
+        """Set has_been_authorized
+        Keyword argument:
+        val -- New has_been_authorized value"""
+        self._has_been_authorized = val
+        return self
+
+    @property
     def metadata(self):
         """Get metadata"""
         return self._metadata
@@ -529,6 +557,10 @@ class Card(object):
             self.fingerprint = data["fingerprint"]
         if "token_type" in data.keys():
             self.token_type = data["token_type"]
+        if "used" in data.keys():
+            self.used = data["used"]
+        if "has_been_authorized" in data.keys():
+            self.has_been_authorized = data["has_been_authorized"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
         if "expires_soon" in data.keys():
@@ -569,6 +601,8 @@ class Card(object):
             "ip_address": self.ip_address,
             "fingerprint": self.fingerprint,
             "token_type": self.token_type,
+            "used": self.used,
+            "has_been_authorized": self.has_been_authorized,
             "metadata": self.metadata,
             "expires_soon": self.expires_soon,
             "sandbox": self.sandbox,

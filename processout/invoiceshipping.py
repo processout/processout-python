@@ -27,6 +27,7 @@ class InvoiceShipping(object):
         self._country_code = None
         self._zip = None
         self._phone_number = None
+        self._phone = None
         self._expects_shipping_at = None
         self._relay_store_name = None
         if prefill is not None:
@@ -176,6 +177,28 @@ class InvoiceShipping(object):
         return self
 
     @property
+    def phone(self):
+        """Get phone"""
+        return self._phone
+
+    @phone.setter
+    def phone(self, val):
+        """Set phone
+        Keyword argument:
+        val -- New phone value"""
+        if val is None:
+            self._phone = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.InvoiceShippingPhone(self._client)
+            obj.fill_with_data(val)
+            self._phone = obj
+        else:
+            self._phone = val
+        return self
+
+    @property
     def expects_shipping_at(self):
         """Get expects_shipping_at"""
         return self._expects_shipping_at
@@ -227,6 +250,8 @@ class InvoiceShipping(object):
             self.zip = data["zip"]
         if "phone_number" in data.keys():
             self.phone_number = data["phone_number"]
+        if "phone" in data.keys():
+            self.phone = data["phone"]
         if "expects_shipping_at" in data.keys():
             self.expects_shipping_at = data["expects_shipping_at"]
         if "relay_store_name" in data.keys():
@@ -247,6 +272,7 @@ class InvoiceShipping(object):
             "country_code": self.country_code,
             "zip": self.zip,
             "phone_number": self.phone_number,
+            "phone": self.phone,
             "expects_shipping_at": self.expects_shipping_at,
             "relay_store_name": self.relay_store_name,
         }

@@ -226,6 +226,30 @@ class Refund(object):
             "invoice_detail_ids": self.invoice_detail_ids,
         }
 
+    def create_for_invoice(self, invoice_id, options={}):
+        """Create a refund for an invoice.
+        Keyword argument:
+        invoice_id -- ID of the invoice
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path = "/invoices/" + quote_plus(invoice_id) + "/refunds"
+        data = {
+            'amount': self.amount,
+            'reason': self.reason,
+            'information': self.information,
+            'invoice_detail_ids': self.invoice_detail_ids,
+            'metadata': options.get("metadata")
+        }
+
+        response = Response(request.post(path, data, options))
+        return_values = []
+
+        return_values.append(response.success)
+
+        return return_values[0]
+
     def fetch_transaction_refunds(self, transaction_id, options={}):
         """Get the transaction's refunds.
         Keyword argument:
