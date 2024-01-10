@@ -99,5 +99,3 @@ target/
 
 deploy.sh
 *.pyc
-
-.github
