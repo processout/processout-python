@@ -77,6 +77,7 @@ class Transaction(object):
         self._initial_scheme_transaction_id = None
         self._scheme_id = None
         self._payment_type = None
+        self._eci = None
         self._native_apm = None
         self._external_details = None
         if prefill is not None:
@@ -982,6 +983,19 @@ class Transaction(object):
         return self
 
     @property
+    def eci(self):
+        """Get eci"""
+        return self._eci
+
+    @eci.setter
+    def eci(self, val):
+        """Set eci
+        Keyword argument:
+        val -- New eci value"""
+        self._eci = val
+        return self
+
+    @property
     def native_apm(self):
         """Get native_apm"""
         return self._native_apm
@@ -1143,6 +1157,8 @@ class Transaction(object):
             self.scheme_id = data["scheme_id"]
         if "payment_type" in data.keys():
             self.payment_type = data["payment_type"]
+        if "eci" in data.keys():
+            self.eci = data["eci"]
         if "native_apm" in data.keys():
             self.native_apm = data["native_apm"]
         if "external_details" in data.keys():
@@ -1213,6 +1229,7 @@ class Transaction(object):
             "initial_scheme_transaction_id": self.initial_scheme_transaction_id,
             "scheme_id": self.scheme_id,
             "payment_type": self.payment_type,
+            "eci": self.eci,
             "native_apm": self.native_apm,
             "external_details": self.external_details,
         }

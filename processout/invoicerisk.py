@@ -18,6 +18,7 @@ class InvoiceRisk(object):
 
         self._score = None
         self._is_legit = None
+        self._skip_gateway_rules = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -47,6 +48,19 @@ class InvoiceRisk(object):
         self._is_legit = val
         return self
 
+    @property
+    def skip_gateway_rules(self):
+        """Get skip_gateway_rules"""
+        return self._skip_gateway_rules
+
+    @skip_gateway_rules.setter
+    def skip_gateway_rules(self, val):
+        """Set skip_gateway_rules
+        Keyword argument:
+        val -- New skip_gateway_rules value"""
+        self._skip_gateway_rules = val
+        return self
+
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
@@ -55,6 +69,8 @@ class InvoiceRisk(object):
             self.score = data["score"]
         if "is_legit" in data.keys():
             self.is_legit = data["is_legit"]
+        if "skip_gateway_rules" in data.keys():
+            self.skip_gateway_rules = data["skip_gateway_rules"]
 
         return self
 
@@ -62,4 +78,5 @@ class InvoiceRisk(object):
         return {
             "score": self.score,
             "is_legit": self.is_legit,
+            "skip_gateway_rules": self.skip_gateway_rules,
         }
