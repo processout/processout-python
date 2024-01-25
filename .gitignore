@@ -98,4 +98,5 @@ target/
 .env
 
 deploy.sh
+publish.sh
 *.pyc
