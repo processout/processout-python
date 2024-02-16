@@ -4,7 +4,6 @@ from processout.client import ProcessOut
 # Import resources
 from processout.activity import Activity
 from processout.addon import Addon
-from processout.apirequest import APIRequest
 from processout.apiversion import APIVersion
 from processout.applepayalternativemerchantcertificates import ApplePayAlternativeMerchantCertificates
 from processout.alternativemerchantcertificate import AlternativeMerchantCertificate

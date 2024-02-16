@@ -456,3 +456,23 @@ class Payout(object):
         return_values.append(obj.fill_with_data(body))
 
         return return_values[0]
+
+    def delete(self, payout_id, options={}):
+        """Delete the payout along with its payout items
+        Keyword argument:
+        payout_id -- ID of the payout
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path = "/payouts/" + quote_plus(payout_id) + ""
+        data = {
+
+        }
+
+        response = Response(request.delete(path, data, options))
+        return_values = []
+
+        return_values.append(response.success)
+
+        return return_values[0]
