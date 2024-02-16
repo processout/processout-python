@@ -71,6 +71,9 @@ class Transaction(object):
         self._created_at = None
         self._chargedback_at = None
         self._refunded_at = None
+        self._authorized_at = None
+        self._captured_at = None
+        self._voided_at = None
         self._three_d_s = None
         self._cvc_check = None
         self._avs_check = None
@@ -896,6 +899,45 @@ class Transaction(object):
         return self
 
     @property
+    def authorized_at(self):
+        """Get authorized_at"""
+        return self._authorized_at
+
+    @authorized_at.setter
+    def authorized_at(self, val):
+        """Set authorized_at
+        Keyword argument:
+        val -- New authorized_at value"""
+        self._authorized_at = val
+        return self
+
+    @property
+    def captured_at(self):
+        """Get captured_at"""
+        return self._captured_at
+
+    @captured_at.setter
+    def captured_at(self, val):
+        """Set captured_at
+        Keyword argument:
+        val -- New captured_at value"""
+        self._captured_at = val
+        return self
+
+    @property
+    def voided_at(self):
+        """Get voided_at"""
+        return self._voided_at
+
+    @voided_at.setter
+    def voided_at(self, val):
+        """Set voided_at
+        Keyword argument:
+        val -- New voided_at value"""
+        self._voided_at = val
+        return self
+
+    @property
     def three_d_s(self):
         """Get three_d_s"""
         return self._three_d_s
@@ -1145,6 +1187,12 @@ class Transaction(object):
             self.chargedback_at = data["chargedback_at"]
         if "refunded_at" in data.keys():
             self.refunded_at = data["refunded_at"]
+        if "authorized_at" in data.keys():
+            self.authorized_at = data["authorized_at"]
+        if "captured_at" in data.keys():
+            self.captured_at = data["captured_at"]
+        if "voided_at" in data.keys():
+            self.voided_at = data["voided_at"]
         if "three_d_s" in data.keys():
             self.three_d_s = data["three_d_s"]
         if "cvc_check" in data.keys():
@@ -1223,6 +1271,9 @@ class Transaction(object):
             "created_at": self.created_at,
             "chargedback_at": self.chargedback_at,
             "refunded_at": self.refunded_at,
+            "authorized_at": self.authorized_at,
+            "captured_at": self.captured_at,
+            "voided_at": self.voided_at,
             "three_d_s": self.three_d_s,
             "cvc_check": self.cvc_check,
             "avs_check": self.avs_check,

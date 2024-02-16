@@ -30,6 +30,7 @@ class Invoice(object):
         self._details = None
         self._url = None
         self._name = None
+        self._order_id = None
         self._amount = None
         self._currency = None
         self._merchant_initiator_type = None
@@ -61,6 +62,7 @@ class Invoice(object):
         self._payment_intent = None
         self._billing = None
         self._unsupported_feature_bypass = None
+        self._verification = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -301,6 +303,19 @@ class Invoice(object):
         Keyword argument:
         val -- New name value"""
         self._name = val
+        return self
+
+    @property
+    def order_id(self):
+        """Get order_id"""
+        return self._order_id
+
+    @order_id.setter
+    def order_id(self, val):
+        """Set order_id
+        Keyword argument:
+        val -- New order_id value"""
+        self._order_id = val
         return self
 
     @property
@@ -778,6 +793,19 @@ class Invoice(object):
             self._unsupported_feature_bypass = val
         return self
 
+    @property
+    def verification(self):
+        """Get verification"""
+        return self._verification
+
+    @verification.setter
+    def verification(self, val):
+        """Set verification
+        Keyword argument:
+        val -- New verification value"""
+        self._verification = val
+        return self
+
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
@@ -810,6 +838,8 @@ class Invoice(object):
             self.url = data["url"]
         if "name" in data.keys():
             self.name = data["name"]
+        if "order_id" in data.keys():
+            self.order_id = data["order_id"]
         if "amount" in data.keys():
             self.amount = data["amount"]
         if "currency" in data.keys():
@@ -872,6 +902,8 @@ class Invoice(object):
             self.billing = data["billing"]
         if "unsupported_feature_bypass" in data.keys():
             self.unsupported_feature_bypass = data["unsupported_feature_bypass"]
+        if "verification" in data.keys():
+            self.verification = data["verification"]
 
         return self
 
@@ -891,6 +923,7 @@ class Invoice(object):
             "details": self.details,
             "url": self.url,
             "name": self.name,
+            "order_id": self.order_id,
             "amount": self.amount,
             "currency": self.currency,
             "merchant_initiator_type": self.merchant_initiator_type,
@@ -922,6 +955,7 @@ class Invoice(object):
             "payment_intent": self.payment_intent,
             "billing": self.billing,
             "unsupported_feature_bypass": self.unsupported_feature_bypass,
+            "verification": self.verification,
         }
 
     def increment_authorization(self, amount, options={}):
@@ -1249,6 +1283,7 @@ class Invoice(object):
         data = {
             'customer_id': self.customer_id,
             'name': self.name,
+            'order_id': self.order_id,
             'amount': self.amount,
             'currency': self.currency,
             'metadata': self.metadata,
@@ -1276,7 +1311,8 @@ class Invoice(object):
             'tax': self.tax,
             'payment_type': self.payment_type,
             'billing': self.billing,
-            'unsupported_feature_bypass': self.unsupported_feature_bypass
+            'unsupported_feature_bypass': self.unsupported_feature_bypass,
+            'verification': self.verification
         }
 
         response = Response(request.post(path, data, options))

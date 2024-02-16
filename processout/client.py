@@ -44,12 +44,6 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.Addon(self, prefill)
 
-    def new_api_request(self, prefill=None):
-        """Create a new APIRequest instance
-        Keyword argument:
-        prefill -- Data used to prefill the object (optional)"""
-        return processout.APIRequest(self, prefill)
-
     def new_api_version(self, prefill=None):
         """Create a new APIVersion instance
         Keyword argument:
