@@ -29,6 +29,7 @@ class PayoutItem(object):
         self._fees = None
         self._metadata = None
         self._created_at = None
+        self._breakdown = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -228,6 +229,28 @@ class PayoutItem(object):
         self._created_at = val
         return self
 
+    @property
+    def breakdown(self):
+        """Get breakdown"""
+        return self._breakdown
+
+    @breakdown.setter
+    def breakdown(self, val):
+        """Set breakdown
+        Keyword argument:
+        val -- New breakdown value"""
+        if val is None:
+            self._breakdown = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.PayoutItemAmountBreakdowns(self._client)
+            obj.fill_with_data(val)
+            self._breakdown = obj
+        else:
+            self._breakdown = val
+        return self
+
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
@@ -258,6 +281,8 @@ class PayoutItem(object):
             self.metadata = data["metadata"]
         if "created_at" in data.keys():
             self.created_at = data["created_at"]
+        if "breakdown" in data.keys():
+            self.breakdown = data["breakdown"]
 
         return self
 
@@ -276,4 +301,5 @@ class PayoutItem(object):
             "fees": self.fees,
             "metadata": self.metadata,
             "created_at": self.created_at,
+            "breakdown": self.breakdown,
         }

@@ -11,6 +11,7 @@ from processout.balances import Balances
 from processout.balance import Balance
 from processout.card import Card
 from processout.cardinformation import CardInformation
+from processout.phone import Phone
 from processout.coupon import Coupon
 from processout.customer import Customer
 from processout.customerphone import CustomerPhone
@@ -35,6 +36,7 @@ from processout.customeraction import CustomerAction
 from processout.dunningaction import DunningAction
 from processout.payout import Payout
 from processout.payoutitem import PayoutItem
+from processout.payoutitemamountbreakdowns import PayoutItemAmountBreakdowns
 from processout.plan import Plan
 from processout.product import Product
 from processout.project import Project
@@ -52,6 +54,11 @@ from processout.paymentdatathreedsauthentication import PaymentDataThreeDSAuthen
 from processout.transactionoperation import TransactionOperation
 from processout.webhook import Webhook
 from processout.webhookendpoint import WebhookEndpoint
+from processout.cardcreaterequest import CardCreateRequest
+from processout.device import Device
+from processout.cardcontact import CardContact
+from processout.cardshipping import CardShipping
+from processout.cardupdaterequest import CardUpdateRequest
 from processout.errorcodes import ErrorCodes
 from processout.categoryerrorcodes import CategoryErrorCodes
 from processout.nativeapmtransactiondetailsgateway import NativeAPMTransactionDetailsGateway
