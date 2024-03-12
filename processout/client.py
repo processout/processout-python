@@ -87,6 +87,12 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.CardInformation(self, prefill)
 
+    def new_phone(self, prefill=None):
+        """Create a new Phone instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.Phone(self, prefill)
+
     def new_coupon(self, prefill=None):
         """Create a new Coupon instance
         Keyword argument:
@@ -231,6 +237,12 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.PayoutItem(self, prefill)
 
+    def new_payout_item_amount_breakdowns(self, prefill=None):
+        """Create a new PayoutItemAmountBreakdowns instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.PayoutItemAmountBreakdowns(self, prefill)
+
     def new_plan(self, prefill=None):
         """Create a new Plan instance
         Keyword argument:
@@ -332,6 +344,36 @@ class ProcessOut:
         Keyword argument:
         prefill -- Data used to prefill the object (optional)"""
         return processout.WebhookEndpoint(self, prefill)
+
+    def new_card_create_request(self, prefill=None):
+        """Create a new CardCreateRequest instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.CardCreateRequest(self, prefill)
+
+    def new_device(self, prefill=None):
+        """Create a new Device instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.Device(self, prefill)
+
+    def new_card_contact(self, prefill=None):
+        """Create a new CardContact instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.CardContact(self, prefill)
+
+    def new_card_shipping(self, prefill=None):
+        """Create a new CardShipping instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.CardShipping(self, prefill)
+
+    def new_card_update_request(self, prefill=None):
+        """Create a new CardUpdateRequest instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.CardUpdateRequest(self, prefill)
 
     def new_error_codes(self, prefill=None):
         """Create a new ErrorCodes instance
