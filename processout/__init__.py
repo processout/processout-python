@@ -41,6 +41,7 @@ from processout.plan import Plan
 from processout.product import Product
 from processout.project import Project
 from processout.projectsftpsettings import ProjectSFTPSettings
+from processout.projectsftpsettingspublic import ProjectSFTPSettingsPublic
 from processout.refund import Refund
 from processout.subscription import Subscription
 from processout.transaction import Transaction

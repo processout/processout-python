@@ -91,7 +91,9 @@ class CardUpdateRequest(object):
         request = Request(self._client)
         path = "/cards/" + quote_plus(card_id) + ""
         data = {
-
+            'update_type': self.update_type,
+            'update_reason': self.update_reason,
+            'preferred_scheme': self.preferred_scheme
         }
 
         response = Response(request.put(path, data, options))
@@ -100,7 +102,6 @@ class CardUpdateRequest(object):
         body = response.body
         body = body["card"]
 
-        obj = processout.CardUpdateRequest(self._client)
-        return_values.append(obj.fill_with_data(body))
+        return_values.append(self.fill_with_data(body))
 
         return return_values[0]
