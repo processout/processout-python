@@ -267,6 +267,12 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.ProjectSFTPSettings(self, prefill)
 
+    def new_project_sftp_settings_public(self, prefill=None):
+        """Create a new ProjectSFTPSettingsPublic instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.ProjectSFTPSettingsPublic(self, prefill)
+
     def new_refund(self, prefill=None):
         """Create a new Refund instance
         Keyword argument:

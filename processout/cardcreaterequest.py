@@ -356,7 +356,23 @@ class CardCreateRequest(object):
         request = Request(self._client)
         path = "/cards"
         data = {
-
+            'device': self.device,
+            'name': self.name,
+            'number': self.number,
+            'exp_day': self.exp_day,
+            'exp_month': self.exp_month,
+            'exp_year': self.exp_year,
+            'cvc2': self.cvc2,
+            'preferred_scheme': self.preferred_scheme,
+            'metadata': self.metadata,
+            'token_type': self.token_type,
+            'eci': self.eci,
+            'cryptogram': self.cryptogram,
+            'applepay_response': self.applepay_response,
+            'applepay_mid': self.applepay_mid,
+            'payment_token': self.payment_token,
+            'contact': self.contact,
+            'shipping': self.shipping
         }
 
         response = Response(request.post(path, data, options))
@@ -365,7 +381,6 @@ class CardCreateRequest(object):
         body = response.body
         body = body["card"]
 
-        obj = processout.CardCreateRequest(self._client)
-        return_values.append(obj.fill_with_data(body))
+        return_values.append(self.fill_with_data(body))
 
         return return_values[0]
