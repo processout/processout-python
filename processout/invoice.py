@@ -63,6 +63,7 @@ class Invoice(object):
         self._billing = None
         self._unsupported_feature_bypass = None
         self._verification = None
+        self._auto_capture_at = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -806,6 +807,19 @@ class Invoice(object):
         self._verification = val
         return self
 
+    @property
+    def auto_capture_at(self):
+        """Get auto_capture_at"""
+        return self._auto_capture_at
+
+    @auto_capture_at.setter
+    def auto_capture_at(self, val):
+        """Set auto_capture_at
+        Keyword argument:
+        val -- New auto_capture_at value"""
+        self._auto_capture_at = val
+        return self
+
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
@@ -904,6 +918,8 @@ class Invoice(object):
             self.unsupported_feature_bypass = data["unsupported_feature_bypass"]
         if "verification" in data.keys():
             self.verification = data["verification"]
+        if "auto_capture_at" in data.keys():
+            self.auto_capture_at = data["auto_capture_at"]
 
         return self
 
@@ -956,6 +972,7 @@ class Invoice(object):
             "billing": self.billing,
             "unsupported_feature_bypass": self.unsupported_feature_bypass,
             "verification": self.verification,
+            "auto_capture_at": self.auto_capture_at,
         }
 
     def increment_authorization(self, amount, options={}):
@@ -1312,7 +1329,8 @@ class Invoice(object):
             'payment_type': self.payment_type,
             'billing': self.billing,
             'unsupported_feature_bypass': self.unsupported_feature_bypass,
-            'verification': self.verification
+            'verification': self.verification,
+            'auto_capture_at': self.auto_capture_at
         }
 
         response = Response(request.post(path, data, options))
