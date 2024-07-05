@@ -393,17 +393,17 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.CategoryErrorCodes(self, prefill)
 
-    def new_native_apm_transaction_details_gateway(self, prefill=None):
-        """Create a new NativeAPMTransactionDetailsGateway instance
+    def new_invoices_authorize_response(self, prefill=None):
+        """Create a new InvoicesAuthorizeResponse instance
         Keyword argument:
         prefill -- Data used to prefill the object (optional)"""
-        return processout.NativeAPMTransactionDetailsGateway(self, prefill)
+        return processout.InvoicesAuthorizeResponse(self, prefill)
 
-    def new_native_apm_transaction_details_invoice(self, prefill=None):
-        """Create a new NativeAPMTransactionDetailsInvoice instance
+    def new_invoices_capture_response(self, prefill=None):
+        """Create a new InvoicesCaptureResponse instance
         Keyword argument:
         prefill -- Data used to prefill the object (optional)"""
-        return processout.NativeAPMTransactionDetailsInvoice(self, prefill)
+        return processout.InvoicesCaptureResponse(self, prefill)
 
     def new_native_apm_transaction_details(self, prefill=None):
         """Create a new NativeAPMTransactionDetails instance
@@ -416,3 +416,15 @@ class ProcessOut:
         Keyword argument:
         prefill -- Data used to prefill the object (optional)"""
         return processout.InvoicesProcessNativePaymentResponse(self, prefill)
+
+    def new_native_apm_transaction_details_gateway(self, prefill=None):
+        """Create a new NativeAPMTransactionDetailsGateway instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.NativeAPMTransactionDetailsGateway(self, prefill)
+
+    def new_native_apm_transaction_details_invoice(self, prefill=None):
+        """Create a new NativeAPMTransactionDetailsInvoice instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.NativeAPMTransactionDetailsInvoice(self, prefill)

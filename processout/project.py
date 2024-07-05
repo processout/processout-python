@@ -354,7 +354,8 @@ class Project(object):
             'name': self.name,
             'default_currency': self.default_currency,
             'dunning_configuration': self.dunning_configuration,
-            'applepay_settings': options.get("applepay_settings")
+            'applepay_settings': options.get("applepay_settings"),
+            'public_metadata': options.get("public_metadata")
         }
 
         response = Response(request.post(path, data, options))
