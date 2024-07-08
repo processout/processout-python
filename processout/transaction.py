@@ -1363,6 +1363,33 @@ class Transaction(object):
 
         return return_values[0]
 
+    def list(self, options={}):
+        """Get full transactions data for specified list of ids.
+        Keyword argument:
+
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path = "/transactions"
+        data = {
+
+        }
+
+        response = Response(request.post(path, data, options))
+        return_values = []
+
+        a = []
+        body = response.body
+        for v in body['transactions']:
+            tmp = processout.Transaction(self._client)
+            tmp.fill_with_data(v)
+            a.append(tmp)
+
+        return_values.append(a)
+
+        return return_values[0]
+
     def find(self, transaction_id, options={}):
         """Find a transaction by its ID.
         Keyword argument:
