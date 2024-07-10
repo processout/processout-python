@@ -23,6 +23,9 @@ class CardShipping(object):
         self._country_code = None
         self._zip = None
         self._phone = None
+        self._first_name = None
+        self._last_name = None
+        self._email = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -126,6 +129,45 @@ class CardShipping(object):
             self._phone = val
         return self
 
+    @property
+    def first_name(self):
+        """Get first_name"""
+        return self._first_name
+
+    @first_name.setter
+    def first_name(self, val):
+        """Set first_name
+        Keyword argument:
+        val -- New first_name value"""
+        self._first_name = val
+        return self
+
+    @property
+    def last_name(self):
+        """Get last_name"""
+        return self._last_name
+
+    @last_name.setter
+    def last_name(self, val):
+        """Set last_name
+        Keyword argument:
+        val -- New last_name value"""
+        self._last_name = val
+        return self
+
+    @property
+    def email(self):
+        """Get email"""
+        return self._email
+
+    @email.setter
+    def email(self, val):
+        """Set email
+        Keyword argument:
+        val -- New email value"""
+        self._email = val
+        return self
+
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
@@ -144,6 +186,12 @@ class CardShipping(object):
             self.zip = data["zip"]
         if "phone" in data.keys():
             self.phone = data["phone"]
+        if "first_name" in data.keys():
+            self.first_name = data["first_name"]
+        if "last_name" in data.keys():
+            self.last_name = data["last_name"]
+        if "email" in data.keys():
+            self.email = data["email"]
 
         return self
 
@@ -156,4 +204,7 @@ class CardShipping(object):
             "country_code": self.country_code,
             "zip": self.zip,
             "phone": self.phone,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "email": self.email,
         }

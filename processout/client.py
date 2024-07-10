@@ -410,9 +410,3 @@ class ProcessOut:
         Keyword argument:
         prefill -- Data used to prefill the object (optional)"""
         return processout.NativeAPMTransactionDetails(self, prefill)
-
-    def new_invoices_process_native_payment_response(self, prefill=None):
-        """Create a new InvoicesProcessNativePaymentResponse instance
-        Keyword argument:
-        prefill -- Data used to prefill the object (optional)"""
-        return processout.InvoicesProcessNativePaymentResponse(self, prefill)

@@ -516,7 +516,8 @@ class Token(object):
             'verify_metadata': options.get("verify_metadata"),
             'set_default': options.get("set_default"),
             'verify_statement_descriptor': options.get("verify_statement_descriptor"),
-            'invoice_return_url': options.get("invoice_return_url")}
+            'invoice_return_url': options.get("invoice_return_url"),
+            'summary': options.get("summary")}
 
         response = Response(request.post(path, data, options))
         return_values = []

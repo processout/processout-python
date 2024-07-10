@@ -65,7 +65,6 @@ from processout.categoryerrorcodes import CategoryErrorCodes
 from processout.nativeapmtransactiondetailsgateway import NativeAPMTransactionDetailsGateway
 from processout.nativeapmtransactiondetailsinvoice import NativeAPMTransactionDetailsInvoice
 from processout.nativeapmtransactiondetails import NativeAPMTransactionDetails
-from processout.invoicesprocessnativepaymentresponse import InvoicesProcessNativePaymentResponse
 
 from processout.gatewayrequest import GatewayRequest
 

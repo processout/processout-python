@@ -29,6 +29,7 @@ class Invoice(object):
         self._token_id = None
         self._details = None
         self._url = None
+        self._url_qrcode = None
         self._name = None
         self._order_id = None
         self._amount = None
@@ -47,6 +48,7 @@ class Invoice(object):
         self._require_backend_capture = None
         self._sandbox = None
         self._created_at = None
+        self._expires_at = None
         self._risk = None
         self._shipping = None
         self._device = None
@@ -294,6 +296,19 @@ class Invoice(object):
         return self
 
     @property
+    def url_qrcode(self):
+        """Get url_qrcode"""
+        return self._url_qrcode
+
+    @url_qrcode.setter
+    def url_qrcode(self, val):
+        """Set url_qrcode
+        Keyword argument:
+        val -- New url_qrcode value"""
+        self._url_qrcode = val
+        return self
+
+    @property
     def name(self):
         """Get name"""
         return self._name
@@ -525,6 +540,19 @@ class Invoice(object):
         Keyword argument:
         val -- New created_at value"""
         self._created_at = val
+        return self
+
+    @property
+    def expires_at(self):
+        """Get expires_at"""
+        return self._expires_at
+
+    @expires_at.setter
+    def expires_at(self, val):
+        """Set expires_at
+        Keyword argument:
+        val -- New expires_at value"""
+        self._expires_at = val
         return self
 
     @property
@@ -850,6 +878,8 @@ class Invoice(object):
             self.details = data["details"]
         if "url" in data.keys():
             self.url = data["url"]
+        if "url_qrcode" in data.keys():
+            self.url_qrcode = data["url_qrcode"]
         if "name" in data.keys():
             self.name = data["name"]
         if "order_id" in data.keys():
@@ -886,6 +916,8 @@ class Invoice(object):
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
             self.created_at = data["created_at"]
+        if "expires_at" in data.keys():
+            self.expires_at = data["expires_at"]
         if "risk" in data.keys():
             self.risk = data["risk"]
         if "shipping" in data.keys():
@@ -938,6 +970,7 @@ class Invoice(object):
             "token_id": self.token_id,
             "details": self.details,
             "url": self.url,
+            "url_qrcode": self.url_qrcode,
             "name": self.name,
             "order_id": self.order_id,
             "amount": self.amount,
@@ -956,6 +989,7 @@ class Invoice(object):
             "require_backend_capture": self.require_backend_capture,
             "sandbox": self.sandbox,
             "created_at": self.created_at,
+            "expires_at": self.expires_at,
             "risk": self.risk,
             "shipping": self.shipping,
             "device": self.device,
@@ -1028,8 +1062,12 @@ class Invoice(object):
         body = body["transaction"]
         transaction = processout.Transaction(self._client)
         return_values.append(transaction.fill_with_data(body))
+        body = response.body
+        body = body["customer_action"]
+        customerAction = processout.CustomerAction(self._client)
+        return_values.append(customerAction.fill_with_data(body))
 
-        return return_values[0]
+        return tuple(return_values)
 
     def capture(self, source, options={}):
         """Capture the invoice using the given source (customer or token)
@@ -1061,8 +1099,12 @@ class Invoice(object):
         body = body["transaction"]
         transaction = processout.Transaction(self._client)
         return_values.append(transaction.fill_with_data(body))
+        body = response.body
+        body = body["customer_action"]
+        customerAction = processout.CustomerAction(self._client)
+        return_values.append(customerAction.fill_with_data(body))
 
-        return return_values[0]
+        return tuple(return_values)
 
     def fetch_customer(self, options={}):
         """Get the customer linked to the invoice.
@@ -1183,12 +1225,15 @@ class Invoice(object):
         return_values = []
 
         body = response.body
-        invoicesProcessNativePaymentResponse = processout.InvoicesProcessNativePaymentResponse(
-            self._client)
-        return_values.append(
-            invoicesProcessNativePaymentResponse.fill_with_data(body))
+        body = body["transaction"]
+        transaction = processout.Transaction(self._client)
+        return_values.append(transaction.fill_with_data(body))
+        body = response.body
+        body = body["native_apm"]
+        nativeAPMResponse = processout.NativeAPMResponse(self._client)
+        return_values.append(nativeAPMResponse.fill_with_data(body))
 
-        return return_values[0]
+        return tuple(return_values)
 
     def initiate_three_d_s(self, source, options={}):
         """Initiate a 3-D Secure authentication
@@ -1330,7 +1375,8 @@ class Invoice(object):
             'billing': self.billing,
             'unsupported_feature_bypass': self.unsupported_feature_bypass,
             'verification': self.verification,
-            'auto_capture_at': self.auto_capture_at
+            'auto_capture_at': self.auto_capture_at,
+            'expires_at': self.expires_at
         }
 
         response = Response(request.post(path, data, options))
@@ -1364,5 +1410,25 @@ class Invoice(object):
 
         obj = processout.Invoice(self._client)
         return_values.append(obj.fill_with_data(body))
+
+        return return_values[0]
+
+    def delete(self, invoice_id, options={}):
+        """Delete an invoice by its ID. Only invoices that have not been used yet can be deleted.
+        Keyword argument:
+        invoice_id -- ID of the invoice
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path = "/invoices/" + quote_plus(invoice_id) + ""
+        data = {
+
+        }
+
+        response = Response(request.delete(path, data, options))
+        return_values = []
+
+        return_values.append(response.success)
 
         return return_values[0]
