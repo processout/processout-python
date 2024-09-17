@@ -527,7 +527,12 @@ class Token(object):
 
         return_values.append(self.fill_with_data(body))
 
-        return return_values[0]
+        body = response.body
+        body = body["customer_action"]
+        customerAction = processout.CustomerAction(self._client)
+        return_values.append(customerAction.fill_with_data(body))
+
+        return tuple(return_values)
 
     def save(self, options={}):
         """Save the updated customer attributes.
