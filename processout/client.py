@@ -129,6 +129,58 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.Event(self, prefill)
 
+    def new_export_layout(self, prefill=None):
+        """Create a new ExportLayout instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.ExportLayout(self, prefill)
+
+    def new_export_layout_configuration(self, prefill=None):
+        """Create a new ExportLayoutConfiguration instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.ExportLayoutConfiguration(self, prefill)
+
+    def new_export_layout_configuration_column(self, prefill=None):
+        """Create a new ExportLayoutConfigurationColumn instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.ExportLayoutConfigurationColumn(self, prefill)
+
+    def new_export_layout_configuration_time(self, prefill=None):
+        """Create a new ExportLayoutConfigurationTime instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.ExportLayoutConfigurationTime(self, prefill)
+
+    def new_export_layout_configuration_amount(self, prefill=None):
+        """Create a new ExportLayoutConfigurationAmount instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.ExportLayoutConfigurationAmount(self, prefill)
+
+    def new_export_layout_configuration_options(self, prefill=None):
+        """Create a new ExportLayoutConfigurationOptions instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.ExportLayoutConfigurationOptions(self, prefill)
+
+    def new_export_layout_configuration_configuration_options_time(
+            self, prefill=None):
+        """Create a new ExportLayoutConfigurationConfigurationOptionsTime instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.ExportLayoutConfigurationConfigurationOptionsTime(
+            self, prefill)
+
+    def new_export_layout_configuration_configuration_options_amount(
+            self, prefill=None):
+        """Create a new ExportLayoutConfigurationConfigurationOptionsAmount instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.ExportLayoutConfigurationConfigurationOptionsAmount(
+            self, prefill)
+
     def new_gateway(self, prefill=None):
         """Create a new Gateway instance
         Keyword argument:
@@ -393,6 +445,18 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.CategoryErrorCodes(self, prefill)
 
+    def new_external_three_ds(self, prefill=None):
+        """Create a new ExternalThreeDS instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.ExternalThreeDS(self, prefill)
+
+    def new_native_apm_transaction_details(self, prefill=None):
+        """Create a new NativeAPMTransactionDetails instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.NativeAPMTransactionDetails(self, prefill)
+
     def new_native_apm_transaction_details_gateway(self, prefill=None):
         """Create a new NativeAPMTransactionDetailsGateway instance
         Keyword argument:
@@ -404,9 +468,3 @@ class ProcessOut:
         Keyword argument:
         prefill -- Data used to prefill the object (optional)"""
         return processout.NativeAPMTransactionDetailsInvoice(self, prefill)
-
-    def new_native_apm_transaction_details(self, prefill=None):
-        """Create a new NativeAPMTransactionDetails instance
-        Keyword argument:
-        prefill -- Data used to prefill the object (optional)"""
-        return processout.NativeAPMTransactionDetails(self, prefill)

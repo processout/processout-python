@@ -1053,6 +1053,8 @@ class Invoice(object):
             'auto_capture_at': options.get("auto_capture_at"),
             'metadata': options.get("metadata"),
             'override_mac_blocking': options.get("override_mac_blocking"),
+            'external_three_d_s': options.get("external_three_d_s"),
+            'save_source': options.get("save_source"),
             'source': source}
 
         response = Response(request.post(path, data, options))
@@ -1090,6 +1092,8 @@ class Invoice(object):
             'metadata': options.get("metadata"),
             'capture_statement_descriptor': options.get("capture_statement_descriptor"),
             'override_mac_blocking': options.get("override_mac_blocking"),
+            'external_three_d_s': options.get("external_three_d_s"),
+            'save_source': options.get("save_source"),
             'source': source}
 
         response = Response(request.post(path, data, options))
