@@ -1436,3 +1436,53 @@ class Invoice(object):
         return_values.append(response.success)
 
         return return_values[0]
+
+    def sync with psp(self, invoice_id, options={}):
+        """Refresh invoice by its ID with PSP.
+        Keyword argument:
+        invoice_id -- ID of the invoice
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path = "/invoices/" + quote_plus(invoice_id) + "/sync-with-psp"
+        data = {
+
+        }
+
+        response = Response(request.put(path, data, options))
+        return_values = []
+
+        body = response.body
+        body = body["invoice"]
+
+        obj = processout.Invoice(self._client)
+        return_values.append(obj.fill_with_data(body))
+
+        return return_values[0]
+
+    def update(self, invoice_id, options={}):
+        """Update invoice by its ID.
+        Keyword argument:
+        invoice_id -- ID of the invoice
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path = "/invoices/" + quote_plus(invoice_id) + ""
+        data = {
+            'amount': self.amount,
+            'tax': self.tax,
+            'details': self.details,
+            'shipping': self.shipping
+        }
+
+        response = Response(request.put(path, data, options))
+        return_values = []
+
+        body = response.body
+        body = body["invoice"]
+
+        return_values.append(self.fill_with_data(body))
+
+        return return_values[0]

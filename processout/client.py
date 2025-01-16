@@ -403,6 +403,18 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.WebhookEndpoint(self, prefill)
 
+    def new_card_shipping(self, prefill=None):
+        """Create a new CardShipping instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.CardShipping(self, prefill)
+
+    def new_card_update_request(self, prefill=None):
+        """Create a new CardUpdateRequest instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.CardUpdateRequest(self, prefill)
+
     def new_card_create_request(self, prefill=None):
         """Create a new CardCreateRequest instance
         Keyword argument:
@@ -420,18 +432,6 @@ class ProcessOut:
         Keyword argument:
         prefill -- Data used to prefill the object (optional)"""
         return processout.CardContact(self, prefill)
-
-    def new_card_shipping(self, prefill=None):
-        """Create a new CardShipping instance
-        Keyword argument:
-        prefill -- Data used to prefill the object (optional)"""
-        return processout.CardShipping(self, prefill)
-
-    def new_card_update_request(self, prefill=None):
-        """Create a new CardUpdateRequest instance
-        Keyword argument:
-        prefill -- Data used to prefill the object (optional)"""
-        return processout.CardUpdateRequest(self, prefill)
 
     def new_error_codes(self, prefill=None):
         """Create a new ErrorCodes instance

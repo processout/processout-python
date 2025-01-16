@@ -63,11 +63,11 @@ from processout.paymentdatathreedsauthentication import PaymentDataThreeDSAuthen
 from processout.transactionoperation import TransactionOperation
 from processout.webhook import Webhook
 from processout.webhookendpoint import WebhookEndpoint
+from processout.cardshipping import CardShipping
+from processout.cardupdaterequest import CardUpdateRequest
 from processout.cardcreaterequest import CardCreateRequest
 from processout.device import Device
 from processout.cardcontact import CardContact
-from processout.cardshipping import CardShipping
-from processout.cardupdaterequest import CardUpdateRequest
 from processout.errorcodes import ErrorCodes
 from processout.categoryerrorcodes import CategoryErrorCodes
 from processout.externalthreeds import ExternalThreeDS
