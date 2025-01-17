@@ -34,12 +34,14 @@ class TransactionOperation(object):
         self._gateway_operation_id = None
         self._arn = None
         self._error_code = None
+        self._error_message = None
         self._gateway_data = None
         self._payment_data_three_d_s_request = None
         self._payment_data_three_d_s_authentication = None
         self._payment_data_network_authentication = None
         self._initial_scheme_transaction_id = None
         self._scheme_id = None
+        self._processed_with_network_token = None
         self._payment_type = None
         self._metadata = None
         self._gateway_fee = None
@@ -318,6 +320,19 @@ class TransactionOperation(object):
         return self
 
     @property
+    def error_message(self):
+        """Get error_message"""
+        return self._error_message
+
+    @error_message.setter
+    def error_message(self, val):
+        """Set error_message
+        Keyword argument:
+        val -- New error_message value"""
+        self._error_message = val
+        return self
+
+    @property
     def gateway_data(self):
         """Get gateway_data"""
         return self._gateway_data
@@ -423,6 +438,19 @@ class TransactionOperation(object):
         return self
 
     @property
+    def processed_with_network_token(self):
+        """Get processed_with_network_token"""
+        return self._processed_with_network_token
+
+    @processed_with_network_token.setter
+    def processed_with_network_token(self, val):
+        """Set processed_with_network_token
+        Keyword argument:
+        val -- New processed_with_network_token value"""
+        self._processed_with_network_token = val
+        return self
+
+    @property
     def payment_type(self):
         """Get payment_type"""
         return self._payment_type
@@ -514,6 +542,8 @@ class TransactionOperation(object):
             self.arn = data["arn"]
         if "error_code" in data.keys():
             self.error_code = data["error_code"]
+        if "error_message" in data.keys():
+            self.error_message = data["error_message"]
         if "gateway_data" in data.keys():
             self.gateway_data = data["gateway_data"]
         if "payment_data_three_d_s_request" in data.keys():
@@ -526,6 +556,8 @@ class TransactionOperation(object):
             self.initial_scheme_transaction_id = data["initial_scheme_transaction_id"]
         if "scheme_id" in data.keys():
             self.scheme_id = data["scheme_id"]
+        if "processed_with_network_token" in data.keys():
+            self.processed_with_network_token = data["processed_with_network_token"]
         if "payment_type" in data.keys():
             self.payment_type = data["payment_type"]
         if "metadata" in data.keys():
@@ -557,12 +589,14 @@ class TransactionOperation(object):
             "gateway_operation_id": self.gateway_operation_id,
             "arn": self.arn,
             "error_code": self.error_code,
+            "error_message": self.error_message,
             "gateway_data": self.gateway_data,
             "payment_data_three_d_s_request": self.payment_data_three_d_s_request,
             "payment_data_three_d_s_authentication": self.payment_data_three_d_s_authentication,
             "payment_data_network_authentication": self.payment_data_network_authentication,
             "initial_scheme_transaction_id": self.initial_scheme_transaction_id,
             "scheme_id": self.scheme_id,
+            "processed_with_network_token": self.processed_with_network_token,
             "payment_type": self.payment_type,
             "metadata": self.metadata,
             "gateway_fee": self.gateway_fee,

@@ -29,6 +29,7 @@ class Customer(object):
         self._email = None
         self._first_name = None
         self._last_name = None
+        self._company_name = None
         self._address1 = None
         self._address2 = None
         self._city = None
@@ -270,6 +271,19 @@ class Customer(object):
         Keyword argument:
         val -- New last_name value"""
         self._last_name = val
+        return self
+
+    @property
+    def company_name(self):
+        """Get company_name"""
+        return self._company_name
+
+    @company_name.setter
+    def company_name(self, val):
+        """Set company_name
+        Keyword argument:
+        val -- New company_name value"""
+        self._company_name = val
         return self
 
     @property
@@ -532,6 +546,8 @@ class Customer(object):
             self.first_name = data["first_name"]
         if "last_name" in data.keys():
             self.last_name = data["last_name"]
+        if "company_name" in data.keys():
+            self.company_name = data["company_name"]
         if "address1" in data.keys():
             self.address1 = data["address1"]
         if "address2" in data.keys():
@@ -584,6 +600,7 @@ class Customer(object):
             "email": self.email,
             "first_name": self.first_name,
             "last_name": self.last_name,
+            "company_name": self.company_name,
             "address1": self.address1,
             "address2": self.address2,
             "city": self.city,
@@ -771,6 +788,7 @@ class Customer(object):
             'email': self.email,
             'first_name': self.first_name,
             'last_name': self.last_name,
+            'company_name': self.company_name,
             'address1': self.address1,
             'address2': self.address2,
             'city': self.city,
@@ -838,6 +856,7 @@ class Customer(object):
             'email': self.email,
             'first_name': self.first_name,
             'last_name': self.last_name,
+            'company_name': self.company_name,
             'address1': self.address1,
             'address2': self.address2,
             'city': self.city,
