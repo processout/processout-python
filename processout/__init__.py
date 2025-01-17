@@ -71,9 +71,9 @@ from processout.cardupdaterequest import CardUpdateRequest
 from processout.errorcodes import ErrorCodes
 from processout.categoryerrorcodes import CategoryErrorCodes
 from processout.externalthreeds import ExternalThreeDS
-from processout.nativeapmtransactiondetails import NativeAPMTransactionDetails
 from processout.nativeapmtransactiondetailsgateway import NativeAPMTransactionDetailsGateway
 from processout.nativeapmtransactiondetailsinvoice import NativeAPMTransactionDetailsInvoice
+from processout.nativeapmtransactiondetails import NativeAPMTransactionDetails
 
 from processout.gatewayrequest import GatewayRequest
 

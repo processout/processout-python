@@ -451,12 +451,6 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.ExternalThreeDS(self, prefill)
 
-    def new_native_apm_transaction_details(self, prefill=None):
-        """Create a new NativeAPMTransactionDetails instance
-        Keyword argument:
-        prefill -- Data used to prefill the object (optional)"""
-        return processout.NativeAPMTransactionDetails(self, prefill)
-
     def new_native_apm_transaction_details_gateway(self, prefill=None):
         """Create a new NativeAPMTransactionDetailsGateway instance
         Keyword argument:
@@ -468,3 +462,9 @@ class ProcessOut:
         Keyword argument:
         prefill -- Data used to prefill the object (optional)"""
         return processout.NativeAPMTransactionDetailsInvoice(self, prefill)
+
+    def new_native_apm_transaction_details(self, prefill=None):
+        """Create a new NativeAPMTransactionDetails instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.NativeAPMTransactionDetails(self, prefill)
