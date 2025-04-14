@@ -40,6 +40,9 @@ from processout.invoiceshippingphone import InvoiceShippingPhone
 from processout.invoicebilling import InvoiceBilling
 from processout.unsupportedfeaturebypass import UnsupportedFeatureBypass
 from processout.invoicedetail import InvoiceDetail
+from processout.invoicesubmerchant import InvoiceSubmerchant
+from processout.submerchantphonenumber import SubmerchantPhoneNumber
+from processout.submerchantaddress import SubmerchantAddress
 from processout.customeraction import CustomerAction
 from processout.dunningaction import DunningAction
 from processout.payout import Payout

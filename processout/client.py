@@ -265,6 +265,24 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.InvoiceDetail(self, prefill)
 
+    def new_invoice_submerchant(self, prefill=None):
+        """Create a new InvoiceSubmerchant instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.InvoiceSubmerchant(self, prefill)
+
+    def new_submerchant_phone_number(self, prefill=None):
+        """Create a new SubmerchantPhoneNumber instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.SubmerchantPhoneNumber(self, prefill)
+
+    def new_submerchant_address(self, prefill=None):
+        """Create a new SubmerchantAddress instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.SubmerchantAddress(self, prefill)
+
     def new_customer_action(self, prefill=None):
         """Create a new CustomerAction instance
         Keyword argument:

@@ -38,6 +38,7 @@ class Token(object):
         self._manual_invoice_cancellation = None
         self._verification_status = None
         self._can_get_balance = None
+        self._webhook_url = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -363,6 +364,19 @@ class Token(object):
         self._can_get_balance = val
         return self
 
+    @property
+    def webhook_url(self):
+        """Get webhook_url"""
+        return self._webhook_url
+
+    @webhook_url.setter
+    def webhook_url(self, val):
+        """Set webhook_url
+        Keyword argument:
+        val -- New webhook_url value"""
+        self._webhook_url = val
+        return self
+
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
@@ -411,6 +425,8 @@ class Token(object):
             self.verification_status = data["verification_status"]
         if "can_get_balance" in data.keys():
             self.can_get_balance = data["can_get_balance"]
+        if "webhook_url" in data.keys():
+            self.webhook_url = data["webhook_url"]
 
         return self
 
@@ -438,6 +454,7 @@ class Token(object):
             "manual_invoice_cancellation": self.manual_invoice_cancellation,
             "verification_status": self.verification_status,
             "can_get_balance": self.can_get_balance,
+            "webhook_url": self.webhook_url,
         }
 
     def fetch_customer_tokens(self, customer_id, options={}):
@@ -509,6 +526,7 @@ class Token(object):
             'description': self.description,
             'invoice_id': self.invoice_id,
             'manual_invoice_cancellation': self.manual_invoice_cancellation,
+            'webhook_url': self.webhook_url,
             'source': options.get("source"),
             'settings': options.get("settings"),
             'device': options.get("device"),
