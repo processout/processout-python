@@ -28,6 +28,7 @@ class Invoice(object):
         self._token = None
         self._token_id = None
         self._details = None
+        self._submerchant = None
         self._url = None
         self._url_qrcode = None
         self._name = None
@@ -280,6 +281,28 @@ class Invoice(object):
                 obj.fill_with_data(v)
                 l.append(obj)
             self._details = l
+        return self
+
+    @property
+    def submerchant(self):
+        """Get submerchant"""
+        return self._submerchant
+
+    @submerchant.setter
+    def submerchant(self, val):
+        """Set submerchant
+        Keyword argument:
+        val -- New submerchant value"""
+        if val is None:
+            self._submerchant = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.InvoiceSubmerchant(self._client)
+            obj.fill_with_data(val)
+            self._submerchant = obj
+        else:
+            self._submerchant = val
         return self
 
     @property
@@ -876,6 +899,8 @@ class Invoice(object):
             self.token_id = data["token_id"]
         if "details" in data.keys():
             self.details = data["details"]
+        if "submerchant" in data.keys():
+            self.submerchant = data["submerchant"]
         if "url" in data.keys():
             self.url = data["url"]
         if "url_qrcode" in data.keys():
@@ -969,6 +994,7 @@ class Invoice(object):
             "token": self.token,
             "token_id": self.token_id,
             "details": self.details,
+            "submerchant": self.submerchant,
             "url": self.url,
             "url_qrcode": self.url_qrcode,
             "name": self.name,
@@ -1354,6 +1380,7 @@ class Invoice(object):
             'currency': self.currency,
             'metadata': self.metadata,
             'details': self.details,
+            'submerchant': self.submerchant,
             'exemption_reason_3ds2': self.exemption_reason_3ds2,
             'sca_exemption_reason': self.sca_exemption_reason,
             'challenge_indicator': self.challenge_indicator,
