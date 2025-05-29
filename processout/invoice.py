@@ -67,6 +67,7 @@ class Invoice(object):
         self._unsupported_feature_bypass = None
         self._verification = None
         self._auto_capture_at = None
+        self._reference_id = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -871,6 +872,19 @@ class Invoice(object):
         self._auto_capture_at = val
         return self
 
+    @property
+    def reference_id(self):
+        """Get reference_id"""
+        return self._reference_id
+
+    @reference_id.setter
+    def reference_id(self, val):
+        """Set reference_id
+        Keyword argument:
+        val -- New reference_id value"""
+        self._reference_id = val
+        return self
+
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
@@ -977,6 +991,8 @@ class Invoice(object):
             self.verification = data["verification"]
         if "auto_capture_at" in data.keys():
             self.auto_capture_at = data["auto_capture_at"]
+        if "reference_id" in data.keys():
+            self.reference_id = data["reference_id"]
 
         return self
 
@@ -1033,6 +1049,7 @@ class Invoice(object):
             "unsupported_feature_bypass": self.unsupported_feature_bypass,
             "verification": self.verification,
             "auto_capture_at": self.auto_capture_at,
+            "reference_id": self.reference_id,
         }
 
     def increment_authorization(self, amount, options={}):
@@ -1381,6 +1398,7 @@ class Invoice(object):
             'metadata': self.metadata,
             'details': self.details,
             'submerchant': self.submerchant,
+            'reference_id': self.reference_id,
             'exemption_reason_3ds2': self.exemption_reason_3ds2,
             'sca_exemption_reason': self.sca_exemption_reason,
             'challenge_indicator': self.challenge_indicator,

@@ -47,6 +47,7 @@ class Customer(object):
         self._created_at = None
         self._registered_at = None
         self._date_of_birth = None
+        self._reference_id = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -516,6 +517,19 @@ class Customer(object):
         self._date_of_birth = val
         return self
 
+    @property
+    def reference_id(self):
+        """Get reference_id"""
+        return self._reference_id
+
+    @reference_id.setter
+    def reference_id(self, val):
+        """Set reference_id
+        Keyword argument:
+        val -- New reference_id value"""
+        self._reference_id = val
+        return self
+
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
@@ -582,6 +596,8 @@ class Customer(object):
             self.registered_at = data["registered_at"]
         if "date_of_birth" in data.keys():
             self.date_of_birth = data["date_of_birth"]
+        if "reference_id" in data.keys():
+            self.reference_id = data["reference_id"]
 
         return self
 
@@ -618,6 +634,7 @@ class Customer(object):
             "created_at": self.created_at,
             "registered_at": self.registered_at,
             "date_of_birth": self.date_of_birth,
+            "reference_id": self.reference_id,
         }
 
     def fetch_subscriptions(self, options={}):
@@ -803,6 +820,7 @@ class Customer(object):
             'sex': self.sex,
             'metadata': self.metadata,
             'id': self.id,
+            'reference_id': self.reference_id,
             'registered_at': self.registered_at,
             'phone_number': self.phone_number
         }

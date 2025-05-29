@@ -75,6 +75,12 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.Balance(self, prefill)
 
+    def new_balances_customer_action(self, prefill=None):
+        """Create a new BalancesCustomerAction instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.BalancesCustomerAction(self, prefill)
+
     def new_card(self, prefill=None):
         """Create a new Card instance
         Keyword argument:
@@ -421,12 +427,6 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.WebhookEndpoint(self, prefill)
 
-    def new_card_create_request(self, prefill=None):
-        """Create a new CardCreateRequest instance
-        Keyword argument:
-        prefill -- Data used to prefill the object (optional)"""
-        return processout.CardCreateRequest(self, prefill)
-
     def new_device(self, prefill=None):
         """Create a new Device instance
         Keyword argument:
@@ -450,6 +450,12 @@ class ProcessOut:
         Keyword argument:
         prefill -- Data used to prefill the object (optional)"""
         return processout.CardUpdateRequest(self, prefill)
+
+    def new_card_create_request(self, prefill=None):
+        """Create a new CardCreateRequest instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.CardCreateRequest(self, prefill)
 
     def new_error_codes(self, prefill=None):
         """Create a new ErrorCodes instance
