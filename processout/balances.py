@@ -17,6 +17,8 @@ class Balances(object):
         self._client = client
 
         self._vouchers = None
+        self._available_balance = None
+        self._customer_action = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -45,18 +47,68 @@ class Balances(object):
             self._vouchers = l
         return self
 
+    @property
+    def available_balance(self):
+        """Get available_balance"""
+        return self._available_balance
+
+    @available_balance.setter
+    def available_balance(self, val):
+        """Set available_balance
+        Keyword argument:
+        val -- New available_balance value"""
+        if val is None:
+            self._available_balance = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.Balance(self._client)
+            obj.fill_with_data(val)
+            self._available_balance = obj
+        else:
+            self._available_balance = val
+        return self
+
+    @property
+    def customer_action(self):
+        """Get customer_action"""
+        return self._customer_action
+
+    @customer_action.setter
+    def customer_action(self, val):
+        """Set customer_action
+        Keyword argument:
+        val -- New customer_action value"""
+        if val is None:
+            self._customer_action = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.BalancesCustomerAction(self._client)
+            obj.fill_with_data(val)
+            self._customer_action = obj
+        else:
+            self._customer_action = val
+        return self
+
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
         data -- The data from which to pull the new values"""
         if "vouchers" in data.keys():
             self.vouchers = data["vouchers"]
+        if "available_balance" in data.keys():
+            self.available_balance = data["available_balance"]
+        if "customer_action" in data.keys():
+            self.customer_action = data["customer_action"]
 
         return self
 
     def to_json(self):
         return {
             "vouchers": self.vouchers,
+            "available_balance": self.available_balance,
+            "customer_action": self.customer_action,
         }
 
     def find(self, token_id, options={}):

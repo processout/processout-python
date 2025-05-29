@@ -527,6 +527,7 @@ class Token(object):
             'invoice_id': self.invoice_id,
             'manual_invoice_cancellation': self.manual_invoice_cancellation,
             'webhook_url': self.webhook_url,
+            'gateway_configuration_id': self.gateway_configuration_id,
             'source': options.get("source"),
             'settings': options.get("settings"),
             'device': options.get("device"),
@@ -570,7 +571,8 @@ class Token(object):
             'verify_metadata': options.get("verify_metadata"),
             'set_default': options.get("set_default"),
             'verify_statement_descriptor': options.get("verify_statement_descriptor"),
-            'invoice_return_url': options.get("invoice_return_url")}
+            'invoice_return_url': options.get("invoice_return_url"),
+            'gateway_configuration_id': options.get("gateway_configuration_id")}
 
         response = Response(request.put(path, data, options))
         return_values = []
