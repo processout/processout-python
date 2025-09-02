@@ -1137,6 +1137,7 @@ class Invoice(object):
             'override_mac_blocking': options.get("override_mac_blocking"),
             'external_three_d_s': options.get("external_three_d_s"),
             'save_source': options.get("save_source"),
+            'capture_type': options.get("capture_type"),
             'source': source}
 
         response = Response(request.post(path, data, options))
