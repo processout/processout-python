@@ -313,10 +313,12 @@ class GatewayConfiguration(object):
         return_values = []
 
         body = response.body
-        body = body["gateway_configuration"]
+        body = body.get("gateway_configuration")
 
-        obj = processout.GatewayConfiguration(self._client)
-        return_values.append(obj.fill_with_data(body))
+        if body is not None:
+
+            obj = processout.GatewayConfiguration(self._client)
+            return_values.append(obj.fill_with_data(body))
 
         return return_values[0]
 
@@ -344,9 +346,11 @@ class GatewayConfiguration(object):
         return_values = []
 
         body = response.body
-        body = body["gateway_configuration"]
+        body = body.get("gateway_configuration")
 
-        return_values.append(self.fill_with_data(body))
+        if body is not None:
+
+            return_values.append(self.fill_with_data(body))
 
         return return_values[0]
 
@@ -395,8 +399,10 @@ class GatewayConfiguration(object):
         return_values = []
 
         body = response.body
-        body = body["gateway_configuration"]
+        body = body.get("gateway_configuration")
 
-        return_values.append(self.fill_with_data(body))
+        if body is not None:
+
+            return_values.append(self.fill_with_data(body))
 
         return return_values[0]

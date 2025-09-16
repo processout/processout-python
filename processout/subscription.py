@@ -742,9 +742,10 @@ class Subscription(object):
         return_values = []
 
         body = response.body
-        body = body["addon"]
-        addon = processout.Addon(self._client)
-        return_values.append(addon.fill_with_data(body))
+        body = body.get("addon")
+        if body is not None:
+            addon = processout.Addon(self._client)
+            return_values.append(addon.fill_with_data(body))
 
         return return_values[0]
 
@@ -788,9 +789,10 @@ class Subscription(object):
         return_values = []
 
         body = response.body
-        body = body["customer"]
-        customer = processout.Customer(self._client)
-        return_values.append(customer.fill_with_data(body))
+        body = body.get("customer")
+        if body is not None:
+            customer = processout.Customer(self._client)
+            return_values.append(customer.fill_with_data(body))
 
         return return_values[0]
 
@@ -839,9 +841,10 @@ class Subscription(object):
         return_values = []
 
         body = response.body
-        body = body["discount"]
-        discount = processout.Discount(self._client)
-        return_values.append(discount.fill_with_data(body))
+        body = body.get("discount")
+        if body is not None:
+            discount = processout.Discount(self._client)
+            return_values.append(discount.fill_with_data(body))
 
         return return_values[0]
 
@@ -949,9 +952,11 @@ class Subscription(object):
         return_values = []
 
         body = response.body
-        body = body["subscription"]
+        body = body.get("subscription")
 
-        return_values.append(self.fill_with_data(body))
+        if body is not None:
+
+            return_values.append(self.fill_with_data(body))
 
         return return_values[0]
 
@@ -972,10 +977,12 @@ class Subscription(object):
         return_values = []
 
         body = response.body
-        body = body["subscription"]
+        body = body.get("subscription")
 
-        obj = processout.Subscription(self._client)
-        return_values.append(obj.fill_with_data(body))
+        if body is not None:
+
+            obj = processout.Subscription(self._client)
+            return_values.append(obj.fill_with_data(body))
 
         return return_values[0]
 
@@ -1006,9 +1013,11 @@ class Subscription(object):
         return_values = []
 
         body = response.body
-        body = body["subscription"]
+        body = body.get("subscription")
 
-        return_values.append(self.fill_with_data(body))
+        if body is not None:
+
+            return_values.append(self.fill_with_data(body))
 
         return return_values[0]
 
@@ -1031,8 +1040,10 @@ class Subscription(object):
         return_values = []
 
         body = response.body
-        body = body["subscription"]
+        body = body.get("subscription")
 
-        return_values.append(self.fill_with_data(body))
+        if body is not None:
+
+            return_values.append(self.fill_with_data(body))
 
         return return_values[0]

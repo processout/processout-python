@@ -228,10 +228,12 @@ class ExportLayout(object):
         return_values = []
 
         body = response.body
-        body = body["export_layout"]
+        body = body.get("export_layout")
 
-        obj = processout.ExportLayout(self._client)
-        return_values.append(obj.fill_with_data(body))
+        if body is not None:
+
+            obj = processout.ExportLayout(self._client)
+            return_values.append(obj.fill_with_data(body))
 
         return return_values[0]
 
@@ -252,10 +254,12 @@ class ExportLayout(object):
         return_values = []
 
         body = response.body
-        body = body["export_layout"]
+        body = body.get("export_layout")
 
-        obj = processout.ExportLayout(self._client)
-        return_values.append(obj.fill_with_data(body))
+        if body is not None:
+
+            obj = processout.ExportLayout(self._client)
+            return_values.append(obj.fill_with_data(body))
 
         return return_values[0]
 
@@ -279,9 +283,11 @@ class ExportLayout(object):
         return_values = []
 
         body = response.body
-        body = body["export_layout"]
+        body = body.get("export_layout")
 
-        return_values.append(self.fill_with_data(body))
+        if body is not None:
+
+            return_values.append(self.fill_with_data(body))
 
         return return_values[0]
 
@@ -304,9 +310,11 @@ class ExportLayout(object):
         return_values = []
 
         body = response.body
-        body = body["export_layout"]
+        body = body.get("export_layout")
 
-        return_values.append(self.fill_with_data(body))
+        if body is not None:
+
+            return_values.append(self.fill_with_data(body))
 
         return return_values[0]
 

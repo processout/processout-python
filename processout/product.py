@@ -260,9 +260,10 @@ class Product(object):
         return_values = []
 
         body = response.body
-        body = body["invoice"]
-        invoice = processout.Invoice(self._client)
-        return_values.append(invoice.fill_with_data(body))
+        body = body.get("invoice")
+        if body is not None:
+            invoice = processout.Invoice(self._client)
+            return_values.append(invoice.fill_with_data(body))
 
         return return_values[0]
 
@@ -315,9 +316,11 @@ class Product(object):
         return_values = []
 
         body = response.body
-        body = body["product"]
+        body = body.get("product")
 
-        return_values.append(self.fill_with_data(body))
+        if body is not None:
+
+            return_values.append(self.fill_with_data(body))
 
         return return_values[0]
 
@@ -338,10 +341,12 @@ class Product(object):
         return_values = []
 
         body = response.body
-        body = body["product"]
+        body = body.get("product")
 
-        obj = processout.Product(self._client)
-        return_values.append(obj.fill_with_data(body))
+        if body is not None:
+
+            obj = processout.Product(self._client)
+            return_values.append(obj.fill_with_data(body))
 
         return return_values[0]
 
@@ -367,9 +372,11 @@ class Product(object):
         return_values = []
 
         body = response.body
-        body = body["product"]
+        body = body.get("product")
 
-        return_values.append(self.fill_with_data(body))
+        if body is not None:
+
+            return_values.append(self.fill_with_data(body))
 
         return return_values[0]
 

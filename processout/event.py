@@ -229,9 +229,11 @@ class Event(object):
         return_values = []
 
         body = response.body
-        body = body["event"]
+        body = body.get("event")
 
-        obj = processout.Event(self._client)
-        return_values.append(obj.fill_with_data(body))
+        if body is not None:
+
+            obj = processout.Event(self._client)
+            return_values.append(obj.fill_with_data(body))
 
         return return_values[0]

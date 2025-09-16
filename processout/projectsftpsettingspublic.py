@@ -98,9 +98,11 @@ class ProjectSFTPSettingsPublic(object):
         return_values = []
 
         body = response.body
-        body = body["sftp_settings"]
+        body = body.get("sftp_settings")
 
-        obj = processout.ProjectSFTPSettingsPublic(self._client)
-        return_values.append(obj.fill_with_data(body))
+        if body is not None:
+
+            obj = processout.ProjectSFTPSettingsPublic(self._client)
+            return_values.append(obj.fill_with_data(body))
 
         return return_values[0]

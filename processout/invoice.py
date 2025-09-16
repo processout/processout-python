@@ -1070,9 +1070,10 @@ class Invoice(object):
         return_values = []
 
         body = response.body
-        body = body["transaction"]
-        transaction = processout.Transaction(self._client)
-        return_values.append(transaction.fill_with_data(body))
+        body = body.get("transaction")
+        if body is not None:
+            transaction = processout.Transaction(self._client)
+            return_values.append(transaction.fill_with_data(body))
 
         return return_values[0]
 
@@ -1104,13 +1105,16 @@ class Invoice(object):
         return_values = []
 
         body = response.body
-        body = body["transaction"]
-        transaction = processout.Transaction(self._client)
-        return_values.append(transaction.fill_with_data(body))
+        body = body.get("transaction")
+        if body is not None:
+            transaction = processout.Transaction(self._client)
+            return_values.append(transaction.fill_with_data(body))
         body = response.body
-        body = body["customer_action"]
-        customerAction = processout.CustomerAction(self._client)
-        return_values.append(customerAction.fill_with_data(body))
+        body = body.get("customer_action")
+        if body is not None:
+            customerAction = processout.CustomerAction(self._client)
+            customerAction_filled = customerAction.fill_with_data(body)
+            setattr(return_values[0], "customer_action", customerAction_filled)
 
         return tuple(return_values)
 
@@ -1143,13 +1147,16 @@ class Invoice(object):
         return_values = []
 
         body = response.body
-        body = body["transaction"]
-        transaction = processout.Transaction(self._client)
-        return_values.append(transaction.fill_with_data(body))
+        body = body.get("transaction")
+        if body is not None:
+            transaction = processout.Transaction(self._client)
+            return_values.append(transaction.fill_with_data(body))
         body = response.body
-        body = body["customer_action"]
-        customerAction = processout.CustomerAction(self._client)
-        return_values.append(customerAction.fill_with_data(body))
+        body = body.get("customer_action")
+        if body is not None:
+            customerAction = processout.CustomerAction(self._client)
+            customerAction_filled = customerAction.fill_with_data(body)
+            setattr(return_values[0], "customer_action", customerAction_filled)
 
         return tuple(return_values)
 
@@ -1170,9 +1177,10 @@ class Invoice(object):
         return_values = []
 
         body = response.body
-        body = body["customer"]
-        customer = processout.Customer(self._client)
-        return_values.append(customer.fill_with_data(body))
+        body = body.get("customer")
+        if body is not None:
+            customer = processout.Customer(self._client)
+            return_values.append(customer.fill_with_data(body))
 
         return return_values[0]
 
@@ -1193,9 +1201,10 @@ class Invoice(object):
         return_values = []
 
         body = response.body
-        body = body["customer"]
-        customer = processout.Customer(self._client)
-        return_values.append(customer.fill_with_data(body))
+        body = body.get("customer")
+        if body is not None:
+            customer = processout.Customer(self._client)
+            return_values.append(customer.fill_with_data(body))
 
         return return_values[0]
 
@@ -1218,9 +1227,10 @@ class Invoice(object):
         return_values = []
 
         body = response.body
-        body = body["transaction"]
-        transaction = processout.Transaction(self._client)
-        return_values.append(transaction.fill_with_data(body))
+        body = body.get("transaction")
+        if body is not None:
+            transaction = processout.Transaction(self._client)
+            return_values.append(transaction.fill_with_data(body))
 
         return return_values[0]
 
@@ -1247,10 +1257,12 @@ class Invoice(object):
         return_values = []
 
         body = response.body
-        body = body["native_apm"]
-        nativeAPMTransactionDetails = processout.NativeAPMTransactionDetails(
-            self._client)
-        return_values.append(nativeAPMTransactionDetails.fill_with_data(body))
+        body = body.get("native_apm")
+        if body is not None:
+            nativeAPMTransactionDetails = processout.NativeAPMTransactionDetails(
+                self._client)
+            return_values.append(
+                nativeAPMTransactionDetails.fill_with_data(body))
 
         return return_values[0]
 
@@ -1272,13 +1284,16 @@ class Invoice(object):
         return_values = []
 
         body = response.body
-        body = body["transaction"]
-        transaction = processout.Transaction(self._client)
-        return_values.append(transaction.fill_with_data(body))
+        body = body.get("transaction")
+        if body is not None:
+            transaction = processout.Transaction(self._client)
+            return_values.append(transaction.fill_with_data(body))
         body = response.body
-        body = body["native_apm"]
-        nativeAPMResponse = processout.NativeAPMResponse(self._client)
-        return_values.append(nativeAPMResponse.fill_with_data(body))
+        body = body.get("native_apm")
+        if body is not None:
+            nativeAPMResponse = processout.NativeAPMResponse(self._client)
+            nativeAPMResponse_filled = nativeAPMResponse.fill_with_data(body)
+            setattr(return_values[0], "native_apm", nativeAPMResponse_filled)
 
         return tuple(return_values)
 
@@ -1300,9 +1315,10 @@ class Invoice(object):
         return_values = []
 
         body = response.body
-        body = body["customer_action"]
-        customerAction = processout.CustomerAction(self._client)
-        return_values.append(customerAction.fill_with_data(body))
+        body = body.get("customer_action")
+        if body is not None:
+            customerAction = processout.CustomerAction(self._client)
+            return_values.append(customerAction.fill_with_data(body))
 
         return return_values[0]
 
@@ -1323,9 +1339,10 @@ class Invoice(object):
         return_values = []
 
         body = response.body
-        body = body["transaction"]
-        transaction = processout.Transaction(self._client)
-        return_values.append(transaction.fill_with_data(body))
+        body = body.get("transaction")
+        if body is not None:
+            transaction = processout.Transaction(self._client)
+            return_values.append(transaction.fill_with_data(body))
 
         return return_values[0]
 
@@ -1347,9 +1364,10 @@ class Invoice(object):
         return_values = []
 
         body = response.body
-        body = body["transaction"]
-        transaction = processout.Transaction(self._client)
-        return_values.append(transaction.fill_with_data(body))
+        body = body.get("transaction")
+        if body is not None:
+            transaction = processout.Transaction(self._client)
+            return_values.append(transaction.fill_with_data(body))
 
         return return_values[0]
 
@@ -1432,9 +1450,11 @@ class Invoice(object):
         return_values = []
 
         body = response.body
-        body = body["invoice"]
+        body = body.get("invoice")
 
-        return_values.append(self.fill_with_data(body))
+        if body is not None:
+
+            return_values.append(self.fill_with_data(body))
 
         return return_values[0]
 
@@ -1455,10 +1475,12 @@ class Invoice(object):
         return_values = []
 
         body = response.body
-        body = body["invoice"]
+        body = body.get("invoice")
 
-        obj = processout.Invoice(self._client)
-        return_values.append(obj.fill_with_data(body))
+        if body is not None:
+
+            obj = processout.Invoice(self._client)
+            return_values.append(obj.fill_with_data(body))
 
         return return_values[0]
 
@@ -1499,10 +1521,12 @@ class Invoice(object):
         return_values = []
 
         body = response.body
-        body = body["invoice"]
+        body = body.get("invoice")
 
-        obj = processout.Invoice(self._client)
-        return_values.append(obj.fill_with_data(body))
+        if body is not None:
+
+            obj = processout.Invoice(self._client)
+            return_values.append(obj.fill_with_data(body))
 
         return return_values[0]
 
@@ -1526,8 +1550,10 @@ class Invoice(object):
         return_values = []
 
         body = response.body
-        body = body["invoice"]
+        body = body.get("invoice")
 
-        return_values.append(self.fill_with_data(body))
+        if body is not None:
+
+            return_values.append(self.fill_with_data(body))
 
         return return_values[0]

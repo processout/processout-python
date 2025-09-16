@@ -653,10 +653,12 @@ class Card(object):
         return_values = []
 
         body = response.body
-        body = body["card"]
+        body = body.get("card")
 
-        obj = processout.Card(self._client)
-        return_values.append(obj.fill_with_data(body))
+        if body is not None:
+
+            obj = processout.Card(self._client)
+            return_values.append(obj.fill_with_data(body))
 
         return return_values[0]
 
