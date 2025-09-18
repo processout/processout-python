@@ -1330,9 +1330,10 @@ class Transaction(object):
         return_values = []
 
         body = response.body
-        body = body["refund"]
-        refund = processout.Refund(self._client)
-        return_values.append(refund.fill_with_data(body))
+        body = body.get("refund")
+        if body is not None:
+            refund = processout.Refund(self._client)
+            return_values.append(refund.fill_with_data(body))
 
         return return_values[0]
 
@@ -1407,9 +1408,11 @@ class Transaction(object):
         return_values = []
 
         body = response.body
-        body = body["transaction"]
+        body = body.get("transaction")
 
-        obj = processout.Transaction(self._client)
-        return_values.append(obj.fill_with_data(body))
+        if body is not None:
+
+            obj = processout.Transaction(self._client)
+            return_values.append(obj.fill_with_data(body))
 
         return return_values[0]

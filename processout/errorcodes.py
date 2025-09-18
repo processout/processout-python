@@ -73,8 +73,9 @@ class ErrorCodes(object):
         return_values = []
 
         body = response.body
+        if body is not None:
 
-        obj = processout.ErrorCodes(self._client)
-        return_values.append(obj.fill_with_data(body))
+            obj = processout.ErrorCodes(self._client)
+            return_values.append(obj.fill_with_data(body))
 
         return return_values[0]

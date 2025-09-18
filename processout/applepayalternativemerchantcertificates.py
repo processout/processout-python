@@ -94,10 +94,11 @@ class ApplePayAlternativeMerchantCertificates(object):
         return_values = []
 
         body = response.body
-        body = body["applepay_certificates"]
-        applePayAlternativeMerchantCertificates = processout.ApplePayAlternativeMerchantCertificates(
-            self._client)
-        return_values.append(
-            applePayAlternativeMerchantCertificates.fill_with_data(body))
+        body = body.get("applepay_certificates")
+        if body is not None:
+            applePayAlternativeMerchantCertificates = processout.ApplePayAlternativeMerchantCertificates(
+                self._client)
+            return_values.append(
+                applePayAlternativeMerchantCertificates.fill_with_data(body))
 
         return return_values[0]

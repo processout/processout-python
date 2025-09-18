@@ -347,9 +347,11 @@ class Addon(object):
         return_values = []
 
         body = response.body
-        body = body["addon"]
+        body = body.get("addon")
 
-        return_values.append(self.fill_with_data(body))
+        if body is not None:
+
+            return_values.append(self.fill_with_data(body))
 
         return return_values[0]
 
@@ -372,10 +374,12 @@ class Addon(object):
         return_values = []
 
         body = response.body
-        body = body["addon"]
+        body = body.get("addon")
 
-        obj = processout.Addon(self._client)
-        return_values.append(obj.fill_with_data(body))
+        if body is not None:
+
+            obj = processout.Addon(self._client)
+            return_values.append(obj.fill_with_data(body))
 
         return return_values[0]
 
@@ -406,9 +410,11 @@ class Addon(object):
         return_values = []
 
         body = response.body
-        body = body["addon"]
+        body = body.get("addon")
 
-        return_values.append(self.fill_with_data(body))
+        if body is not None:
+
+            return_values.append(self.fill_with_data(body))
 
         return return_values[0]
 

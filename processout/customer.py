@@ -709,9 +709,10 @@ class Customer(object):
         return_values = []
 
         body = response.body
-        body = body["token"]
-        token = processout.Token(self._client)
-        return_values.append(token.fill_with_data(body))
+        body = body.get("token")
+        if body is not None:
+            token = processout.Token(self._client)
+            return_values.append(token.fill_with_data(body))
 
         return return_values[0]
 
@@ -829,9 +830,11 @@ class Customer(object):
         return_values = []
 
         body = response.body
-        body = body["customer"]
+        body = body.get("customer")
 
-        return_values.append(self.fill_with_data(body))
+        if body is not None:
+
+            return_values.append(self.fill_with_data(body))
 
         return return_values[0]
 
@@ -852,10 +855,12 @@ class Customer(object):
         return_values = []
 
         body = response.body
-        body = body["customer"]
+        body = body.get("customer")
 
-        obj = processout.Customer(self._client)
-        return_values.append(obj.fill_with_data(body))
+        if body is not None:
+
+            obj = processout.Customer(self._client)
+            return_values.append(obj.fill_with_data(body))
 
         return return_values[0]
 
@@ -896,9 +901,11 @@ class Customer(object):
         return_values = []
 
         body = response.body
-        body = body["customer"]
+        body = body.get("customer")
 
-        return_values.append(self.fill_with_data(body))
+        if body is not None:
+
+            return_values.append(self.fill_with_data(body))
 
         return return_values[0]
 

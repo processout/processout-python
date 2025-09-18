@@ -264,9 +264,11 @@ class Project(object):
         return_values = []
 
         body = response.body
-        body = body["project"]
+        body = body.get("project")
 
-        return_values.append(self.fill_with_data(body))
+        if body is not None:
+
+            return_values.append(self.fill_with_data(body))
 
         return return_values[0]
 
@@ -287,9 +289,11 @@ class Project(object):
         return_values = []
 
         body = response.body
-        body = body["project"]
+        body = body.get("project")
 
-        return_values.append(self.fill_with_data(body))
+        if body is not None:
+
+            return_values.append(self.fill_with_data(body))
 
         return return_values[0]
 
@@ -362,8 +366,10 @@ class Project(object):
         return_values = []
 
         body = response.body
-        body = body["project"]
+        body = body.get("project")
 
-        return_values.append(self.fill_with_data(body))
+        if body is not None:
+
+            return_values.append(self.fill_with_data(body))
 
         return return_values[0]

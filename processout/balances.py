@@ -128,8 +128,9 @@ class Balances(object):
         return_values = []
 
         body = response.body
-        body = body["balances"]
-        balances = processout.Balances(self._client)
-        return_values.append(balances.fill_with_data(body))
+        body = body.get("balances")
+        if body is not None:
+            balances = processout.Balances(self._client)
+            return_values.append(balances.fill_with_data(body))
 
         return return_values[0]

@@ -311,9 +311,11 @@ class Coupon(object):
         return_values = []
 
         body = response.body
-        body = body["coupon"]
+        body = body.get("coupon")
 
-        return_values.append(self.fill_with_data(body))
+        if body is not None:
+
+            return_values.append(self.fill_with_data(body))
 
         return return_values[0]
 
@@ -334,10 +336,12 @@ class Coupon(object):
         return_values = []
 
         body = response.body
-        body = body["coupon"]
+        body = body.get("coupon")
 
-        obj = processout.Coupon(self._client)
-        return_values.append(obj.fill_with_data(body))
+        if body is not None:
+
+            obj = processout.Coupon(self._client)
+            return_values.append(obj.fill_with_data(body))
 
         return return_values[0]
 
@@ -358,9 +362,11 @@ class Coupon(object):
         return_values = []
 
         body = response.body
-        body = body["coupon"]
+        body = body.get("coupon")
 
-        return_values.append(self.fill_with_data(body))
+        if body is not None:
+
+            return_values.append(self.fill_with_data(body))
 
         return return_values[0]
 

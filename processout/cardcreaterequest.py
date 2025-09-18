@@ -379,8 +379,10 @@ class CardCreateRequest(object):
         return_values = []
 
         body = response.body
-        body = body["card"]
+        body = body.get("card")
 
-        return_values.append(self.fill_with_data(body))
+        if body is not None:
+
+            return_values.append(self.fill_with_data(body))
 
         return return_values[0]

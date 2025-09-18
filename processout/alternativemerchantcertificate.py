@@ -64,11 +64,12 @@ class AlternativeMerchantCertificate(object):
         return_values = []
 
         body = response.body
-        body = body["alternative_merchant_certificate"]
-        alternativeMerchantCertificate = processout.AlternativeMerchantCertificate(
-            self._client)
-        return_values.append(
-            alternativeMerchantCertificate.fill_with_data(body))
+        body = body.get("alternative_merchant_certificate")
+        if body is not None:
+            alternativeMerchantCertificate = processout.AlternativeMerchantCertificate(
+                self._client)
+            return_values.append(
+                alternativeMerchantCertificate.fill_with_data(body))
 
         return return_values[0]
 

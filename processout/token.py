@@ -503,10 +503,12 @@ class Token(object):
         return_values = []
 
         body = response.body
-        body = body["token"]
+        body = body.get("token")
 
-        obj = processout.Token(self._client)
-        return_values.append(obj.fill_with_data(body))
+        if body is not None:
+
+            obj = processout.Token(self._client)
+            return_values.append(obj.fill_with_data(body))
 
         return return_values[0]
 
@@ -542,14 +544,18 @@ class Token(object):
         return_values = []
 
         body = response.body
-        body = body["token"]
+        body = body.get("token")
 
-        return_values.append(self.fill_with_data(body))
+        if body is not None:
+
+            return_values.append(self.fill_with_data(body))
 
         body = response.body
-        body = body["customer_action"]
-        customerAction = processout.CustomerAction(self._client)
-        return_values.append(customerAction.fill_with_data(body))
+        body = body.get("customer_action")
+        if body is not None:
+            customerAction = processout.CustomerAction(self._client)
+            customerAction_filled = customerAction.fill_with_data(body)
+            setattr(return_values[0], "customer_action", customerAction_filled)
 
         return tuple(return_values)
 
