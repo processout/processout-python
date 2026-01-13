@@ -240,6 +240,7 @@ class Refund(object):
             'reason': self.reason,
             'information': self.information,
             'invoice_detail_ids': self.invoice_detail_ids,
+            'split_allocations': self.split_allocations,
             'metadata': options.get("metadata")
         }
 
@@ -319,6 +320,7 @@ class Refund(object):
             'reason': self.reason,
             'information': self.information,
             'invoice_detail_ids': self.invoice_detail_ids,
+            'split_allocations': self.split_allocations,
             'metadata': options.get("metadata")
         }
 

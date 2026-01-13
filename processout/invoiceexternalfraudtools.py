@@ -19,6 +19,7 @@ class InvoiceExternalFraudTools(object):
         self._forter = None
         self._ravelin = None
         self._signifyd = None
+        self._riskified = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -61,6 +62,19 @@ class InvoiceExternalFraudTools(object):
         self._signifyd = val
         return self
 
+    @property
+    def riskified(self):
+        """Get riskified"""
+        return self._riskified
+
+    @riskified.setter
+    def riskified(self, val):
+        """Set riskified
+        Keyword argument:
+        val -- New riskified value"""
+        self._riskified = val
+        return self
+
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
@@ -71,6 +85,8 @@ class InvoiceExternalFraudTools(object):
             self.ravelin = data["ravelin"]
         if "signifyd" in data.keys():
             self.signifyd = data["signifyd"]
+        if "riskified" in data.keys():
+            self.riskified = data["riskified"]
 
         return self
 
@@ -79,4 +95,5 @@ class InvoiceExternalFraudTools(object):
             "forter": self.forter,
             "ravelin": self.ravelin,
             "signifyd": self.signifyd,
+            "riskified": self.riskified,
         }

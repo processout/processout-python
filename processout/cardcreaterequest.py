@@ -24,6 +24,7 @@ class CardCreateRequest(object):
         self._exp_year = None
         self._cvc2 = None
         self._preferred_scheme = None
+        self._preferred_card_type = None
         self._metadata = None
         self._token_type = None
         self._eci = None
@@ -147,6 +148,19 @@ class CardCreateRequest(object):
         Keyword argument:
         val -- New preferred_scheme value"""
         self._preferred_scheme = val
+        return self
+
+    @property
+    def preferred_card_type(self):
+        """Get preferred_card_type"""
+        return self._preferred_card_type
+
+    @preferred_card_type.setter
+    def preferred_card_type(self, val):
+        """Set preferred_card_type
+        Keyword argument:
+        val -- New preferred_card_type value"""
+        self._preferred_card_type = val
         return self
 
     @property
@@ -304,6 +318,8 @@ class CardCreateRequest(object):
             self.cvc2 = data["cvc2"]
         if "preferred_scheme" in data.keys():
             self.preferred_scheme = data["preferred_scheme"]
+        if "preferred_card_type" in data.keys():
+            self.preferred_card_type = data["preferred_card_type"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
         if "token_type" in data.keys():
@@ -335,6 +351,7 @@ class CardCreateRequest(object):
             "exp_year": self.exp_year,
             "cvc2": self.cvc2,
             "preferred_scheme": self.preferred_scheme,
+            "preferred_card_type": self.preferred_card_type,
             "metadata": self.metadata,
             "token_type": self.token_type,
             "eci": self.eci,
@@ -364,6 +381,7 @@ class CardCreateRequest(object):
             'exp_year': self.exp_year,
             'cvc2': self.cvc2,
             'preferred_scheme': self.preferred_scheme,
+            'preferred_card_type': self.preferred_card_type,
             'metadata': self.metadata,
             'token_type': self.token_type,
             'eci': self.eci,
@@ -372,7 +390,8 @@ class CardCreateRequest(object):
             'applepay_mid': self.applepay_mid,
             'payment_token': self.payment_token,
             'contact': self.contact,
-            'shipping': self.shipping
+            'shipping': self.shipping,
+            'scheme_transaction': self.scheme_transaction
         }
 
         response = Response(request.post(path, data, options))

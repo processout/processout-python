@@ -23,8 +23,6 @@ class Transaction(object):
         self._invoice_id = None
         self._customer = None
         self._customer_id = None
-        self._subscription = None
-        self._subscription_id = None
         self._token = None
         self._token_id = None
         self._card = None
@@ -83,6 +81,7 @@ class Transaction(object):
         self._eci = None
         self._native_apm = None
         self._external_details = None
+        self._origin = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -202,41 +201,6 @@ class Transaction(object):
         Keyword argument:
         val -- New customer_id value"""
         self._customer_id = val
-        return self
-
-    @property
-    def subscription(self):
-        """Get subscription"""
-        return self._subscription
-
-    @subscription.setter
-    def subscription(self, val):
-        """Set subscription
-        Keyword argument:
-        val -- New subscription value"""
-        if val is None:
-            self._subscription = val
-            return self
-
-        if isinstance(val, dict):
-            obj = processout.Subscription(self._client)
-            obj.fill_with_data(val)
-            self._subscription = obj
-        else:
-            self._subscription = val
-        return self
-
-    @property
-    def subscription_id(self):
-        """Get subscription_id"""
-        return self._subscription_id
-
-    @subscription_id.setter
-    def subscription_id(self, val):
-        """Set subscription_id
-        Keyword argument:
-        val -- New subscription_id value"""
-        self._subscription_id = val
         return self
 
     @property
@@ -1072,6 +1036,19 @@ class Transaction(object):
         self._external_details = val
         return self
 
+    @property
+    def origin(self):
+        """Get origin"""
+        return self._origin
+
+    @origin.setter
+    def origin(self, val):
+        """Set origin
+        Keyword argument:
+        val -- New origin value"""
+        self._origin = val
+        return self
+
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
@@ -1090,10 +1067,6 @@ class Transaction(object):
             self.customer = data["customer"]
         if "customer_id" in data.keys():
             self.customer_id = data["customer_id"]
-        if "subscription" in data.keys():
-            self.subscription = data["subscription"]
-        if "subscription_id" in data.keys():
-            self.subscription_id = data["subscription_id"]
         if "token" in data.keys():
             self.token = data["token"]
         if "token_id" in data.keys():
@@ -1211,6 +1184,8 @@ class Transaction(object):
             self.native_apm = data["native_apm"]
         if "external_details" in data.keys():
             self.external_details = data["external_details"]
+        if "origin" in data.keys():
+            self.origin = data["origin"]
 
         return self
 
@@ -1223,8 +1198,6 @@ class Transaction(object):
             "invoice_id": self.invoice_id,
             "customer": self.customer,
             "customer_id": self.customer_id,
-            "subscription": self.subscription,
-            "subscription_id": self.subscription_id,
             "token": self.token,
             "token_id": self.token_id,
             "card": self.card,
@@ -1283,6 +1256,7 @@ class Transaction(object):
             "eci": self.eci,
             "native_apm": self.native_apm,
             "external_details": self.external_details,
+            "origin": self.origin,
         }
 
     def fetch_refunds(self, options={}):
