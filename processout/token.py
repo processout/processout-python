@@ -39,6 +39,7 @@ class Token(object):
         self._verification_status = None
         self._can_get_balance = None
         self._webhook_url = None
+        self._vault_id = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -377,6 +378,19 @@ class Token(object):
         self._webhook_url = val
         return self
 
+    @property
+    def vault_id(self):
+        """Get vault_id"""
+        return self._vault_id
+
+    @vault_id.setter
+    def vault_id(self, val):
+        """Set vault_id
+        Keyword argument:
+        val -- New vault_id value"""
+        self._vault_id = val
+        return self
+
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
@@ -427,6 +441,8 @@ class Token(object):
             self.can_get_balance = data["can_get_balance"]
         if "webhook_url" in data.keys():
             self.webhook_url = data["webhook_url"]
+        if "vault_id" in data.keys():
+            self.vault_id = data["vault_id"]
 
         return self
 
@@ -455,6 +471,7 @@ class Token(object):
             "verification_status": self.verification_status,
             "can_get_balance": self.can_get_balance,
             "webhook_url": self.webhook_url,
+            "vault_id": self.vault_id,
         }
 
     def fetch_customer_tokens(self, customer_id, options={}):

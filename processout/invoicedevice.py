@@ -17,6 +17,7 @@ class InvoiceDevice(object):
         self._client = client
 
         self._channel = None
+        self._platform = None
         self._ip_address = None
         self._id = None
         if prefill is not None:
@@ -33,6 +34,19 @@ class InvoiceDevice(object):
         Keyword argument:
         val -- New channel value"""
         self._channel = val
+        return self
+
+    @property
+    def platform(self):
+        """Get platform"""
+        return self._platform
+
+    @platform.setter
+    def platform(self, val):
+        """Set platform
+        Keyword argument:
+        val -- New platform value"""
+        self._platform = val
         return self
 
     @property
@@ -67,6 +81,8 @@ class InvoiceDevice(object):
         data -- The data from which to pull the new values"""
         if "channel" in data.keys():
             self.channel = data["channel"]
+        if "platform" in data.keys():
+            self.platform = data["platform"]
         if "ip_address" in data.keys():
             self.ip_address = data["ip_address"]
         if "id" in data.keys():
@@ -77,6 +93,7 @@ class InvoiceDevice(object):
     def to_json(self):
         return {
             "channel": self.channel,
+            "platform": self.platform,
             "ip_address": self.ip_address,
             "id": self.id,
         }
