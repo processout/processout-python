@@ -22,7 +22,6 @@ class Customer(object):
         self._default_token = None
         self._default_token_id = None
         self._tokens = None
-        self._subscriptions = None
         self._transactions = None
         self._balance = None
         self._currency = None
@@ -48,6 +47,7 @@ class Customer(object):
         self._registered_at = None
         self._date_of_birth = None
         self._reference_id = None
+        self._vault_id = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -157,31 +157,6 @@ class Customer(object):
                 obj.fill_with_data(v)
                 l.append(obj)
             self._tokens = l
-        return self
-
-    @property
-    def subscriptions(self):
-        """Get subscriptions"""
-        return self._subscriptions
-
-    @subscriptions.setter
-    def subscriptions(self, val):
-        """Set subscriptions
-        Keyword argument:
-        val -- New subscriptions value"""
-        if val is None:
-            self._subscriptions = []
-            return self
-
-        if len(val) > 0 and isinstance(val[0], processout.Subscription):
-            self._subscriptions = val
-        else:
-            l = []
-            for v in val:
-                obj = processout.Subscription(self._client)
-                obj.fill_with_data(v)
-                l.append(obj)
-            self._subscriptions = l
         return self
 
     @property
@@ -530,6 +505,19 @@ class Customer(object):
         self._reference_id = val
         return self
 
+    @property
+    def vault_id(self):
+        """Get vault_id"""
+        return self._vault_id
+
+    @vault_id.setter
+    def vault_id(self, val):
+        """Set vault_id
+        Keyword argument:
+        val -- New vault_id value"""
+        self._vault_id = val
+        return self
+
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
@@ -546,8 +534,6 @@ class Customer(object):
             self.default_token_id = data["default_token_id"]
         if "tokens" in data.keys():
             self.tokens = data["tokens"]
-        if "subscriptions" in data.keys():
-            self.subscriptions = data["subscriptions"]
         if "transactions" in data.keys():
             self.transactions = data["transactions"]
         if "balance" in data.keys():
@@ -598,6 +584,8 @@ class Customer(object):
             self.date_of_birth = data["date_of_birth"]
         if "reference_id" in data.keys():
             self.reference_id = data["reference_id"]
+        if "vault_id" in data.keys():
+            self.vault_id = data["vault_id"]
 
         return self
 
@@ -609,7 +597,6 @@ class Customer(object):
             "default_token": self.default_token,
             "default_token_id": self.default_token_id,
             "tokens": self.tokens,
-            "subscriptions": self.subscriptions,
             "transactions": self.transactions,
             "balance": self.balance,
             "currency": self.currency,
@@ -635,34 +622,8 @@ class Customer(object):
             "registered_at": self.registered_at,
             "date_of_birth": self.date_of_birth,
             "reference_id": self.reference_id,
+            "vault_id": self.vault_id,
         }
-
-    def fetch_subscriptions(self, options={}):
-        """Get the subscriptions belonging to the customer.
-        Keyword argument:
-
-        options -- Options for the request"""
-        self.fill_with_data(options)
-
-        request = Request(self._client)
-        path = "/customers/" + quote_plus(self.id) + "/subscriptions"
-        data = {
-
-        }
-
-        response = Response(request.get(path, data, options))
-        return_values = []
-
-        a = []
-        body = response.body
-        for v in body['subscriptions']:
-            tmp = processout.Subscription(self._client)
-            tmp.fill_with_data(v)
-            a.append(tmp)
-
-        return_values.append(a)
-
-        return return_values[0]
 
     def fetch_tokens(self, options={}):
         """Get the customer's tokens.

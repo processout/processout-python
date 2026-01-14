@@ -19,6 +19,8 @@ class Device(object):
         self._request_origin = None
         self._id = None
         self._channel = None
+        self._threeds_sdk = None
+        self._platform = None
         self._ip_address = None
         self._user_agent = None
         self._header_accept = None
@@ -69,6 +71,32 @@ class Device(object):
         Keyword argument:
         val -- New channel value"""
         self._channel = val
+        return self
+
+    @property
+    def threeds_sdk(self):
+        """Get threeds_sdk"""
+        return self._threeds_sdk
+
+    @threeds_sdk.setter
+    def threeds_sdk(self, val):
+        """Set threeds_sdk
+        Keyword argument:
+        val -- New threeds_sdk value"""
+        self._threeds_sdk = val
+        return self
+
+    @property
+    def platform(self):
+        """Get platform"""
+        return self._platform
+
+    @platform.setter
+    def platform(self, val):
+        """Set platform
+        Keyword argument:
+        val -- New platform value"""
+        self._platform = val
         return self
 
     @property
@@ -211,6 +239,10 @@ class Device(object):
             self.id = data["id"]
         if "channel" in data.keys():
             self.channel = data["channel"]
+        if "threeds_sdk" in data.keys():
+            self.threeds_sdk = data["threeds_sdk"]
+        if "platform" in data.keys():
+            self.platform = data["platform"]
         if "ip_address" in data.keys():
             self.ip_address = data["ip_address"]
         if "user_agent" in data.keys():
@@ -239,6 +271,8 @@ class Device(object):
             "request_origin": self.request_origin,
             "id": self.id,
             "channel": self.channel,
+            "threeds_sdk": self.threeds_sdk,
+            "platform": self.platform,
             "ip_address": self.ip_address,
             "user_agent": self.user_agent,
             "header_accept": self.header_accept,

@@ -43,6 +43,7 @@ class TransactionOperation(object):
         self._scheme_id = None
         self._processed_with_network_token = None
         self._payment_type = None
+        self._capture_type = None
         self._metadata = None
         self._gateway_fee = None
         self._created_at = None
@@ -464,6 +465,19 @@ class TransactionOperation(object):
         return self
 
     @property
+    def capture_type(self):
+        """Get capture_type"""
+        return self._capture_type
+
+    @capture_type.setter
+    def capture_type(self, val):
+        """Set capture_type
+        Keyword argument:
+        val -- New capture_type value"""
+        self._capture_type = val
+        return self
+
+    @property
     def metadata(self):
         """Get metadata"""
         return self._metadata
@@ -560,6 +574,8 @@ class TransactionOperation(object):
             self.processed_with_network_token = data["processed_with_network_token"]
         if "payment_type" in data.keys():
             self.payment_type = data["payment_type"]
+        if "capture_type" in data.keys():
+            self.capture_type = data["capture_type"]
         if "metadata" in data.keys():
             self.metadata = data["metadata"]
         if "gateway_fee" in data.keys():
@@ -598,6 +614,7 @@ class TransactionOperation(object):
             "scheme_id": self.scheme_id,
             "processed_with_network_token": self.processed_with_network_token,
             "payment_type": self.payment_type,
+            "capture_type": self.capture_type,
             "metadata": self.metadata,
             "gateway_fee": self.gateway_fee,
             "created_at": self.created_at,

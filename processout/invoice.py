@@ -23,8 +23,6 @@ class Invoice(object):
         self._transaction_id = None
         self._customer = None
         self._customer_id = None
-        self._subscription = None
-        self._subscription_id = None
         self._token = None
         self._token_id = None
         self._details = None
@@ -187,41 +185,6 @@ class Invoice(object):
         Keyword argument:
         val -- New customer_id value"""
         self._customer_id = val
-        return self
-
-    @property
-    def subscription(self):
-        """Get subscription"""
-        return self._subscription
-
-    @subscription.setter
-    def subscription(self, val):
-        """Set subscription
-        Keyword argument:
-        val -- New subscription value"""
-        if val is None:
-            self._subscription = val
-            return self
-
-        if isinstance(val, dict):
-            obj = processout.Subscription(self._client)
-            obj.fill_with_data(val)
-            self._subscription = obj
-        else:
-            self._subscription = val
-        return self
-
-    @property
-    def subscription_id(self):
-        """Get subscription_id"""
-        return self._subscription_id
-
-    @subscription_id.setter
-    def subscription_id(self, val):
-        """Set subscription_id
-        Keyword argument:
-        val -- New subscription_id value"""
-        self._subscription_id = val
         return self
 
     @property
@@ -903,10 +866,6 @@ class Invoice(object):
             self.customer = data["customer"]
         if "customer_id" in data.keys():
             self.customer_id = data["customer_id"]
-        if "subscription" in data.keys():
-            self.subscription = data["subscription"]
-        if "subscription_id" in data.keys():
-            self.subscription_id = data["subscription_id"]
         if "token" in data.keys():
             self.token = data["token"]
         if "token_id" in data.keys():
@@ -1005,8 +964,6 @@ class Invoice(object):
             "transaction_id": self.transaction_id,
             "customer": self.customer,
             "customer_id": self.customer_id,
-            "subscription": self.subscription,
-            "subscription_id": self.subscription_id,
             "token": self.token,
             "token_id": self.token_id,
             "details": self.details,
@@ -1052,6 +1009,50 @@ class Invoice(object):
             "reference_id": self.reference_id,
         }
 
+    def authenticate(self, source, options={}):
+        """Autheticate the invoice using the given source (customer or token)
+        Keyword argument:
+        source -- Source used to authenticate the payment. Can be a card, token or a gateway request.
+        options -- Options for the request"""
+        self.fill_with_data(options)
+
+        request = Request(self._client)
+        path = "/invoices/:invoice_id/authenticate"
+        data = {
+            'device': self.device,
+            'incremental': self.incremental,
+            'capture_type': self.capture_type,
+            'split_allocations': self.split_allocations,
+            'installment_plan_id': self.installment_plan_id,
+            'synchronous': options.get("synchronous"),
+            'retry_drop_liability_shift': options.get("retry_drop_liability_shift"),
+            'capture_amount': options.get("capture_amount"),
+            'enable_three_d_s_2': options.get("enable_three_d_s_2"),
+            'allow_fallback_to_sale': options.get("allow_fallback_to_sale"),
+            'auto_capture_at': options.get("auto_capture_at"),
+            'metadata': options.get("metadata"),
+            'override_mac_blocking': options.get("override_mac_blocking"),
+            'external_three_d_s': options.get("external_three_d_s"),
+            'save_source': options.get("save_source"),
+            'source': source}
+
+        response = Response(request.post(path, data, options))
+        return_values = []
+
+        body = response.body
+        body = body.get("transaction")
+        if body is not None:
+            transaction = processout.Transaction(self._client)
+            return_values.append(transaction.fill_with_data(body))
+        body = response.body
+        body = body.get("customer_action")
+        if body is not None:
+            customerAction = processout.CustomerAction(self._client)
+            customerAction_filled = customerAction.fill_with_data(body)
+            setattr(return_values[0], "customer_action", customerAction_filled)
+
+        return tuple(return_values)
+
     def increment_authorization(self, amount, options={}):
         """Create an incremental authorization
         Keyword argument:
@@ -1089,6 +1090,9 @@ class Invoice(object):
         data = {
             'device': self.device,
             'incremental': self.incremental,
+            'capture_type': self.capture_type,
+            'split_allocations': self.split_allocations,
+            'installment_plan_id': self.installment_plan_id,
             'synchronous': options.get("synchronous"),
             'retry_drop_liability_shift': options.get("retry_drop_liability_shift"),
             'capture_amount': options.get("capture_amount"),
@@ -1129,7 +1133,9 @@ class Invoice(object):
         path = "/invoices/" + quote_plus(self.id) + "/capture"
         data = {
             'device': self.device,
+            'authenticate_only': self.authenticate_only,
             'incremental': self.incremental,
+            'installment_plan_id': self.installment_plan_id,
             'authorize_only': options.get("authorize_only"),
             'synchronous': options.get("synchronous"),
             'retry_drop_liability_shift': options.get("retry_drop_liability_shift"),
@@ -1220,6 +1226,7 @@ class Invoice(object):
         path = "/invoices/" + quote_plus(self.id) + "/payout"
         data = {
             'force_gateway_configuration_id': options.get("force_gateway_configuration_id"),
+            'metadata': options.get("metadata"),
             'gateway_configuration_id': gateway_configuration_id,
             'source': source}
 
@@ -1443,7 +1450,8 @@ class Invoice(object):
             'unsupported_feature_bypass': self.unsupported_feature_bypass,
             'verification': self.verification,
             'auto_capture_at': self.auto_capture_at,
-            'expires_at': self.expires_at
+            'expires_at': self.expires_at,
+            'split_allocations': self.split_allocations
         }
 
         response = Response(request.post(path, data, options))

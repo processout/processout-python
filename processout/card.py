@@ -49,6 +49,8 @@ class Card(object):
         self._expires_soon = None
         self._sandbox = None
         self._created_at = None
+        self._preferred_card_type = None
+        self._vault_id = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -499,6 +501,32 @@ class Card(object):
         self._created_at = val
         return self
 
+    @property
+    def preferred_card_type(self):
+        """Get preferred_card_type"""
+        return self._preferred_card_type
+
+    @preferred_card_type.setter
+    def preferred_card_type(self, val):
+        """Set preferred_card_type
+        Keyword argument:
+        val -- New preferred_card_type value"""
+        self._preferred_card_type = val
+        return self
+
+    @property
+    def vault_id(self):
+        """Get vault_id"""
+        return self._vault_id
+
+    @vault_id.setter
+    def vault_id(self, val):
+        """Set vault_id
+        Keyword argument:
+        val -- New vault_id value"""
+        self._vault_id = val
+        return self
+
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
@@ -569,6 +597,10 @@ class Card(object):
             self.sandbox = data["sandbox"]
         if "created_at" in data.keys():
             self.created_at = data["created_at"]
+        if "preferred_card_type" in data.keys():
+            self.preferred_card_type = data["preferred_card_type"]
+        if "vault_id" in data.keys():
+            self.vault_id = data["vault_id"]
 
         return self
 
@@ -607,6 +639,8 @@ class Card(object):
             "expires_soon": self.expires_soon,
             "sandbox": self.sandbox,
             "created_at": self.created_at,
+            "preferred_card_type": self.preferred_card_type,
+            "vault_id": self.vault_id,
         }
 
     def all(self, options={}):
