@@ -1021,9 +1021,6 @@ class Invoice(object):
         data = {
             'device': self.device,
             'incremental': self.incremental,
-            'capture_type': self.capture_type,
-            'split_allocations': self.split_allocations,
-            'installment_plan_id': self.installment_plan_id,
             'synchronous': options.get("synchronous"),
             'retry_drop_liability_shift': options.get("retry_drop_liability_shift"),
             'capture_amount': options.get("capture_amount"),
@@ -1090,9 +1087,6 @@ class Invoice(object):
         data = {
             'device': self.device,
             'incremental': self.incremental,
-            'capture_type': self.capture_type,
-            'split_allocations': self.split_allocations,
-            'installment_plan_id': self.installment_plan_id,
             'synchronous': options.get("synchronous"),
             'retry_drop_liability_shift': options.get("retry_drop_liability_shift"),
             'capture_amount': options.get("capture_amount"),
@@ -1133,9 +1127,7 @@ class Invoice(object):
         path = "/invoices/" + quote_plus(self.id) + "/capture"
         data = {
             'device': self.device,
-            'authenticate_only': self.authenticate_only,
             'incremental': self.incremental,
-            'installment_plan_id': self.installment_plan_id,
             'authorize_only': options.get("authorize_only"),
             'synchronous': options.get("synchronous"),
             'retry_drop_liability_shift': options.get("retry_drop_liability_shift"),
@@ -1450,8 +1442,7 @@ class Invoice(object):
             'unsupported_feature_bypass': self.unsupported_feature_bypass,
             'verification': self.verification,
             'auto_capture_at': self.auto_capture_at,
-            'expires_at': self.expires_at,
-            'split_allocations': self.split_allocations
+            'expires_at': self.expires_at
         }
 
         response = Response(request.post(path, data, options))
