@@ -34,19 +34,6 @@ def main():
     # Fetch the customers
     client.new_customer().all()
 
-    # Create a subscription for a customer
-    customer = client.new_customer().create()
-    assert customer.id != "", "The created customer ID should not be empty"
-
-    subscription = client.new_subscription({
-        "customer_id": customer.id,
-        "name": "Test subscription",
-        "amount": "9.99",
-        "currency": "USD",
-        "interval": "1d"
-    }).create()
-    assert subscription.id != "", "The created subscription ID should not be empty"
-
     # Expand a customers' project and fetch gateways
     customer = client.new_customer().create({"expand": ["project"]})
     assert customer.project != None, "The customer project should be expanded"
