@@ -36,6 +36,8 @@ from processout.invoiceshipping import InvoiceShipping
 from processout.invoiceshippingphone import InvoiceShippingPhone
 from processout.invoicebilling import InvoiceBilling
 from processout.unsupportedfeaturebypass import UnsupportedFeatureBypass
+from processout.paymentprocessingconfiguration import PaymentProcessingConfiguration
+from processout.apmpaymentprocessingconfiguration import APMPaymentProcessingConfiguration
 from processout.invoicedetail import InvoiceDetail
 from processout.invoicesubmerchant import InvoiceSubmerchant
 from processout.submerchantphonenumber import SubmerchantPhoneNumber
@@ -50,6 +52,8 @@ from processout.project import Project
 from processout.projectsftpsettings import ProjectSFTPSettings
 from processout.projectsftpsettingspublic import ProjectSFTPSettingsPublic
 from processout.refund import Refund
+from processout.submerchant import Submerchant
+from processout.submerchantmapping import SubmerchantMapping
 from processout.transaction import Transaction
 from processout.nativeapmresponse import NativeAPMResponse
 from processout.nativeapmparameterdefinition import NativeAPMParameterDefinition
@@ -63,6 +67,7 @@ from processout.webhook import Webhook
 from processout.webhookendpoint import WebhookEndpoint
 from processout.cardupdaterequest import CardUpdateRequest
 from processout.cardcreaterequest import CardCreateRequest
+from processout.cardschemedetails import CardSchemeDetails
 from processout.device import Device
 from processout.cardcontact import CardContact
 from processout.cardshipping import CardShipping

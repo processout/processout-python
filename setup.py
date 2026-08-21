@@ -1,14 +1,14 @@
-from distutils.core import setup
+from setuptools import setup
 
 setup(
   name = 'processout',
   packages = ['processout', 'processout.errors', 'processout.networking'],
-  version = '9.0.1',
+  version = '10.0.0',
   description = 'ProcessOut API bindings.',
   author = 'ProcessOut',
   author_email = 'hi@processout.com',
   url = 'https://github.com/processout/processout-python',
-  download_url = 'https://github.com/processout/processout-python/tarball/9.0.1',
+  download_url = 'https://github.com/processout/processout-python/tarball/10.0.0',
   keywords = ['ProcessOut', 'api', 'bindings'],
   classifiers = [],
 )

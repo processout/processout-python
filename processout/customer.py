@@ -47,7 +47,6 @@ class Customer(object):
         self._registered_at = None
         self._date_of_birth = None
         self._reference_id = None
-        self._vault_id = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -505,19 +504,6 @@ class Customer(object):
         self._reference_id = val
         return self
 
-    @property
-    def vault_id(self):
-        """Get vault_id"""
-        return self._vault_id
-
-    @vault_id.setter
-    def vault_id(self, val):
-        """Set vault_id
-        Keyword argument:
-        val -- New vault_id value"""
-        self._vault_id = val
-        return self
-
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
@@ -584,8 +570,6 @@ class Customer(object):
             self.date_of_birth = data["date_of_birth"]
         if "reference_id" in data.keys():
             self.reference_id = data["reference_id"]
-        if "vault_id" in data.keys():
-            self.vault_id = data["vault_id"]
 
         return self
 
@@ -622,7 +606,6 @@ class Customer(object):
             "registered_at": self.registered_at,
             "date_of_birth": self.date_of_birth,
             "reference_id": self.reference_id,
-            "vault_id": self.vault_id,
         }
 
     def fetch_tokens(self, options={}):

@@ -27,6 +27,7 @@ class Invoice(object):
         self._token_id = None
         self._details = None
         self._submerchant = None
+        self._submerchant_id = None
         self._url = None
         self._url_qrcode = None
         self._name = None
@@ -66,6 +67,7 @@ class Invoice(object):
         self._verification = None
         self._auto_capture_at = None
         self._reference_id = None
+        self._payment_processing_config = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -267,6 +269,19 @@ class Invoice(object):
             self._submerchant = obj
         else:
             self._submerchant = val
+        return self
+
+    @property
+    def submerchant_id(self):
+        """Get submerchant_id"""
+        return self._submerchant_id
+
+    @submerchant_id.setter
+    def submerchant_id(self, val):
+        """Set submerchant_id
+        Keyword argument:
+        val -- New submerchant_id value"""
+        self._submerchant_id = val
         return self
 
     @property
@@ -848,6 +863,28 @@ class Invoice(object):
         self._reference_id = val
         return self
 
+    @property
+    def payment_processing_config(self):
+        """Get payment_processing_config"""
+        return self._payment_processing_config
+
+    @payment_processing_config.setter
+    def payment_processing_config(self, val):
+        """Set payment_processing_config
+        Keyword argument:
+        val -- New payment_processing_config value"""
+        if val is None:
+            self._payment_processing_config = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.PaymentProcessingConfiguration(self._client)
+            obj.fill_with_data(val)
+            self._payment_processing_config = obj
+        else:
+            self._payment_processing_config = val
+        return self
+
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
@@ -874,6 +911,8 @@ class Invoice(object):
             self.details = data["details"]
         if "submerchant" in data.keys():
             self.submerchant = data["submerchant"]
+        if "submerchant_id" in data.keys():
+            self.submerchant_id = data["submerchant_id"]
         if "url" in data.keys():
             self.url = data["url"]
         if "url_qrcode" in data.keys():
@@ -952,6 +991,8 @@ class Invoice(object):
             self.auto_capture_at = data["auto_capture_at"]
         if "reference_id" in data.keys():
             self.reference_id = data["reference_id"]
+        if "payment_processing_config" in data.keys():
+            self.payment_processing_config = data["payment_processing_config"]
 
         return self
 
@@ -968,6 +1009,7 @@ class Invoice(object):
             "token_id": self.token_id,
             "details": self.details,
             "submerchant": self.submerchant,
+            "submerchant_id": self.submerchant_id,
             "url": self.url,
             "url_qrcode": self.url_qrcode,
             "name": self.name,
@@ -1007,6 +1049,7 @@ class Invoice(object):
             "verification": self.verification,
             "auto_capture_at": self.auto_capture_at,
             "reference_id": self.reference_id,
+            "payment_processing_config": self.payment_processing_config,
         }
 
     def authenticate(self, source, options={}):
@@ -1031,6 +1074,9 @@ class Invoice(object):
             'override_mac_blocking': options.get("override_mac_blocking"),
             'external_three_d_s': options.get("external_three_d_s"),
             'save_source': options.get("save_source"),
+            'provision_network_token': options.get("provision_network_token"),
+            'invoice_line_items': options.get("invoice_line_items"),
+            'transaction_link_id': options.get("transaction_link_id"),
             'source': source}
 
         response = Response(request.post(path, data, options))
@@ -1097,6 +1143,9 @@ class Invoice(object):
             'override_mac_blocking': options.get("override_mac_blocking"),
             'external_three_d_s': options.get("external_three_d_s"),
             'save_source': options.get("save_source"),
+            'provision_network_token': options.get("provision_network_token"),
+            'invoice_line_items': options.get("invoice_line_items"),
+            'transaction_link_id': options.get("transaction_link_id"),
             'source': source}
 
         response = Response(request.post(path, data, options))
@@ -1139,6 +1188,8 @@ class Invoice(object):
             'override_mac_blocking': options.get("override_mac_blocking"),
             'external_three_d_s': options.get("external_three_d_s"),
             'save_source': options.get("save_source"),
+            'provision_network_token': options.get("provision_network_token"),
+            'transaction_link_id': options.get("transaction_link_id"),
             'source': source}
 
         response = Response(request.post(path, data, options))
@@ -1415,6 +1466,7 @@ class Invoice(object):
             'metadata': self.metadata,
             'details': self.details,
             'submerchant': self.submerchant,
+            'submerchant_id': self.submerchant_id,
             'reference_id': self.reference_id,
             'exemption_reason_3ds2': self.exemption_reason_3ds2,
             'sca_exemption_reason': self.sca_exemption_reason,

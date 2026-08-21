@@ -39,7 +39,7 @@ class Token(object):
         self._verification_status = None
         self._can_get_balance = None
         self._webhook_url = None
-        self._vault_id = None
+        self._provision_network_token = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -379,16 +379,16 @@ class Token(object):
         return self
 
     @property
-    def vault_id(self):
-        """Get vault_id"""
-        return self._vault_id
+    def provision_network_token(self):
+        """Get provision_network_token"""
+        return self._provision_network_token
 
-    @vault_id.setter
-    def vault_id(self, val):
-        """Set vault_id
+    @provision_network_token.setter
+    def provision_network_token(self, val):
+        """Set provision_network_token
         Keyword argument:
-        val -- New vault_id value"""
-        self._vault_id = val
+        val -- New provision_network_token value"""
+        self._provision_network_token = val
         return self
 
     def fill_with_data(self, data):
@@ -441,8 +441,8 @@ class Token(object):
             self.can_get_balance = data["can_get_balance"]
         if "webhook_url" in data.keys():
             self.webhook_url = data["webhook_url"]
-        if "vault_id" in data.keys():
-            self.vault_id = data["vault_id"]
+        if "provision_network_token" in data.keys():
+            self.provision_network_token = data["provision_network_token"]
 
         return self
 
@@ -471,7 +471,7 @@ class Token(object):
             "verification_status": self.verification_status,
             "can_get_balance": self.can_get_balance,
             "webhook_url": self.webhook_url,
-            "vault_id": self.vault_id,
+            "provision_network_token": self.provision_network_token,
         }
 
     def fetch_customer_tokens(self, customer_id, options={}):
@@ -555,7 +555,8 @@ class Token(object):
             'set_default': options.get("set_default"),
             'verify_statement_descriptor': options.get("verify_statement_descriptor"),
             'invoice_return_url': options.get("invoice_return_url"),
-            'summary': options.get("summary")}
+            'summary': options.get("summary"),
+            'provision_network_token': options.get("provision_network_token")}
 
         response = Response(request.post(path, data, options))
         return_values = []
@@ -595,7 +596,8 @@ class Token(object):
             'set_default': options.get("set_default"),
             'verify_statement_descriptor': options.get("verify_statement_descriptor"),
             'invoice_return_url': options.get("invoice_return_url"),
-            'gateway_configuration_id': options.get("gateway_configuration_id")}
+            'gateway_configuration_id': options.get("gateway_configuration_id"),
+            'provision_network_token': options.get("provision_network_token")}
 
         response = Response(request.put(path, data, options))
         return_values = []

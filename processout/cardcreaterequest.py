@@ -34,6 +34,7 @@ class CardCreateRequest(object):
         self._payment_token = None
         self._contact = None
         self._shipping = None
+        self._scheme_details = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -298,6 +299,28 @@ class CardCreateRequest(object):
             self._shipping = val
         return self
 
+    @property
+    def scheme_details(self):
+        """Get scheme_details"""
+        return self._scheme_details
+
+    @scheme_details.setter
+    def scheme_details(self, val):
+        """Set scheme_details
+        Keyword argument:
+        val -- New scheme_details value"""
+        if val is None:
+            self._scheme_details = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.CardSchemeDetails(self._client)
+            obj.fill_with_data(val)
+            self._scheme_details = obj
+        else:
+            self._scheme_details = val
+        return self
+
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
@@ -338,6 +361,8 @@ class CardCreateRequest(object):
             self.contact = data["contact"]
         if "shipping" in data.keys():
             self.shipping = data["shipping"]
+        if "scheme_details" in data.keys():
+            self.scheme_details = data["scheme_details"]
 
         return self
 
@@ -361,6 +386,7 @@ class CardCreateRequest(object):
             "payment_token": self.payment_token,
             "contact": self.contact,
             "shipping": self.shipping,
+            "scheme_details": self.scheme_details,
         }
 
     def create(self, options={}):
@@ -391,7 +417,7 @@ class CardCreateRequest(object):
             'payment_token': self.payment_token,
             'contact': self.contact,
             'shipping': self.shipping,
-            'scheme_transaction': self.scheme_transaction
+            'scheme_details': self.scheme_details
         }
 
         response = Response(request.post(path, data, options))
