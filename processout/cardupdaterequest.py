@@ -18,6 +18,7 @@ class CardUpdateRequest(object):
 
         self._preferred_scheme = None
         self._preferred_card_type = None
+        self._scheme_details = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -47,6 +48,28 @@ class CardUpdateRequest(object):
         self._preferred_card_type = val
         return self
 
+    @property
+    def scheme_details(self):
+        """Get scheme_details"""
+        return self._scheme_details
+
+    @scheme_details.setter
+    def scheme_details(self, val):
+        """Set scheme_details
+        Keyword argument:
+        val -- New scheme_details value"""
+        if val is None:
+            self._scheme_details = val
+            return self
+
+        if isinstance(val, dict):
+            obj = processout.CardSchemeDetails(self._client)
+            obj.fill_with_data(val)
+            self._scheme_details = obj
+        else:
+            self._scheme_details = val
+        return self
+
     def fill_with_data(self, data):
         """Fill the current object with the new values pulled from data
         Keyword argument:
@@ -55,6 +78,8 @@ class CardUpdateRequest(object):
             self.preferred_scheme = data["preferred_scheme"]
         if "preferred_card_type" in data.keys():
             self.preferred_card_type = data["preferred_card_type"]
+        if "scheme_details" in data.keys():
+            self.scheme_details = data["scheme_details"]
 
         return self
 
@@ -62,6 +87,7 @@ class CardUpdateRequest(object):
         return {
             "preferred_scheme": self.preferred_scheme,
             "preferred_card_type": self.preferred_card_type,
+            "scheme_details": self.scheme_details,
         }
 
     def update(self, card_id, options={}):
@@ -75,7 +101,7 @@ class CardUpdateRequest(object):
         path = "/cards/" + quote_plus(card_id) + ""
         data = {
             'preferred_scheme': self.preferred_scheme,
-            'scheme_transaction': self.scheme_transaction
+            'scheme_details': self.scheme_details
         }
 
         response = Response(request.put(path, data, options))

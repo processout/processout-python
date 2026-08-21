@@ -21,6 +21,7 @@ class CardContact(object):
         self._city = None
         self._state = None
         self._country_code = None
+        self._billing_country_code = None
         self._zip = None
         if prefill is not None:
             self.fill_with_data(prefill)
@@ -91,6 +92,19 @@ class CardContact(object):
         return self
 
     @property
+    def billing_country_code(self):
+        """Get billing_country_code"""
+        return self._billing_country_code
+
+    @billing_country_code.setter
+    def billing_country_code(self, val):
+        """Set billing_country_code
+        Keyword argument:
+        val -- New billing_country_code value"""
+        self._billing_country_code = val
+        return self
+
+    @property
     def zip(self):
         """Get zip"""
         return self._zip
@@ -117,6 +131,8 @@ class CardContact(object):
             self.state = data["state"]
         if "country_code" in data.keys():
             self.country_code = data["country_code"]
+        if "billing_country_code" in data.keys():
+            self.billing_country_code = data["billing_country_code"]
         if "zip" in data.keys():
             self.zip = data["zip"]
 
@@ -129,5 +145,6 @@ class CardContact(object):
             "city": self.city,
             "state": self.state,
             "country_code": self.country_code,
+            "billing_country_code": self.billing_country_code,
             "zip": self.zip,
         }

@@ -241,6 +241,18 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.UnsupportedFeatureBypass(self, prefill)
 
+    def new_payment_processing_configuration(self, prefill=None):
+        """Create a new PaymentProcessingConfiguration instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.PaymentProcessingConfiguration(self, prefill)
+
+    def new_apm_payment_processing_configuration(self, prefill=None):
+        """Create a new APMPaymentProcessingConfiguration instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.APMPaymentProcessingConfiguration(self, prefill)
+
     def new_invoice_detail(self, prefill=None):
         """Create a new InvoiceDetail instance
         Keyword argument:
@@ -325,6 +337,18 @@ class ProcessOut:
         prefill -- Data used to prefill the object (optional)"""
         return processout.Refund(self, prefill)
 
+    def new_submerchant(self, prefill=None):
+        """Create a new Submerchant instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.Submerchant(self, prefill)
+
+    def new_submerchant_mapping(self, prefill=None):
+        """Create a new SubmerchantMapping instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.SubmerchantMapping(self, prefill)
+
     def new_transaction(self, prefill=None):
         """Create a new Transaction instance
         Keyword argument:
@@ -402,6 +426,12 @@ class ProcessOut:
         Keyword argument:
         prefill -- Data used to prefill the object (optional)"""
         return processout.CardCreateRequest(self, prefill)
+
+    def new_card_scheme_details(self, prefill=None):
+        """Create a new CardSchemeDetails instance
+        Keyword argument:
+        prefill -- Data used to prefill the object (optional)"""
+        return processout.CardSchemeDetails(self, prefill)
 
     def new_device(self, prefill=None):
         """Create a new Device instance

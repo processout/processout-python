@@ -40,6 +40,7 @@ class Card(object):
         self._state = None
         self._zip = None
         self._country_code = None
+        self._billing_country_code = None
         self._ip_address = None
         self._fingerprint = None
         self._token_type = None
@@ -50,7 +51,8 @@ class Card(object):
         self._sandbox = None
         self._created_at = None
         self._preferred_card_type = None
-        self._vault_id = None
+        self._initial_scheme_transaction_id = None
+        self._payment_account_reference = None
         if prefill is not None:
             self.fill_with_data(prefill)
 
@@ -385,6 +387,19 @@ class Card(object):
         return self
 
     @property
+    def billing_country_code(self):
+        """Get billing_country_code"""
+        return self._billing_country_code
+
+    @billing_country_code.setter
+    def billing_country_code(self, val):
+        """Set billing_country_code
+        Keyword argument:
+        val -- New billing_country_code value"""
+        self._billing_country_code = val
+        return self
+
+    @property
     def ip_address(self):
         """Get ip_address"""
         return self._ip_address
@@ -515,16 +530,29 @@ class Card(object):
         return self
 
     @property
-    def vault_id(self):
-        """Get vault_id"""
-        return self._vault_id
+    def initial_scheme_transaction_id(self):
+        """Get initial_scheme_transaction_id"""
+        return self._initial_scheme_transaction_id
 
-    @vault_id.setter
-    def vault_id(self, val):
-        """Set vault_id
+    @initial_scheme_transaction_id.setter
+    def initial_scheme_transaction_id(self, val):
+        """Set initial_scheme_transaction_id
         Keyword argument:
-        val -- New vault_id value"""
-        self._vault_id = val
+        val -- New initial_scheme_transaction_id value"""
+        self._initial_scheme_transaction_id = val
+        return self
+
+    @property
+    def payment_account_reference(self):
+        """Get payment_account_reference"""
+        return self._payment_account_reference
+
+    @payment_account_reference.setter
+    def payment_account_reference(self, val):
+        """Set payment_account_reference
+        Keyword argument:
+        val -- New payment_account_reference value"""
+        self._payment_account_reference = val
         return self
 
     def fill_with_data(self, data):
@@ -579,6 +607,8 @@ class Card(object):
             self.zip = data["zip"]
         if "country_code" in data.keys():
             self.country_code = data["country_code"]
+        if "billing_country_code" in data.keys():
+            self.billing_country_code = data["billing_country_code"]
         if "ip_address" in data.keys():
             self.ip_address = data["ip_address"]
         if "fingerprint" in data.keys():
@@ -599,8 +629,10 @@ class Card(object):
             self.created_at = data["created_at"]
         if "preferred_card_type" in data.keys():
             self.preferred_card_type = data["preferred_card_type"]
-        if "vault_id" in data.keys():
-            self.vault_id = data["vault_id"]
+        if "initial_scheme_transaction_id" in data.keys():
+            self.initial_scheme_transaction_id = data["initial_scheme_transaction_id"]
+        if "payment_account_reference" in data.keys():
+            self.payment_account_reference = data["payment_account_reference"]
 
         return self
 
@@ -630,6 +662,7 @@ class Card(object):
             "state": self.state,
             "zip": self.zip,
             "country_code": self.country_code,
+            "billing_country_code": self.billing_country_code,
             "ip_address": self.ip_address,
             "fingerprint": self.fingerprint,
             "token_type": self.token_type,
@@ -640,7 +673,8 @@ class Card(object):
             "sandbox": self.sandbox,
             "created_at": self.created_at,
             "preferred_card_type": self.preferred_card_type,
-            "vault_id": self.vault_id,
+            "initial_scheme_transaction_id": self.initial_scheme_transaction_id,
+            "payment_account_reference": self.payment_account_reference,
         }
 
     def all(self, options={}):
