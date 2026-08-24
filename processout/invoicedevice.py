@@ -17,6 +17,7 @@ class InvoiceDevice(object):
         self._client = client
 
         self._channel = None
+        self._threeds_sdk = None
         self._platform = None
         self._ip_address = None
         self._id = None
@@ -34,6 +35,19 @@ class InvoiceDevice(object):
         Keyword argument:
         val -- New channel value"""
         self._channel = val
+        return self
+
+    @property
+    def threeds_sdk(self):
+        """Get threeds_sdk"""
+        return self._threeds_sdk
+
+    @threeds_sdk.setter
+    def threeds_sdk(self, val):
+        """Set threeds_sdk
+        Keyword argument:
+        val -- New threeds_sdk value"""
+        self._threeds_sdk = val
         return self
 
     @property
@@ -81,6 +95,8 @@ class InvoiceDevice(object):
         data -- The data from which to pull the new values"""
         if "channel" in data.keys():
             self.channel = data["channel"]
+        if "threeds_sdk" in data.keys():
+            self.threeds_sdk = data["threeds_sdk"]
         if "platform" in data.keys():
             self.platform = data["platform"]
         if "ip_address" in data.keys():
@@ -93,6 +109,7 @@ class InvoiceDevice(object):
     def to_json(self):
         return {
             "channel": self.channel,
+            "threeds_sdk": self.threeds_sdk,
             "platform": self.platform,
             "ip_address": self.ip_address,
             "id": self.id,
